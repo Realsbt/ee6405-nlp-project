@@ -39,10 +39,10 @@ HC3 数据卡注明 CC-BY-SA-4.0，并保留原始来源中更严格的条款。
 | `experiments/hart_grouped_v1/` | 冻结的训练／验证／测试分区、协议及图缓存 |
 | `experiments/hc3_aux_v1_1/` | 冻结辅助数据、协议及已对齐的 RST 输出 |
 | `experiments/models/tfidf_lr_v1.joblib` | 正式 TF-IDF 模型 |
-| `experiments/neural_runs/<run>/` | 七个正式神经模型的 checkpoint、训练事件及源码快照 |
+| `experiments/neural_runs/<run>/` | 十二个正式神经模型的 checkpoint、训练事件及源码快照 |
 | `.venv/`、`.venv-rst/` | 训练／推理与独立 RST 环境 |
 
-正式神经运行名称为 `roberta_s3407`、`roberta_s42`、`roberta_s2026`、`race_s3407`、`race_s42`、`race_s2026`、`race_no_supcon_s3407`。作者提供的已微调 checkpoint 只用于早期 smoke，不能替代这些正式实验的 checkpoint。
+正式神经运行是 `roberta_s{seed}`、`roberta_supcon_s{seed}`、`race_no_supcon_s{seed}`、`race_s{seed}`，每组种子为 3407、42、2026，共十二次。作者提供的已微调 checkpoint 只用于早期 smoke，不能替代这些正式实验的 checkpoint。
 
 ## 在另一台机器复跑
 

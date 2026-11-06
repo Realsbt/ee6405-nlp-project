@@ -6,7 +6,7 @@
 
 ## 当前研究问题与状态
 
-比较传统词汇特征、RoBERTa 和 RACE 在四类英文文本来源检测上的表现，分析篇章结构与监督对比损失的作用。主模型预定种子为 3407、42、2026；关闭对比损失的消融先做种子 3407。所有神经模型只按验证集 Macro-F1 选 checkpoint，测试分数不用于改变实验参数。
+比较传统词汇特征、RoBERTa 和 RACE 在四类英文文本来源检测上的表现，分析篇章结构与监督对比损失的作用。架构（RoBERTa／RACE）与目标（CE／CE＋SupCon）组成 2×2 矩阵，每格使用种子 3407、42、2026；本轮保留原七次神经训练，补充五次，完成状态见统一报告。所有神经模型只按验证集 Macro-F1 选 checkpoint，测试分数不用于改变实验参数。
 
 - `human_written`：人工原文。
 - `human_ai_polished`：人工内容经 AI 润色。
@@ -97,35 +97,46 @@ bash '/home/botao/文档/ChatGPT/小组作业/experiments/run_baseline.sh' tfidf
 
 环境 `/data/botao/ee6405-race-validation/.venv`，Python 3.11、PyTorch 2.7.0+cu128。它以 overlay 方式复用现有 `rl_robotlab` 的 PyTorch，额外依赖装在自己的环境中，没有修改机器人环境。关键版本见 `requirements-core.txt`。当前主机复跑已验证；全新系统的从零安装尚未验证。
 
-`configs/neural_v1.json` 固定 batch 16、最多 20 轮、学习率 2.9e-5、warmup 10%、patience 5、四类平衡 batch；仅解冻 RoBERTa 最后一层。训练用 BF16，选模与测试用 FP32。RACE 使用官方 RGCN、root pooling、MLP 和监督对比损失；`race_no_supcon` 只关闭该损失。RoBERTa 与 RACE 的分类头维度和模型容量不同，不能把两者之差完全归因为篇章结构。
+`configs/neural_v1.json` 固定 batch 16、最多 20 轮、学习率 2.9e-5、warmup 10%、patience 5、四类平衡 batch；仅解冻 RoBERTa 最后一层。训练用 BF16，选模与测试用 FP32。RACE 使用官方 RGCN、root pooling 和 MLP；两种架构均可独立启用或关闭监督对比损失。`roberta_supcon` 使用已有 CLS 特征，`race_no_supcon` 仅关闭 RACE 的该损失，不改变各自分类头。RoBERTa 与 RACE 的分类头维度和模型容量不同，不能把两者之差完全归因为篇章结构。
 
 首个 RoBERTa（3407）测试 Macro-F1 90.75%、Macro-AUROC 98.86%，最佳验证轮次 8。完整 3,194 条重载预测完全一致。这是一个种子、同基准分组测试的结果。
 
 首个 RACE（3407）测试 Macro-F1 90.84%、Macro-AUROC 98.77%，最佳验证轮次同为 8。完整测试集重载后的类别预测一致，最大分数差约 1.19e-7。相对 RoBERTa 的 Macro-F1 差约 +0.10 个百分点；按来源组 bootstrap 的条件区间包含零，目前没有明确的总体优劣证据。
 
-关闭对比损失的 RACE（3407）Macro-F1 88.89%、Macro-AUROC 98.36%，同样验证选第 8 轮并通过完整重载复核。完整 RACE 比它高约 1.95 个百分点，来源组条件区间约 [+0.86,+3.07]；这是单次拟合的消融证据，没有消融多种子稳定性结论。
+关闭对比损失的 RACE（3407）Macro-F1 88.89%、Macro-AUROC 98.36%，同样验证选第 8 轮并通过完整重载复核。完整 RACE 比它高约 1.95 个百分点，来源组条件区间约 [+0.86,+3.07]；这是种子 3407 已拟合模型的条件比较；本轮完整的同种子差值、均值与 SD 见统一报告的 2×2 表。
 
-完整三种子 Macro-F1：RoBERTa **90.72% ± 0.25**，RACE **90.37% ± 0.60**（均值 ± 样本 SD，SD 单位为百分点）。平均差为 RACE−RoBERTa **−0.35 个百分点**，本组实验不支持 RACE 总体优于 RoBERTa。每个种子的验证指标、选中轮次和测试结果都在统一报告中，主表没有挑选测试最好的种子。
+完整 2×2 的四格三种子结果如下；原七次训练均保留，五次补跑均经完整测试集重载验证。
+
+| 方法 | 训练次数 | Macro-F1 | Macro-AUROC |
+|---|---:|---:|---:|
+| RoBERTa · CE | 3 | 90.72% ± 0.25 | 98.89% ± 0.02 |
+| RoBERTa · CE + SupCon | 3 | 91.15% ± 0.24 | 98.90% ± 0.06 |
+| RACE · CE | 3 | 89.92% ± 0.90 | 98.34% ± 0.11 |
+| RACE · CE + SupCon | 3 | 90.37% ± 0.60 | 98.67% ± 0.11 |
+
+同种子 SupCon 增益：RoBERTa +0.44、RACE +0.45 个百分点；相同损失下 RACE−RoBERTa：CE -0.80、CE＋SupCon -0.78；交互为 +0.01。逐种子差异、样本 SD 与证据边界见统一报告。
 
 ```bash
 # 在工作区根目录逐条运行；使用新名称保留已有正式结果。
 bash experiments/run_neural.sh --model-type roberta --seed 42 --run-name review_roberta_s42
-bash experiments/run_neural.sh --model-type race --seed 42 --run-name review_race_s42
+bash experiments/run_neural.sh --model-type race --supcon --seed 42 --run-name review_race_s42
 bash experiments/run_neural.sh --model-type race_no_supcon --seed 3407 --run-name review_no_supcon_s3407
 
 # 仅查看预定队列，不启动训练。
 /data/botao/ee6405-race-validation/.venv/bin/python -m experiments.run_comparison_queue --plan
 ```
 
-实际队列状态：`/data/botao/ee6405-race-validation/experiments/comparison_queue_v1/status.json`；当前总日志 `reports/comparison_queue_v1_resume.log`，原阶段日志也保留。队列逐项训练、重载复核和做辅助评估；队列完成只说明这些任务完成，整项目还需汇总与交付验收。文件锁阻止重复队列。中断的实验需先确认进程已退出，再用原命令加 `--resume`；恢复从最后一个完整 epoch 开始，配置和训练源码必须与该次快照一致。
+原阶段队列状态：`/data/botao/ee6405-race-validation/experiments/comparison_queue_v1/status.json`；当前总日志 `reports/comparison_queue_v1_resume.log`，原阶段日志也保留。队列逐项训练、重载复核和做辅助评估；队列完成只说明这些任务完成，整项目还需汇总与交付验收。文件锁阻止重复队列。中断的实验需先确认进程已退出，再用原命令加 `--resume`；恢复从最后一个完整 epoch 开始，配置和训练源码必须与该次快照一致。
 
 checkpoint、optimizer、事件日志、源码快照在 `/data/botao/ee6405-race-validation/experiments/neural_runs/<run>/`；本目录 `reports/<run>/` 保存配置、结果、逐条预测和验证。现有完成运行禁止覆盖。图缓存经官方实时预处理和同一初始化模型输出对照，差异为零，见 `reports/graph_cache_verification.json`。
 
 `--run-name` 只改变输出目录，不改变训练配置、数据或种子。新名称使用 1–80 个英文字母、数字、下划线或连字符，并以字母或数字开头。默认仍是 `<model>_s<seed>`；已有目录会报错并保留。复跑别名不自动加入预定主表，完成后可用 `verify_neural --run review_race_s42` 对其做完整重载检查。恢复中断的别名需带相同 `--run-name` 和 `--resume`。
 
+新增的 [2×2 队列与参数约定](../docs/ABLATION_2X2.md) 使用独立 `--supcon`／`--no-supcon`；`--model-type race` 现在只选择架构，完整 RACE 必须显式开启损失。`python3 -B -m experiments.run_ablation_queue --status` 只读显示五次新增运行的进度。新增运行沿用原协议、超参数、早停与选模规则。
+
 仅检查训练入口可加 `--smoke`：每类 8 条训练、2 条验证，只跑一轮，不打开测试分区，输出名称自动加 `smoke_` 前缀。正式训练与 smoke 的结果分开；固定种子不承诺跨设备的逐位一致。
 
-`reports/retraining_entrypoint.json` 记录了从 `/tmp` 实际运行两种模型的新名称 smoke：32 条训练、8 条验证，梯度有限且分类头确有更新，未读取测试集。非法目录名称和重复运行分别被拒绝，七个正式神经 checkpoint 哈希未变。这些 smoke 不参与主指标。
+`reports/ablation_entrypoint.json` 记录四种架构／损失组合的实际 smoke；`reports/retraining_entrypoint.json` 记录从 `/tmp` 运行两种架构的 wrapper smoke：32 条训练、8 条验证，梯度有限且分类头确有更新，未读取测试集。非法目录名称和重复运行分别被拒绝，原有七个正式神经 checkpoint 哈希未变。这些 smoke 不参与主指标。
 
 图模型的词汇输入仍为首 512 tokens。官方 graph builder 删除截断外 EDU 节点，但保留全篇关系节点及连接；因此结构信息可以超出词汇窗口。统一分析分别报告未截断与截断子集，并明确其只是描述性比较。
 
@@ -176,7 +187,7 @@ bash '/home/botao/文档/ChatGPT/小组作业/experiments/run_review.sh'
 /data/botao/ee6405-race-validation/.venv/bin/python -m experiments.verify_project
 ```
 
-测试/验证脚本不会训练模型或根据测试结果调参。统一分析保存每类、子域、截断子集、混淆矩阵、资源记录及按来源关联分组 bootstrap 的成对比较。三种子标准差与单次模型的条件 bootstrap 衡量不同的不确定性；只有一个冻结划分，不能宣称已覆盖跨划分、跨数据集或未见生成模型泛化。
+`verify_neural` 与统一分析不会训练模型或根据测试结果调参；入口审计 `verify_training_entrypoint` 另外运行 train/validation-only smoke，不读取测试数据。统一分析保存每类、子域、截断子集、混淆矩阵、资源记录及按来源关联分组 bootstrap 的成对比较。三种子标准差与单次模型的条件 bootstrap 衡量不同的不确定性；只有一个冻结划分，不能宣称已覆盖跨划分、跨数据集或未见生成模型泛化。
 
 统一分析还会自动刷新 `reports/comparison/CASE_STUDIES.md` 的四个可追溯案例和 `reports/auxiliary/REPORT.md` 的 HC3 输出分配/来源/长度分析。案例按说明的事后规则选取，不是代表性抽样；HC3 四个输出的分配不是四分类真值。`--require-complete` 同时要求预定训练和四个方法的辅助评估全部完成。
 

@@ -114,7 +114,8 @@ def main():
                     else:
                         wait_for_existing(run)
                 else:
-                    execute("experiments.train_neural", ["--model-type", kind, "--seed", str(seed)], f"{run}.log")
+                    execute("experiments.train_neural", ["--model-type", kind, "--seed", str(seed),
+                            "--supcon" if kind == "race" else "--no-supcon"], f"{run}.log")
                 verify(run)
                 if seed == 3407:
                     # CPU parsing proceeds separately while the ablation trains.

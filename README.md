@@ -2,9 +2,9 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), comparing **TF-IDF + logistic regression, RoBERTa, RACE**, and a RACE ablation without supervised contrastive loss. The project adds a fixed grouped split, baseline comparisons, multiple training seeds, parser audits and an interactive raw-text demo.
+A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), comparing **TF-IDF + logistic regression, RoBERTa, RACE**, with an architecture × objective 2×2 ablation (CE versus CE + supervised contrastive loss). The project adds a fixed grouped split, baseline comparisons, multiple training seeds, parser audits and an interactive raw-text demo.
 
-**Status:** the planned experiments, analysis and local demo are complete. Final slides, a video with human narration and signed submission documents remain to be completed. See the [submission checklist](docs/SUBMISSION.md). This repository contains code and evaluation evidence; submission to the course platform is a separate step.
+**Status:** the five-run [2×2 extension](docs/ABLATION_2X2.md), full checkpoint verification and updated analysis are complete. The original local demo is retained. Final slides, a video with human narration and signed submission documents remain to be completed. See the [submission checklist](docs/SUBMISSION.md). This repository contains code and evaluation evidence; submission to the course platform is a separate step.
 
 ## Task and data
 
@@ -35,31 +35,33 @@ flowchart TB
     R --> Y
 ```
 
-Models are trained independently. RoBERTa and RACE use the same base-pretrained initialization. HART uses the released RST trees; the demo and HC3 use the local parser. The no-SupCon ablation retains the RACE inference architecture.
+Models are trained independently. RoBERTa and RACE use the same base-pretrained initialization. HART uses the released RST trees; the demo and HC3 use the local parser. Each neural architecture is trained both with and without SupCon; changing the objective leaves its inference architecture intact.
 
 ## Results
 
-Results use the fixed HART grouped test set. Neural checkpoints are selected by validation Macro-F1. Every formal run has a complete test-set reload verification record.
+Results use the fixed HART grouped test set. Neural checkpoints are selected by validation Macro-F1. All twelve neural runs have complete test-set reload verification; the deterministic TF-IDF baseline is retained.
 
-![HART Macro-F1 and Macro-AUROC for the four methods](experiments/reports/comparison/main_metrics.png)
-
-*RoBERTa and RACE show the mean and sample standard deviation across three seeds. TF-IDF and the no-SupCon ablation each have one run.*
+![HART results for the lexical baseline and four neural conditions](experiments/reports/comparison/main_metrics.png)
 
 | Method | Runs | Macro-F1 | Macro-AUROC |
 |---|---:|---:|---:|
 | TF-IDF + logistic regression | 1 | 79.40% | 96.24% |
-| RoBERTa | 3 | **90.72% ± 0.25** | **98.89% ± 0.02** |
-| RACE | 3 | 90.37% ± 0.60 | 98.67% ± 0.11 |
-| RACE w/o SupCon | 1 | 88.89% | 98.36% |
+| RoBERTa · CE | 3 | 90.72% ± 0.25 | 98.89% ± 0.02 |
+| RoBERTa · CE + SupCon | 3 | 91.15% ± 0.24 | 98.90% ± 0.06 |
+| RACE · CE | 3 | 89.92% ± 0.90 | 98.34% ± 0.11 |
+| RACE · CE + SupCon | 3 | 90.37% ± 0.60 | 98.67% ± 0.11 |
 
-Means and sample standard deviations use seeds 3407, 42 and 2026. Standard deviations are in percentage points. The ablation has only one seed.
+Neural results use seeds 3407, 42 and 2026. Values are means ± sample SD; SD is in percentage points. Each cell of the architecture × objective matrix has three runs.
 
-- RACE's mean Macro-F1 is 0.35 percentage points below RoBERTa. These experiments **do not support an overall advantage for RACE**.
-- For seed 3407, full RACE exceeds the no-SupCon ablation by 1.95 percentage points. This ablation difference has not been checked across multiple seeds.
-- On HC3, RACE reaches 38.69% binary Macro-F1 and only 8.40% AI recall, showing substantial cross-benchmark degradation. Scores are uncalibrated and cannot establish authorship.
-- All models use the first 512 tokens for lexical input, but RACE also retains full-document relation nodes. Model capacities differ as well, so any difference cannot be attributed solely to graph structure.
+- SupCon changes Macro-F1 by **+0.44 percentage points in RoBERTa** and **+0.45 in RACE**, using matched-seed mean differences.
+- RACE − RoBERTa is **-0.80 points under CE** and **-0.78 under CE + SupCon**. The interaction (RACE's loss effect minus RoBERTa's) is **+0.01 points**. Per-seed differences and their SDs are in the report.
+- Architecture comparisons also include pooling, representation dimension, parameter count and full-document structural information; they do not isolate graph structure alone.
+- The five added runs extend an analysis whose original test results were already inspected. Three training seeds on the same split are not a new independent test or evidence of broad generalization.
+- HC3 remains the original single-seed binary auxiliary comparison: full RACE has 38.69% Macro-F1 and 8.40% AI recall. This 2×2 extension concerns HART and does not establish an analogous HC3 improvement.
 
-See the [experimental report](experiments/reports/comparison/REPORT.md) for class and domain results, statistical limitations and computational costs. Additional material includes [error and complementary cases](experiments/reports/comparison/CASE_STUDIES.md), [HC3 analysis](experiments/reports/auxiliary/REPORT.md) and [method notes](experiments/METHOD_NOTES.md).
+![Four-cell comparison and paired seed contrasts](experiments/reports/comparison/ablation_2x2.png)
+
+See the [experimental report](experiments/reports/comparison/REPORT.md), [2×2 protocol and commands](docs/ABLATION_2X2.md), [error cases](experiments/reports/comparison/CASE_STUDIES.md), [HC3 analysis](experiments/reports/auxiliary/REPORT.md) and [method notes](experiments/METHOD_NOTES.md).
 
 ## Quick start
 
@@ -71,7 +73,7 @@ Run from the repository root with the Python 3 standard library. No GPU, dataset
 python3 scripts/check_results.py
 ```
 
-The script recomputes metrics from individual predictions and checks eight formal runs, four HC3 evaluations and the aggregate tables. It checks internal consistency of the saved evidence; checkpoint inference still requires external resources.
+The script recomputes metrics from individual predictions and checks thirteen formal runs, four HC3 evaluations, aggregate tables and five paired factorial contrasts. It checks internal consistency of the saved evidence; checkpoint inference still requires external resources.
 
 ### Run the English demo on Linux / Windows WSL2
 

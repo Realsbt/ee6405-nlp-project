@@ -2,9 +2,9 @@
 
 [English](README.md) | **简体中文**
 
-比较 **TF-IDF＋逻辑回归、RoBERTa、RACE** 及关闭监督对比损失的消融，分析英文文本的创作与后续编辑来源。项目基于 [RACE](https://github.com/ICTMCG/RACE) 做课程复现与实验分析，新增固定分组划分、基线对照、多种子评估、解析审计和原始文本 Demo。
+比较 **TF-IDF＋逻辑回归、RoBERTa、RACE**，并以 CE／CE＋SupCon 构成架构 × 损失的 2×2 消融，分析英文文本的创作与后续编辑来源。项目基于 [RACE](https://github.com/ICTMCG/RACE) 做课程复现与实验分析，新增固定分组划分、基线对照、多种子评估、解析审计和原始文本 Demo。
 
-**当前状态：预定实验、结果分析和本机 Demo 已完成；正式 slides、真人视频和签名声明等提交材料待完成。** 详细清单见 [提交准备](docs/SUBMISSION.md)。GitHub 保存代码和评估证据，课程平台提交另行完成。
+**当前状态：[2×2 消融](docs/ABLATION_2X2.md) 缺少的五次训练、完整重载复核及汇总分析均已完成，保留原本机 Demo；正式 slides、真人视频和签名声明等提交材料待完成。** 详细清单见 [提交准备](docs/SUBMISSION.md)。GitHub 保存代码和评估证据，课程平台提交另行完成。
 
 ## 任务与数据
 
@@ -35,31 +35,33 @@ flowchart TB
     R --> Y
 ```
 
-各模型独立训练；RoBERTa 与 RACE 使用相同基础初始化。HART 使用作者发布的 RST 树，Demo／HC3 使用本机解析器。关闭 SupCon 的消融沿用 RACE 推理结构。
+各模型独立训练；RoBERTa 与 RACE 使用相同基础初始化。HART 使用作者发布的 RST 树，Demo／HC3 使用本机解析器。两种神经架构分别启用或关闭 SupCon；损失开关不改变各自推理结构。
 
 ## 实验结果
 
-固定 HART 分组测试集；神经模型按验证集 Macro-F1 选择 checkpoint。所有正式运行均有完整测试集重载复核记录。
+使用固定 HART 分组测试集，神经模型只按验证集 Macro-F1 选 checkpoint。十二次神经运行均完成完整测试集重载复核，保留原确定性 TF-IDF 基线。
 
-![HART 四种方法的 Macro-F1 与 Macro-AUROC 对比](experiments/reports/comparison/main_metrics.png)
-
-*RoBERTa／RACE 展示三种子均值及样本标准差；TF-IDF 和关闭 SupCon 的消融各运行一次。*
+![传统基线与四个神经配置的 HART 结果](experiments/reports/comparison/main_metrics.png)
 
 | 方法 | 训练次数 | Macro-F1 | Macro-AUROC |
 |---|---:|---:|---:|
-| TF-IDF＋逻辑回归 | 1 | 79.40% | 96.24% |
-| RoBERTa | 3 | **90.72% ± 0.25** | **98.89% ± 0.02** |
-| RACE | 3 | 90.37% ± 0.60 | 98.67% ± 0.11 |
-| RACE w/o SupCon | 1 | 88.89% | 98.36% |
+| TF-IDF + logistic regression | 1 | 79.40% | 96.24% |
+| RoBERTa · CE | 3 | 90.72% ± 0.25 | 98.89% ± 0.02 |
+| RoBERTa · CE + SupCon | 3 | 91.15% ± 0.24 | 98.90% ± 0.06 |
+| RACE · CE | 3 | 89.92% ± 0.90 | 98.34% ± 0.11 |
+| RACE · CE + SupCon | 3 | 90.37% ± 0.60 | 98.67% ± 0.11 |
 
-均值与样本标准差来自种子 3407、42、2026；标准差单位为百分点。消融只运行一次。
+四个神经配置各使用种子 3407、42、2026；报告均值 ± 样本标准差，标准差单位为百分点。
 
-- RACE 平均比 RoBERTa 低 0.35 个百分点，本组实验**不支持 RACE 总体更优**。
-- 在种子 3407 上，完整 RACE 比关闭对比损失高 1.95 个百分点；尚未验证消融的多种子稳定性。
-- HC3 上 RACE 的二分类 Macro-F1 为 38.69%，AI 召回率仅 8.40%，跨基准退化明显。模型分数未经校准，不能作为可靠作者身份鉴定。
-- 词汇输入均为首 512 tokens，但 RACE 还保留全篇关系节点；模型容量也不同，因此两者差异不能全部归因为图结构。
+- 同种子配对后，SupCon 对 RoBERTa 的平均 Macro-F1 增益为 **+0.44 个百分点**，对 RACE 为 **+0.45 个百分点**。
+- 相同目标下，RACE−RoBERTa 的差异为：**CE 下 -0.80**、**CE＋SupCon 下 -0.78 个百分点**。交互项（RACE 的损失增益 − RoBERTa 的损失增益）为 **+0.01 个百分点**。逐种子差值及其 SD 见完整报告。
+- 架构差异仍包含 pooling、表示维度、参数量和全篇结构信息，不能全部归因于篇章图。
+- 本轮五次补跑在查看原有结果后确定，沿用同一保留测试集；三个训练种子不构成新增独立测试，也不能证明广泛泛化。
+- HC3 仍是原单种子辅助二分类比较：完整 RACE 的 Macro-F1 为 38.69%、AI 召回为 8.40%。本轮 2×2 补跑针对 HART，不能据此推出 HC3 上也有相同收益。
 
-完整图表、类别与子域指标、统计限制和计算成本见 [实验报告](experiments/reports/comparison/REPORT.md)。另有 [错误与互补案例](experiments/reports/comparison/CASE_STUDIES.md)、[HC3 分析](experiments/reports/auxiliary/REPORT.md) 和 [方法说明](experiments/METHOD_NOTES.md)。
+![四格结果与同种子成对差异](experiments/reports/comparison/ablation_2x2.png)
+
+完整结果见 [实验报告](experiments/reports/comparison/REPORT.md)；运行与证据边界见 [2×2 消融协议](docs/ABLATION_2X2.md)。另有 [错误案例](experiments/reports/comparison/CASE_STUDIES.md)、[HC3 分析](experiments/reports/auxiliary/REPORT.md) 和 [方法说明](experiments/METHOD_NOTES.md)。
 
 ## 快速查看与运行
 
@@ -71,7 +73,7 @@ flowchart TB
 python3 scripts/check_results.py
 ```
 
-脚本从逐条预测重新计算指标，核对八个正式运行、四组 HC3 结果及汇总表。它检验保存结果的内部一致性；重新加载 checkpoint 推理仍需要外部资源。
+脚本从逐条预测重新计算指标，核对十三个正式运行、四组 HC3 结果、汇总表与五个配对消融差异。它检验保存结果的内部一致性；重新加载 checkpoint 推理仍需要外部资源。
 
 ### 在 Linux / Windows WSL2 运行英文 Demo
 

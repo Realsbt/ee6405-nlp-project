@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "training_entrypoint_sha256": "a9100c4cc496f28f88fd472dc19410ef5d64b123a06964289e2266028eed36ce",
+  "smokes": {
+    "roberta": {
+      "smoke_path": "/data/botao/ee6405-race-validation/experiments/neural_runs/smoke_ablation_v1_roberta_s3407/smoke.json",
+      "smoke_sha256": "6cdea17e0912a0dab46d94435db4d9a93a12f3c0dfc62702bb220297d13fbbdd",
+      "use_supcon": false,
+      "mean_train_supcon": 0.0
+    },
+    "roberta_supcon": {
+      "smoke_path": "/data/botao/ee6405-race-validation/experiments/neural_runs/smoke_ablation_v1_roberta_supcon_s3407/smoke.json",
+      "smoke_sha256": "77669d4a46af0a34a5c60d5a7f61d15d7ac53f7255c8edcfed74618d96397177",
+      "use_supcon": true,
+      "mean_train_supcon": 3.034820556640625
+    },
+    "race_no_supcon": {
+      "smoke_path": "/data/botao/ee6405-race-validation/experiments/neural_runs/smoke_ablation_v1_race_no_supcon_s3407/smoke.json",
+      "smoke_sha256": "ae7f6b93765ea7b0838a1d582d4a929d3af57c388b594f1127a618fe04f118a1",
+      "use_supcon": false,
+      "mean_train_supcon": 0.0
+    },
+    "race": {
+      "smoke_path": "/data/botao/ee6405-race-validation/experiments/neural_runs/smoke_ablation_v1_race_s3407/smoke.json",
+      "smoke_sha256": "f086064397dc79f327560ee21fe450faa53ff9905858041fd55ee514470c57f8",
+      "use_supcon": true,
+      "mean_train_supcon": 3.640981674194336
+    }
+  },
+  "test_partition_loaded": false,
+  "scope": "All four architecture/loss combinations actually optimized on train/val smoke subsets"
+}

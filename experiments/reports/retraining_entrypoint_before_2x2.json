@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "training_entrypoint_sha256": "074b5f2b66fd153a56f454cf41cebb70872a8a11d047b2516a3caf0ac7b387b3",
+  "invocation_cwd": "/tmp",
+  "smokes": {
+    "roberta": {
+      "run_id": "smoke_io_review_roberta_s3407",
+      "smoke_path": "/data/botao/ee6405-race-validation/experiments/neural_runs/smoke_io_review_roberta_s3407/smoke.json",
+      "smoke_sha256": "016af6cc5ae50675e7b1e094102d7a51dada71092c1b7121834fb475d4a02aa4",
+      "train_records": 32,
+      "val_records": 8,
+      "test_partition_loaded": false,
+      "configuration_matches_fixed_smoke": true
+    },
+    "race": {
+      "run_id": "smoke_io_review_race_s3407",
+      "smoke_path": "/data/botao/ee6405-race-validation/experiments/neural_runs/smoke_io_review_race_s3407/smoke.json",
+      "smoke_sha256": "c2e25ce166f5f58a969822ab6b86dd1a05a152dcbeeae11f52c74e0ab8ffbf16",
+      "train_records": 32,
+      "val_records": 8,
+      "test_partition_loaded": false,
+      "configuration_matches_fixed_smoke": true
+    }
+  },
+  "guards": {
+    "invalid_name": {
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "log_path": "/home/botao/文档/ChatGPT/小组作业/experiments/reports/retraining_invalid_name.log",
+      "log_sha256": "3c186aebfbcae108881683d97cafe77711da2a194f442e08f25c235fdfb5f47a"
+    },
+    "existing_name": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "log_path": "/home/botao/文档/ChatGPT/小组作业/experiments/reports/retraining_existing_name.log",
+      "log_sha256": "36c7d094e2123b71f2f1b784d7927a5ee82c5d13cc21b651b5ba0e04499617b2"
+    }
+  },
+  "existing_smoke_files_preserved": true,
+  "canonical_checkpoint_hashes_unchanged": {
+    "roberta_s3407": "d7eabbcd9a4a085dc23bd93d6d5ac27b73ac6dfe065745547554464397778f7f",
+    "roberta_s42": "bfca16904f499e1f25461cc9c74e41fc80bd851daaf304bb6de9d5644c927371",
+    "roberta_s2026": "8bd8fcb87f9a18f354eaede827250f1d31b3786ffdba6a1b8373e253c0418766",
+    "race_s3407": "6797d46f3fb2f84734b0cf9e49d7d566eefc9f97ffa6d0db3219d8aa107098d1",
+    "race_s42": "6a53f05a849c6ab4fcf4898f2bbf47b4c26d20c75e5b8e63655bc2f3e9cf9bb0",
+    "race_s2026": "304528018c63590034f86d7c1b703accf009636fd8c200afccb81295e9dbcc10",
+    "race_no_supcon_s3407": "06d0e7bd2a5ffa19fa49b959498560eafa147e270b361061f069b38809265b27"
+  },
+  "scope": "Actual train/validation-only invocation under new names; path-name rejection and overwrite rejection. Not a new benchmark or proof of bitwise training determinism."
+}

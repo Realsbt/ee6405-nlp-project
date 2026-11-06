@@ -11,7 +11,7 @@
   ],
   "all_four_choices_available": true,
   "new_model_checked_this_turn": "race_no_supcon",
-  "previous_three_model_ui_evidence": "/home/botao/\u6587\u6863/ChatGPT/\u5c0f\u7ec4\u4f5c\u4e1a/experiments/reports/demo_ui_verification_initial.json",
+  "previous_three_model_ui_evidence": "/home/botao/文档/ChatGPT/小组作业/experiments/reports/demo_ui_verification_initial.json",
   "synthetic_sample_has_no_ground_truth_label": true,
   "visible_prediction": "human_ai_polished",
   "visible_scores_percent": [
@@ -23,7 +23,22 @@
   "visible_end_to_end_seconds": 0.38,
   "visible_edu_count": 6,
   "actual_rst_tree_expanded_and_checked": true,
-  "screenshot_path": "/home/botao/\u6587\u6863/ChatGPT/\u5c0f\u7ec4\u4f5c\u4e1a/experiments/reports/demo_ablation.jpg",
-  "screenshot_sha256": "ecbaaea823895c46b5ada81c4b9df69008e50690fc11fe5bfd593ea831e669d2",
-  "screenshot_refreshed_utc": "2026-11-05T21:57:49.056303+00:00"
+  "screenshot_path": "/home/botao/文档/ChatGPT/小组作业/experiments/reports/demo_ablation.jpg",
+  "screenshot_sha256": "87e8cb9bc5f09e641aba894793368dba2cf7130134f3587e01ab97ad4c707ce8",
+  "screenshot_refreshed_utc": "2026-11-05T21:57:49.056303+00:00",
+  "screenshot_integrity_reaudit": {
+    "checked_utc": "2026-11-06T08:40:33.417115+00:00",
+    "method": "Visual inspection of the existing committed JPEG; no new browser interaction is claimed",
+    "previous_recorded_sha256": "ecbaaea823895c46b5ada81c4b9df69008e50690fc11fe5bfd593ea831e669d2",
+    "selected_model": "RACE · no contrastive loss",
+    "visible_scores_percent": [
+      0.6,
+      97.1,
+      2.2,
+      0.1
+    ],
+    "visible_edu_count": 6,
+    "visible_end_to_end_seconds": 0.7,
+    "note": "The old hash did not match the committed JPEG. Its model, scores and EDU count match the historical record, but the displayed request time is 0.70 s versus the earlier interaction record of 0.38 s. The original checked_utc and interaction fields are preserved; only the current stored-image hash is repaired."
+  }
 }

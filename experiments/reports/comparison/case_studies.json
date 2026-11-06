@@ -252,7 +252,7 @@
       "comment": "文本讨论非人类解释者与人工智能语境下的符号学。该工具改写 AI 样本中，RACE 的标签正确而 RoBERTa、TF-IDF 选择 ai_generated。它展示当前模型的互补性；单例不能把成功归因于图结构机制，也不能抵消整体成对区间包含零的事实。"
     }
   ],
-  "full_error_list_sha256": "34214adf33c13a026e9fa6a24264ca3b361d7e56a88e7240399e6b9b22b7af9d",
+  "full_error_list_sha256": "c4b8fa0c03c16854de2ea83cb69c217713055e59f52ef1e6664de1e3fbef8ef2",
   "data_protocol_sha256": "a9ebdae25b53c91af5169f8327e8b9733758607a0b11cf56db6c29afdc20762b",
   "script_sha256": "e07d593d205760d026f6d0208b8a00b76e06464ece7dbaf3837675a3b83b7322"
 }
