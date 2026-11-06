@@ -1,5 +1,7 @@
 # EE6405 · Text Creation and Editing Detection
 
+**English** | [简体中文](README.zh-CN.md)
+
 A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), comparing **TF-IDF + logistic regression, RoBERTa, RACE**, and a RACE ablation without supervised contrastive loss. The project adds a fixed grouped split, baseline comparisons, multiple training seeds, parser audits and an interactive raw-text demo.
 
 **Status:** the planned experiments, analysis and local demo are complete. Final slides, a video with human narration and signed submission documents remain to be completed. See the [submission checklist](docs/SUBMISSION.md). This repository contains code and evaluation evidence; submission to the course platform is a separate step.
@@ -94,7 +96,8 @@ Open <http://127.0.0.1:8765/>. The demo uses the CPU by default and displays sco
 ## Repository contents
 
 ```text
-README.md                 Project overview, results and entry points
+README.md                 English project overview, results and entry points
+README.zh-CN.md           Chinese version of the project overview
 docs/                     Original course documents and submission checklist
 data/README.md            External data, weights and environment requirements
 experiments/              Data preparation, training, evaluation, RST and demo
