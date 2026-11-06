@@ -1,0 +1,78 @@
+{
+  "protocol_id": "hc3_aux_v1_1",
+  "source": {
+    "repository": "Hello-SimpleAI/HC3",
+    "revision": "4d0ff18143b5a7e1b1e79beb540c04549d1e59d3",
+    "files": [
+      {
+        "name": "all.jsonl",
+        "size_bytes": 73722850,
+        "sha256": "ee231f82283d754050a4dc58ecf9331afaf5daea7283c6da0b096ed0fb2774cf"
+      },
+      {
+        "name": "README.md",
+        "size_bytes": 1487,
+        "sha256": "ce119f7fcd4511acb1d2ac37ddb082238b9a93b2f638c57f8d2c44f381248691"
+      }
+    ]
+  },
+  "original_question_rows": 24322,
+  "question_pairs": 500,
+  "answer_records": 1000,
+  "seed": 2026,
+  "source_question_pairs": {
+    "finance": 100,
+    "medicine": 100,
+    "open_qa": 100,
+    "reddit_eli5": 100,
+    "wiki_csai": 100
+  },
+  "selection": "100 questions per source, first nonempty human and ChatGPT answer; fixed random order; no predictions used",
+  "exclusions_before_sampling": {
+    "duplicate_question": 531,
+    "missing_one_answer_type": 457
+  },
+  "same_label_duplicate_pairs_skipped_while_sampling": 6,
+  "overlap_with_hart_normalized_text": 0,
+  "duplicate_selected_answers": 0,
+  "binary_mapping": {
+    "human": 0,
+    "ChatGPT": 1
+  },
+  "four_class_score_mapping": "P(AI creator) = P(ai_generated) + P(ai_humanized); threshold fixed at 0.5",
+  "four_class_label_ids_are_proxy_pure_classes": true,
+  "statistics_by_binary_class": {
+    "0": {
+      "count": 500,
+      "median_words": 86.0,
+      "truncated_at_512": 18,
+      "approximate_ai_marker_present": 0
+    },
+    "1": {
+      "count": 500,
+      "median_words": 177.5,
+      "truncated_at_512": 1,
+      "approximate_ai_marker_present": 0
+    }
+  },
+  "answer_sha256": "d7a046f3391353a68b0aa7c85d5aff402182ac01d976876708e00569c42820bb",
+  "prepare_script_sha256": "468b83f0f34422c396a47b92ac2fa745e5214e4a2a29281bb8e4fe0a8a1c8e9c",
+  "evidence_boundary": "Auxiliary binary OOD evaluation only. No labels distinguish polishing/humanization; it cannot validate four-class generalization. Unfiltered answer-length and explicit AI-marker differences remain.",
+  "license": "HC3 card lists CC-BY-SA-4.0 with any stricter source-dataset terms preserved; see downloaded original README",
+  "data_root": "/data/botao/ee6405-race-validation/experiments/hc3_aux_v1_1",
+  "identifier_repair": {
+    "reason": "Source index may be null or repeated; source:index was not a unique key",
+    "source_protocol_sha256": "e809bbde762e5769c38fbf6690e2eb99600339bddcac43f1c1a365ed3786b3bb",
+    "source_answer_sha256": "7f491c2f965605cc2b4e6faa6ccada7630f7de208ed8c5f3dcb4cba186797d2a",
+    "original_unique_item_ids": 48,
+    "repaired_unique_item_ids": 1000,
+    "unique_question_groups": 500,
+    "fields_changed": [
+      "item_id",
+      "group_id"
+    ],
+    "all_text_labels_sources_and_order_unchanged": true,
+    "selection_or_tuning_repeated": false,
+    "repair_script_sha256": "18647b786ca52380fbf6d0c3d3f980710fe27a3228053ca416d2b0b921507185"
+  }
+}

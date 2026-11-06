@@ -1,0 +1,10 @@
+/home/botao/miniforge/envs/rl_robotlab/lib/python3.11/site-packages/torch/cuda/__init__.py:61: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/botao/文档/ChatGPT/小组作业/experiments/train_neural.py", line 304, in <module>
+    main()
+  File "/home/botao/文档/ChatGPT/小组作业/experiments/train_neural.py", line 93, in main
+    raise FileExistsError(f"Preserving existing run {output} / {report_dir}; choose a new --run-name or use --resume for a stopped run")
+FileExistsError: Preserving existing run /data/botao/ee6405-race-validation/experiments/neural_runs/smoke_io_review_roberta_s3407 / /home/botao/文档/ChatGPT/小组作业/experiments/reports/smoke_io_review_roberta_s3407; choose a new --run-name or use --resume for a stopped run

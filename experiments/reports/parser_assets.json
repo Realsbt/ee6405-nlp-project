@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "files": [
+    {
+      "path": "/data/botao/ee6405-race-validation/assets/isanlp_rst_rstdt/best_weights.pt",
+      "bytes": 2545320602,
+      "sha256": "c4008a42605d6fc2657be72ba1de50977b164f88bbc5f53b62a922f43fff3c32",
+      "revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a",
+      "download_etag": "c4008a42605d6fc2657be72ba1de50977b164f88bbc5f53b62a922f43fff3c32",
+      "etag_algorithm": "LFS SHA-256",
+      "matches_preserved_download_metadata": true
+    },
+    {
+      "path": "/data/botao/ee6405-race-validation/assets/isanlp_rst_rstdt/config.json",
+      "bytes": 1088,
+      "sha256": "b1f844b6b39f08023bfbde97c7a3075404c360c2014c5f283b47e8f9db4bea74",
+      "revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a",
+      "download_etag": "5d9db8df1489d859fc65c549b3f29a65fee544b4",
+      "etag_algorithm": "Git blob SHA-1",
+      "matches_preserved_download_metadata": true
+    },
+    {
+      "path": "/data/botao/ee6405-race-validation/assets/isanlp_rst_rstdt/relation_table.txt",
+      "bytes": 576,
+      "sha256": "850c1978c57ef3c59f45ad8a120f635b20953d4fac1f98acaba858a0f61d402c",
+      "revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a",
+      "download_etag": "19341bb54d2b32868f4db26e4e89a824f4a60f77",
+      "etag_algorithm": "Git blob SHA-1",
+      "matches_preserved_download_metadata": true
+    },
+    {
+      "path": "/data/botao/ee6405-race-validation/assets/xlm-roberta-large-config/config.json",
+      "bytes": 616,
+      "sha256": "ec7c3a99c58a38ebb702a2297f1c4586944e841b5eb29d201ff87e0f9c9abe0e",
+      "revision": "c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "download_etag": "8e5fb14e1352fd8fc678a7b293b63cfb5cf091f6",
+      "etag_algorithm": "Git blob SHA-1",
+      "matches_preserved_download_metadata": true
+    },
+    {
+      "path": "/data/botao/ee6405-race-validation/assets/xlm-roberta-large-config/tokenizer_config.json",
+      "bytes": 25,
+      "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+      "revision": "c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "download_etag": "34ddbd64a4cd3f2d9d8a9120d3662d0bf91baead",
+      "etag_algorithm": "Git blob SHA-1",
+      "matches_preserved_download_metadata": true
+    },
+    {
+      "path": "/data/botao/ee6405-race-validation/assets/xlm-roberta-large-config/tokenizer.json",
+      "bytes": 9096718,
+      "sha256": "a898ea75433890f6610f4e470b8ebeb0c21dce5c8dd61f892eb09eb5919d2e2c",
+      "revision": "c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "download_etag": "463f3414782c1c9405828c9b31bfa36dda1f45c5",
+      "etag_algorithm": "Git blob SHA-1",
+      "matches_preserved_download_metadata": true
+    },
+    {
+      "path": "/data/botao/ee6405-race-validation/assets/xlm-roberta-large-config/sentencepiece.bpe.model",
+      "bytes": 5069051,
+      "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+      "revision": "c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "download_etag": "db9af13bf09fd3028ca32be90d3fb66d5e470399",
+      "etag_algorithm": "Git blob SHA-1",
+      "matches_preserved_download_metadata": true
+    }
+  ],
+  "source": "Offline verification against preserved HF download revision + etag metadata; no new remote verification or download",
+  "parser_repo": "tchewik/isanlp_rst_v3",
+  "encoder_config_tokenizer_repo": "FacebookAI/xlm-roberta-large",
+  "local_config_only_changes_model_name_to_local_tokenizer": true,
+  "local_config_sha256": "e984510fe1ac96b0c36066dfdad9a88e84da90ac97ffafb42ea0c7a1cde443b9",
+  "checkpoint_and_relations_symlink_to_verified_source": true,
+  "audit_script_sha256": "9858497aa894b7179de86bad47448f389c257e17bd13dd9611fda04a0050e4bc"
+}

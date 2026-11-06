@@ -1,0 +1,56 @@
+{
+  "status": "completed",
+  "data_protocol_sha256": "a9ebdae25b53c91af5169f8327e8b9733758607a0b11cf56db6c29afdc20762b",
+  "counts": {
+    "train": {
+      "articles": 11190,
+      "total_edu_nodes": 519916,
+      "visible_edu_nodes": 458364,
+      "articles_with_unseen_edu_nodes": 3016
+    },
+    "val": {
+      "articles": 1600,
+      "total_edu_nodes": 73081,
+      "visible_edu_nodes": 65450,
+      "articles_with_unseen_edu_nodes": 397
+    },
+    "test": {
+      "articles": 3194,
+      "total_edu_nodes": 146716,
+      "visible_edu_nodes": 130190,
+      "articles_with_unseen_edu_nodes": 857
+    }
+  },
+  "relation_counts": {
+    "Elaboration": 322209,
+    "Contrast": 33188,
+    "same-unit": 45111,
+    "Summary": 12071,
+    "Joint": 81011,
+    "Background": 28461,
+    "Topic-Comment": 5467,
+    "Enablement": 21511,
+    "Evaluation": 20841,
+    "Manner-Means": 16923,
+    "Comparison": 3081,
+    "Cause": 26697,
+    "Explanation": 19655,
+    "Attribution": 40746,
+    "Temporal": 34997,
+    "textual-organization": 3254,
+    "Condition": 7070,
+    "Topic-Change": 1436
+  },
+  "relation_types": 18,
+  "edge_types": 54,
+  "source_code_sha256": {
+    "experiments/prepare_graph_cache.py": "417e173e1a1046d8d1148a7119ceb56b61f2e72e6be6591a2dc056caa939b109",
+    "local_validation/upstream/RACE/utils/flexible_dataset.py": "f6d183442b5ceb7c018f04993ae0be1db6aea9f511da1fa13e0893a2d9028738"
+  },
+  "cache_file_sha256": {
+    "train": "8038e725f170dd8df14419c8323b1ab6e01f148703e819cc3fcbe098f08fb0fe",
+    "val": "dba9258febb11dc4d626a2a01768c2560e3c894cc2c93044d9bec28e637c6757",
+    "test": "fa199487dcbf9c2886064b79092bce7c9a7d72e61b93472a5beb044ff35f888a"
+  },
+  "information_boundary": "Original full-article RST and first-512-token lexical features. Hidden EDUs remain as structure; compare untruncated subsets before attributing gains purely to graph modeling."
+}

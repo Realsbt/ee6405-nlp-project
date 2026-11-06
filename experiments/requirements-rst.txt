@@ -1,0 +1,14 @@
+# Add to a separate environment containing torch and requirements-core.txt.
+# Install with --no-deps: these are the exercised RST-DT inference path packages.
+# Optional spaCy/Playwright branches of isanlp-rst are not used by this project.
+isanlp-rst==3.2.2
+isanlp @ git+https://github.com/iinemo/isanlp.git@2a102e59f9718acc7fe259dd8d83c66d5da39794
+razdel==0.5.0
+jsonnet==0.20.0
+nltk==3.9.1
+sentencepiece==0.2.0
+fire==0.7.1
+termcolor==3.3.0
+lxml==6.1.1
+networkx==3.3
+pillow==11.3.0

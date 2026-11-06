@@ -1,0 +1,180 @@
+{
+  "status": "needs_review",
+  "records": 1000,
+  "parsed_sha256": "8857a23717b41a3492b5cfbe1b4dce2634756e5b1fd1f2aa88c7d6e6feff1c7a",
+  "valid_ordered_exact_character_spans": true,
+  "records_with_uncovered_nonwhitespace": 34,
+  "cases": [
+    {
+      "item_id": "hc3_finance:fcb2d832718fce58ecf4cdb0ca0acd8b523c17f630957989ebc9185c0be494cf_ai",
+      "uncovered_nonspace_characters": 24,
+      "gap_excerpt": "             TtHtFwa(aT(To(PIfcaIaoy("
+    },
+    {
+      "item_id": "hc3_finance:3858d6c99269aada4d413922d2922eeee699604c68489900b75b7d078b26ce5c_ai",
+      "uncovered_nonspace_characters": 13,
+      "gap_excerpt": "               Siat(ItwadIat"
+    },
+    {
+      "item_id": "hc3_finance:d132b41ef47235a610757ee4f241ad9f81d6a34c9b58ece6c8e0e57e88d474d4_ai",
+      "uncovered_nonspace_characters": 15,
+      "gap_excerpt": "   HSTITKtsAamItLi"
+    },
+    {
+      "item_id": "hc3_finance:b6d3785e039c9f22de14c199e98956a2aaaea3def0f7bffeb42fe87d6dbd425f_ai",
+      "uncovered_nonspace_characters": 45,
+      "gap_excerpt": "     Tyihoeuc    e tc  tr  htadhte ha   cinip tega u, seaem, dma ela"
+    },
+    {
+      "item_id": "hc3_finance:fd3630978cd56b0ecaba8190e36a33e4195681d7ec646cc31809c311a32d3223_ai",
+      "uncovered_nonspace_characters": 6,
+      "gap_excerpt": "    S  uuu  de"
+    },
+    {
+      "item_id": "hc3_finance:b9264250d2b32180b48f361b218b1c67100b34af95b423e5b6400b3d5b4c7573_ai",
+      "uncovered_nonspace_characters": 10,
+      "gap_excerpt": "CobDctWR7P"
+    },
+    {
+      "item_id": "hc3_medicine:de4cd60668f88a3e18e16cb5919da9c8b552404d80d5f3fd9e5f117f77f76000_human",
+      "uncovered_nonspace_characters": 1,
+      "gap_excerpt": "                     R"
+    },
+    {
+      "item_id": "hc3_medicine:6d7b2905569e290da0dde2182992ee3a02299688ad52a9008fcc698a0d314796_human",
+      "uncovered_nonspace_characters": 23,
+      "gap_excerpt": "IPmaiIBIpIoanBTDIphMHAG"
+    },
+    {
+      "item_id": "hc3_medicine:25e1eb2b1da7ed7fa97aa9a7e38c95b68d127925c0fdf2c6288d1a7140e5521e_human",
+      "uncovered_nonspace_characters": 8,
+      "gap_excerpt": "      ItHItIWT"
+    },
+    {
+      "item_id": "hc3_medicine:82d78174f3e4a20e839ac9496d5690da877865c3713af93271944aaa4291291f_human",
+      "uncovered_nonspace_characters": 1,
+      "gap_excerpt": "Y"
+    },
+    {
+      "item_id": "hc3_medicine:3b873ae8d0928eb7fd7147281060f6161f4cc0e3f1fbd268264b2c7d043563b8_human",
+      "uncovered_nonspace_characters": 31,
+      "gap_excerpt": "  -e2uv.e...L......M.R.Ehiuf n h cwd"
+    },
+    {
+      "item_id": "hc3_medicine:2deaeafb44cf9a6db17391c9bdeef08f8c7171ee272ccc04b556456872c65843_human",
+      "uncovered_nonspace_characters": 6,
+      "gap_excerpt": "IyaBaT"
+    },
+    {
+      "item_id": "hc3_medicine:403e9d4b6fbe6add72e074d236eb1e1f1b9ae060c37b473c4740ee98caccadb8_human",
+      "uncovered_nonspace_characters": 5,
+      "gap_excerpt": " watch"
+    },
+    {
+      "item_id": "hc3_medicine:82ca646bc827b51f2eaf2923f1a6863bffc800b4c5f66c276a8fed3aeff8a6ec_human",
+      "uncovered_nonspace_characters": 19,
+      "gap_excerpt": "WTIaTucAaTbPIaBHIfT"
+    },
+    {
+      "item_id": "hc3_medicine:367621a808972e6cbd34476747aae4b14ac927a854e3a2fd5855219310c4147b_human",
+      "uncovered_nonspace_characters": 23,
+      "gap_excerpt": "IIItaHHDY'IaHSSItPaHtAG"
+    },
+    {
+      "item_id": "hc3_open_qa:db0b55e5c33505ccf074b38b12fa883c4cfdfb9f8a09a40f71c0eaf55f297620_ai",
+      "uncovered_nonspace_characters": 19,
+      "gap_excerpt": "     AtatT(au\\uwTtawntto"
+    },
+    {
+      "item_id": "hc3_open_qa:caefa2cde2b83c5ca0a46d3d21d5df2146bf8726afef23e39759fc203c38ef66_human",
+      "uncovered_nonspace_characters": 11,
+      "gap_excerpt": "    rw(at(twtuf"
+    },
+    {
+      "item_id": "hc3_open_qa:b5d69240c395e2759b13c10c0adcb0f1d49ff85f4efb0c486f0327642925ef2d_ai",
+      "uncovered_nonspace_characters": 7,
+      "gap_excerpt": "            OitTawI"
+    },
+    {
+      "item_id": "hc3_open_qa:94095a24120f23250d68ae96690426670cab2685bddcb60e27391dbd4fca8651_ai",
+      "uncovered_nonspace_characters": 18,
+      "gap_excerpt": "    TctaaTaaotCtawgtDw"
+    },
+    {
+      "item_id": "hc3_open_qa:e82c59c9f0a988910a453016ffe100a0a74e7ccefedca122a30be8b52a4d2e39_ai",
+      "uncovered_nonspace_characters": 4,
+      "gap_excerpt": "IaAs"
+    },
+    {
+      "item_id": "hc3_open_qa:370faede1b68dbb87400969942458c6ed1080e06874a954af951013a84a67f42_ai",
+      "uncovered_nonspace_characters": 17,
+      "gap_excerpt": "     TyOytaTthaTdtH(db"
+    },
+    {
+      "item_id": "hc3_reddit_eli5:60b6142acc33896c16e9c63f75338dfcf28b6511f6ff93c27bee1a9a3d790d99_ai",
+      "uncovered_nonspace_characters": 13,
+      "gap_excerpt": "     IatTufohvonh   t  "
+    },
+    {
+      "item_id": "hc3_reddit_eli5:d36fc28a917b9da16b0804a37bc51501c4ed31960ed5cff91902a4b62dc766ae_ai",
+      "uncovered_nonspace_characters": 22,
+      "gap_excerpt": "        SbWt(abTattiFWtatehhot"
+    },
+    {
+      "item_id": "hc3_reddit_eli5:39db8fe55a9e76f26c7d358d05b38945475b1f0c5d87b0653450d53693238a7e_human",
+      "uncovered_nonspace_characters": 15,
+      "gap_excerpt": "-Tt uhhhsrssmetd"
+    },
+    {
+      "item_id": "hc3_reddit_eli5:4a2d8f24ef7ade64abad1c01051f8991d1ea26cb0ea828883a6ac0033c446e4e_ai",
+      "uncovered_nonspace_characters": 39,
+      "gap_excerpt": "            TwwtTtaItthahhhohohns e iwdee s  ahe ei  wreheu"
+    },
+    {
+      "item_id": "hc3_reddit_eli5:7b76cfea2113694e817ed8c919f9d1202127cd91d1ff9cfeb7dc1e2d962baac9_ai",
+      "uncovered_nonspace_characters": 19,
+      "gap_excerpt": "        WiwlAHItwawtAtwlAbT"
+    },
+    {
+      "item_id": "hc3_reddit_eli5:91befef0e984ad2f10e34775d9219477a68fb52b71867351af2e880c3b98a830_ai",
+      "uncovered_nonspace_characters": 19,
+      "gap_excerpt": "           IaaTbWtwanitTwtwtta"
+    },
+    {
+      "item_id": "hc3_reddit_eli5:73dd6834b737fd9a35166672da122527400933ef235c1b9c98682964581c2009_ai",
+      "uncovered_nonspace_characters": 16,
+      "gap_excerpt": "       TwawFiwwtTtidiSw"
+    },
+    {
+      "item_id": "hc3_wiki_csai:e0ece03a61637847887ecf6f61186280a670a487a7778e8c037a92e1c0d00d88_human",
+      "uncovered_nonspace_characters": 2,
+      "gap_excerpt": "       \n        —h"
+    },
+    {
+      "item_id": "hc3_wiki_csai:5b5b7fe52a3de8cd82edfb2e54777b2740e998216fcc030e49f2bb36acb19c52_human",
+      "uncovered_nonspace_characters": 36,
+      "gap_excerpt": "   \n  —hoeteoohhhshchhehnhhhehnreoshhhhnnh"
+    },
+    {
+      "item_id": "hc3_wiki_csai:b5fceab3726d2d46a2fac097aabb684ed95aa785eaab8a7a48f2190196670d18_human",
+      "uncovered_nonspace_characters": 7,
+      "gap_excerpt": "    —utauLw"
+    },
+    {
+      "item_id": "hc3_wiki_csai:1f80391a9b4c7ee63bc782f6c5c912ba9c42a1f991f9420d005f22ffb334af9c_human",
+      "uncovered_nonspace_characters": 2,
+      "gap_excerpt": "    —n"
+    },
+    {
+      "item_id": "hc3_wiki_csai:281980b7b452eb56c7462e822d83fc0c984d7f96b32f09630dc04032ab592356_human",
+      "uncovered_nonspace_characters": 8,
+      "gap_excerpt": "         \n—rhouanh"
+    },
+    {
+      "item_id": "hc3_wiki_csai:d8093c8a74541ad4323eb51fdd54e2af05a053e2a38e37aa20301f5f86d4fb2e_human",
+      "uncovered_nonspace_characters": 13,
+      "gap_excerpt": "       —wbirnhofooor"
+    }
+  ],
+  "audit_script_sha256": "19802b04b6ba2f77f506aa9d3eb0571d012995988f17eb5d9e2d28ef85fcedc6"
+}

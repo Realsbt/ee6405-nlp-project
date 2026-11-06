@@ -1,0 +1,27 @@
+{
+  "status": "recorded",
+  "kind": "training",
+  "python": "3.11.15 | packaged by conda-forge | (main, Aug 11 2026, 10:26:29) [GCC 14.4.0]",
+  "executable": "/data/botao/ee6405-race-validation/.venv/bin/python",
+  "prefix": "/data/botao/ee6405-race-validation/.venv",
+  "base_prefix": "/home/botao/miniforge/envs/rl_robotlab",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.39",
+  "packages": {
+    "torch": "2.7.0+cu128",
+    "numpy": "1.26.0",
+    "transformers": "4.46.3",
+    "tokenizers": "0.20.3",
+    "huggingface-hub": "0.36.0",
+    "safetensors": "0.8.0",
+    "tqdm": "4.67.3",
+    "requests": "2.32.3",
+    "torch-geometric": "2.6.1",
+    "scikit-learn": "1.6.1",
+    "scipy": "1.15.3",
+    "joblib": "1.4.2",
+    "threadpoolctl": "3.6.0",
+    "matplotlib": "3.10.3"
+  },
+  "fresh_system_install_validated": false,
+  "scope": "Existing local overlay runtime; inherited base packages were not installed or changed by this script"
+}

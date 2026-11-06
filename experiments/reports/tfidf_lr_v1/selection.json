@@ -1,0 +1,264 @@
+{
+  "selection_metric": "validation macro-F1; smaller C breaks exact ties",
+  "candidate_C": [
+    0.1,
+    1.0,
+    10.0
+  ],
+  "selected_C": 10.0,
+  "candidates": [
+    {
+      "C": 0.1,
+      "fit_seconds": 0.5164349099941319,
+      "iterations": [
+        24
+      ],
+      "validation": {
+        "samples": 1600,
+        "accuracy": 0.76875,
+        "macro_f1": 0.7057075329818192,
+        "macro_precision": 0.7129468305302649,
+        "macro_recall": 0.7117481884057971,
+        "macro_auroc_ovr": 0.9163042210538768,
+        "macro_tpr_at_1pct_fpr_roc": 0.3309181488801054,
+        "per_class": {
+          "human_written": {
+            "support": 400,
+            "precision": 0.6735459662288931,
+            "recall": 0.8975,
+            "f1": 0.7695605573419079,
+            "auroc_ovr": 0.9312666666666667,
+            "tpr_at_1pct_fpr_roc": 0.22
+          },
+          "human_ai_polished": {
+            "support": 400,
+            "precision": 0.7987421383647799,
+            "recall": 0.635,
+            "f1": 0.7075208913649025,
+            "auroc_ovr": 0.92430625,
+            "tpr_at_1pct_fpr_roc": 0.4125
+          },
+          "ai_generated": {
+            "support": 690,
+            "precision": 0.8794992175273866,
+            "recall": 0.8144927536231884,
+            "f1": 0.8457486832204665,
+            "auroc_ovr": 0.9221149864628124,
+            "tpr_at_1pct_fpr_roc": 0.427536231884058
+          },
+          "ai_humanized": {
+            "support": 110,
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "auroc_ovr": 0.8875289810860281,
+            "tpr_at_1pct_fpr_roc": 0.2636363636363636
+          }
+        },
+        "confusion_matrix": [
+          [
+            359,
+            30,
+            3,
+            8
+          ],
+          [
+            111,
+            254,
+            28,
+            7
+          ],
+          [
+            56,
+            32,
+            562,
+            40
+          ],
+          [
+            7,
+            2,
+            46,
+            55
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "convergence_warnings": []
+    },
+    {
+      "C": 1.0,
+      "fit_seconds": 1.4570081120036775,
+      "iterations": [
+        77
+      ],
+      "validation": {
+        "samples": 1600,
+        "accuracy": 0.835625,
+        "macro_f1": 0.7703443875511037,
+        "macro_precision": 0.8079305295418724,
+        "macro_recall": 0.7540983201581027,
+        "macro_auroc_ovr": 0.9494226859299331,
+        "macro_tpr_at_1pct_fpr_roc": 0.44240777338603426,
+        "per_class": {
+          "human_written": {
+            "support": 400,
+            "precision": 0.7427385892116183,
+            "recall": 0.895,
+            "f1": 0.8117913832199547,
+            "auroc_ovr": 0.9596375,
+            "tpr_at_1pct_fpr_roc": 0.2825
+          },
+          "human_ai_polished": {
+            "support": 400,
+            "precision": 0.8519553072625698,
+            "recall": 0.7625,
+            "f1": 0.8047493403693932,
+            "auroc_ovr": 0.9509145833333333,
+            "tpr_at_1pct_fpr_roc": 0.5675
+          },
+          "ai_generated": {
+            "support": 690,
+            "precision": 0.9017341040462428,
+            "recall": 0.9043478260869565,
+            "f1": 0.9030390738060782,
+            "auroc_ovr": 0.9580904602643733,
+            "tpr_at_1pct_fpr_roc": 0.5014492753623189
+          },
+          "ai_humanized": {
+            "support": 110,
+            "precision": 0.7352941176470589,
+            "recall": 0.45454545454545453,
+            "f1": 0.5617977528089888,
+            "auroc_ovr": 0.9290482001220257,
+            "tpr_at_1pct_fpr_roc": 0.41818181818181815
+          }
+        },
+        "confusion_matrix": [
+          [
+            358,
+            32,
+            4,
+            6
+          ],
+          [
+            82,
+            305,
+            11,
+            2
+          ],
+          [
+            36,
+            20,
+            624,
+            10
+          ],
+          [
+            6,
+            1,
+            53,
+            50
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "convergence_warnings": []
+    },
+    {
+      "C": 10.0,
+      "fit_seconds": 2.1175724379936582,
+      "iterations": [
+        110
+      ],
+      "validation": {
+        "samples": 1600,
+        "accuracy": 0.85625,
+        "macro_f1": 0.7843205457086591,
+        "macro_precision": 0.8525368162311665,
+        "macro_recall": 0.7593922924901186,
+        "macro_auroc_ovr": 0.9560385472197593,
+        "macro_tpr_at_1pct_fpr_roc": 0.4790135046113307,
+        "per_class": {
+          "human_written": {
+            "support": 400,
+            "precision": 0.7871396895787139,
+            "recall": 0.8875,
+            "f1": 0.8343125734430082,
+            "auroc_ovr": 0.9660583333333334,
+            "tpr_at_1pct_fpr_roc": 0.325
+          },
+          "human_ai_polished": {
+            "support": 400,
+            "precision": 0.8621621621621621,
+            "recall": 0.7975,
+            "f1": 0.8285714285714286,
+            "auroc_ovr": 0.9525229166666667,
+            "tpr_at_1pct_fpr_roc": 0.59
+          },
+          "ai_generated": {
+            "support": 690,
+            "precision": 0.8954607977991746,
+            "recall": 0.9434782608695652,
+            "f1": 0.9188426252646437,
+            "auroc_ovr": 0.9692642140468226,
+            "tpr_at_1pct_fpr_roc": 0.5101449275362319
+          },
+          "ai_humanized": {
+            "support": 110,
+            "precision": 0.8653846153846154,
+            "recall": 0.4090909090909091,
+            "f1": 0.5555555555555556,
+            "auroc_ovr": 0.9363087248322147,
+            "tpr_at_1pct_fpr_roc": 0.4909090909090909
+          }
+        },
+        "confusion_matrix": [
+          [
+            355,
+            33,
+            7,
+            5
+          ],
+          [
+            68,
+            319,
+            13,
+            0
+          ],
+          [
+            21,
+            16,
+            651,
+            2
+          ],
+          [
+            7,
+            2,
+            56,
+            45
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "convergence_warnings": []
+    }
+  ],
+  "vocabulary_and_idf_fit_on": "train only",
+  "classifier_fit_on": "train only",
+  "test_used_for_selection": false,
+  "refit_on_train_plus_val": false
+}

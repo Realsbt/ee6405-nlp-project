@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "retained_records": 15984,
+  "cross_split_id_group_normalized_text_and_block_overlap": 0,
+  "reloaded_model_prediction_count": 3194,
+  "max_probability_difference": 0.0,
+  "metrics_match_saved_results": true,
+  "feature_count": 50000,
+  "input_field": "model_text only; IDs, labels, domain and model_name excluded from features"
+}

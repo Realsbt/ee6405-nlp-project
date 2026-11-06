@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "records": 1000,
+  "parsed_sha256": "4b10a597f84a1994e67d05f22f2b9d966ca3e65aab30706e7f2da9f68c1bbfad",
+  "valid_ordered_exact_character_spans": true,
+  "records_with_uncovered_nonwhitespace": 0,
+  "cases": [],
+  "audit_script_sha256": "adefc4175d5d04050eeadbd020b54adce3c759710240dab18fa181c5620ecfc1"
+}

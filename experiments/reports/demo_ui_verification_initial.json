@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "checked_utc": "2026-11-05T21:04:41.837301+00:00",
+  "url": "http://127.0.0.1:8765/",
+  "method": "Actual CUA browser clicks and accessibility/screenshot inspection",
+  "models_selected_and_run": [
+    "tfidf",
+    "roberta",
+    "race"
+  ],
+  "pending_ablation_disabled": true,
+  "synthetic_sample_has_no_ground_truth_label": true,
+  "race_visible_prediction": "human_ai_polished",
+  "race_visible_scores_percent": [
+    0.1,
+    59.1,
+    37.4,
+    3.4
+  ],
+  "race_visible_end_to_end_seconds": 0.42,
+  "race_visible_edu_count": 6,
+  "actual_rst_tree_expanded_and_checked": true,
+  "screenshot_path": "/home/botao/\u6587\u6863/ChatGPT/\u5c0f\u7ec4\u4f5c\u4e1a/experiments/reports/demo_race.jpg",
+  "screenshot_sha256": "3b9acb794286d0757abba72f2a87258d7d7e06605f64fa259b467cc29ebffacd"
+}

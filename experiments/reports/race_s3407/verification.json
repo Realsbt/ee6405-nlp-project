@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "strict_checkpoint_reload": true,
+  "samples": 3194,
+  "same_ids_and_order": true,
+  "predictions_identical": true,
+  "max_probability_difference": 1.1920928955078125e-07,
+  "metrics_match_saved_result": true,
+  "evaluation_seconds": 41.36386907900305,
+  "checkpoint_sha256": "6797d46f3fb2f84734b0cf9e49d7d566eefc9f97ffa6d0db3219d8aa107098d1"
+}

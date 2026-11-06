@@ -1,0 +1,149 @@
+{
+  "status": "completed",
+  "detector_run": "race_s3407",
+  "detector_sha256": "6797d46f3fb2f84734b0cf9e49d7d566eefc9f97ffa6d0db3219d8aa107098d1",
+  "protocol_id": "hc3_aux_v1_1",
+  "protocol_sha256": "a5e10bab63f151ba522a95828d83427f31861c5897b378b991f726257a256dda",
+  "score": "P(ai_generated)+P(ai_humanized)",
+  "threshold": 0.5,
+  "fit_or_tuning_on_hc3": false,
+  "metrics": {
+    "samples": 1000,
+    "accuracy": 0.486,
+    "balanced_accuracy": 0.486,
+    "macro_f1": 0.38692455593776687,
+    "ai_precision": 0.42857142857142855,
+    "ai_recall": 0.084,
+    "human_false_positive_rate_at_0_5": 0.112,
+    "auroc": 0.6843600000000001,
+    "tpr_at_1pct_fpr_roc": 0.004,
+    "confusion_matrix_human_ai": [
+      [
+        444,
+        56
+      ],
+      [
+        458,
+        42
+      ]
+    ]
+  },
+  "per_source": {
+    "finance": {
+      "samples": 200,
+      "accuracy": 0.36,
+      "balanced_accuracy": 0.36,
+      "macro_f1": 0.2763455450022614,
+      "ai_precision": 0.0625,
+      "ai_recall": 0.02,
+      "human_false_positive_rate_at_0_5": 0.3,
+      "auroc": 0.3630999999999999,
+      "tpr_at_1pct_fpr_roc": 0.0,
+      "confusion_matrix_human_ai": [
+        [
+          70,
+          30
+        ],
+        [
+          98,
+          2
+        ]
+      ]
+    },
+    "medicine": {
+      "samples": 200,
+      "accuracy": 0.49,
+      "balanced_accuracy": 0.49,
+      "macro_f1": 0.4276736617663562,
+      "ai_precision": 0.47058823529411764,
+      "ai_recall": 0.16,
+      "human_false_positive_rate_at_0_5": 0.18,
+      "auroc": 0.6527000000000001,
+      "tpr_at_1pct_fpr_roc": 0.0,
+      "confusion_matrix_human_ai": [
+        [
+          82,
+          18
+        ],
+        [
+          84,
+          16
+        ]
+      ]
+    },
+    "open_qa": {
+      "samples": 200,
+      "accuracy": 0.52,
+      "balanced_accuracy": 0.52,
+      "macro_f1": 0.4171928120446819,
+      "ai_precision": 0.625,
+      "ai_recall": 0.1,
+      "human_false_positive_rate_at_0_5": 0.06,
+      "auroc": 0.6359,
+      "tpr_at_1pct_fpr_roc": 0.02,
+      "confusion_matrix_human_ai": [
+        [
+          94,
+          6
+        ],
+        [
+          90,
+          10
+        ]
+      ]
+    },
+    "reddit_eli5": {
+      "samples": 200,
+      "accuracy": 0.54,
+      "balanced_accuracy": 0.54,
+      "macro_f1": 0.4165398274987316,
+      "ai_precision": 1.0,
+      "ai_recall": 0.08,
+      "human_false_positive_rate_at_0_5": 0.0,
+      "auroc": 0.939,
+      "tpr_at_1pct_fpr_roc": 0.18,
+      "confusion_matrix_human_ai": [
+        [
+          100,
+          0
+        ],
+        [
+          92,
+          8
+        ]
+      ]
+    },
+    "wiki_csai": {
+      "samples": 200,
+      "accuracy": 0.52,
+      "balanced_accuracy": 0.52,
+      "macro_f1": 0.39117199391172,
+      "ai_precision": 0.75,
+      "ai_recall": 0.06,
+      "human_false_positive_rate_at_0_5": 0.02,
+      "auroc": 0.8069,
+      "tpr_at_1pct_fpr_roc": 0.04,
+      "confusion_matrix_human_ai": [
+        [
+          98,
+          2
+        ],
+        [
+          94,
+          6
+        ]
+      ]
+    }
+  },
+  "evaluation_seconds_excluding_separate_parser_worker": 12.09558494000521,
+  "timing_details": {
+    "rst_parse_model_load_seconds": 5.110042003005219,
+    "rst_parse_total_seconds": 757.2518302660828,
+    "rst_parse_device": "cpu",
+    "parsed_input_sha256": "4b10a597f84a1994e67d05f22f2b9d966ca3e65aab30706e7f2da9f68c1bbfad",
+    "tokenization_graph_preprocessing_seconds": 1.1995313610023004,
+    "detector_forward_seconds": 10.097890318000282
+  },
+  "evidence_boundary": "Auxiliary binary OOD evaluation only. No labels distinguish polishing/humanization; it cannot validate four-class generalization. Unfiltered answer-length and explicit AI-marker differences remain.",
+  "script_sha256": "a4c46b45b9f62cb1c78a3998a7099088eebeb618919c22c0b4c9a7175dff594d"
+}

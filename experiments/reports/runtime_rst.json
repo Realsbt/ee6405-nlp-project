@@ -1,0 +1,40 @@
+{
+  "status": "recorded",
+  "kind": "rst",
+  "python": "3.11.15 | packaged by conda-forge | (main, Aug 11 2026, 10:26:29) [GCC 14.4.0]",
+  "executable": "/data/botao/ee6405-race-validation/.venv-rst/bin/python",
+  "prefix": "/data/botao/ee6405-race-validation/.venv-rst",
+  "base_prefix": "/home/botao/miniforge/envs/rl_robotlab",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.39",
+  "packages": {
+    "torch": "2.7.0+cu128",
+    "numpy": "1.26.0",
+    "transformers": "4.46.3",
+    "tokenizers": "0.20.3",
+    "huggingface-hub": "0.36.0",
+    "safetensors": "0.8.0",
+    "tqdm": "4.67.3",
+    "requests": "2.32.3",
+    "isanlp-rst": "3.2.2",
+    "isanlp": "0.0.7",
+    "razdel": "0.5.0",
+    "jsonnet": "0.20.0",
+    "nltk": "3.9.1",
+    "sentencepiece": "0.2.0",
+    "fire": "0.7.1",
+    "termcolor": "3.3.0",
+    "lxml": "6.1.1",
+    "networkx": "3.3",
+    "pillow": "11.3.0"
+  },
+  "fresh_system_install_validated": false,
+  "scope": "Existing local overlay runtime; inherited base packages were not installed or changed by this script",
+  "isanlp_direct_url": {
+    "url": "https://github.com/iinemo/isanlp.git",
+    "vcs_info": {
+      "vcs": "git",
+      "commit_id": "2a102e59f9718acc7fe259dd8d83c66d5da39794",
+      "requested_revision": "2a102e59f9718acc7fe259dd8d83c66d5da39794"
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "checks": {
+    "tfidf_lr_v1": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "race_no_supcon_s3407_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 13,
+      "selected_epoch": 8,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "race_no_supcon_s3407": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "roberta_s3407_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 13,
+      "selected_epoch": 8,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "roberta_s3407": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "roberta_s42_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 19,
+      "selected_epoch": 14,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "roberta_s42": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "roberta_s2026_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 20,
+      "selected_epoch": 17,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "roberta_s2026": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "race_s3407_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 13,
+      "selected_epoch": 8,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "race_s3407": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "race_s42_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 19,
+      "selected_epoch": 14,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "race_s42": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "race_s2026_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 11,
+      "selected_epoch": 6,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "race_s2026": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "tfidf_lr_v1_hc3": "frozen binary auxiliary evaluation completed",
+    "roberta_s3407_hc3": "frozen binary auxiliary evaluation completed",
+    "race_s3407_hc3": "frozen binary auxiliary evaluation completed",
+    "race_no_supcon_s3407_hc3": "frozen binary auxiliary evaluation completed",
+    "comparison/summary.json": "completed",
+    "demo_verification_all.json": "passed",
+    "demo_ui_verification.json": "passed",
+    "graph_cache_verification.json": "passed",
+    "released_rst_span_audit.json": "audited_without_data_changes",
+    "parser_assets.json": "passed",
+    "retraining_entrypoint.json": "passed",
+    "auxiliary/summary.json": "completed",
+    "comparison/case_studies.json": "completed",
+    "hc3_rst_aligned_span_audit.json": "passed",
+    "upstream_tree_clean": true
+  },
+  "missing_or_invalid": [],
+  "scope": "Local implementation/evaluation/Demo/documentation gate. Human narration, signatures and course submission remain user tasks.",
+  "verification_script_sha256": "388b8e415e33907ff688eb8166e70b7e40e07f813d54734966570496bf3c8ed8"
+}

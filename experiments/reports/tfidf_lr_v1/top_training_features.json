@@ -1,0 +1,250 @@
+{
+  "human_written": [
+    {
+      "feature": "said",
+      "coefficient": 7.628730095439837
+    },
+    {
+      "feature": "said the",
+      "coefficient": 4.455908220422424
+    },
+    {
+      "feature": "says",
+      "coefficient": 4.338757924379271
+    },
+    {
+      "feature": "that is",
+      "coefficient": 3.932766322480272
+    },
+    {
+      "feature": "11",
+      "coefficient": 3.8736491435348204
+    },
+    {
+      "feature": "10",
+      "coefficient": 3.623885589128645
+    },
+    {
+      "feature": "get",
+      "coefficient": 3.573452613797567
+    },
+    {
+      "feature": "na",
+      "coefficient": 3.4091825299863014
+    },
+    {
+      "feature": "of the",
+      "coefficient": 3.379187524282731
+    },
+    {
+      "feature": "fig",
+      "coefficient": 3.363915720744049
+    },
+    {
+      "feature": "et",
+      "coefficient": 3.346990919126435
+    },
+    {
+      "feature": "16",
+      "coefficient": 3.2693354979622304
+    },
+    {
+      "feature": "say",
+      "coefficient": 3.227226706332788
+    },
+    {
+      "feature": "be",
+      "coefficient": 3.1669693599803344
+    },
+    {
+      "feature": "is",
+      "coefficient": 3.1333862897450095
+    }
+  ],
+  "human_ai_polished": [
+    {
+      "feature": "version",
+      "coefficient": 9.004415379210254
+    },
+    {
+      "feature": "polished version",
+      "coefficient": 7.696760045524109
+    },
+    {
+      "feature": "polished",
+      "coefficient": 7.500120146891443
+    },
+    {
+      "feature": "restructured",
+      "coefficient": 6.938997034381928
+    },
+    {
+      "feature": "the polished",
+      "coefficient": 6.769289348618549
+    },
+    {
+      "feature": "version of",
+      "coefficient": 6.043731537562451
+    },
+    {
+      "feature": "here the",
+      "coefficient": 5.94339084232099
+    },
+    {
+      "feature": "here",
+      "coefficient": 5.821193852501166
+    },
+    {
+      "feature": "flow",
+      "coefficient": 5.787732265255366
+    },
+    {
+      "feature": "here restructured",
+      "coefficient": 5.1400325089687
+    },
+    {
+      "feature": "restructured version",
+      "coefficient": 4.927030406245642
+    },
+    {
+      "feature": "flow and",
+      "coefficient": 4.914721148647841
+    },
+    {
+      "feature": "while",
+      "coefficient": 4.450912513498251
+    },
+    {
+      "feature": "despite",
+      "coefficient": 4.344859053834134
+    },
+    {
+      "feature": "explained",
+      "coefficient": 3.9365812686090864
+    }
+  ],
+  "ai_generated": [
+    {
+      "feature": "within",
+      "coefficient": 6.773837973985001
+    },
+    {
+      "feature": "rewrite",
+      "coefficient": 4.577680852428989
+    },
+    {
+      "feature": "the reference",
+      "coefficient": 4.345139578580989
+    },
+    {
+      "feature": "significant",
+      "coefficient": 4.126467975631506
+    },
+    {
+      "feature": "reference",
+      "coefficient": 3.9044847136450858
+    },
+    {
+      "feature": "reference text",
+      "coefficient": 3.8845785704794284
+    },
+    {
+      "feature": "style",
+      "coefficient": 3.8207449083221965
+    },
+    {
+      "feature": "sarah",
+      "coefficient": 3.810739611876205
+    },
+    {
+      "feature": "amidst",
+      "coefficient": 3.322999450367038
+    },
+    {
+      "feature": "particularly",
+      "coefficient": 3.3032182131329773
+    },
+    {
+      "feature": "their",
+      "coefficient": 3.2846000270454576
+    },
+    {
+      "feature": "that",
+      "coefficient": 3.1949299563575684
+    },
+    {
+      "feature": "something",
+      "coefficient": 3.188241103631775
+    },
+    {
+      "feature": "crucial",
+      "coefficient": 3.183380809852012
+    },
+    {
+      "feature": "maintaining",
+      "coefficient": 3.0827859667111084
+    }
+  ],
+  "ai_humanized": [
+    {
+      "feature": "which",
+      "coefficient": 6.786041960298407
+    },
+    {
+      "feature": "through",
+      "coefficient": 4.866268488017592
+    },
+    {
+      "feature": "difficulties",
+      "coefficient": 4.413373753259883
+    },
+    {
+      "feature": "risks",
+      "coefficient": 4.001598085953867
+    },
+    {
+      "feature": "important",
+      "coefficient": 3.6429805116266376
+    },
+    {
+      "feature": "because",
+      "coefficient": 3.456864737385411
+    },
+    {
+      "feature": "started",
+      "coefficient": 3.444640716579216
+    },
+    {
+      "feature": "issues",
+      "coefficient": 3.3884403846801856
+    },
+    {
+      "feature": "started to",
+      "coefficient": 3.3214801728200847
+    },
+    {
+      "feature": "progress",
+      "coefficient": 3.0818852824979364
+    },
+    {
+      "feature": "was the",
+      "coefficient": 3.0586608575407133
+    },
+    {
+      "feature": "because of",
+      "coefficient": 2.884966738216585
+    },
+    {
+      "feature": "makes",
+      "coefficient": 2.643077533581985
+    },
+    {
+      "feature": "came",
+      "coefficient": 2.635489737436951
+    },
+    {
+      "feature": "fresh",
+      "coefficient": 2.6277025415559776
+    }
+  ]
+}

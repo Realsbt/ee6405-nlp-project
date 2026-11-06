@@ -1,0 +1,168 @@
+{
+  "status": "audited_without_data_changes",
+  "counts": {
+    "train": {
+      "records": 11190,
+      "edu_nodes": 519916,
+      "records_with_invalid_spans": 36,
+      "records_with_overlapping_or_unordered_spans": 0,
+      "records_with_leaf_text_not_exact_original_slice": 0,
+      "records_with_uncovered_nonspace": 2338,
+      "records_with_uncovered_nonspace_in_lexical_window": 2227,
+      "uncovered_nonspace_characters": 76618,
+      "uncovered_nonspace_in_lexical_window": 58368,
+      "total_nonspace_characters": 20258420
+    },
+    "val": {
+      "records": 1600,
+      "edu_nodes": 73081,
+      "records_with_invalid_spans": 4,
+      "records_with_overlapping_or_unordered_spans": 0,
+      "records_with_leaf_text_not_exact_original_slice": 0,
+      "records_with_uncovered_nonspace": 340,
+      "records_with_uncovered_nonspace_in_lexical_window": 326,
+      "uncovered_nonspace_characters": 10555,
+      "uncovered_nonspace_in_lexical_window": 8358,
+      "total_nonspace_characters": 2867167
+    },
+    "test": {
+      "records": 3194,
+      "edu_nodes": 146716,
+      "records_with_invalid_spans": 10,
+      "records_with_overlapping_or_unordered_spans": 0,
+      "records_with_leaf_text_not_exact_original_slice": 0,
+      "records_with_uncovered_nonspace": 677,
+      "records_with_uncovered_nonspace_in_lexical_window": 653,
+      "uncovered_nonspace_characters": 20466,
+      "uncovered_nonspace_in_lexical_window": 15845,
+      "total_nonspace_characters": 5799932
+    }
+  },
+  "item_quality_sha256": "88d03bd8473fa9441329b11cefba2fb624d24cab8dac48d680e4cfe54c0fdbab",
+  "first_20_issue_examples": [
+    {
+      "item_id": "news-a27d4fbf85834201192dab8888e88b4f_human_ai_polished_claude-3-5-sonnet-20241022",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 8,
+      "missing_in_window": 8
+    },
+    {
+      "item_id": "writing-valid15384_ai_generated_gpt-4o-2024-11-20_THEN_claude-3-5-sonnet-20241022",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 28,
+      "missing_in_window": 28
+    },
+    {
+      "item_id": "arxiv-2110.06296v2_ai_generated_gpt-4o-2024-11-20_THEN_gpt-4o-2024-11-20",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 35,
+      "missing_in_window": 35
+    },
+    {
+      "item_id": "writing-test7443_human_ai_polished_claude-3-5-sonnet-20241022",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 80,
+      "missing_in_window": 50
+    },
+    {
+      "item_id": "writing-test14891_ai_generated_gpt-4o-2024-11-20_THEN_gpt-4o-2024-11-20",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 54,
+      "missing_in_window": 38
+    },
+    {
+      "item_id": "arxiv-2104.11576v1_ai_generated_claude-3-5-sonnet-20241022_THEN_gpt-3.5-turbo",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 2,
+      "missing_in_window": 2
+    },
+    {
+      "item_id": "writing-valid14071_ai_generated_gpt-3.5-turbo",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 27,
+      "missing_in_window": 21
+    },
+    {
+      "item_id": "arxiv-2307.14440v1_ai_generated_claude-3-5-sonnet-20241022",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 46,
+      "missing_in_window": 46
+    },
+    {
+      "item_id": "essay-AAATRP14318000424773_ai_generated_gpt-4o-2024-11-20_THEN_gpt-4o-2024-11-20",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 21,
+      "missing_in_window": 21
+    },
+    {
+      "item_id": "essay-AAAVUP14319000019493_ai_generated_qwen2.5-72b-instruct_THEN_claude-3-5-sonnet-20241022",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 25,
+      "missing_in_window": 25
+    },
+    {
+      "item_id": "writing-test5391_ai_generated_gemini-1.5-pro-002_THEN_claude-3-5-sonnet-20241022",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 33,
+      "missing_in_window": 33
+    },
+    {
+      "item_id": "writing-valid12499_human_ai_polished_claude-3-5-sonnet-20241022",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 33,
+      "missing_in_window": 33
+    },
+    {
+      "item_id": "writing-test15125_ai_generated_gemini-1.5-pro-002_THEN_gemini-1.5-pro-002",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 94,
+      "missing_in_window": 27
+    },
+    {
+      "item_id": "writing-valid7537_human_ai_polished_gpt-4o-2024-11-20",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 25,
+      "missing_in_window": 25
+    },
+    {
+      "item_id": "essay-AAAOPP13416000147882_human_ai_polished_gemini-1.5-pro-002",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 12,
+      "missing_in_window": 12
+    },
+    {
+      "item_id": "arxiv-2404.03426v1_ai_generated_qwen2.5-72b-instruct",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 16,
+      "missing_in_window": 0
+    },
+    {
+      "item_id": "arxiv-2403.07748v1_ai_generated_gpt-4o-2024-11-20",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 22,
+      "missing_in_window": 22
+    },
+    {
+      "item_id": "writing-valid8524_ai_generated_qwen2.5-72b-instruct_THEN_gpt-4o-2024-11-20",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 18,
+      "missing_in_window": 18
+    },
+    {
+      "item_id": "writing-valid5133_ai_humanized_tool",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 30,
+      "missing_in_window": 27
+    },
+    {
+      "item_id": "arxiv-2310.16706v1_ai_generated_gpt-3.5-turbo_THEN_claude-3-5-sonnet-20241022",
+      "issue": "uncovered non-whitespace characters",
+      "missing": 26,
+      "missing_in_window": 18
+    }
+  ],
+  "data_protocol_sha256": "a9ebdae25b53c91af5169f8327e8b9733758607a0b11cf56db6c29afdc20762b",
+  "frozen_data_or_model_changed": false,
+  "scope": "Audits released tree coordinates, not discourse annotation correctness. Findings are limitations, not a reason to retune on test or silently replace frozen trees.",
+  "audit_script_sha256": "c2df4cffc11f4bd3b7725b086e7ae9a43bc74174f94bfe10744d3a6d8c8acfd5"
+}

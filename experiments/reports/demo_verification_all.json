@@ -1,0 +1,276 @@
+{
+  "status": "passed",
+  "scope": "Actual local HTTP inference; synthetic examples have no authorship labels",
+  "models": [
+    "tfidf",
+    "roberta",
+    "race",
+    "race_no_supcon"
+  ],
+  "device": "cpu",
+  "empty_request_rejected": true,
+  "timing_context": "CPU Demo while local GPU training / CPU auxiliary parsing may be active; these are observed request times, not isolated benchmark latency",
+  "cache_note": "First request may reuse earlier server requests. A cold detector load has detector_model_load_seconds > 0; a cold parser load has non-null rst_parser_initialization. Legacy reports used cold_request/warm_request keys; inspect their actual load fields.",
+  "checks": {
+    "tfidf": {
+      "first_request": {
+        "model": "tfidf",
+        "run_id": "tfidf_lr_v1",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.06762298963278712,
+          "human_ai_polished": 0.5020135391642944,
+          "ai_generated": 0.06030873867763136,
+          "ai_humanized": 0.3700547325252871
+        },
+        "ai_creator_score": 0.43036347120291846,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": null,
+          "edu_count": null
+        },
+        "timing": {
+          "end_to_end_seconds": 0.001655328000197187,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.0013260539999464527,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": null
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeat_request": {
+        "model": "tfidf",
+        "run_id": "tfidf_lr_v1",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.06762298963278712,
+          "human_ai_polished": 0.5020135391642944,
+          "ai_generated": 0.06030873867763136,
+          "ai_humanized": 0.3700547325252871
+        },
+        "ai_creator_score": 0.43036347120291846,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": null,
+          "edu_count": null
+        },
+        "timing": {
+          "end_to_end_seconds": 0.0008105629967758432,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.0006435710020014085,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": null
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeated_predictions_max_difference": 0.0,
+      "long_text_reference": {
+        "item_id": "arxiv-2004.12186v2_ai_generated_gpt-4o-2024-11-20",
+        "saved_prediction_matches": true,
+        "max_probability_difference_cpu_vs_saved": 0.0,
+        "tolerance": 1e-08,
+        "truncation_reported": true
+      }
+    },
+    "roberta": {
+      "first_request": {
+        "model": "roberta",
+        "run_id": "roberta_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.0005235736025497317,
+          "human_ai_polished": 0.9858357906341553,
+          "ai_generated": 0.013445599004626274,
+          "ai_humanized": 0.00019508678815327585
+        },
+        "ai_creator_score": 0.013640685938298702,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": null,
+          "edu_count": null
+        },
+        "timing": {
+          "end_to_end_seconds": 0.042605586000718176,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.0423609999998007,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": null
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeat_request": {
+        "model": "roberta",
+        "run_id": "roberta_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.0005235736025497317,
+          "human_ai_polished": 0.9858357906341553,
+          "ai_generated": 0.013445599004626274,
+          "ai_humanized": 0.00019508678815327585
+        },
+        "ai_creator_score": 0.013640685938298702,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": null,
+          "edu_count": null
+        },
+        "timing": {
+          "end_to_end_seconds": 0.0454061809941777,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.04499865200341446,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": null
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeated_predictions_max_difference": 0.0,
+      "long_text_reference": {
+        "item_id": "arxiv-2004.12186v2_ai_generated_gpt-4o-2024-11-20",
+        "saved_prediction_matches": true,
+        "max_probability_difference_cpu_vs_saved": 1.1920928955078125e-07,
+        "tolerance": 0.0005,
+        "truncation_reported": true
+      }
+    },
+    "race": {
+      "first_request": {
+        "model": "race",
+        "run_id": "race_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.0010339498985558748,
+          "human_ai_polished": 0.666000485420227,
+          "ai_generated": 0.3104860186576843,
+          "ai_humanized": 0.022479519248008728
+        },
+        "ai_creator_score": 0.33296555280685425,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": "full document",
+          "edu_count": 4
+        },
+        "timing": {
+          "end_to_end_seconds": 0.300900358997751,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.06037747700611362,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": 0.23951977099932265
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeat_request": {
+        "model": "race",
+        "run_id": "race_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.0010339498985558748,
+          "human_ai_polished": 0.666000485420227,
+          "ai_generated": 0.3104860186576843,
+          "ai_humanized": 0.022479519248008728
+        },
+        "ai_creator_score": 0.33296555280685425,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": "full document",
+          "edu_count": 4
+        },
+        "timing": {
+          "end_to_end_seconds": 0.2614239910035394,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.05565921199740842,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": 0.20484021399897756
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeated_predictions_max_difference": 0.0,
+      "raw_text_parser_to_graph_to_checkpoint_verified": true
+    },
+    "race_no_supcon": {
+      "first_request": {
+        "model": "race_no_supcon",
+        "run_id": "race_no_supcon_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.04984379932284355,
+          "human_ai_polished": 0.8972780108451843,
+          "ai_generated": 0.046757426112890244,
+          "ai_humanized": 0.0061207483522593975
+        },
+        "ai_creator_score": 0.05287817493081093,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": "full document",
+          "edu_count": 4
+        },
+        "timing": {
+          "end_to_end_seconds": 0.6324978839984396,
+          "detector_model_load_seconds": 0.36660596699948655,
+          "detector_forward_seconds": 0.05959028699726332,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": 0.20015946999774314
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeat_request": {
+        "model": "race_no_supcon",
+        "run_id": "race_no_supcon_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.04984379932284355,
+          "human_ai_polished": 0.8972780108451843,
+          "ai_generated": 0.046757426112890244,
+          "ai_humanized": 0.0061207483522593975
+        },
+        "ai_creator_score": 0.05287817493081093,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": "full document",
+          "edu_count": 4
+        },
+        "timing": {
+          "end_to_end_seconds": 0.25865798000450013,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.05599567999888677,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": 0.20176400399941485
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeated_predictions_max_difference": 0.0,
+      "raw_text_parser_to_graph_to_checkpoint_verified": true
+    }
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "protocol_id": "hart_grouped_v1",
+  "source": "RACE author's processed English HART four-class release",
+  "raw": {
+    "records": 16000,
+    "source_groups": 4000,
+    "labels": {
+      "ai_generated": 6985,
+      "human_ai_polished": 4000,
+      "human_written": 4000,
+      "ai_humanized": 1015
+    },
+    "domains": {
+      "arxiv": 4000,
+      "essay": 4000,
+      "writing": 4000,
+      "news": 4000
+    },
+    "domain_label_counts": {
+      "arxiv": {
+        "ai_generated": 1755,
+        "human_ai_polished": 1000,
+        "human_written": 1000,
+        "ai_humanized": 245
+      },
+      "essay": {
+        "ai_generated": 1744,
+        "human_written": 1000,
+        "human_ai_polished": 1000,
+        "ai_humanized": 256
+      },
+      "news": {
+        "ai_generated": 1758,
+        "human_ai_polished": 1000,
+        "human_written": 1000,
+        "ai_humanized": 242
+      },
+      "writing": {
+        "ai_generated": 1728,
+        "human_written": 1000,
+        "human_ai_polished": 1000,
+        "ai_humanized": 272
+      }
+    }
+  },
+  "original_partition_overlap": {
+    "train__val": {
+      "group_id": 1328,
+      "normalized_text_sha256": 1
+    },
+    "train__test": {
+      "group_id": 2334,
+      "normalized_text_sha256": 2
+    },
+    "val__test": {
+      "group_id": 695,
+      "normalized_text_sha256": 1
+    }
+  },
+  "retained": {
+    "records": 15984,
+    "source_groups": 4000,
+    "labels": {
+      "ai_generated": 6982,
+      "human_ai_polished": 3994,
+      "human_written": 3993,
+      "ai_humanized": 1015
+    },
+    "domains": {
+      "arxiv": 4000,
+      "essay": 4000,
+      "news": 3994,
+      "writing": 3990
+    },
+    "domain_label_counts": {
+      "arxiv": {
+        "ai_generated": 1755,
+        "human_ai_polished": 1000,
+        "human_written": 1000,
+        "ai_humanized": 245
+      },
+      "essay": {
+        "ai_generated": 1744,
+        "human_ai_polished": 1000,
+        "human_written": 1000,
+        "ai_humanized": 256
+      },
+      "news": {
+        "ai_generated": 1757,
+        "human_ai_polished": 998,
+        "human_written": 997,
+        "ai_humanized": 242
+      },
+      "writing": {
+        "ai_generated": 1726,
+        "ai_humanized": 272,
+        "human_ai_polished": 996,
+        "human_written": 996
+      }
+    }
+  },
+  "exclusions": {
+    "same_label_normalized_duplicate": 2,
+    "conflicting_normalized_text_labels": 14
+  },
+  "cleaning": {
+    "normalization": "NFKC + collapse whitespace + casefold",
+    "conflicts": "Exclude all records sharing normalized text with different labels",
+    "duplicates": "Keep lexicographically first eligible item ID per same-label normalized text",
+    "comparison_pool": "Require nonempty RST for every model's common sample pool"
+  },
+  "split": {
+    "algorithm": "StratifiedGroupKFold; first fold; strata domain|label; group source/duplicate connected component",
+    "test_n_splits": 5,
+    "test_seed": 42,
+    "validation_n_splits": 8,
+    "validation_seed": 43,
+    "target_train_val_test": [
+      0.7,
+      0.1,
+      0.2
+    ],
+    "selection_used_model_scores": false
+  },
+  "partitions": {
+    "train": {
+      "records": 11190,
+      "source_groups": 2801,
+      "labels": {
+        "ai_generated": 4921,
+        "human_ai_polished": 2796,
+        "human_written": 2795,
+        "ai_humanized": 678
+      },
+      "domains": {
+        "arxiv": 2808,
+        "essay": 2800,
+        "news": 2794,
+        "writing": 2788
+      },
+      "domain_label_counts": {
+        "arxiv": {
+          "ai_generated": 1251,
+          "human_ai_polished": 702,
+          "human_written": 702,
+          "ai_humanized": 153
+        },
+        "essay": {
+          "ai_generated": 1226,
+          "human_ai_polished": 700,
+          "human_written": 700,
+          "ai_humanized": 174
+        },
+        "news": {
+          "ai_generated": 1238,
+          "human_ai_polished": 698,
+          "human_written": 697,
+          "ai_humanized": 161
+        },
+        "writing": {
+          "ai_generated": 1206,
+          "ai_humanized": 190,
+          "human_ai_polished": 696,
+          "human_written": 696
+        }
+      },
+      "split_blocks": 2800,
+      "truncated_at_512_tokens": 3166,
+      "fraction": 0.700075075075075,
+      "sha256": "3cd1539d26189ab1ca1c7e0efc5e34d92265f5d5a9c65783b85af28f41fa9c2b"
+    },
+    "val": {
+      "records": 1600,
+      "source_groups": 400,
+      "labels": {
+        "ai_generated": 690,
+        "human_ai_polished": 400,
+        "human_written": 400,
+        "ai_humanized": 110
+      },
+      "domains": {
+        "arxiv": 396,
+        "essay": 400,
+        "news": 400,
+        "writing": 404
+      },
+      "domain_label_counts": {
+        "arxiv": {
+          "ai_generated": 165,
+          "human_ai_polished": 99,
+          "human_written": 99,
+          "ai_humanized": 33
+        },
+        "essay": {
+          "ai_generated": 180,
+          "human_ai_polished": 100,
+          "human_written": 100,
+          "ai_humanized": 20
+        },
+        "news": {
+          "ai_generated": 174,
+          "ai_humanized": 26,
+          "human_ai_polished": 100,
+          "human_written": 100
+        },
+        "writing": {
+          "ai_generated": 171,
+          "human_ai_polished": 101,
+          "human_written": 101,
+          "ai_humanized": 31
+        }
+      },
+      "split_blocks": 400,
+      "truncated_at_512_tokens": 418,
+      "fraction": 0.1001001001001001,
+      "sha256": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8"
+    },
+    "test": {
+      "records": 3194,
+      "source_groups": 799,
+      "labels": {
+        "ai_generated": 1371,
+        "human_ai_polished": 798,
+        "human_written": 798,
+        "ai_humanized": 227
+      },
+      "domains": {
+        "arxiv": 796,
+        "essay": 800,
+        "news": 800,
+        "writing": 798
+      },
+      "domain_label_counts": {
+        "arxiv": {
+          "ai_generated": 339,
+          "human_ai_polished": 199,
+          "human_written": 199,
+          "ai_humanized": 59
+        },
+        "essay": {
+          "ai_generated": 338,
+          "human_ai_polished": 200,
+          "human_written": 200,
+          "ai_humanized": 62
+        },
+        "news": {
+          "ai_generated": 345,
+          "human_ai_polished": 200,
+          "human_written": 200,
+          "ai_humanized": 55
+        },
+        "writing": {
+          "ai_generated": 349,
+          "ai_humanized": 51,
+          "human_ai_polished": 199,
+          "human_written": 199
+        }
+      },
+      "split_blocks": 799,
+      "truncated_at_512_tokens": 897,
+      "fraction": 0.19982482482482483,
+      "sha256": "1814009b21bad70fbbc83d4b5b952469f19fde009fe8d979ac9c0c71491f542a"
+    }
+  },
+  "new_partition_overlap": {
+    "train__val": {
+      "group_id": 0,
+      "normalized_text_sha256": 0
+    },
+    "train__test": {
+      "group_id": 0,
+      "normalized_text_sha256": 0
+    },
+    "val__test": {
+      "group_id": 0,
+      "normalized_text_sha256": 0
+    }
+  },
+  "lexical_input": "TF-IDF uses original character prefix covered by the first 512 RoBERTa tokens including specials",
+  "tokenizer_revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+  "source_files": [
+    {
+      "name": "train_graph.jsonl",
+      "file_id": "1bKPdOdhW97l2_9H46DwICRKZelg0Y8dW",
+      "path": "/data/botao/ee6405-race-validation/assets/hart_official/train_graph.jsonl",
+      "size_bytes": 463781847,
+      "sha256": "ffedcc941c35c42a636d6e0ff3fe25b9971e2efd1ab88cb7998574d9eea7e9e6",
+      "source_url": "https://drive.google.com/file/d/1bKPdOdhW97l2_9H46DwICRKZelg0Y8dW/view"
+    },
+    {
+      "name": "val_graph.jsonl",
+      "file_id": "1MBOQYSJy21ny2SA1GR_Yb58MM4nVw_Vn",
+      "path": "/data/botao/ee6405-race-validation/assets/hart_official/val_graph.jsonl",
+      "size_bytes": 66869993,
+      "sha256": "791d635a7a472b9569ac5b9776076b428973eb4f05b1860f2bee1cb9adde9bad",
+      "source_url": "https://drive.google.com/file/d/1MBOQYSJy21ny2SA1GR_Yb58MM4nVw_Vn/view"
+    },
+    {
+      "name": "test_graph.jsonl",
+      "file_id": "1GEpgjVzW8yZZUeEPv9xsBdOjP2KBkON8",
+      "path": "/data/botao/ee6405-race-validation/assets/hart_official/test_graph.jsonl",
+      "size_bytes": 130891961,
+      "sha256": "2acaf62ea42359266efd69e6c6023bcf5ec8c544991555bf1285638a560cc51c",
+      "source_url": "https://drive.google.com/file/d/1GEpgjVzW8yZZUeEPv9xsBdOjP2KBkON8/view"
+    }
+  ],
+  "prepare_script_sha256": "c7cc093682ee48eebfbbef14b006eda61a17a711c1103a0a092aa19ae57af5e5",
+  "data_root": "/data/botao/ee6405-race-validation/experiments/hart_grouped_v1",
+  "checkpoint_boundary": "Author fine-tuned checkpoint is for smoke checks only; it may have seen the new test groups and must not be used for an independent evaluation on this split.",
+  "remaining_limitations": [
+    "Only one benchmark with four domains",
+    "No semantic near-duplicate detection beyond source IDs and normalized text",
+    "In-domain grouped holdout; not unseen-domain or unseen-generator validation"
+  ]
+}

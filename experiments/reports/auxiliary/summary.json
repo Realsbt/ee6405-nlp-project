@@ -1,0 +1,1101 @@
+{
+  "status": "completed",
+  "missing_runs": [],
+  "protocol_id": "hc3_aux_v1_1",
+  "protocol_sha256": "a5e10bab63f151ba522a95828d83427f31861c5897b378b991f726257a256dda",
+  "threshold_unchanged": 0.5,
+  "score_unchanged": "P(ai_generated)+P(ai_humanized)",
+  "descriptive_analysis_only": true,
+  "analyses": {
+    "tfidf_lr_v1": {
+      "binary_metrics": {
+        "samples": 1000,
+        "accuracy": 0.513,
+        "balanced_accuracy": 0.513,
+        "macro_f1": 0.38585705728427755,
+        "ai_precision": 0.6444444444444445,
+        "ai_recall": 0.058,
+        "human_false_positive_rate_at_0_5": 0.032,
+        "auroc": 0.601108,
+        "tpr_at_1pct_fpr_roc": 0.032,
+        "confusion_matrix_human_ai": [
+          [
+            484,
+            16
+          ],
+          [
+            471,
+            29
+          ]
+        ]
+      },
+      "hart_aligned_binary_reference": {
+        "samples": 3194,
+        "accuracy": 0.9467752035065748,
+        "balanced_accuracy": 0.9467849849906368,
+        "macro_f1": 0.9467631801768979,
+        "ai_precision": 0.9612403100775194,
+        "ai_recall": 0.9311639549436797,
+        "human_false_positive_rate_at_0_5": 0.03759398496240601,
+        "auroc": 0.9840762732864704,
+        "tpr_at_1pct_fpr_roc": 0.8679599499374218,
+        "confusion_matrix_human_ai": [
+          [
+            1536,
+            60
+          ],
+          [
+            110,
+            1488
+          ]
+        ]
+      },
+      "binary_label_to_predicted_class_counts": [
+        [
+          393,
+          86,
+          16,
+          5
+        ],
+        [
+          403,
+          70,
+          17,
+          10
+        ]
+      ],
+      "predicted_class_order": [
+        "human_written",
+        "human_ai_polished",
+        "ai_generated",
+        "ai_humanized"
+      ],
+      "binary_label_order": [
+        "human",
+        "ChatGPT"
+      ],
+      "score_quantiles_by_binary_label": {
+        "human": [
+          0.0014639190641918228,
+          0.0332343591402254,
+          0.08647297340094293,
+          0.19115758072207795,
+          0.8756566987034355
+        ],
+        "ChatGPT": [
+          0.007062403342432352,
+          0.06235536141017059,
+          0.12380525374379162,
+          0.2374561862670294,
+          0.8758664515500955
+        ]
+      },
+      "by_answer_length": {
+        "at_most_100_words": {
+          "human_answers": 284,
+          "chatgpt_answers": 64,
+          "metrics": {
+            "samples": 348,
+            "accuracy": 0.7816091954022989,
+            "balanced_accuracy": 0.484925176056338,
+            "macro_f1": 0.45133183968135426,
+            "ai_precision": 0.07142857142857142,
+            "ai_recall": 0.015625,
+            "human_false_positive_rate_at_0_5": 0.045774647887323945,
+            "auroc": 0.5481954225352113,
+            "tpr_at_1pct_fpr_roc": 0.015625,
+            "confusion_matrix_human_ai": [
+              [
+                271,
+                13
+              ],
+              [
+                63,
+                1
+              ]
+            ]
+          }
+        },
+        "101_to_200_words": {
+          "human_answers": 115,
+          "chatgpt_answers": 271,
+          "metrics": {
+            "samples": 386,
+            "accuracy": 0.35233160621761656,
+            "balanced_accuracy": 0.5337397721803305,
+            "macro_f1": 0.31509766068589595,
+            "ai_precision": 0.92,
+            "ai_recall": 0.08487084870848709,
+            "human_false_positive_rate_at_0_5": 0.017391304347826087,
+            "auroc": 0.7305310444408791,
+            "tpr_at_1pct_fpr_roc": 0.06642066420664207,
+            "confusion_matrix_human_ai": [
+              [
+                113,
+                2
+              ],
+              [
+                248,
+                23
+              ]
+            ]
+          }
+        },
+        "over_200_words": {
+          "human_answers": 101,
+          "chatgpt_answers": 165,
+          "metrics": {
+            "samples": 266,
+            "accuracy": 0.39473684210526316,
+            "balanced_accuracy": 0.5102010201020102,
+            "macro_f1": 0.30624807633117884,
+            "ai_precision": 0.8333333333333334,
+            "ai_recall": 0.030303030303030304,
+            "human_false_positive_rate_at_0_5": 0.009900990099009901,
+            "auroc": 0.7174917491749174,
+            "tpr_at_1pct_fpr_roc": 0.030303030303030304,
+            "confusion_matrix_human_ai": [
+              [
+                100,
+                1
+              ],
+              [
+                160,
+                5
+              ]
+            ]
+          }
+        }
+      },
+      "per_source": {
+        "finance": {
+          "samples": 200,
+          "accuracy": 0.515,
+          "balanced_accuracy": 0.515,
+          "macro_f1": 0.37368845843422116,
+          "ai_precision": 0.8,
+          "ai_recall": 0.04,
+          "human_false_positive_rate_at_0_5": 0.01,
+          "auroc": 0.7384,
+          "tpr_at_1pct_fpr_roc": 0.04,
+          "confusion_matrix_human_ai": [
+            [
+              99,
+              1
+            ],
+            [
+              96,
+              4
+            ]
+          ]
+        },
+        "medicine": {
+          "samples": 200,
+          "accuracy": 0.51,
+          "balanced_accuracy": 0.51,
+          "macro_f1": 0.3551783129359126,
+          "ai_precision": 1.0,
+          "ai_recall": 0.02,
+          "human_false_positive_rate_at_0_5": 0.0,
+          "auroc": 0.7329,
+          "tpr_at_1pct_fpr_roc": 0.09,
+          "confusion_matrix_human_ai": [
+            [
+              100,
+              0
+            ],
+            [
+              98,
+              2
+            ]
+          ]
+        },
+        "open_qa": {
+          "samples": 200,
+          "accuracy": 0.48,
+          "balanced_accuracy": 0.48,
+          "macro_f1": 0.37492487077773773,
+          "ai_precision": 0.3888888888888889,
+          "ai_recall": 0.07,
+          "human_false_positive_rate_at_0_5": 0.11,
+          "auroc": 0.4341,
+          "tpr_at_1pct_fpr_roc": 0.0,
+          "confusion_matrix_human_ai": [
+            [
+              89,
+              11
+            ],
+            [
+              93,
+              7
+            ]
+          ]
+        },
+        "reddit_eli5": {
+          "samples": 200,
+          "accuracy": 0.515,
+          "balanced_accuracy": 0.515,
+          "macro_f1": 0.37368845843422116,
+          "ai_precision": 0.8,
+          "ai_recall": 0.04,
+          "human_false_positive_rate_at_0_5": 0.01,
+          "auroc": 0.5439999999999999,
+          "tpr_at_1pct_fpr_roc": 0.04,
+          "confusion_matrix_human_ai": [
+            [
+              99,
+              1
+            ],
+            [
+              96,
+              4
+            ]
+          ]
+        },
+        "wiki_csai": {
+          "samples": 200,
+          "accuracy": 0.545,
+          "balanced_accuracy": 0.5449999999999999,
+          "macro_f1": 0.444698703279939,
+          "ai_precision": 0.8,
+          "ai_recall": 0.12,
+          "human_false_positive_rate_at_0_5": 0.03,
+          "auroc": 0.6222000000000001,
+          "tpr_at_1pct_fpr_roc": 0.09,
+          "confusion_matrix_human_ai": [
+            [
+              97,
+              3
+            ],
+            [
+              88,
+              12
+            ]
+          ]
+        }
+      },
+      "hart_predictions_sha256": "a849056008961e55af3a821001869287b8a61348c3a2e1d1f59048bff8f04734",
+      "predictions_sha256": "59dcbd92ae143606889776f5fc58b025f1506f27fc35a6492b06ef4d586001fe"
+    },
+    "roberta_s3407": {
+      "binary_metrics": {
+        "samples": 1000,
+        "accuracy": 0.535,
+        "balanced_accuracy": 0.535,
+        "macro_f1": 0.4336665160503781,
+        "ai_precision": 0.7272727272727273,
+        "ai_recall": 0.112,
+        "human_false_positive_rate_at_0_5": 0.042,
+        "auroc": 0.6108640000000001,
+        "tpr_at_1pct_fpr_roc": 0.066,
+        "confusion_matrix_human_ai": [
+          [
+            479,
+            21
+          ],
+          [
+            444,
+            56
+          ]
+        ]
+      },
+      "hart_aligned_binary_reference": {
+        "samples": 3194,
+        "accuracy": 0.9636819035691923,
+        "balanced_accuracy": 0.9636873786468674,
+        "macro_f1": 0.9636794968316706,
+        "ai_precision": 0.9719745222929936,
+        "ai_recall": 0.9549436795994993,
+        "human_false_positive_rate_at_0_5": 0.02756892230576441,
+        "auroc": 0.9931344318242414,
+        "tpr_at_1pct_fpr_roc": 0.9086357947434293,
+        "confusion_matrix_human_ai": [
+          [
+            1552,
+            44
+          ],
+          [
+            72,
+            1526
+          ]
+        ]
+      },
+      "binary_label_to_predicted_class_counts": [
+        [
+          381,
+          98,
+          15,
+          6
+        ],
+        [
+          31,
+          413,
+          54,
+          2
+        ]
+      ],
+      "predicted_class_order": [
+        "human_written",
+        "human_ai_polished",
+        "ai_generated",
+        "ai_humanized"
+      ],
+      "binary_label_order": [
+        "human",
+        "ChatGPT"
+      ],
+      "score_quantiles_by_binary_label": {
+        "human": [
+          9.215968020725995e-05,
+          0.001095753419129153,
+          0.008858756673134849,
+          0.049554666085896315,
+          0.9998175092041492
+        ],
+        "ChatGPT": [
+          0.00023451024046039493,
+          0.0043000461343751795,
+          0.01788865191133482,
+          0.09199274202273955,
+          0.9999233456910588
+        ]
+      },
+      "by_answer_length": {
+        "at_most_100_words": {
+          "human_answers": 284,
+          "chatgpt_answers": 64,
+          "metrics": {
+            "samples": 348,
+            "accuracy": 0.7816091954022989,
+            "balanced_accuracy": 0.4970290492957746,
+            "macro_f1": 0.47469611503932624,
+            "ai_precision": 0.16666666666666666,
+            "ai_recall": 0.046875,
+            "human_false_positive_rate_at_0_5": 0.0528169014084507,
+            "auroc": 0.5086927816901408,
+            "tpr_at_1pct_fpr_roc": 0.0,
+            "confusion_matrix_human_ai": [
+              [
+                269,
+                15
+              ],
+              [
+                61,
+                3
+              ]
+            ]
+          }
+        },
+        "101_to_200_words": {
+          "human_answers": 115,
+          "chatgpt_answers": 271,
+          "metrics": {
+            "samples": 386,
+            "accuracy": 0.39378238341968913,
+            "balanced_accuracy": 0.5532488368361944,
+            "macro_f1": 0.3755254424778761,
+            "ai_precision": 0.8775510204081632,
+            "ai_recall": 0.15867158671586715,
+            "human_false_positive_rate_at_0_5": 0.05217391304347826,
+            "auroc": 0.6688272100112306,
+            "tpr_at_1pct_fpr_roc": 0.08487084870848709,
+            "confusion_matrix_human_ai": [
+              [
+                109,
+                6
+              ],
+              [
+                228,
+                43
+              ]
+            ]
+          }
+        },
+        "over_200_words": {
+          "human_answers": 101,
+          "chatgpt_answers": 165,
+          "metrics": {
+            "samples": 266,
+            "accuracy": 0.41729323308270677,
+            "balanced_accuracy": 0.5303030303030303,
+            "macro_f1": 0.3400560224089636,
+            "ai_precision": 1.0,
+            "ai_recall": 0.06060606060606061,
+            "human_false_positive_rate_at_0_5": 0.0,
+            "auroc": 0.6682868286828683,
+            "tpr_at_1pct_fpr_roc": 0.06666666666666667,
+            "confusion_matrix_human_ai": [
+              [
+                101,
+                0
+              ],
+              [
+                155,
+                10
+              ]
+            ]
+          }
+        }
+      },
+      "per_source": {
+        "finance": {
+          "samples": 200,
+          "accuracy": 0.545,
+          "balanced_accuracy": 0.545,
+          "macro_f1": 0.47054545454545454,
+          "ai_precision": 0.68,
+          "ai_recall": 0.17,
+          "human_false_positive_rate_at_0_5": 0.08,
+          "auroc": 0.5434,
+          "tpr_at_1pct_fpr_roc": 0.07,
+          "confusion_matrix_human_ai": [
+            [
+              92,
+              8
+            ],
+            [
+              83,
+              17
+            ]
+          ]
+        },
+        "medicine": {
+          "samples": 200,
+          "accuracy": 0.54,
+          "balanced_accuracy": 0.54,
+          "macro_f1": 0.45238095238095233,
+          "ai_precision": 0.7,
+          "ai_recall": 0.14,
+          "human_false_positive_rate_at_0_5": 0.06,
+          "auroc": 0.505,
+          "tpr_at_1pct_fpr_roc": 0.13,
+          "confusion_matrix_human_ai": [
+            [
+              94,
+              6
+            ],
+            [
+              86,
+              14
+            ]
+          ]
+        },
+        "open_qa": {
+          "samples": 200,
+          "accuracy": 0.515,
+          "balanced_accuracy": 0.515,
+          "macro_f1": 0.38837920489296635,
+          "ai_precision": 0.6666666666666666,
+          "ai_recall": 0.06,
+          "human_false_positive_rate_at_0_5": 0.03,
+          "auroc": 0.47129999999999994,
+          "tpr_at_1pct_fpr_roc": 0.05,
+          "confusion_matrix_human_ai": [
+            [
+              97,
+              3
+            ],
+            [
+              94,
+              6
+            ]
+          ]
+        },
+        "reddit_eli5": {
+          "samples": 200,
+          "accuracy": 0.515,
+          "balanced_accuracy": 0.515,
+          "macro_f1": 0.37368845843422116,
+          "ai_precision": 0.8,
+          "ai_recall": 0.04,
+          "human_false_positive_rate_at_0_5": 0.01,
+          "auroc": 0.9293,
+          "tpr_at_1pct_fpr_roc": 0.07,
+          "confusion_matrix_human_ai": [
+            [
+              99,
+              1
+            ],
+            [
+              96,
+              4
+            ]
+          ]
+        },
+        "wiki_csai": {
+          "samples": 200,
+          "accuracy": 0.56,
+          "balanced_accuracy": 0.5599999999999999,
+          "macro_f1": 0.47109027527347036,
+          "ai_precision": 0.8333333333333334,
+          "ai_recall": 0.15,
+          "human_false_positive_rate_at_0_5": 0.03,
+          "auroc": 0.5951,
+          "tpr_at_1pct_fpr_roc": 0.1,
+          "confusion_matrix_human_ai": [
+            [
+              97,
+              3
+            ],
+            [
+              85,
+              15
+            ]
+          ]
+        }
+      },
+      "hart_predictions_sha256": "6aea3d253b59145f427fd16d0f2e82de8a5c23930f04a8b97840423087bf3295",
+      "predictions_sha256": "24da89dab36ec80710a6e584cf5187423e23ca53d096f641d4f32e5454bfebdf"
+    },
+    "race_s3407": {
+      "binary_metrics": {
+        "samples": 1000,
+        "accuracy": 0.486,
+        "balanced_accuracy": 0.486,
+        "macro_f1": 0.38692455593776687,
+        "ai_precision": 0.42857142857142855,
+        "ai_recall": 0.084,
+        "human_false_positive_rate_at_0_5": 0.112,
+        "auroc": 0.6843600000000001,
+        "tpr_at_1pct_fpr_roc": 0.004,
+        "confusion_matrix_human_ai": [
+          [
+            444,
+            56
+          ],
+          [
+            458,
+            42
+          ]
+        ]
+      },
+      "hart_aligned_binary_reference": {
+        "samples": 3194,
+        "accuracy": 0.9639949906073888,
+        "balanced_accuracy": 0.9640002697607598,
+        "macro_f1": 0.9639927846367384,
+        "ai_precision": 0.9719923615531508,
+        "ai_recall": 0.9555694618272841,
+        "human_false_positive_rate_at_0_5": 0.02756892230576441,
+        "auroc": 0.9938323593715203,
+        "tpr_at_1pct_fpr_roc": 0.9180225281602002,
+        "confusion_matrix_human_ai": [
+          [
+            1552,
+            44
+          ],
+          [
+            71,
+            1527
+          ]
+        ]
+      },
+      "binary_label_to_predicted_class_counts": [
+        [
+          353,
+          92,
+          22,
+          33
+        ],
+        [
+          89,
+          369,
+          41,
+          1
+        ]
+      ],
+      "predicted_class_order": [
+        "human_written",
+        "human_ai_polished",
+        "ai_generated",
+        "ai_humanized"
+      ],
+      "binary_label_order": [
+        "human",
+        "ChatGPT"
+      ],
+      "score_quantiles_by_binary_label": {
+        "human": [
+          2.707923833611403e-05,
+          0.00021308768305061676,
+          0.0012544044705009583,
+          0.02329501304484438,
+          0.9999696154845878
+        ],
+        "ChatGPT": [
+          8.327711134370475e-05,
+          0.003965479170290109,
+          0.0087627677198725,
+          0.03714802623608193,
+          0.9998984206467867
+        ]
+      },
+      "by_answer_length": {
+        "at_most_100_words": {
+          "human_answers": 284,
+          "chatgpt_answers": 64,
+          "metrics": {
+            "samples": 348,
+            "accuracy": 0.7413793103448276,
+            "balanced_accuracy": 0.4784330985915493,
+            "macro_f1": 0.4655654904102109,
+            "ai_precision": 0.11764705882352941,
+            "ai_recall": 0.0625,
+            "human_false_positive_rate_at_0_5": 0.1056338028169014,
+            "auroc": 0.6031580105633803,
+            "tpr_at_1pct_fpr_roc": 0.0,
+            "confusion_matrix_human_ai": [
+              [
+                254,
+                30
+              ],
+              [
+                60,
+                4
+              ]
+            ]
+          }
+        },
+        "101_to_200_words": {
+          "human_answers": 115,
+          "chatgpt_answers": 271,
+          "metrics": {
+            "samples": 386,
+            "accuracy": 0.34196891191709844,
+            "balanced_accuracy": 0.5038344296486443,
+            "macro_f1": 0.3154308057533864,
+            "ai_precision": 0.717948717948718,
+            "ai_recall": 0.1033210332103321,
+            "human_false_positive_rate_at_0_5": 0.09565217391304348,
+            "auroc": 0.787742660035296,
+            "tpr_at_1pct_fpr_roc": 0.0036900369003690036,
+            "confusion_matrix_human_ai": [
+              [
+                104,
+                11
+              ],
+              [
+                243,
+                28
+              ]
+            ]
+          }
+        },
+        "over_200_words": {
+          "human_answers": 101,
+          "chatgpt_answers": 165,
+          "metrics": {
+            "samples": 266,
+            "accuracy": 0.3609022556390977,
+            "balanced_accuracy": 0.45604560456045606,
+            "macro_f1": 0.30409356725146197,
+            "ai_precision": 0.4,
+            "ai_recall": 0.06060606060606061,
+            "human_false_positive_rate_at_0_5": 0.1485148514851485,
+            "auroc": 0.7597359735973598,
+            "tpr_at_1pct_fpr_roc": 0.006060606060606061,
+            "confusion_matrix_human_ai": [
+              [
+                86,
+                15
+              ],
+              [
+                155,
+                10
+              ]
+            ]
+          }
+        }
+      },
+      "per_source": {
+        "finance": {
+          "samples": 200,
+          "accuracy": 0.36,
+          "balanced_accuracy": 0.36,
+          "macro_f1": 0.2763455450022614,
+          "ai_precision": 0.0625,
+          "ai_recall": 0.02,
+          "human_false_positive_rate_at_0_5": 0.3,
+          "auroc": 0.3630999999999999,
+          "tpr_at_1pct_fpr_roc": 0.0,
+          "confusion_matrix_human_ai": [
+            [
+              70,
+              30
+            ],
+            [
+              98,
+              2
+            ]
+          ]
+        },
+        "medicine": {
+          "samples": 200,
+          "accuracy": 0.49,
+          "balanced_accuracy": 0.49,
+          "macro_f1": 0.4276736617663562,
+          "ai_precision": 0.47058823529411764,
+          "ai_recall": 0.16,
+          "human_false_positive_rate_at_0_5": 0.18,
+          "auroc": 0.6527000000000001,
+          "tpr_at_1pct_fpr_roc": 0.0,
+          "confusion_matrix_human_ai": [
+            [
+              82,
+              18
+            ],
+            [
+              84,
+              16
+            ]
+          ]
+        },
+        "open_qa": {
+          "samples": 200,
+          "accuracy": 0.52,
+          "balanced_accuracy": 0.52,
+          "macro_f1": 0.4171928120446819,
+          "ai_precision": 0.625,
+          "ai_recall": 0.1,
+          "human_false_positive_rate_at_0_5": 0.06,
+          "auroc": 0.6359,
+          "tpr_at_1pct_fpr_roc": 0.02,
+          "confusion_matrix_human_ai": [
+            [
+              94,
+              6
+            ],
+            [
+              90,
+              10
+            ]
+          ]
+        },
+        "reddit_eli5": {
+          "samples": 200,
+          "accuracy": 0.54,
+          "balanced_accuracy": 0.54,
+          "macro_f1": 0.4165398274987316,
+          "ai_precision": 1.0,
+          "ai_recall": 0.08,
+          "human_false_positive_rate_at_0_5": 0.0,
+          "auroc": 0.939,
+          "tpr_at_1pct_fpr_roc": 0.18,
+          "confusion_matrix_human_ai": [
+            [
+              100,
+              0
+            ],
+            [
+              92,
+              8
+            ]
+          ]
+        },
+        "wiki_csai": {
+          "samples": 200,
+          "accuracy": 0.52,
+          "balanced_accuracy": 0.52,
+          "macro_f1": 0.39117199391172,
+          "ai_precision": 0.75,
+          "ai_recall": 0.06,
+          "human_false_positive_rate_at_0_5": 0.02,
+          "auroc": 0.8069,
+          "tpr_at_1pct_fpr_roc": 0.04,
+          "confusion_matrix_human_ai": [
+            [
+              98,
+              2
+            ],
+            [
+              94,
+              6
+            ]
+          ]
+        }
+      },
+      "hart_predictions_sha256": "466df1bd7efa2e136e0e2d679d6f7dbdd83c15c9b762ef1cc7b217c6db06be45",
+      "predictions_sha256": "2fa35bde50e2ba70f980ccaae4bed74da72664c6c7b1147bcb86f55c5e446c05"
+    },
+    "race_no_supcon_s3407": {
+      "binary_metrics": {
+        "samples": 1000,
+        "accuracy": 0.534,
+        "balanced_accuracy": 0.534,
+        "macro_f1": 0.4452380952380952,
+        "ai_precision": 0.67,
+        "ai_recall": 0.134,
+        "human_false_positive_rate_at_0_5": 0.066,
+        "auroc": 0.7031080000000001,
+        "tpr_at_1pct_fpr_roc": 0.018,
+        "confusion_matrix_human_ai": [
+          [
+            467,
+            33
+          ],
+          [
+            433,
+            67
+          ]
+        ]
+      },
+      "hart_aligned_binary_reference": {
+        "samples": 3194,
+        "accuracy": 0.954915466499687,
+        "balanced_accuracy": 0.9549225065166044,
+        "macro_f1": 0.9549103571596631,
+        "ai_precision": 0.9654289372599232,
+        "ai_recall": 0.9436795994993742,
+        "human_false_positive_rate_at_0_5": 0.03383458646616541,
+        "auroc": 0.9916707444455946,
+        "tpr_at_1pct_fpr_roc": 0.8961201501877347,
+        "confusion_matrix_human_ai": [
+          [
+            1542,
+            54
+          ],
+          [
+            90,
+            1508
+          ]
+        ]
+      },
+      "binary_label_to_predicted_class_counts": [
+        [
+          389,
+          73,
+          19,
+          19
+        ],
+        [
+          59,
+          372,
+          65,
+          4
+        ]
+      ],
+      "predicted_class_order": [
+        "human_written",
+        "human_ai_polished",
+        "ai_generated",
+        "ai_humanized"
+      ],
+      "binary_label_order": [
+        "human",
+        "ChatGPT"
+      ],
+      "score_quantiles_by_binary_label": {
+        "human": [
+          6.616296531980481e-06,
+          0.0002921237266946264,
+          0.0024753892812441336,
+          0.0419984993422986,
+          0.9999565308589808
+        ],
+        "ChatGPT": [
+          0.00019802283091507888,
+          0.005934762818242234,
+          0.025276626400227542,
+          0.1362074719290831,
+          0.9999469996819244
+        ]
+      },
+      "by_answer_length": {
+        "at_most_100_words": {
+          "human_answers": 284,
+          "chatgpt_answers": 64,
+          "metrics": {
+            "samples": 348,
+            "accuracy": 0.7672413793103449,
+            "balanced_accuracy": 0.4942781690140845,
+            "macro_f1": 0.4782222386761194,
+            "ai_precision": 0.16,
+            "ai_recall": 0.0625,
+            "human_false_positive_rate_at_0_5": 0.07394366197183098,
+            "auroc": 0.5738886443661972,
+            "tpr_at_1pct_fpr_roc": 0.0,
+            "confusion_matrix_human_ai": [
+              [
+                263,
+                21
+              ],
+              [
+                60,
+                4
+              ]
+            ]
+          }
+        },
+        "101_to_200_words": {
+          "human_answers": 115,
+          "chatgpt_answers": 271,
+          "metrics": {
+            "samples": 386,
+            "accuracy": 0.3860103626943005,
+            "balanced_accuracy": 0.5402053585753249,
+            "macro_f1": 0.3692071131582395,
+            "ai_precision": 0.8269230769230769,
+            "ai_recall": 0.15867158671586715,
+            "human_false_positive_rate_at_0_5": 0.0782608695652174,
+            "auroc": 0.7725653778276913,
+            "tpr_at_1pct_fpr_roc": 0.033210332103321034,
+            "confusion_matrix_human_ai": [
+              [
+                106,
+                9
+              ],
+              [
+                228,
+                43
+              ]
+            ]
+          }
+        },
+        "over_200_words": {
+          "human_answers": 101,
+          "chatgpt_answers": 165,
+          "metrics": {
+            "samples": 266,
+            "accuracy": 0.44360902255639095,
+            "balanced_accuracy": 0.5457545754575457,
+            "macro_f1": 0.3912666996536368,
+            "ai_precision": 0.8695652173913043,
+            "ai_recall": 0.12121212121212122,
+            "human_false_positive_rate_at_0_5": 0.0297029702970297,
+            "auroc": 0.7743774377437744,
+            "tpr_at_1pct_fpr_roc": 0.08484848484848485,
+            "confusion_matrix_human_ai": [
+              [
+                98,
+                3
+              ],
+              [
+                145,
+                20
+              ]
+            ]
+          }
+        }
+      },
+      "per_source": {
+        "finance": {
+          "samples": 200,
+          "accuracy": 0.53,
+          "balanced_accuracy": 0.53,
+          "macro_f1": 0.4725620020199753,
+          "ai_precision": 0.5882352941176471,
+          "ai_recall": 0.2,
+          "human_false_positive_rate_at_0_5": 0.14,
+          "auroc": 0.5822,
+          "tpr_at_1pct_fpr_roc": 0.0,
+          "confusion_matrix_human_ai": [
+            [
+              86,
+              14
+            ],
+            [
+              80,
+              20
+            ]
+          ]
+        },
+        "medicine": {
+          "samples": 200,
+          "accuracy": 0.53,
+          "balanced_accuracy": 0.53,
+          "macro_f1": 0.4554512802687985,
+          "ai_precision": 0.6153846153846154,
+          "ai_recall": 0.16,
+          "human_false_positive_rate_at_0_5": 0.1,
+          "auroc": 0.5663,
+          "tpr_at_1pct_fpr_roc": 0.01,
+          "confusion_matrix_human_ai": [
+            [
+              90,
+              10
+            ],
+            [
+              84,
+              16
+            ]
+          ]
+        },
+        "open_qa": {
+          "samples": 200,
+          "accuracy": 0.495,
+          "balanced_accuracy": 0.495,
+          "macro_f1": 0.3703045606159793,
+          "ai_precision": 0.45454545454545453,
+          "ai_recall": 0.05,
+          "human_false_positive_rate_at_0_5": 0.06,
+          "auroc": 0.6159,
+          "tpr_at_1pct_fpr_roc": 0.0,
+          "confusion_matrix_human_ai": [
+            [
+              94,
+              6
+            ],
+            [
+              95,
+              5
+            ]
+          ]
+        },
+        "reddit_eli5": {
+          "samples": 200,
+          "accuracy": 0.54,
+          "balanced_accuracy": 0.54,
+          "macro_f1": 0.4231974921630094,
+          "ai_precision": 0.9,
+          "ai_recall": 0.09,
+          "human_false_positive_rate_at_0_5": 0.01,
+          "auroc": 0.9496,
+          "tpr_at_1pct_fpr_roc": 0.1,
+          "confusion_matrix_human_ai": [
+            [
+              99,
+              1
+            ],
+            [
+              91,
+              9
+            ]
+          ]
+        },
+        "wiki_csai": {
+          "samples": 200,
+          "accuracy": 0.575,
+          "balanced_accuracy": 0.575,
+          "macro_f1": 0.49161159125571935,
+          "ai_precision": 0.8947368421052632,
+          "ai_recall": 0.17,
+          "human_false_positive_rate_at_0_5": 0.02,
+          "auroc": 0.7988999999999999,
+          "tpr_at_1pct_fpr_roc": 0.15,
+          "confusion_matrix_human_ai": [
+            [
+              98,
+              2
+            ],
+            [
+              83,
+              17
+            ]
+          ]
+        }
+      },
+      "hart_predictions_sha256": "4772dcca5abf3253749bb0f346298df2d12b3daa34ba35e53bf6bcf92ad83b22",
+      "predictions_sha256": "c324cb41b71315280ce57a350facc036bcc8eb79162401ffc82fb68dacc0b8b4"
+    }
+  },
+  "hart_reference": {
+    "samples": 3194,
+    "human_creator": 1596,
+    "ai_creator": 1598,
+    "test_file_sha256": "1814009b21bad70fbbc83d4b5b952469f19fde009fe8d979ac9c0c71491f542a",
+    "binary_label_collapse": "human_written/human_ai_polished -> 0; ai_generated/ai_humanized -> 1",
+    "post_hoc_descriptive_reference_not_selection": true
+  },
+  "interpretation_boundary": "Rows have binary authorship labels only. Allocation to four model outputs is not a four-class confusion matrix or four-class accuracy. Length/source slices are confounded descriptive groups, not controlled interventions.",
+  "analysis_script_sha256": "9d6025d641cb28536b266cbbdda27a8e59f0ad4a1ca803bed4da135e04ccb8fc"
+}

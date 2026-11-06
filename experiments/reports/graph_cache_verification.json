@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "samples": 4,
+  "split": "train only",
+  "cached_fields_equal_official_processing": true,
+  "four_class_output_shape": [
+    4,
+    4
+  ],
+  "max_abs_logit_difference": 0.0,
+  "weights": "base pretrained RoBERTa plus randomly initialized RACE layers; no author fine-tuned checkpoint",
+  "device": "cpu",
+  "training_performed": false
+}

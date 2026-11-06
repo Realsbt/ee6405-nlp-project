@@ -1,0 +1,258 @@
+{
+  "status": "completed",
+  "missing_runs": [],
+  "selection": "Post-hoc illustration: first item ID in each of the three largest RACE seed-3407 error pairs; then first item ID among RACE-correct/RoBERTa-wrong cases. Does not select models, thresholds, partitions or primary metrics.",
+  "cases": [
+    {
+      "item_id": "arxiv-2101.03103v1_ai_generated_llama-3.3-70b-instruct_THEN_gemini-1.5-pro-002",
+      "title": "AI 到 AI 的改写链被判为人工内容润色",
+      "true_label": "ai_generated",
+      "input_truncated": false,
+      "lexical_tokens_with_specials": 479,
+      "article_characters": 1953,
+      "rst_coordinate_quality": {
+        "item_id": "arxiv-2101.03103v1_ai_generated_llama-3.3-70b-instruct_THEN_gemini-1.5-pro-002",
+        "split": "test",
+        "valid_and_ordered_spans": true,
+        "uncovered_nonspace_characters": 0,
+        "uncovered_nonspace_in_lexical_window": 0,
+        "all_nonspace_covered": true
+      },
+      "source_file": "/data/botao/ee6405-race-validation/assets/hart_official/train_graph.jsonl",
+      "source_line": 1090,
+      "normalized_text_sha256": "5eb958b05e3dc74387357fa0b4c2874d83ea33bad84c9f91ec198adea03f12e9",
+      "outputs": {
+        "tfidf_lr_v1": {
+          "prediction": "human_written",
+          "four_class_scores": {
+            "human_written": 0.6170824038930472,
+            "human_ai_polished": 0.3684033092237935,
+            "ai_generated": 0.011923685800182274,
+            "ai_humanized": 0.0025906010829770793
+          },
+          "true_label_score": 0.011923685800182274
+        },
+        "roberta_s3407": {
+          "prediction": "human_ai_polished",
+          "four_class_scores": {
+            "human_written": 1.0465012564964127e-05,
+            "human_ai_polished": 0.9949895739555359,
+            "ai_generated": 0.004998552612960339,
+            "ai_humanized": 1.4106226444710046e-06
+          },
+          "true_label_score": 0.004998552612960339
+        },
+        "race_s3407": {
+          "prediction": "human_ai_polished",
+          "four_class_scores": {
+            "human_written": 0.00015594426076859236,
+            "human_ai_polished": 0.9975314140319824,
+            "ai_generated": 0.002312111435458064,
+            "ai_humanized": 5.416092108134762e-07
+          },
+          "true_label_score": 0.002312111435458064
+        },
+        "race_no_supcon_s3407": {
+          "prediction": "human_ai_polished",
+          "four_class_scores": {
+            "human_written": 8.821334631647915e-05,
+            "human_ai_polished": 0.9892673492431641,
+            "ai_generated": 0.010640236549079418,
+            "ai_humanized": 4.279745553503744e-06
+          },
+          "true_label_score": 0.010640236549079418
+        }
+      },
+      "comment": "文本讨论 few-shot prompt-tuning，并保留学术论述和引文的表达形式。发布标签把该 AI→AI 改写链归为 ai_generated；RoBERTa 和 RACE 均高分选择 human_ai_polished。该例正文完整、坐标覆盖干净，因此不能简单归因于 512-token 截断或已知跨度漏字。保留的论述形式可能与训练中的润色样本相似，这是待验证的解释候选；高输出分数不等于真实创作流程的可靠概率。"
+    },
+    {
+      "item_id": "arxiv-2006.11038v2_ai_humanized_tool",
+      "title": "改写 AI 文本仍被判为 AI 原生文本",
+      "true_label": "ai_humanized",
+      "input_truncated": true,
+      "lexical_tokens_with_specials": 512,
+      "article_characters": 3555,
+      "rst_coordinate_quality": {
+        "item_id": "arxiv-2006.11038v2_ai_humanized_tool",
+        "split": "test",
+        "valid_and_ordered_spans": true,
+        "uncovered_nonspace_characters": 0,
+        "uncovered_nonspace_in_lexical_window": 0,
+        "all_nonspace_covered": true
+      },
+      "source_file": "/data/botao/ee6405-race-validation/assets/hart_official/test_graph.jsonl",
+      "source_line": 609,
+      "normalized_text_sha256": "facbcd2a446381ea4a72fa2f3a895eda4ec9358bedae25aabc110a29e160dce6",
+      "outputs": {
+        "tfidf_lr_v1": {
+          "prediction": "ai_humanized",
+          "four_class_scores": {
+            "human_written": 0.00759160977633491,
+            "human_ai_polished": 0.12588158370037614,
+            "ai_generated": 0.22948406572116808,
+            "ai_humanized": 0.6370427408021209
+          },
+          "true_label_score": 0.6370427408021209
+        },
+        "roberta_s3407": {
+          "prediction": "ai_generated",
+          "four_class_scores": {
+            "human_written": 2.6966540644934867e-06,
+            "human_ai_polished": 0.001867586513981223,
+            "ai_generated": 0.9374575018882751,
+            "ai_humanized": 0.060672178864479065
+          },
+          "true_label_score": 0.060672178864479065
+        },
+        "race_s3407": {
+          "prediction": "ai_generated",
+          "four_class_scores": {
+            "human_written": 5.363080617826199e-06,
+            "human_ai_polished": 0.038266610354185104,
+            "ai_generated": 0.853987455368042,
+            "ai_humanized": 0.10774045437574387
+          },
+          "true_label_score": 0.10774045437574387
+        },
+        "race_no_supcon_s3407": {
+          "prediction": "ai_generated",
+          "four_class_scores": {
+            "human_written": 1.2145621894887881e-06,
+            "human_ai_polished": 0.003870449960231781,
+            "ai_generated": 0.994877815246582,
+            "ai_humanized": 0.0012504919432103634
+          },
+          "true_label_score": 0.0012504919432103634
+        }
+      },
+      "comment": "文本讨论 Fokker–Planck 方程的多领域应用，发布标签为工具改写 AI。TF-IDF 在该例正确，两个神经模型均选择 ai_generated，说明总体较强的模型也存在互补错误。词汇窗口被截断，因此只能说明本窗口与所用结构信息下的失败；不能据此判断完整正文有没有编辑线索，或把所有工具改写视为可检测。"
+    },
+    {
+      "item_id": "arxiv-2006.04959v1_human_ai_polished_gpt-3.5-turbo",
+      "title": "RACE 与 RoBERTa 的一次反向分歧",
+      "true_label": "human_ai_polished",
+      "input_truncated": true,
+      "lexical_tokens_with_specials": 512,
+      "article_characters": 3324,
+      "rst_coordinate_quality": {
+        "item_id": "arxiv-2006.04959v1_human_ai_polished_gpt-3.5-turbo",
+        "split": "test",
+        "valid_and_ordered_spans": true,
+        "uncovered_nonspace_characters": 0,
+        "uncovered_nonspace_in_lexical_window": 0,
+        "all_nonspace_covered": true
+      },
+      "source_file": "/data/botao/ee6405-race-validation/assets/hart_official/train_graph.jsonl",
+      "source_line": 10923,
+      "normalized_text_sha256": "284dcbe48c88df871da7ce3edea5f8e83d7d9fd0dfc8204caaf5eee8270c0f75",
+      "outputs": {
+        "tfidf_lr_v1": {
+          "prediction": "human_written",
+          "four_class_scores": {
+            "human_written": 0.7246432049636822,
+            "human_ai_polished": 0.04219867752001034,
+            "ai_generated": 0.08042747106351487,
+            "ai_humanized": 0.15273064645279266
+          },
+          "true_label_score": 0.04219867752001034
+        },
+        "roberta_s3407": {
+          "prediction": "human_ai_polished",
+          "four_class_scores": {
+            "human_written": 3.2833449949976057e-06,
+            "human_ai_polished": 0.8531718850135803,
+            "ai_generated": 0.14295190572738647,
+            "ai_humanized": 0.003872957080602646
+          },
+          "true_label_score": 0.8531718850135803
+        },
+        "race_s3407": {
+          "prediction": "ai_generated",
+          "four_class_scores": {
+            "human_written": 2.2059439288568683e-05,
+            "human_ai_polished": 0.4063771963119507,
+            "ai_generated": 0.5879938006401062,
+            "ai_humanized": 0.00560698751360178
+          },
+          "true_label_score": 0.4063771963119507
+        },
+        "race_no_supcon_s3407": {
+          "prediction": "human_ai_polished",
+          "four_class_scores": {
+            "human_written": 4.140355304116383e-05,
+            "human_ai_polished": 0.7674794793128967,
+            "ai_generated": 0.23064331710338593,
+            "ai_humanized": 0.001835730392485857
+          },
+          "true_label_score": 0.7674794793128967
+        }
+      },
+      "comment": "文本讨论社交网络对新闻传播与信任机制的影响。RoBERTa 正确选择 human_ai_polished，RACE 更偏向 ai_generated，其两类分数相对接近。RACE 使用更多结构信息仍可能出错；模型容量、pooling、损失和训练随机性也不同，单个分歧不足以证明某条篇章关系导致错误。"
+    },
+    {
+      "item_id": "arxiv-2008.10522v2_ai_humanized_tool",
+      "title": "RACE 纠正 RoBERTa 的一次错误",
+      "true_label": "ai_humanized",
+      "input_truncated": false,
+      "lexical_tokens_with_specials": 420,
+      "article_characters": 2557,
+      "rst_coordinate_quality": {
+        "item_id": "arxiv-2008.10522v2_ai_humanized_tool",
+        "split": "test",
+        "valid_and_ordered_spans": true,
+        "uncovered_nonspace_characters": 22,
+        "uncovered_nonspace_in_lexical_window": 22,
+        "all_nonspace_covered": false
+      },
+      "source_file": "/data/botao/ee6405-race-validation/assets/hart_official/train_graph.jsonl",
+      "source_line": 2141,
+      "normalized_text_sha256": "31e5b1d56201d4e992ace67e7b0f19e7873459d35d1e2a6283339b9e4c35bc33",
+      "outputs": {
+        "tfidf_lr_v1": {
+          "prediction": "ai_generated",
+          "four_class_scores": {
+            "human_written": 0.0022996851039067683,
+            "human_ai_polished": 0.010614726398237373,
+            "ai_generated": 0.9285894138750357,
+            "ai_humanized": 0.058496174622820106
+          },
+          "true_label_score": 0.058496174622820106
+        },
+        "roberta_s3407": {
+          "prediction": "ai_generated",
+          "four_class_scores": {
+            "human_written": 1.2017642347927904e-06,
+            "human_ai_polished": 0.0018484193133190274,
+            "ai_generated": 0.9171133041381836,
+            "ai_humanized": 0.08103712648153305
+          },
+          "true_label_score": 0.08103712648153305
+        },
+        "race_s3407": {
+          "prediction": "ai_humanized",
+          "four_class_scores": {
+            "human_written": 4.4249381403460575e-07,
+            "human_ai_polished": 2.243861490569543e-05,
+            "ai_generated": 0.0020511269103735685,
+            "ai_humanized": 0.9979259967803955
+          },
+          "true_label_score": 0.9979259967803955
+        },
+        "race_no_supcon_s3407": {
+          "prediction": "human_ai_polished",
+          "four_class_scores": {
+            "human_written": 0.00010740880679804832,
+            "human_ai_polished": 0.8243743777275085,
+            "ai_generated": 0.050486013293266296,
+            "ai_humanized": 0.12503212690353394
+          },
+          "true_label_score": 0.12503212690353394
+        }
+      },
+      "comment": "文本讨论非人类解释者与人工智能语境下的符号学。该工具改写 AI 样本中，RACE 的标签正确而 RoBERTa、TF-IDF 选择 ai_generated。它展示当前模型的互补性；单例不能把成功归因于图结构机制，也不能抵消整体成对区间包含零的事实。"
+    }
+  ],
+  "full_error_list_sha256": "34214adf33c13a026e9fa6a24264ca3b361d7e56a88e7240399e6b9b22b7af9d",
+  "data_protocol_sha256": "a9ebdae25b53c91af5169f8327e8b9733758607a0b11cf56db6c29afdc20762b",
+  "script_sha256": "e07d593d205760d026f6d0208b8a00b76e06464ece7dbaf3837675a3b83b7322"
+}

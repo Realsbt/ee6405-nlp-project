@@ -1,0 +1,217 @@
+{
+  "status": "passed",
+  "scope": "Actual local HTTP inference; synthetic examples have no authorship labels",
+  "models": [
+    "tfidf",
+    "roberta",
+    "race"
+  ],
+  "device": "cpu",
+  "empty_request_rejected": true,
+  "timing_context": "CPU Demo while local GPU training / CPU auxiliary parsing may be active; these are observed request times, not isolated benchmark latency",
+  "checks": {
+    "tfidf": {
+      "cold_request": {
+        "model": "tfidf",
+        "run_id": "tfidf_lr_v1",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.06762298963278712,
+          "human_ai_polished": 0.5020135391642944,
+          "ai_generated": 0.06030873867763136,
+          "ai_humanized": 0.3700547325252871
+        },
+        "ai_creator_score": 0.43036347120291846,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": null,
+          "edu_count": null
+        },
+        "timing": {
+          "end_to_end_seconds": 0.0015026670007500798,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.0012606550008058548,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": null
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "warm_request": {
+        "model": "tfidf",
+        "run_id": "tfidf_lr_v1",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.06762298963278712,
+          "human_ai_polished": 0.5020135391642944,
+          "ai_generated": 0.06030873867763136,
+          "ai_humanized": 0.3700547325252871
+        },
+        "ai_creator_score": 0.43036347120291846,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": null,
+          "edu_count": null
+        },
+        "timing": {
+          "end_to_end_seconds": 0.000640926999039948,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.0005448679949040525,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": null
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeated_predictions_max_difference": 0.0,
+      "long_text_reference": {
+        "item_id": "arxiv-2004.12186v2_ai_generated_gpt-4o-2024-11-20",
+        "saved_prediction_matches": true,
+        "max_probability_difference_cpu_vs_saved": 0.0,
+        "tolerance": 1e-08,
+        "truncation_reported": true
+      }
+    },
+    "roberta": {
+      "cold_request": {
+        "model": "roberta",
+        "run_id": "roberta_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.0005235736025497317,
+          "human_ai_polished": 0.9858357906341553,
+          "ai_generated": 0.013445599004626274,
+          "ai_humanized": 0.00019508678815327585
+        },
+        "ai_creator_score": 0.013640685938298702,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": null,
+          "edu_count": null
+        },
+        "timing": {
+          "end_to_end_seconds": 0.0487564229988493,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.04851615400548326,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": null
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "warm_request": {
+        "model": "roberta",
+        "run_id": "roberta_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.0005235736025497317,
+          "human_ai_polished": 0.9858357906341553,
+          "ai_generated": 0.013445599004626274,
+          "ai_humanized": 0.00019508678815327585
+        },
+        "ai_creator_score": 0.013640685938298702,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": null,
+          "edu_count": null
+        },
+        "timing": {
+          "end_to_end_seconds": 0.05511602299520746,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.05455751000408782,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": null
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeated_predictions_max_difference": 0.0,
+      "long_text_reference": {
+        "item_id": "arxiv-2004.12186v2_ai_generated_gpt-4o-2024-11-20",
+        "saved_prediction_matches": true,
+        "max_probability_difference_cpu_vs_saved": 1.1920928955078125e-07,
+        "tolerance": 0.0005,
+        "truncation_reported": true
+      }
+    },
+    "race": {
+      "cold_request": {
+        "model": "race",
+        "run_id": "race_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.0010339498985558748,
+          "human_ai_polished": 0.666000485420227,
+          "ai_generated": 0.3104860186576843,
+          "ai_humanized": 0.022479519248008728
+        },
+        "ai_creator_score": 0.33296555280685425,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": "full document",
+          "edu_count": 4
+        },
+        "timing": {
+          "end_to_end_seconds": 9.22766421999404,
+          "detector_model_load_seconds": 0.44477533800090896,
+          "detector_forward_seconds": 0.07302224000159185,
+          "rst_parser_initialization": {
+            "status": "ready",
+            "model_load_seconds": 8.454383720003534,
+            "device": "cpu",
+            "parser_revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a"
+          },
+          "rst_parse_seconds": 0.21917065599700436
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "warm_request": {
+        "model": "race",
+        "run_id": "race_s3407",
+        "prediction": "human_ai_polished",
+        "scores": {
+          "human_written": 0.0010339498985558748,
+          "human_ai_polished": 0.666000485420227,
+          "ai_generated": 0.3104860186576843,
+          "ai_humanized": 0.022479519248008728
+        },
+        "ai_creator_score": 0.33296555280685425,
+        "input": {
+          "characters": 185,
+          "lexical_tokens_with_specials": 35,
+          "lexical_covered_characters": 185,
+          "lexical_truncated": false,
+          "rst_scope": "full document",
+          "edu_count": 4
+        },
+        "timing": {
+          "end_to_end_seconds": 0.2888000080056372,
+          "detector_model_load_seconds": 0.0,
+          "detector_forward_seconds": 0.06291443900408922,
+          "rst_parser_initialization": null,
+          "rst_parse_seconds": 0.22489485800178954
+        },
+        "device": "cpu",
+        "scope": "English HART-trained four-class model; class scores are not calibrated authorship probabilities. HC3 only supports auxiliary binary evaluation."
+      },
+      "repeated_predictions_max_difference": 0.0,
+      "raw_text_parser_to_graph_to_checkpoint_verified": true
+    }
+  }
+}
