@@ -113,7 +113,7 @@ class DetectorService:
 
     def predict(self, text, name):
         if not isinstance(text, str) or not text.strip() or len(text) > 12000:
-            raise ValueError("请输入非空英文文本，最多 12000 个字符。")
+            raise ValueError("Enter non-empty English text, up to 12,000 characters.")
         if name not in RUN_NAMES:
             raise ValueError("Unknown model")
         with self.lock:
