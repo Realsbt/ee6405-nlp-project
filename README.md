@@ -17,9 +17,31 @@
 
 独立辅助评估使用 **HC3** 的 1,000 条人类／ChatGPT 回答。HC3 只有二分类真值，不能用于验证创作者／编辑者四分类泛化。数据版本、获取位置和运行前提见 [数据与外部资源](data/README.md)。
 
+### 方法概览
+
+```mermaid
+flowchart TB
+    T["英文正文"] --> V["首 512 tokens 对应文本"]
+    V --> F["TF-IDF＋逻辑回归"]
+    V --> B["RoBERTa 编码"]
+    B --> C["CLS＋MLP"]
+    T --> G["全文 RST／EDU 关系图"]
+    B --> R["EDU 池化＋RGCN<br/>Root＋MLP"]
+    G --> R
+    F --> Y["四类分数"]
+    C --> Y
+    R --> Y
+```
+
+各模型独立训练；RoBERTa 与 RACE 使用相同基础初始化。HART 使用作者发布的 RST 树，Demo／HC3 使用本机解析器。关闭 SupCon 的消融沿用 RACE 推理结构。
+
 ## 实验结果
 
 固定 HART 分组测试集；神经模型按验证集 Macro-F1 选择 checkpoint。所有正式运行均有完整测试集重载复核记录。
+
+![HART 四种方法的 Macro-F1 与 Macro-AUROC 对比](experiments/reports/comparison/main_metrics.png)
+
+*RoBERTa／RACE 展示三种子均值及样本标准差；TF-IDF 和关闭 SupCon 的消融各运行一次。*
 
 | 方法 | 训练次数 | Macro-F1 | Macro-AUROC |
 |---|---:|---:|---:|
@@ -50,6 +72,12 @@ python3 scripts/check_results.py
 脚本从逐条预测重新计算指标，核对八个正式运行、四组 HC3 结果及汇总表。它检验保存结果的内部一致性；重新加载 checkpoint 推理仍需要外部资源。
 
 ### 已配置的原实验主机：操作 Demo 和完整复核
+
+<p align="center">
+  <img src="experiments/reports/demo_race.jpg" alt="RACE Demo 实际界面：英文输入、模型选择、四类分数和篇章解析信息" width="680">
+</p>
+
+*RACE 原始文本交互界面。示例没有真实来源标签；图中耗时仅为该次请求记录，不是冷启动基准。*
 
 ```bash
 # 原始英文输入 → 四类模型分数；RACE 使用真实 RST 解析器
