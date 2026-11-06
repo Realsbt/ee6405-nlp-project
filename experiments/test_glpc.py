@@ -2,8 +2,8 @@ import unittest
 
 import torch
 
-from experiments.glpc_data import collate_glpc, sentence_spans, visible_token_spans
-from experiments.glpc_model import CREATOR_LABELS, consistency_js
+from experiments.glpc_data import collate_glpc, hard_source_pairs, sentence_spans, visible_token_spans
+from experiments.glpc_model import CREATOR_LABELS, consistency_js, pair_ranking_loss
 
 
 class GLPCChecks(unittest.TestCase):
@@ -34,6 +34,30 @@ class GLPCChecks(unittest.TestCase):
         self.assertTrue(torch.isfinite(loss))
         self.assertIsNotNone(four.grad)
         self.assertIsNotNone(creator.grad)
+
+    def test_same_source_pairs_only_use_requested_hard_boundaries(self):
+        records = [
+            {"group_id": "g", "label_id": 1, "article": "a", "item_id": "g1"},
+            {"group_id": "g", "label_id": 2, "article": "b", "item_id": "g2"},
+            {"group_id": "g", "label_id": 3, "article": "c", "item_id": "g3"},
+            {"group_id": "other", "label_id": 0, "article": "d", "item_id": "o0"},
+        ]
+        pairs = hard_source_pairs(records)
+        self.assertEqual({pair["pair_type"] for pair in pairs},
+                         {"polished_vs_generated", "humanized_vs_generated"})
+        self.assertEqual({pair["group_id"] for pair in pairs}, {"g"})
+
+    def test_pair_ranking_loss_has_gradient(self):
+        negative = torch.zeros(2, 4, requires_grad=True)
+        positive = torch.zeros(2, 4, requires_grad=True)
+        loss = pair_ranking_loss(
+            negative, positive,
+            ["polished_vs_generated", "humanized_vs_generated"], margin=0.1,
+        )
+        loss.backward()
+        self.assertGreater(float(loss), 0)
+        self.assertIsNotNone(negative.grad)
+        self.assertIsNotNone(positive.grad)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 """GLPC text-window dataset with explicit sentence-to-token alignment."""
 
 import re
+from collections import defaultdict
 
 import torch
 from torch.utils.data import Dataset
@@ -95,3 +96,61 @@ def collate_glpc(items, pad_token_id=1):
         "sentence_tokens": [item["sentence_tokens"] for item in items],
     }
     return batch
+
+
+def hard_source_pairs(records):
+    """Return confirmed same-group cross-label pairs for training supervision."""
+    groups = defaultdict(dict)
+    for record in records:
+        groups[record["group_id"]][record["label_id"]] = record
+    pairs = []
+    for group_id, versions in groups.items():
+        for negative, positive, pair_type in ((2, 1, "polished_vs_generated"),
+                                              (2, 3, "humanized_vs_generated")):
+            if negative in versions and positive in versions:
+                pairs.append({
+                    "group_id": group_id,
+                    "pair_type": pair_type,
+                    "negative": versions[negative],
+                    "positive": versions[positive],
+                })
+    return pairs
+
+
+class PairDataset(Dataset):
+    def __init__(self, pairs, tokenizer, max_length=512):
+        self.items = []
+        for pair in pairs:
+            negative, positive = pair["negative"], pair["positive"]
+            negative_encoded, negative_sentences = visible_token_spans(negative["article"], tokenizer, max_length)
+            positive_encoded, positive_sentences = visible_token_spans(positive["article"], tokenizer, max_length)
+            self.items.append({
+                "pair_type": pair["pair_type"],
+                "group_id": pair["group_id"],
+                "negative": _encoded_item(negative, negative_encoded, negative_sentences),
+                "positive": _encoded_item(positive, positive_encoded, positive_sentences),
+            })
+
+    def __len__(self):
+        return len(self.items)
+
+    def __getitem__(self, index):
+        return self.items[index]
+
+
+def _encoded_item(record, encoded, sentence_tokens):
+    return {
+        "input_ids": torch.tensor(encoded["input_ids"], dtype=torch.long),
+        "attention_mask": torch.tensor(encoded["attention_mask"], dtype=torch.long),
+        "sentence_tokens": sentence_tokens,
+        "id": record["item_id"],
+        "label": torch.tensor(record["label_id"], dtype=torch.long),
+    }
+
+
+def collate_pairs(items, pad_token_id=1):
+    negative = collate_glpc([item["negative"] for item in items], pad_token_id)
+    positive = collate_glpc([item["positive"] for item in items], pad_token_id)
+    return {"negative": negative, "positive": positive,
+            "pair_type": [item["pair_type"] for item in items],
+            "group_id": [item["group_id"] for item in items]}
