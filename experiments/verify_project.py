@@ -1,6 +1,7 @@
 """Final project evidence gate. Missing work cannot be marked completed."""
 
 import json
+import math
 from pathlib import Path
 import subprocess
 
@@ -8,6 +9,7 @@ import numpy as np
 
 from experiments.common import DATA_ROOT, LABELS, classification_metrics, file_hash, read_jsonl, write_json
 from experiments.neural import BACKBONE, PROJECT_ROOT, UPSTREAM
+from experiments.ablation import MISSING_RUNS, NEURAL_RUNS, recipe_for_run, resolve_config
 
 
 def verify_saved_predictions(folder, result, records):
@@ -26,10 +28,9 @@ def verify_saved_predictions(folder, result, records):
 
 
 def verify_neural_recipe(run, result, verification, base_sha256):
-    kind, seed = run.rsplit("_s", 1)
-    expected = json.loads((PROJECT_ROOT / "experiments/configs/neural_v1.json").read_text())
-    expected.update(model_type=kind, seed=int(seed), use_supcon=kind == "race")
-    assert result["config"] == expected, "Run differs from the frozen comparison recipe"
+    base = json.loads((PROJECT_ROOT / "experiments/configs/neural_v1.json").read_text())
+    expected = recipe_for_run(base, run)
+    assert resolve_config(result["config"]) == expected, "Run differs from the frozen comparison recipe"
     assert result["initialization"]["kind"] == "base pretraining only"
     assert result["initialization"]["path"] == str(BACKBONE)
     assert result["initialization"]["model_safetensors_sha256"] == base_sha256
@@ -50,6 +51,11 @@ def verify_neural_recipe(run, result, verification, base_sha256):
     assert epochs[-1]["epoch"] <= expected["max_epochs"]
     assert epochs[-1]["epoch"] == expected["max_epochs"] or epochs[-1]["stale_epochs"] >= expected["early_stopping_patience"]
     assert len([event for event in events if event["event"] == "completed"]) == 1
+    if "experiments/ablation.py" in result["code_sha256"]:
+        for event in epochs:
+            assert (event["mean_train_supcon"] > 0) == expected["use_supcon"], "Actual loss differs from configured objective"
+            combined = event["mean_train_ce"] + expected["supcon_weight"] * event["mean_train_supcon"]
+            assert math.isclose(event["mean_train_loss"], combined, abs_tol=1e-6), "Loss component accounting mismatch"
     assert result["upstream_commit"] == "61ce528430a8bb84fd1bfb3285ee34827182ef59"
     return {"initialization": "same base pretrained weights", "recipe": "exact fixed comparison configuration",
             "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
@@ -72,7 +78,7 @@ def main():
     test_records = read_jsonl(DATA_ROOT / "test.jsonl")
     auxiliary_records = read_jsonl(auxiliary_root / "test.jsonl")
     base_sha256 = file_hash(BACKBONE / "model.safetensors")
-    runs = ["tfidf_lr_v1", "race_no_supcon_s3407"] + [f"{kind}_s{seed}" for kind in ("roberta", "race") for seed in (3407, 42, 2026)]
+    runs = ["tfidf_lr_v1", *NEURAL_RUNS]
     for run in runs:
         folder = reports / run
         try:
@@ -93,6 +99,24 @@ def main():
             checks[run] = "completed and reload-verified; frozen protocol and current checkpoint hash match"
         except (FileNotFoundError, KeyError, AssertionError) as error:
             missing.append(f"{run}: {type(error).__name__}: {error}")
+    for architecture, reference in (("roberta", "roberta_s3407"), ("race", "race_s3407")):
+        if reference not in trained_models:
+            continue
+        for run, result in trained_models.items():
+            if run == "tfidf_lr_v1" or resolve_config(result["config"])["model_type"] != architecture:
+                continue
+            if result["parameters"] != trained_models[reference]["parameters"]:
+                missing.append(f"{run}: parameter counts or trainable layers differ within architecture")
+            else:
+                checks[f"{run}_architecture_parameters"] = "same parameter counts and trainable layers within architecture"
+    if MISSING_RUNS[0] in trained_models:
+        reference_sources = trained_models[MISSING_RUNS[0]]["code_sha256"]
+        for run in MISSING_RUNS:
+            if run in trained_models:
+                if any(trained_models[run]["code_sha256"].get(path) != digest for path, digest in reference_sources.items()):
+                    missing.append(f"{run}: shared training source changed during the five-run extension")
+                else:
+                    checks[f"{run}_shared_training_source"] = "same shared training implementation across the added runs"
     for run in ("tfidf_lr_v1", "roberta_s3407", "race_s3407", "race_no_supcon_s3407"):
         try:
             auxiliary = json.loads((reports / run / "hc3_aux_v1_1_result.json").read_text())
@@ -122,6 +146,7 @@ def main():
                          ("released_rst_span_audit.json", "audited_without_data_changes"),
                          ("parser_assets.json", "passed"),
                          ("retraining_entrypoint.json", "passed"),
+                         ("ablation_entrypoint.json", "passed"),
                          ("auxiliary/summary.json", "completed"), ("comparison/case_studies.json", "completed"),
                          ("hc3_rst_aligned_span_audit.json", "passed")):
         try:
@@ -152,6 +177,25 @@ def main():
                 assert record["guards"]["existing_name"]["exit_code"] == 1
                 assert all(file_hash(item["log_path"]) == item["log_sha256"] for item in record["guards"].values())
                 assert all(trained_models[run]["checkpoint_sha256"] == digest for run, digest in record["canonical_checkpoint_hashes_unchanged"].items())
+            if name == "ablation_entrypoint.json":
+                assert record["training_entrypoint_sha256"] == file_hash(PROJECT_ROOT / "experiments/train_neural.py")
+                assert set(record["smokes"]) == {"roberta", "roberta_supcon", "race_no_supcon", "race"}
+                for kind, item in record["smokes"].items():
+                    assert file_hash(item["smoke_path"]) == item["smoke_sha256"]
+                    smoke = json.loads(Path(item["smoke_path"]).read_text())
+                    expected = recipe_for_run(json.loads((PROJECT_ROOT / "experiments/configs/neural_v1.json").read_text()), f"{kind}_s3407")
+                    expected.update(max_epochs=1, early_stopping_patience=1)
+                    assert smoke["config"] == expected and smoke["status"] == "passed"
+                    assert not smoke["test_partition_loaded"] and smoke["finite_gradients"] and smoke["classifier_updated"]
+                    assert (smoke["mean_train_supcon"] > 0) == expected["use_supcon"]
+                    assert file_hash(Path(item["smoke_path"]).parent / "source/experiments/train_neural.py") == record["training_entrypoint_sha256"]
+            if name == "comparison/summary.json":
+                assert set(record["analyses"]) == set(runs)
+                assert record["factorial_ablation"]["status"] == "completed"
+                assert all(effect["seeds"] == [3407, 42, 2026] for effect in record["factorial_ablation"]["effects"].values())
+                assert record["analysis_script_sha256"] == file_hash(PROJECT_ROOT / "experiments/analyze_results.py")
+                assert set(record["analysis_support_sha256"]) == {"experiments/ablation.py", "experiments/factorial_summary.py"}
+                assert all(file_hash(PROJECT_ROOT / path) == digest for path, digest in record["analysis_support_sha256"].items())
             if name == "auxiliary/summary.json":
                 assert record["hart_reference"]["samples"] == 3194
                 assert record["hart_reference"]["test_file_sha256"] == file_hash(DATA_ROOT / "test.jsonl")
@@ -166,7 +210,8 @@ def main():
     for name in ("README.md", "SOURCES.md", "VIDEO_OUTLINE.md", "METHOD_NOTES.md", "requirements-core.txt", "requirements-rst.txt", "run_review.sh",
                  "reports/runtime_training.json", "reports/runtime_rst.json", "reports/comparison/REPORT.md",
                  "reports/comparison/main_metrics.png", "reports/comparison/confusion_matrices.png", "reports/comparison/domain_metrics.png",
-                 "reports/comparison/learning_curves.png", "reports/auxiliary/aligned_binary_metrics.png"):
+                 "reports/comparison/learning_curves.png", "reports/comparison/ablation_2x2.png",
+                 "reports/auxiliary/aligned_binary_metrics.png"):
         path = PROJECT_ROOT / "experiments" / name
         if not path.is_file() or path.stat().st_size == 0:
             missing.append(name)

@@ -13,12 +13,15 @@ import numpy as np
 
 from experiments.common import DATA_ROOT, DOMAINS, LABELS, classification_metrics, file_hash, read_jsonl, write_json, write_jsonl
 from experiments.neural import PROJECT_ROOT, load_records
+from experiments.ablation import CONDITIONS, NEURAL_RUNS, NAMES as NEURAL_NAMES
+from experiments.factorial_summary import markdown_factorial, summarize_factorial
 
 
 REPORTS = PROJECT_ROOT / "experiments/reports"
 PRIMARY = ["tfidf_lr_v1", "roberta_s3407", "race_s3407", "race_no_supcon_s3407"]
-EXPECTED = PRIMARY + [f"{kind}_s{seed}" for kind in ("roberta", "race") for seed in (42, 2026)]
-NAMES = {"tfidf_lr_v1": "TF-IDF + LR", "roberta": "RoBERTa", "race": "RACE", "race_no_supcon": "RACE w/o SupCon"}
+DISPLAY_RUNS = ["tfidf_lr_v1"] + [f"{kind}_s3407" for kind in CONDITIONS]
+EXPECTED = ["tfidf_lr_v1", *NEURAL_RUNS]
+NAMES = {"tfidf_lr_v1": "TF-IDF + LR", **NEURAL_NAMES}
 SHORT_LABELS = ["Human", "AI-polished", "AI-generated", "AI-humanized"]
 
 
@@ -54,13 +57,13 @@ def paired_block_bootstrap(rows, y, left, right):
 
 
 def figures(out, analyses, summaries):
-    colors = ["#728f86", "#4f7f91", "#137f73", "#c18b54"]
+    colors = ["#728f86", "#4f7f91", "#8b72a3", "#c18b54", "#137f73"]
     plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False,
                          "figure.facecolor": "white", "axes.titleweight": "bold"})
-    keys = [key for key in PRIMARY if key in analyses]
+    keys = [key for key in DISPLAY_RUNS if key in analyses]
     if not keys:
         return
-    fig, axes = plt.subplots(1, 2, figsize=(10, 4.1))
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4.8))
     for ax, metric, title in zip(axes, ("macro_f1", "macro_auroc_ovr"), ("Macro-F1", "Macro-AUROC (OvR)")):
         values, deviations = [], []
         for key in keys:
@@ -110,13 +113,12 @@ def figures(out, analyses, summaries):
     fig.tight_layout()
     fig.savefig(out / "domain_metrics.png", dpi=180, bbox_inches="tight")
     plt.close(fig)
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4.6), sharey=True)
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8), sharey=True)
     seed_colors = {"3407": "#137f73", "42": "#4f7f91", "2026": "#8b72a3"}
     all_validation_values = []
-    for ax, kind in zip(axes, ("roberta", "race")):
+    for ax, kind in zip(axes.flat, CONDITIONS):
         for run in analyses:
-            ablation = run == "race_no_supcon_s3407" and kind == "race"
-            if family(run) != kind and not ablation:
+            if family(run) != kind:
                 continue
             events = read_jsonl(DATA_ROOT.parent / "neural_runs" / run / "events.jsonl")
             epochs = [event for event in events if event["event"] == "epoch_complete"]
@@ -126,24 +128,60 @@ def figures(out, analyses, summaries):
             y = [100 * event["validation"]["macro_f1"] for event in epochs]
             all_validation_values.extend(y)
             seed = run.rsplit("_s", 1)[1]
-            color = "#c18b54" if ablation else seed_colors[seed]
-            label = "No SupCon · 3407 (one run)" if ablation else f"Seed {seed}"
-            ax.plot(x, y, marker=".", linestyle="--" if ablation else "-", color=color, label=label)
+            color = seed_colors[seed]
+            ax.plot(x, y, marker=".", color=color, label=f"Seed {seed}")
             best = analyses[run]["best_epoch"]
             selected = next(event for event in epochs if event["epoch"] == best)
             ax.scatter([best], [100 * selected["validation"]["macro_f1"]], marker="*", s=105, color=color, zorder=5)
         ax.set_xlabel("Completed epoch")
         ax.xaxis.set_major_locator(MaxNLocator(integer=True, nbins=6))
         ax.set_title(NAMES[kind])
-        ax.legend(fontsize=8)
+        if ax.lines:
+            ax.legend(fontsize=8)
+        else:
+            ax.text(.5, .5, "No completed, verified run yet", transform=ax.transAxes, ha="center")
         ax.grid(axis="y", alpha=.15)
     if all_validation_values:
-        axes[0].set_ylim(max(0, min(all_validation_values) - 3), min(100, max(all_validation_values) + 3))
-    axes[0].set_ylabel("Validation Macro-F1 (%)")
+        axes[0, 0].set_ylim(max(0, min(all_validation_values) - 3), min(100, max(all_validation_values) + 3))
+    for ax in axes[:, 0]:
+        ax.set_ylabel("Validation Macro-F1 (%)")
     fig.suptitle("Completed and reload-verified runs · stars mark validation-selected checkpoints\nNo test curve is used for selection", fontsize=11)
     fig.tight_layout()
     fig.savefig(out / "learning_curves.png", dpi=180, bbox_inches="tight")
     plt.close(fig)
+    factorial = summarize_factorial(analyses)
+    if factorial["status"] == "completed":
+        fig, axes = plt.subplots(1, 2, figsize=(12, 4.8), gridspec_kw={"width_ratios": [1, 1.35]})
+        for kinds, color, label in ((["roberta", "roberta_supcon"], "#4f7f91", "RoBERTa"),
+                                    (["race_no_supcon", "race"], "#137f73", "RACE")):
+            for seed in (3407, 42, 2026):
+                axes[0].plot([0, 1], [100 * analyses[f"{kind}_s{seed}"]["test"]["macro_f1"] for kind in kinds],
+                             color=color, alpha=.25, linewidth=1)
+            means = [100 * summaries[kind]["macro_f1"]["mean"] for kind in kinds]
+            sds = [100 * summaries[kind]["macro_f1"]["sample_sd"] for kind in kinds]
+            axes[0].errorbar([0, 1], means, yerr=sds, color=color, marker="o", capsize=5, linewidth=2, label=label)
+        axes[0].set_xticks([0, 1], ["CE", "CE + SupCon"])
+        axes[0].set_xlim(-.2, 1.2)
+        axes[0].set_ylabel("Test Macro-F1 (%)")
+        axes[0].set_title("Four conditions · mean ± seed SD")
+        axes[0].legend()
+        labels = ["SupCon effect · RoBERTa", "SupCon effect · RACE", "RACE − RoBERTa · CE",
+                  "RACE − RoBERTa · CE + SupCon", "Interaction (difference of effects)"]
+        effects = list(factorial["effects"].values())
+        for index, effect in enumerate(effects):
+            metric = effect["metrics"]["macro_f1"]
+            axes[1].scatter([100*x for x in metric["values"]], [index]*3, color="#8b72a3", alpha=.5, s=20)
+            axes[1].errorbar(100 * metric["mean"], index, xerr=100 * metric["sample_sd"],
+                             fmt="o", color="#18342a", capsize=4)
+        axes[1].axvline(0, color="#aaaaaa", linestyle="--", linewidth=1)
+        axes[1].set_yticks(range(5), labels)
+        axes[1].invert_yaxis()
+        axes[1].set_xlabel("Paired Macro-F1 difference (percentage points)")
+        axes[1].set_title("Three matched seeds · mean ± SD, not CI")
+        fig.suptitle("HART frozen grouped split · seeds 3407, 42, 2026", fontsize=12)
+        fig.tight_layout()
+        fig.savefig(out / "ablation_2x2.png", dpi=180, bbox_inches="tight")
+        plt.close(fig)
 
 
 def main():
@@ -209,6 +247,7 @@ def main():
     for left, right in (("roberta_s3407", "race_s3407"), ("race_no_supcon_s3407", "race_s3407")):
         if left in predictions and right in predictions:
             bootstrap[f"{right}_minus_{left}"] = paired_block_bootstrap(rows, y, predictions[left], predictions[right])
+    factorial = summarize_factorial(analyses)
     auxiliary = {}
     for run in PRIMARY:
         path = REPORTS / run / "hc3_aux_v1_1_result.json"
@@ -243,16 +282,19 @@ def main():
               "data_protocol_sha256": file_hash(DATA_ROOT / "protocol.json"),
               "test_samples": len(rows), "analyses": analyses, "training_seed_summaries": summaries,
               "paired_block_bootstrap": bootstrap, "hc3_binary_auxiliary": auxiliary,
+              "factorial_ablation": factorial,
               "auxiliary_analysis_sha256": file_hash(REPORTS / "auxiliary/summary.json"),
               "case_studies_sha256": file_hash(out / "case_studies.json"),
               "information_boundary": "All lexical inputs use the first 512 RoBERTa tokens. RACE drops out-of-window EDU nodes but retains full-document relation nodes and their connections; use untruncated cohort comparisons to examine this difference. Cohort differences are descriptive, not randomized controls.",
-              "statistical_boundary": "Three training seeds on one frozen grouped split do not establish cross-dataset or unseen-generator generalization. Ablation has one seed. Bootstrap is conditional on fitted seed-3407 models.",
+              "statistical_boundary": "The 2x2 design has four neural conditions and three planned seeds per condition on one frozen grouped split; completed runs are listed separately. The added ablations follow inspection of existing results, not an independent holdout. Bootstrap is conditional on fitted seed-3407 models; HC3 retains its original single-seed scope.",
               "analysis_script_sha256": file_hash(__file__)}
+    report["analysis_support_sha256"] = {name: file_hash(PROJECT_ROOT / name) for name in
+                                         ("experiments/ablation.py", "experiments/factorial_summary.py")}
     write_json(out / "summary.json", report)
     figures(out, analyses, summaries)
     lines = ["# EE6405 RACE 实验结果", "", f"状态：{'完整实验已复核' if report['status'] == 'completed' else '阶段结果，仍有实验未完成'}。固定 HART 分组测试集 {len(rows):,} 条；验证集选模。", "",
              "| 模型 | 训练次数 | Macro-F1（均值 ± SD） | Macro-AUROC（均值 ± SD） |", "|---|---:|---:|---:|"]
-    for key in ("tfidf_lr_v1", "roberta", "race", "race_no_supcon"):
+    for key in ("tfidf_lr_v1", *CONDITIONS):
         if key not in summaries:
             continue
         summary = summaries[key]
@@ -260,22 +302,23 @@ def main():
             item = summary[name]
             return f"{100*item['mean']:.2f}%" + (f" ± {100*item['sample_sd']:.2f}" if item["sample_sd"] is not None else "")
         lines.append(f"| {NAMES[key]} | {len(summary['runs'])} | {percent('macro_f1')} | {percent('macro_auroc_ovr')} |")
-    lines += ["", "SD 表示训练随机种子的样本标准差；TF-IDF 为确定性拟合。消融只有一次训练，不能把单次差异当成稳定收益。"]
+    lines += ["", "SD 表示同一冻结划分下训练随机种子的样本标准差；TF-IDF 为确定性拟合。四个神经配置均计划运行种子 3407、42、2026，缺失时明确标记。", ""]
+    lines += markdown_factorial(factorial)
     if all(kind in summaries for kind in ("roberta", "race")) and summaries["roberta"]["seeds"] == summaries["race"]["seeds"]:
         delta = 100 * (summaries["race"]["macro_f1"]["mean"] - summaries["roberta"]["macro_f1"]["mean"])
-        lines += ["", f"在相同的 {len(summaries['race']['seeds'])} 个训练种子上，RACE−RoBERTa 的平均 Macro-F1 差为 {delta:+.2f} 个百分点。"
+        lines += ["", f"原方案比较（RACE＋SupCon 对 RoBERTa＋CE）：在相同的 {len(summaries['race']['seeds'])} 个训练种子上，平均 Macro-F1 差为 {delta:+.2f} 个百分点。该比较同时改变架构与训练目标。"
                   + ("RACE 的平均分数较低，本组实验不支持其总体优于 RoBERTa。" if delta < 0 else "该均值差仍需结合种子波动和对比条件解释，不能单独证明稳定优势。"),
                   "这是一个固定来源分组划分上的复核，没有覆盖重新划分、独立四分类数据或未见生成模型的不确定性。"]
     lines += ["", "| 主方法 | 种子 | 验证 Macro-F1 | 选中轮次 | 测试 Macro-F1 | 测试 Macro-AUROC |", "|---|---:|---:|---:|---:|---:|"]
     for run in EXPECTED:
-        if run in analyses and family(run) in ("roberta", "race"):
+        if run in analyses and family(run) in CONDITIONS:
             item = analyses[run]
             seed = int(run.rsplit("_s", 1)[1])
             lines.append(f"| {NAMES[family(run)]} | {seed} | {100*item['validation_macro_f1']:.2f}% | {item['best_epoch']} | {100*item['test']['macro_f1']:.2f}% | {100*item['test']['macro_auroc_ovr']:.2f}% |")
     lines += ["", "## 输入窗口与对比条件", "",
               "词汇输入均限制为首 512 个 RoBERTa token。RACE 会删除截断外的 EDU 节点，但保留全篇关系节点与连接，因此主表存在可用结构信息差异。下面分别报告词汇窗口完整与截断样本，属于描述性分组分析。", "",
               "| 单次模型（种子 3407） | 完整正文子集 n / Macro-F1 | 截断子集 n / Macro-F1 |", "|---|---:|---:|"]
-    for run in PRIMARY:
+    for run in DISPLAY_RUNS:
         if run in analyses:
             cohorts = analyses[run]["cohorts"]
             a, b = cohorts["lexical_window_complete"], cohorts["lexical_window_truncated"]
@@ -286,7 +329,7 @@ def main():
         lines += ["", f"事后只读审计：作者发布的测试 RST 中有 {test_quality['records_with_invalid_spans']} 条含无效字符跨度；其余合法跨度记录中，{test_quality['records_with_uncovered_nonspace']} 条未覆盖全部非空白字符。发布数据及模型保持冻结。", "",
                   "下表由解析问题排查引出，只按坐标质量分组，不依据模型分数筛选；它属于事后描述性分析，不能作为重新训练的受控消融。坐标干净也不代表篇章关系标注正确。", "",
                   "| 模型 | 坐标干净 n / Macro-F1 | 坐标有问题 n / Macro-F1 | 词汇完整且坐标干净 n / Macro-F1 |", "|---|---:|---:|---:|"]
-        for run in PRIMARY:
+        for run in DISPLAY_RUNS:
             if run in analyses:
                 cohorts = analyses[run]["cohorts"]
                 values = [f"{cohorts[key]['samples']} / {100*cohorts[key]['macro_f1']:.2f}%" for key in
@@ -294,25 +337,25 @@ def main():
                 lines.append("| " + NAMES[family(run)] + " | " + " | ".join(values) + " |")
     lines += ["", "## 类别与子域", "", "以下使用预先指定的种子 3407，不从测试结果选择展示种子。", "",
               "| 模型 | 人工 F1 | AI 润色 F1 | AI 生成 F1 | 改写 AI F1 |", "|---|---:|---:|---:|---:|"]
-    for run in PRIMARY:
+    for run in DISPLAY_RUNS:
         if run in analyses:
             values = [f"{100*analyses[run]['test']['per_class'][label]['f1']:.2f}%" for label in LABELS]
             lines.append("| " + NAMES[family(run)] + " | " + " | ".join(values) + " |")
     lines += ["", "| 模型 | arxiv Macro-F1 | essay | news | writing |", "|---|---:|---:|---:|---:|"]
-    for run in PRIMARY:
+    for run in DISPLAY_RUNS:
         if run in analyses:
             values = [f"{100*analyses[run]['by_domain'][domain]['macro_f1']:.2f}%" for domain in DOMAINS]
             lines.append("| " + NAMES[family(run)] + " | " + " | ".join(values) + " |")
     pair = bootstrap.get("race_s3407_minus_roberta_s3407")
     if pair:
         low, high = pair["percentile_95_interval"]
-        lines += ["", f"种子 3407 的 RACE−RoBERTa Macro-F1 差为 {100*pair['delta_macro_f1_right_minus_left']:+.2f} 个百分点；按 {pair['resampling_units']} 个来源关联分组抽样的 95% 条件 bootstrap 区间为 [{100*low:+.2f}, {100*high:+.2f}] 个百分点。"
+        lines += ["", f"原方案种子 3407 的 RACE＋SupCon − RoBERTa＋CE Macro-F1 差为 {100*pair['delta_macro_f1_right_minus_left']:+.2f} 个百分点；按 {pair['resampling_units']} 个来源关联分组抽样的 95% 条件 bootstrap 区间为 [{100*low:+.2f}, {100*high:+.2f}] 个百分点。"
                   + ("该区间包含零，单次拟合没有明确的总体优劣证据。" if low <= 0 <= high else "该区间只描述这两个已拟合模型及当前测试来源组的抽样波动。"),
                   "它不涵盖重新训练和跨数据集的不确定性；主表中的训练种子波动另行报告。"]
     ablation_pair = bootstrap.get("race_s3407_minus_race_no_supcon_s3407")
     if ablation_pair:
         low, high = ablation_pair["percentile_95_interval"]
-        lines += ["", f"单次消融：完整 RACE 相对关闭监督对比损失的 Macro-F1 差为 {100*ablation_pair['delta_macro_f1_right_minus_left']:+.2f} 个百分点；来源组 bootstrap 95% 条件区间为 [{100*low:+.2f}, {100*high:+.2f}]。这支持当前拟合下该损失的作用，但未涵盖消融重新训练的随机波动，也不能把它当成图结构本身的独立收益。"]
+        lines += ["", f"种子 3407 的条件消融比较：完整 RACE 相对关闭监督对比损失的 Macro-F1 差为 {100*ablation_pair['delta_macro_f1_right_minus_left']:+.2f} 个百分点；来源组 bootstrap 95% 条件区间为 [{100*low:+.2f}, {100*high:+.2f}]。该条件区间不包含重新训练的不确定性；三种子配对差异另见 2×2 表，不能把损失收益当成图结构本身的独立收益。"]
     if "race_s3407" in analyses:
         matrix = np.asarray(analyses["race_s3407"]["test"]["confusion_matrix"])
         off_diagonal = matrix.copy()
@@ -340,10 +383,10 @@ def main():
     lines += ["", "HC3 缺少润色和人类化四分类标签，只支持上述二分类辅助结论。正文长度、来源与生成条件的变化仍是混杂因素；HART 与 HC3 的分数不能直接作为相同任务排序。HC3 原始 index 存在空值；v1.1 仅修复 ID，文本、标签与顺序均保持冻结版本不变。", "", "## 审核与复现", "",
               "summary.json 保存统一重算指标、分域和类别指标、资源记录、多种子摘要、成组 bootstrap 及证据边界。error_cases.jsonl 保存全部主 RACE 错误及其与 RoBERTa 的分歧，不按表现筛选案例。", "",
               "具体四个事后说明案例见 [CASE_STUDIES.md](CASE_STUDIES.md)，包含选择规则、原始样本位置、预测分数、输入/坐标限制和解释候选。HC3 输出分配、固定分数分布及来源/长度分析见 [辅助分析](../auxiliary/REPORT.md)，其中也将 HART 按相同创作者定义折叠为二分类，沿用同一分数/阈值观察跨基准差距；这是事后描述性参考。四个模型输出的分配不能称为 HC3 四分类准确率。", "",
-              "图表：main_metrics.png、confusion_matrices.png、domain_metrics.png、learning_curves.png。收敛图展示已完成且重载复核的主方法各个种子和单次消融，仅画验证集指标及其选中的 checkpoint；未完成训练不混入结果。不同设备、是否包含解析或模型加载的计时范围不同，不能直接相除解释加速倍数。"]
+              "图表：main_metrics.png、ablation_2x2.png（矩阵完整后生成）、confusion_matrices.png、domain_metrics.png、learning_curves.png。收敛图展示已完成且重载复核的四个神经配置的全部已完成种子，仅画验证集指标及其选中的 checkpoint；未完成训练不混入结果。不同设备、是否包含解析或模型加载的计时范围不同，不能直接相除解释加速倍数。"]
     lines += ["", "## 计算成本（种子 3407）", "",
               "| 模型 | 训练/验证/保存（秒） | 3194 条测试前向（秒） | CUDA 分配峰值 MiB |", "|---|---:|---:|---:|"]
-    for run in PRIMARY:
+    for run in DISPLAY_RUNS:
         if run not in analyses:
             continue
         e = analyses[run]["efficiency"]

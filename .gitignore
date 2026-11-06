@@ -45,6 +45,15 @@ models/
 !/experiments/reports/race_s42/
 !/experiments/reports/race_s2026/
 !/experiments/reports/race_no_supcon_s3407/
+!/experiments/reports/race_no_supcon_s42/
+!/experiments/reports/race_no_supcon_s2026/
+!/experiments/reports/roberta_supcon_s3407/
+!/experiments/reports/roberta_supcon_s42/
+!/experiments/reports/roberta_supcon_s2026/
+!/experiments/reports/ablation_entrypoint.json
+!/experiments/reports/retraining_entrypoint_before_2x2.json
+!/experiments/reports/ablation_retraining_invalid_name.log
+!/experiments/reports/ablation_retraining_existing_name.log
 !/experiments/reports/comparison/
 !/experiments/reports/auxiliary/
 !/experiments/reports/data_v1.json

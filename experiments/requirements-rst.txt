@@ -1,4 +1,4 @@
-# Add to a separate environment containing torch and requirements-core.txt.
+# Add to the isolated environment containing torch and requirements-core.txt.
 # Install with --no-deps: these are the exercised RST-DT inference path packages.
 # Optional spaCy/Playwright branches of isanlp-rst are not used by this project.
 isanlp-rst==3.2.2

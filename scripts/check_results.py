@@ -18,8 +18,9 @@ LABELS = ("human_written", "human_ai_polished", "ai_generated", "ai_humanized")
 FAMILIES = {
     "tfidf_lr_v1": ("tfidf_lr_v1",),
     "roberta": tuple(f"roberta_s{seed}" for seed in (3407, 42, 2026)),
+    "roberta_supcon": tuple(f"roberta_supcon_s{seed}" for seed in (3407, 42, 2026)),
     "race": tuple(f"race_s{seed}" for seed in (3407, 42, 2026)),
-    "race_no_supcon": ("race_no_supcon_s3407",),
+    "race_no_supcon": tuple(f"race_no_supcon_s{seed}" for seed in (3407, 42, 2026)),
 }
 PRIMARY = ("tfidf_lr_v1", "roberta_s3407", "race_s3407", "race_no_supcon_s3407")
 
@@ -192,6 +193,30 @@ def check(reports):
             else:
                 require(saved["sample_sd"] is None, f"{family}: single run must have null SD")
 
+    factorial = summary["factorial_ablation"]
+    require(factorial["status"] == "completed" and not factorial["missing_runs"], "Incomplete factorial analysis")
+    contrasts = {
+        "supcon_with_roberta": {"roberta_supcon": 1, "roberta": -1},
+        "supcon_with_race": {"race": 1, "race_no_supcon": -1},
+        "race_minus_roberta_with_ce": {"race_no_supcon": 1, "roberta": -1},
+        "race_minus_roberta_with_supcon": {"race": 1, "roberta_supcon": -1},
+        "interaction": {"race": 1, "race_no_supcon": -1, "roberta_supcon": -1, "roberta": 1},
+    }
+    require(set(factorial["effects"]) == set(contrasts), "Incorrect factorial contrasts")
+    for name, coefficients in contrasts.items():
+        effect = factorial["effects"][name]
+        require(effect["seeds"] == [3407, 42, 2026] and effect["coefficients"] == coefficients,
+                f"{name}: wrong seed pairing or contrast")
+        for metric in ("accuracy", "macro_f1", "macro_auroc_ovr"):
+            values = [sum(weight * recomputed[f"{kind}_s{seed}"][metric] for kind, weight in coefficients.items())
+                      for seed in (3407, 42, 2026)]
+            recorded = effect["metrics"][metric]
+            require(recorded["n"] == 3 and len(recorded["values"]) == 3, f"{name}: wrong count")
+            for actual, saved in zip(values, recorded["values"]):
+                close(actual, saved, f"{name}/{metric}/paired value")
+            close(statistics.mean(values), recorded["mean"], f"{name}/{metric}/mean")
+            close(statistics.stdev(values), recorded["sample_sd"], f"{name}/{metric}/SD")
+
     identity = None
     for run in PRIMARY:
         folder = reports / run
@@ -229,7 +254,7 @@ def check(reports):
         compare_metrics(aligned, auxiliary["analyses"][run]["hart_aligned_binary_reference"],
                         f"{run}/HART binary reference")
         print(f"HC3  {run:24s} accuracy={metrics['accuracy']:.6f} macro_f1={metrics['macro_f1']:.6f} auroc={metrics['auroc']:.6f}")
-    print("PASS: 8 HART runs, 4 HC3 runs, and stored summary aggregates agree.")
+    print("PASS: 13 HART runs, 4 HC3 runs, seed aggregates and five paired factorial contrasts agree.")
     print("Scope: saved-prediction consistency only; no original data or checkpoint replay.")
 
 

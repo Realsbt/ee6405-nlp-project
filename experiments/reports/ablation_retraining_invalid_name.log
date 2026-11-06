@@ -1,0 +1,7 @@
+/home/botao/miniforge/envs/rl_robotlab/lib/python3.11/site-packages/torch/cuda/__init__.py:61: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+usage: train_neural.py [-h] [--config CONFIG]
+                       [--model-type {roberta,race,race_no_supcon}]
+                       [--supcon | --no-supcon] [--seed SEED]
+                       [--run-name RUN_NAME] [--smoke] [--resume]
+train_neural.py: error: argument --run-name: Use 1–80 ASCII letters, digits, underscores or hyphens; start with a letter or digit

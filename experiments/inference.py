@@ -4,6 +4,8 @@ import atexit
 import json
 import os
 from pathlib import Path
+
+from experiments.paths import STORAGE, BACKBONE, UPSTREAM, resolve_recorded_path, parser_python
 import select
 import subprocess
 import threading
@@ -18,7 +20,6 @@ from experiments.neural import PROJECT_ROOT, TextDataset, build_model, collate_b
 from experiments.raw_graph import RawGraphDataset
 
 
-STORAGE = DATA_ROOT.parent.parent
 RUN_NAMES = {"tfidf": "tfidf_lr_v1", "roberta": "roberta_s3407", "race": "race_s3407",
              "race_no_supcon": "race_no_supcon_s3407"}
 DISPLAY = {"tfidf": "TF-IDF + Logistic Regression", "roberta": "RoBERTa", "race": "RACE",
@@ -46,10 +47,22 @@ class DetectorService:
         for name, run in RUN_NAMES.items():
             report = PROJECT_ROOT / "experiments/reports" / run
             ready = (report / "result.json").exists() and (report / "verification.json").exists()
+            reason = "Training or verification pending"
             if ready:
-                ready = json.loads((report / "result.json").read_text())["status"] == "completed"
+                result = json.loads((report / "result.json").read_text())
+                ready = result["status"] == "completed"
                 ready = ready and json.loads((report / "verification.json").read_text())["status"] == "passed"
+                if ready:
+                    required = [resolve_recorded_path(result.get("checkpoint_path", result.get("model_path")))]
+                    if name != "tfidf":
+                        required += [BACKBONE / "model.safetensors", UPSTREAM / "models/flexible_model.py"]
+                    if name.startswith("race"):
+                        required += [STORAGE / "assets/isanlp_rst_local/best_weights.pt",
+                                     STORAGE / "assets/isanlp_rst_local/config.json"]
+                    ready = all(path.is_file() for path in required)
+                    reason = "Model resources not installed" if not ready else ""
             output.append({"id": name, "name": DISPLAY[name], "available": ready,
+                           "availability_reason": reason,
                            "requires_rst": name.startswith("race"), "run_id": run})
         return {"models": output, "device": self.device, "max_characters": 12000,
                 "labels": LABELS, "parser_loaded": self.parser is not None and self.parser.poll() is None}
@@ -58,17 +71,17 @@ class DetectorService:
         if name in self.models:
             return self.models[name], 0.0
         if not any(row["id"] == name and row["available"] for row in self.registry()["models"]):
-            raise ValueError("This model has not completed training and reload verification")
+            raise ValueError("Model unavailable: install its resources and check the verification record")
         started = time.perf_counter()
         run = RUN_NAMES[name]
         report = PROJECT_ROOT / "experiments/reports" / run
         result = json.loads((report / "result.json").read_text())
         if name == "tfidf":
             assert file_hash(result["model_path"]) == result["model_sha256"]
-            model = joblib.load(result["model_path"])
+            model = joblib.load(resolve_recorded_path(result["model_path"]))
         else:
             assert file_hash(result["checkpoint_path"]) == result["checkpoint_sha256"]
-            saved = torch.load(result["checkpoint_path"], map_location="cpu", weights_only=True)
+            saved = torch.load(resolve_recorded_path(result["checkpoint_path"]), map_location="cpu", weights_only=True)
             model = build_model(result["config"], saved.get("metadata")).to(self.device).eval()
             model.load_state_dict(saved["model_state_dict"], strict=True)
         self.models[name] = model
@@ -92,7 +105,7 @@ class DetectorService:
             environment = {**os.environ, "HF_HOME": str(STORAGE / "cache/huggingface"),
                            "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1", "TOKENIZERS_PARALLELISM": "false",
                            "PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "2", "OPENBLAS_NUM_THREADS": "2"}
-            self.parser = subprocess.Popen([str(STORAGE / ".venv-rst/bin/python"), "-u", "-m", "experiments.rst_service"],
+            self.parser = subprocess.Popen([parser_python(), "-u", "-m", "experiments.rst_service"],
                                            cwd=PROJECT_ROOT, env=environment, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                            stderr=log, text=True, bufsize=1)
             log.close()
@@ -113,7 +126,7 @@ class DetectorService:
 
     def predict(self, text, name):
         if not isinstance(text, str) or not text.strip() or len(text) > 12000:
-            raise ValueError("请输入非空英文文本，最多 12000 个字符。")
+            raise ValueError("Enter non-empty English text, up to 12,000 characters.")
         if name not in RUN_NAMES:
             raise ValueError("Unknown model")
         with self.lock:
