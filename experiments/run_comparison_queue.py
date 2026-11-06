@@ -10,13 +10,15 @@ import fcntl
 import json
 import os
 from pathlib import Path
+
+from experiments.paths import STORAGE
 import subprocess
 import sys
 import time
 
 
 ROOT = Path(__file__).resolve().parents[1]
-STORAGE = Path("/data/botao/ee6405-race-validation")
+
 RUNS = STORAGE / "experiments/neural_runs"
 REPORTS = ROOT / "experiments/reports"
 QUEUE = STORAGE / "experiments/comparison_queue_v1"

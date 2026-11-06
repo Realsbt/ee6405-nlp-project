@@ -1,7 +1,10 @@
 """Compare cached graph inputs and outputs with the official live preprocessing."""
 
+import argparse
 import json
 from pathlib import Path
+
+from experiments.paths import resolve_recorded_path
 
 import torch
 
@@ -11,6 +14,9 @@ from experiments.neural import PROJECT_ROOT, balanced_smoke_records, build_model
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--report', type=Path, default=PROJECT_ROOT / 'experiments/reports/graph_cache_verification.json')
+    args = parser.parse_args()
     torch.set_num_threads(2)
     torch.manual_seed(3407)
     records = balanced_smoke_records(load_records("train"), 1)
@@ -18,7 +24,7 @@ def main():
     needed = {row["item_id"] for row in records}
     raw_by_id = {}
     for source in {row["source_file"] for row in records}:
-        with Path(source).open() as stream:
+        with resolve_recorded_path(source).open() as stream:
             for line in stream:
                 raw = json.loads(line)
                 if raw["item_id"] in needed:
@@ -53,7 +59,7 @@ def main():
               "max_abs_logit_difference": float((actual - expected).abs().max()),
               "weights": "base pretrained RoBERTa plus randomly initialized RACE layers; no author fine-tuned checkpoint",
               "device": "cpu", "training_performed": False}
-    write_json(PROJECT_ROOT / "experiments/reports/graph_cache_verification.json", report)
+    write_json(args.report, report)
     print(json.dumps(report, indent=2))
 
 

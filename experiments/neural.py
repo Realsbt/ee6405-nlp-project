@@ -2,6 +2,8 @@
 
 import json
 from pathlib import Path
+
+from experiments.paths import PROJECT_ROOT, UPSTREAM, BACKBONE, resolve_recorded_path
 import sys
 
 import numpy as np
@@ -12,9 +14,6 @@ from transformers import AutoTokenizer
 from experiments.common import DATA_ROOT, LABELS, file_hash, read_jsonl
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-UPSTREAM = PROJECT_ROOT / "local_validation/upstream/RACE"
-BACKBONE = Path("/data/botao/ee6405-race-validation/assets/roberta-base")
 RUN_ROOT = DATA_ROOT.parent / "neural_runs"
 
 
@@ -29,8 +28,10 @@ def import_upstream():
 def build_model(config, metadata=None):
     baseline, race, _ = import_upstream()
     model_class = baseline if config["model_type"] == "roberta" else race
+    architecture = dict(config["architecture"])
+    architecture["backbone_model_path"] = str(resolve_recorded_path(architecture["backbone_model_path"]))
     return model_class(feature_dim=128, gnn_hidden_dim=512, num_heads=4, num_classes=4,
-                       config=config["architecture"], metadata=metadata, output_features=True)
+                       config=architecture, metadata=metadata, output_features=True)
 
 
 class TextDataset(Dataset):

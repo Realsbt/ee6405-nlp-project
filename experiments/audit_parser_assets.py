@@ -4,10 +4,12 @@ import hashlib
 import json
 from pathlib import Path
 
+from experiments.paths import ASSETS
+
 from experiments.common import file_hash, write_json
 
 
-ASSETS = Path("/data/botao/ee6405-race-validation/assets")
+
 
 
 def verify_download(root, filename, revision):

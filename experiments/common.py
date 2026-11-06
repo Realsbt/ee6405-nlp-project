@@ -4,13 +4,15 @@ import hashlib
 import json
 from pathlib import Path
 
+from experiments.paths import DATA_ROOT, resolve_recorded_path
+
 import numpy as np
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_recall_fscore_support, roc_auc_score, roc_curve
 
 
 LABELS = ["human_written", "human_ai_polished", "ai_generated", "ai_humanized"]
 DOMAINS = ["arxiv", "essay", "news", "writing"]
-DATA_ROOT = Path("/data/botao/ee6405-race-validation/experiments/hart_grouped_v1")
+
 
 
 def write_json(path, value):
@@ -28,13 +30,13 @@ def write_jsonl(path, records):
 
 
 def read_jsonl(path):
-    with Path(path).open() as stream:
+    with resolve_recorded_path(path).open() as stream:
         return [json.loads(line) for line in stream if line.strip()]
 
 
 def file_hash(path):
     digest = hashlib.sha256()
-    with Path(path).open("rb") as stream:
+    with resolve_recorded_path(path).open("rb") as stream:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()

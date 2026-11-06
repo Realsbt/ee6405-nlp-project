@@ -73,7 +73,7 @@ python3 scripts/check_results.py
 
 The script recomputes metrics from individual predictions and checks eight formal runs, four HC3 evaluations and the aggregate tables. It checks internal consistency of the saved evidence; checkpoint inference still requires external resources.
 
-### Use the demo on the configured experiment host
+### Run the English demo on Linux / Windows WSL2
 
 <p align="center">
   <img src="experiments/reports/demo_race.jpg" alt="English RACE demo: text input, model selection, four-class scores and discourse parsing information" width="800">
@@ -82,16 +82,22 @@ The script recomputes metrics from individual predictions and checks eight forma
 *The interface and demonstration materials are in English. The example has no ground-truth authorship label. The displayed request time is an individual measurement, not a cold-start benchmark.*
 
 ```bash
-# Raw English input -> four-class scores; RACE uses the actual RST parser
-bash experiments/run_demo.sh
+# First install Python 3.11, Git, GitHub CLI and a C/C++ compiler.
+# Each teammate needs access to this private repository and gh auth login.
+export EE6405_STORAGE="$HOME/ee6405-resources"
+python3 scripts/setup_environment.py --python python3.11 --torch cpu
+export EE6405_PYTHON="$EE6405_STORAGE/.venv/bin/python"
 
-# Rebuild analysis plots and check data, checkpoints, training and reload evidence
-bash experiments/run_review.sh
+"$EE6405_PYTHON" scripts/fetch_resources.py --profile demo
+"$EE6405_PYTHON" scripts/check_installation.py --predict
+bash experiments/run_demo.sh
 ```
 
 Open <http://127.0.0.1:8765/>. The demo uses the CPU by default and displays scores, input truncation, the parsed discourse tree and timing. Free-form input without a ground-truth label demonstrates functionality only.
 
-**Training and inference currently depend on the original host's `/data/botao/ee6405-race-validation/` directory, two Python environments and separately obtained official source code. Cloning this repository alone is not sufficient to launch the demo.** A fresh-machine installation has not been verified. See [external resources](data/README.md) for directories, pinned versions and acquisition steps, and [run instructions](experiments/README.md) for training and reload commands.
+The demo downloads about **4.28 GiB** of resources plus its Python environment. Our checkpoints are distributed through the private [resources-v1 release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1); upstream resources are fetched from pinned original sources. They are not stored in Git. A relocated Linux checkout and a fresh isolated CPU environment have passed all four demo models, exact dataset reconstruction and preprocessing checks. WSL2 instructions are provided but were not exercised in this check.
+
+Follow the **[Linux / WSL2 reproduction guide](docs/REPRODUCING.md)** for prerequisites, full-data restoration, hardware requirements and GPU training. The original `/data/botao/ee6405-race-validation/` directory remains a local resource store; teammates choose their own `EE6405_STORAGE`. Historical result paths are resolved at read time without changing their provenance.
 
 ## Repository contents
 
@@ -107,6 +113,8 @@ experiments/              Data preparation, training, evaluation, RST and demo
   SOURCES.md               Papers, code, data and version references
   VIDEO_OUTLINE.md         9-minute-20-second human presentation outline
 scripts/check_results.py   Dependency-free saved-result consistency check
+scripts/                  Environment setup, resource download and validation
+resources/                Pinned resource manifest and frozen HC3 selection
 ```
 
 Raw datasets, model weights, Python environments, official source copies and routine logs are excluded from Git. Historical smoke runs, superseded auxiliary outputs and error lists containing full text remain in the original workspace. Submitted prediction tables contain IDs, labels and scores, without the source articles. Video renders and their editable local project remain outside Git to keep the repository small.

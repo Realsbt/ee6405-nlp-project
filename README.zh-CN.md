@@ -73,7 +73,7 @@ python3 scripts/check_results.py
 
 脚本从逐条预测重新计算指标，核对八个正式运行、四组 HC3 结果及汇总表。它检验保存结果的内部一致性；重新加载 checkpoint 推理仍需要外部资源。
 
-### 已配置的原实验主机：操作 Demo 和完整复核
+### 在 Linux / Windows WSL2 运行英文 Demo
 
 <p align="center">
   <img src="experiments/reports/demo_race.jpg" alt="RACE 英文 Demo 实际界面：文本输入、模型选择、四类分数和篇章解析信息" width="800">
@@ -82,16 +82,22 @@ python3 scripts/check_results.py
 *Demo 界面及演示材料使用英文。示例没有真实来源标签；图中耗时仅为该次请求记录，不是冷启动基准。*
 
 ```bash
-# 原始英文输入 → 四类模型分数；RACE 使用真实 RST 解析器
-bash experiments/run_demo.sh
+# 先安装 Python 3.11、Git、GitHub CLI、C/C++ 编译器。
+# 每位组员需要私有仓库读取权限，并执行 gh auth login。
+export EE6405_STORAGE="$HOME/ee6405-resources"
+python3 scripts/setup_environment.py --python python3.11 --torch cpu
+export EE6405_PYTHON="$EE6405_STORAGE/.venv/bin/python"
 
-# 重算分析图表，并检查数据、checkpoint、训练记录和重载证据
-bash experiments/run_review.sh
+"$EE6405_PYTHON" scripts/fetch_resources.py --profile demo
+"$EE6405_PYTHON" scripts/check_installation.py --predict
+bash experiments/run_demo.sh
 ```
 
 Demo 地址为 <http://127.0.0.1:8765/>，默认 CPU。已有服务时直接打开地址。页面展示四类分数、输入截断、篇章树与耗时；无真实标签的自由输入仅用于功能演示。
 
-**当前训练与推理脚本依赖原主机的 `/data/botao/ee6405-race-validation/`、两套 Python 环境，以及单独获取的官方源码。只克隆仓库不能直接启动 Demo。** 新机器从零安装尚未验证；所需目录、固定版本和获取步骤见 [数据与外部资源](data/README.md)，训练和重载命令见 [详细运行说明](experiments/README.md)。
+Demo 需下载约 **4.28 GiB** 资源，另加 Python 环境。我们的 checkpoint 单独放在私有仓库的 [resources-v1 Release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1)，上游资源从固定版本的原始来源获取，不进入 Git。已经在迁移后的 Linux checkout、新建独立 CPU 环境中跑通四个 Demo 模型，并完成固定数据重建和预处理检查；提供 WSL2 步骤，但本次没有实际测试 WSL2。
+
+系统准备、完整数据恢复、硬件要求和 GPU 训练见 **[Linux / WSL2 复现指南](docs/REPRODUCING.zh-CN.md)**。原来的 `/data/botao/ee6405-race-validation/` 继续作为本机资源目录；组员自行设置 `EE6405_STORAGE`。历史结果中的路径在读取时映射，保留原始来源记录。
 
 ## 仓库内容
 
@@ -107,6 +113,8 @@ experiments/              数据处理、训练、评估、RST 与 Demo
   SOURCES.md               论文、代码、数据与版本来源
   VIDEO_OUTLINE.md         9 分 20 秒真人讲解提纲
 scripts/check_results.py   无额外依赖的结果一致性复核
+scripts/                  环境安装、资源下载与校验入口
+resources/                固定资源清单和 HC3 原始选择记录
 ```
 
 原始数据、模型权重、Python 环境、官方源码副本和一般运行日志不进入 Git。历史 smoke、旧版辅助输出和含正文的错误清单保留在原工作区，相关分析可在完整环境中重生成。提交的逐条预测保存 ID、标签和模型分数，不包含原始文章正文。视频成品及其可编辑工程保留在本地，不进入 Git，以保持仓库简洁。

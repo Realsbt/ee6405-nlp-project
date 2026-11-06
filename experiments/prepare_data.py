@@ -10,6 +10,8 @@ from collections import Counter, defaultdict
 from itertools import combinations
 import json
 from pathlib import Path
+
+from experiments.paths import ASSETS, BACKBONE
 import re
 import unicodedata
 import hashlib
@@ -134,7 +136,7 @@ def describe(rows):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, default=Path("/data/botao/ee6405-race-validation/assets/hart_official"))
+    parser.add_argument("--source", type=Path, default=ASSETS / "hart_official")
     parser.add_argument("--output", type=Path, default=DATA_ROOT)
     parser.add_argument("--report", type=Path, default=Path("experiments/reports/data_v1.json"))
     args = parser.parse_args()
@@ -147,7 +149,7 @@ def main():
     original = {split: [r for r in raw if r["original_split"] == split] for split in ("train", "val", "test")}
     retained, exclusions = clean_and_group(raw)
     partitions = make_partitions(retained)
-    tokenizer_path = Path("/data/botao/ee6405-race-validation/assets/roberta-base")
+    tokenizer_path = BACKBONE
     tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path), local_files_only=True)
     for rows in partitions.values():
         for start in range(0, len(rows), 128):

@@ -10,14 +10,15 @@ import hashlib
 import importlib.metadata
 import json
 from pathlib import Path
+
+from experiments.paths import ASSETS, PROJECT_ROOT, UPSTREAM
 import resource
 import time
 
 from experiments.rst_alignment import exact_tree_alignment
 
 
-ROOT = Path(__file__).resolve().parents[1]
-ASSETS = Path("/data/botao/ee6405-race-validation/assets")
+ROOT = PROJECT_ROOT
 
 
 def tree_dict(node, text, relation_names):
@@ -89,7 +90,7 @@ def main():
         torch.load = original_load
         PreTrainedModel.resize_token_embeddings = original_resize
     load_seconds = time.perf_counter() - load_started
-    names = {line.split("_")[0] for line in (ROOT / "local_validation/upstream/RACE/utils/relation_table.txt").read_text().splitlines() if line.strip()}
+    names = {line.split("_")[0] for line in (UPSTREAM / "utils/relation_table.txt").read_text().splitlines() if line.strip()}
     relation_names = {name.casefold(): name for name in names}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     timings, edu_counts = [], []
