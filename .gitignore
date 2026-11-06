@@ -24,6 +24,7 @@ venv/
 /local_validation/
 /experiments/hart_grouped_v1/
 /experiments/neural_runs/
+experiments/glpc_runs/
 /experiments/PROGRESS.md
 outputs/
 runs/

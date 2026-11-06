@@ -1,0 +1,94 @@
+"""GLPC-v0: shared RoBERTa global/local branches and creator supervision."""
+
+import torch
+from torch import nn
+from transformers import AutoModel
+
+from experiments.neural import import_upstream
+
+
+CREATOR_LABELS = torch.tensor([0, 0, 1, 1])
+
+
+class GLPCModel(nn.Module):
+    def __init__(self, config, mode="glpc"):
+        super().__init__()
+        self.config = config
+        self.mode = mode
+        architecture = config["architecture"]
+        self.bert_model = AutoModel.from_pretrained(architecture["backbone_model_path"])
+        self.bert_dim = architecture.get("bert_dim", 768)
+        unfreeze_layers = architecture.get("unfreeze_bert_layers", 1)
+        for parameter in self.bert_model.parameters():
+            parameter.requires_grad = False
+        if unfreeze_layers > 0:
+            for layer in self.bert_model.encoder.layer[-unfreeze_layers:]:
+                for parameter in layer.parameters():
+                    parameter.requires_grad = True
+        _, _, supcon_class = import_upstream()
+        self.supcon_class = supcon_class
+        self.classifier = self._classification_head(self.bert_dim, 4, architecture)
+        if self.mode in ("creator_aux", "creator_local", "glpc"):
+            self.creator_head = self._classification_head(self.bert_dim, 2, architecture)
+        else:
+            self.creator_head = None
+        if self.mode in ("creator_local", "glpc"):
+            self.local_stats = nn.Sequential(
+                nn.Linear(self.bert_dim * 3, self.bert_dim),
+                nn.GELU(),
+                nn.Dropout(architecture.get("classifier_dropout", 0.1)),
+            )
+            self.local_residual = nn.Linear(self.bert_dim, 4)
+            nn.init.zeros_(self.local_residual.weight)
+            nn.init.zeros_(self.local_residual.bias)
+        else:
+            self.local_stats = None
+            self.local_residual = None
+
+    @staticmethod
+    def _classification_head(input_dim, num_classes, architecture):
+        _, _, _ = import_upstream()
+        from models.modules import ClassificationHead
+        return ClassificationHead(
+            input_dim=input_dim,
+            hidden_dim=input_dim,
+            num_classes=num_classes,
+            dropout_prob=architecture.get("classifier_dropout", 0.1),
+        )
+
+    def forward(self, batch):
+        outputs = self.bert_model(
+            input_ids=batch["input_ids"],
+            attention_mask=batch["attention_mask"],
+        )
+        hidden = outputs.last_hidden_state
+        cls = hidden[:, 0]
+        logits = self.classifier(cls)
+        local_logits = torch.zeros_like(logits)
+        if self.mode in ("creator_local", "glpc"):
+            descriptors = []
+            for row, sentence_list in enumerate(batch["sentence_tokens"]):
+                vectors = []
+                for sentence in sentence_list:
+                    indices = torch.tensor(sentence["token_indices"], device=hidden.device)
+                    vectors.append(hidden[row, indices].mean(dim=0))
+                local = torch.stack(vectors)
+                mean = local.mean(dim=0)
+                std = local.std(dim=0, unbiased=False) if len(vectors) > 1 else torch.zeros_like(mean)
+                adjacent = (local[1:] - local[:-1]).abs().mean(dim=0) if len(vectors) > 1 else torch.zeros_like(mean)
+                descriptors.append(torch.cat((mean, std, adjacent)))
+            local_logits = self.local_residual(self.local_stats(torch.stack(descriptors)))
+            logits = logits + local_logits
+        creator_logits = self.creator_head(cls) if self.creator_head is not None else None
+        return {"features": cls, "logits": logits, "creator_logits": creator_logits, "local_logits": local_logits}
+
+
+def consistency_js(four_logits, creator_logits):
+    q = torch.softmax(four_logits.float(), dim=1)
+    creator = torch.softmax(creator_logits.float(), dim=1)
+    q_creator = torch.stack((q[:, 0] + q[:, 1], q[:, 2] + q[:, 3]), dim=1)
+    midpoint = (q_creator + creator) / 2
+    return 0.5 * (
+        torch.sum(q_creator * (q_creator.clamp_min(1e-8).log() - midpoint.clamp_min(1e-8).log()), dim=1)
+        + torch.sum(creator * (creator.clamp_min(1e-8).log() - midpoint.clamp_min(1e-8).log()), dim=1)
+    ).mean()

@@ -109,7 +109,7 @@ class BalancedBatchSampler(Sampler):
 
 
 def load_records(split, data_root=DATA_ROOT):
-    protocol = json.loads((data_root / "protocol.json").read_text())
+    protocol = json.loads((data_root / "protocol.json").read_text(encoding="utf-8"))
     path = data_root / f"{split}.jsonl"
     if file_hash(path) != protocol["partitions"][split]["sha256"]:
         raise ValueError("Frozen data partition changed")

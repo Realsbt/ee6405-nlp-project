@@ -20,19 +20,19 @@ DATA_ROOT = Path(os.environ.get("EE6405_DATA_ROOT", STORAGE_ROOT / "experiments/
 def write_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + "\n")
+    path.write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
 
 
 def write_jsonl(path, records):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w") as stream:
+    with path.open("w", encoding="utf-8", newline="\n") as stream:
         for record in records:
             stream.write(json.dumps(record, ensure_ascii=False, allow_nan=False) + "\n")
 
 
 def read_jsonl(path):
-    with Path(path).open() as stream:
+    with Path(path).open(encoding="utf-8") as stream:
         return [json.loads(line) for line in stream if line.strip()]
 
 
