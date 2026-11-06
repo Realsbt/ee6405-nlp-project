@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 import torch
 
-from experiments.neural import BalancedBatchSampler, collate_batch
+from experiments.neural import BalancedBatchSampler, collate_batch, resolve_use_supcon
 
 
 class NeuralDataChecks(unittest.TestCase):
@@ -29,6 +29,12 @@ class NeuralDataChecks(unittest.TestCase):
         self.assertEqual(batch["full_text_attention_mask"][1].tolist(), [1, 1, 0])
         self.assertEqual(batch["labels"].tolist(), [0, 1])
         self.assertEqual(batch["id"], ["a", "b"])
+
+    def test_supcon_switch_is_independent_from_architecture(self):
+        self.assertTrue(resolve_use_supcon("roberta", False, True))
+        self.assertFalse(resolve_use_supcon("race", True, False))
+        self.assertTrue(resolve_use_supcon("race", False, None))
+        self.assertFalse(resolve_use_supcon("race_no_supcon", False, None))
 
 
 if __name__ == "__main__":

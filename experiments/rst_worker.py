@@ -14,10 +14,11 @@ import resource
 import time
 
 from experiments.rst_alignment import exact_tree_alignment
+from experiments.common import ASSETS_ROOT
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = Path("/data/botao/ee6405-race-validation/assets")
+ASSETS = ASSETS_ROOT
 
 
 def tree_dict(node, text, relation_names):

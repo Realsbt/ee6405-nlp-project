@@ -11,13 +11,13 @@ import re
 
 import numpy as np
 
-from experiments.common import DATA_ROOT, file_hash, read_jsonl, write_json, write_jsonl
+from experiments.common import ASSETS_ROOT, DATA_ROOT, file_hash, read_jsonl, write_json, write_jsonl
 from experiments.neural import PROJECT_ROOT, load_records, tokenizer_local
 from experiments.prepare_data import text_hash
 
 
 def main():
-    source = Path("/data/botao/ee6405-race-validation/assets/hc3")
+    source = ASSETS_ROOT / "hc3"
     out = DATA_ROOT.parent / "hc3_aux_v1"
     if out.exists():
         raise FileExistsError(f"Preserving frozen auxiliary data {out}")

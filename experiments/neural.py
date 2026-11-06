@@ -9,13 +9,22 @@ import torch
 from torch.utils.data import Dataset, Sampler
 from transformers import AutoTokenizer
 
-from experiments.common import DATA_ROOT, LABELS, file_hash, read_jsonl
+from experiments.common import ASSETS_ROOT, DATA_ROOT, LABELS, file_hash, read_jsonl
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 UPSTREAM = PROJECT_ROOT / "local_validation/upstream/RACE"
-BACKBONE = Path("/data/botao/ee6405-race-validation/assets/roberta-base")
+BACKBONE = ASSETS_ROOT / "roberta-base"
 RUN_ROOT = DATA_ROOT.parent / "neural_runs"
+
+
+def resolve_use_supcon(model_type, configured, requested):
+    """Resolve the loss independently from the model architecture."""
+    if requested is not None:
+        return requested
+    if configured:
+        return True
+    return model_type == "race"
 
 
 def import_upstream():

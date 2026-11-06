@@ -27,7 +27,7 @@ from transformers import get_linear_schedule_with_warmup
 from experiments.common import DATA_ROOT, DOMAINS, LABELS, classification_metrics, file_hash, write_json, write_jsonl
 from experiments.neural import (BACKBONE, PROJECT_ROOT, RUN_ROOT, BalancedBatchSampler, TextDataset,
                                 balanced_smoke_records, build_model, collate_batch, import_upstream,
-                                load_records, tokenizer_local)
+                                load_records, resolve_use_supcon, tokenizer_local)
 
 
 STOP_REQUESTED = False
@@ -76,6 +76,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=Path("experiments/configs/neural_v1.json"))
     parser.add_argument("--model-type", choices=["roberta", "race", "race_no_supcon"], default="roberta")
+    supcon = parser.add_mutually_exclusive_group()
+    supcon.add_argument("--use-supcon", dest="use_supcon", action="store_true",
+                        help="Enable supervised contrastive loss for any model architecture")
+    supcon.add_argument("--no-supcon", dest="use_supcon", action="store_false",
+                        help="Disable supervised contrastive loss for any model architecture")
+    parser.set_defaults(use_supcon=None)
     parser.add_argument("--seed", type=int, default=3407)
     parser.add_argument("--run-name", type=run_name,
                         help="Alternative output name; existing runs are preserved; smoke runs add a smoke_ prefix")
@@ -83,7 +89,9 @@ def main():
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     config = json.loads(args.config.read_text())
-    config.update(model_type=args.model_type, seed=args.seed, use_supcon=args.model_type == "race")
+    config["architecture"]["backbone_model_path"] = str(BACKBONE)
+    config.update(model_type=args.model_type, seed=args.seed,
+                  use_supcon=resolve_use_supcon(args.model_type, config.get("use_supcon", False), args.use_supcon))
     if args.smoke:
         config.update(max_epochs=1, early_stopping_patience=1)
     run_id = ("smoke_" if args.smoke else "") + (args.run_name or f"{args.model_type}_s{args.seed}")

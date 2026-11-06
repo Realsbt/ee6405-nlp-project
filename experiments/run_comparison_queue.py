@@ -2,11 +2,12 @@
 
 This local queue is narrower than the active Goal: a completed queue means the
 listed training and reload checks finished, not that the whole project is done.
+The 2x2 loss/architecture comparison is represented by explicit jobs so the
+loss switch cannot be inferred accidentally from the model name.
 """
 
 import argparse
 import datetime
-import fcntl
 import json
 import os
 from pathlib import Path
@@ -14,14 +15,24 @@ import subprocess
 import sys
 import time
 
+try:
+    import fcntl
+except ImportError:
+    fcntl = None
+
 
 ROOT = Path(__file__).resolve().parents[1]
-STORAGE = Path("/data/botao/ee6405-race-validation")
+STORAGE = Path(os.environ.get("EE6405_STORAGE", ROOT))
 RUNS = STORAGE / "experiments/neural_runs"
 REPORTS = ROOT / "experiments/reports"
 QUEUE = STORAGE / "experiments/comparison_queue_v1"
-PLAN = [("race_no_supcon", 3407), ("roberta", 42), ("race", 42),
-        ("roberta", 2026), ("race", 2026)]
+JOBS = [
+    {"run": "roberta_supcon_s3407", "model_type": "roberta", "seed": 3407, "supcon": True},
+    {"run": "roberta_supcon_s42", "model_type": "roberta", "seed": 42, "supcon": True},
+    {"run": "roberta_supcon_s2026", "model_type": "roberta", "seed": 2026, "supcon": True},
+    {"run": "race_no_supcon_s42", "model_type": "race", "seed": 42, "supcon": False},
+    {"run": "race_no_supcon_s2026", "model_type": "race", "seed": 2026, "supcon": False},
+]
 
 
 def read(path):
@@ -37,24 +48,27 @@ def write_status(**values):
     print(json.dumps(document), flush=True)
 
 
-def process_is_training(pid, run):
+def process_is_training(pid, job):
     try:
         command = Path(f"/proc/{pid}/cmdline").read_bytes().replace(b"\0", b" ").decode()
     except FileNotFoundError:
         return False
-    kind, seed = run.rsplit("_s", 1)
-    return "experiments.train_neural" in command and f"--model-type {kind}" in command and f"--seed {seed}" in command
+    switch = "--use-supcon" if job["supcon"] else "--no-supcon"
+    return ("experiments.train_neural" in command
+            and f"--model-type {job['model_type']}" in command
+            and f"--seed {job['seed']}" in command
+            and switch in command)
 
 
-def wait_for_existing(run):
-    status_path = RUNS / run / "status.json"
+def wait_for_existing(job):
+    status_path = RUNS / job["run"] / "status.json"
     status = read(status_path)
-    while process_is_training(status["pid"], run):
-        write_status(status="waiting_for_existing_training", run=run, training_pid=status["pid"])
+    while process_is_training(status["pid"], job):
+        write_status(status="waiting_for_existing_training", run=job["run"], training_pid=status["pid"])
         time.sleep(30)
         status = read(status_path)
-    if status["status"] != "completed" or not (REPORTS / run / "result.json").exists():
-        raise RuntimeError(f"Existing run did not complete: {run}: {status}")
+    if status["status"] != "completed" or not (REPORTS / job["run"] / "result.json").exists():
+        raise RuntimeError(f"Existing run did not complete: {job['run']}: {status}")
 
 
 def execute(module, arguments, log_name):
@@ -89,11 +103,18 @@ def main():
     parser.add_argument("--plan", action="store_true")
     args = parser.parse_args()
     if args.plan:
-        print(json.dumps({"wait_for": "race_s3407", "remaining_training": PLAN,
+        print(json.dumps({"wait_for": "race_s3407", "remaining_training": JOBS,
                           "selection": "validation Macro-F1 only; frozen recipe for every listed run",
                           "verification": "strict reload and all 3194 test predictions after each run",
-                          "auxiliary": "HC3 binary evaluation for the three seed-3407 neural conditions"}, indent=2))
+                          "matrix": {
+                              "roberta_no_supcon": ["roberta_s3407", "roberta_s42", "roberta_s2026"],
+                              "roberta_supcon": ["roberta_supcon_s3407", "roberta_supcon_s42", "roberta_supcon_s2026"],
+                              "race_no_supcon": ["race_no_supcon_s3407", "race_no_supcon_s42", "race_no_supcon_s2026"],
+                              "race_supcon": ["race_s3407", "race_s42", "race_s2026"],
+                          }}, indent=2))
         return
+    if fcntl is None:
+        raise RuntimeError("The training queue requires a POSIX host with fcntl; use --plan on Windows")
     QUEUE.mkdir(parents=True, exist_ok=True)
     with (QUEUE / "lock").open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -101,33 +122,22 @@ def main():
             if (RUNS / "race_s3407/result.json").exists():
                 assert read(RUNS / "race_s3407/status.json")["status"] == "completed"
             else:
-                wait_for_existing("race_s3407")
+                wait_for_existing({"run": "race_s3407", "model_type": "race", "seed": 3407, "supcon": True})
             verify("race_s3407")
             auxiliary("roberta_s3407")
-            for kind, seed in PLAN:
-                run = f"{kind}_s{seed}"
+            for job in JOBS:
+                run = job["run"]
                 if (RUNS / run).exists():
                     if (RUNS / run / "result.json").exists():
                         assert read(RUNS / run / "status.json")["status"] == "completed"
                     else:
-                        wait_for_existing(run)
+                        wait_for_existing(job)
                 else:
-                    execute("experiments.train_neural", ["--model-type", kind, "--seed", str(seed)], f"{run}.log")
+                    switch = "--use-supcon" if job["supcon"] else "--no-supcon"
+                    execute("experiments.train_neural",
+                            ["--model-type", job["model_type"], "--seed", str(job["seed"]),
+                             "--run-name", run, switch], f"{run}.log")
                 verify(run)
-                if seed == 3407:
-                    # CPU parsing proceeds separately while the ablation trains.
-                    # A complete, aligned audit is required; a partial JSONL is
-                    # never an evaluation-ready file.
-                    audit = STORAGE / "experiments/hc3_aux_v1_1/test_parsed_aligned.audit.json"
-                    deadline = time.monotonic() + 3600
-                    while not audit.exists():
-                        if time.monotonic() > deadline:
-                            raise RuntimeError("HC3 parser did not finish within one hour; inspect its log")
-                        write_status(status="waiting_for_hc3_parser")
-                        time.sleep(30)
-                    assert read(audit)["status"] == "passed"
-                    auxiliary("race_s3407")
-                    auxiliary(run)
             write_status(status="completed", scope="Training/reload/auxiliary queue only; remaining Goal deliverables require review")
         except Exception as error:
             write_status(status="failed", error_type=type(error).__name__, error=str(error))

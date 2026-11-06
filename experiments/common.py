@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import os
 from pathlib import Path
 
 import numpy as np
@@ -10,7 +11,10 @@ from sklearn.metrics import accuracy_score, confusion_matrix, precision_recall_f
 
 LABELS = ["human_written", "human_ai_polished", "ai_generated", "ai_humanized"]
 DOMAINS = ["arxiv", "essay", "news", "writing"]
-DATA_ROOT = Path("/data/botao/ee6405-race-validation/experiments/hart_grouped_v1")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+STORAGE_ROOT = Path(os.environ.get("EE6405_STORAGE", PROJECT_ROOT))
+ASSETS_ROOT = Path(os.environ.get("EE6405_ASSETS", STORAGE_ROOT / "assets"))
+DATA_ROOT = Path(os.environ.get("EE6405_DATA_ROOT", STORAGE_ROOT / "experiments/hart_grouped_v1"))
 
 
 def write_json(path, value):

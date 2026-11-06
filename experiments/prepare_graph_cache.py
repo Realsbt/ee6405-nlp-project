@@ -8,7 +8,7 @@ from collections import Counter
 import json
 from pathlib import Path
 
-from experiments.common import DATA_ROOT, LABELS, file_hash, write_json
+from experiments.common import ASSETS_ROOT, DATA_ROOT, LABELS, file_hash, write_json
 from experiments.neural import PROJECT_ROOT, UPSTREAM, import_upstream, load_records, tokenizer_local
 
 
@@ -26,7 +26,7 @@ def main():
     expected = {row["item_id"]: (split, row) for split, rows in records.items() for row in rows}
     assert len(expected) == sum(map(len, records.values()))
     processor = object.__new__(FlexibleGraphDataset)
-    processor.config = {"backbone_model_path": "/data/botao/ee6405-race-validation/assets/roberta-base", "max_seq_length": 512}
+    processor.config = {"backbone_model_path": str(ASSETS_ROOT / "roberta-base"), "max_seq_length": 512}
     processor.tokenizer = tokenizer_local()
     handles = {split: (temporary / f"{split}.jsonl").open("wb") for split in records}
     indices = {split: {} for split in records}

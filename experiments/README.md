@@ -97,7 +97,16 @@ bash '/home/botao/文档/ChatGPT/小组作业/experiments/run_baseline.sh' tfidf
 
 环境 `/data/botao/ee6405-race-validation/.venv`，Python 3.11、PyTorch 2.7.0+cu128。它以 overlay 方式复用现有 `rl_robotlab` 的 PyTorch，额外依赖装在自己的环境中，没有修改机器人环境。关键版本见 `requirements-core.txt`。当前主机复跑已验证；全新系统的从零安装尚未验证。
 
+路径默认以仓库根目录为存储根：数据在 `experiments/hart_grouped_v1/`，下载资源在 `assets/`，训练输出在 `experiments/neural_runs/`。迁移到其他机器时可设置 `EE6405_STORAGE` 覆盖存储根，或分别设置 `EE6405_ASSETS`、`EE6405_DATA_ROOT`；训练和图缓存脚本会读取这些环境变量，不依赖 Linux `/data` 路径。
+
 `configs/neural_v1.json` 固定 batch 16、最多 20 轮、学习率 2.9e-5、warmup 10%、patience 5、四类平衡 batch；仅解冻 RoBERTa 最后一层。训练用 BF16，选模与测试用 FP32。RACE 使用官方 RGCN、root pooling、MLP 和监督对比损失；`race_no_supcon` 只关闭该损失。RoBERTa 与 RACE 的分类头维度和模型容量不同，不能把两者之差完全归因为篇章结构。
+
+架构和监督对比损失现在是独立开关。历史命令在 `--model-type race` 时仍默认启用 SupCon；可用 `--use-supcon` 或 `--no-supcon` 覆盖任意架构，例如：
+
+```bash
+bash experiments/run_neural.sh --model-type roberta --use-supcon --seed 3407 --run-name roberta_supcon_s3407
+bash experiments/run_neural.sh --model-type race --no-supcon --seed 42 --run-name race_no_supcon_s42
+```
 
 首个 RoBERTa（3407）测试 Macro-F1 90.75%、Macro-AUROC 98.86%，最佳验证轮次 8。完整 3,194 条重载预测完全一致。这是一个种子、同基准分组测试的结果。
 
@@ -117,7 +126,7 @@ bash experiments/run_neural.sh --model-type race_no_supcon --seed 3407 --run-nam
 /data/botao/ee6405-race-validation/.venv/bin/python -m experiments.run_comparison_queue --plan
 ```
 
-实际队列状态：`/data/botao/ee6405-race-validation/experiments/comparison_queue_v1/status.json`；当前总日志 `reports/comparison_queue_v1_resume.log`，原阶段日志也保留。队列逐项训练、重载复核和做辅助评估；队列完成只说明这些任务完成，整项目还需汇总与交付验收。文件锁阻止重复队列。中断的实验需先确认进程已退出，再用原命令加 `--resume`；恢复从最后一个完整 epoch 开始，配置和训练源码必须与该次快照一致。
+当前队列补齐 2×2 对照中缺少的五个运行：`roberta_supcon_s3407`、`roberta_supcon_s42`、`roberta_supcon_s2026`、`race_no_supcon_s42`、`race_no_supcon_s2026`。每个作业显式传入 `--use-supcon` 或 `--no-supcon`，并在训练后执行完整测试集重载验证；已有运行不会覆盖。实际队列状态：`/data/botao/ee6405-race-validation/experiments/comparison_queue_v1/status.json`；队列完成只说明训练与重载检查完成，整项目还需汇总与交付验收。文件锁阻止重复队列。中断的实验需先确认进程已退出，再用原命令加 `--resume`；恢复从最后一个完整 epoch 开始，配置和训练源码必须与该次快照一致。
 
 checkpoint、optimizer、事件日志、源码快照在 `/data/botao/ee6405-race-validation/experiments/neural_runs/<run>/`；本目录 `reports/<run>/` 保存配置、结果、逐条预测和验证。现有完成运行禁止覆盖。图缓存经官方实时预处理和同一初始化模型输出对照，差异为零，见 `reports/graph_cache_verification.json`。
 
@@ -125,7 +134,7 @@ checkpoint、optimizer、事件日志、源码快照在 `/data/botao/ee6405-race
 
 仅检查训练入口可加 `--smoke`：每类 8 条训练、2 条验证，只跑一轮，不打开测试分区，输出名称自动加 `smoke_` 前缀。正式训练与 smoke 的结果分开；固定种子不承诺跨设备的逐位一致。
 
-`reports/retraining_entrypoint.json` 记录了从 `/tmp` 实际运行两种模型的新名称 smoke：32 条训练、8 条验证，梯度有限且分类头确有更新，未读取测试集。非法目录名称和重复运行分别被拒绝，七个正式神经 checkpoint 哈希未变。这些 smoke 不参与主指标。
+`reports/retraining_entrypoint.json` 记录了从 `/tmp` 实际运行两种模型的新名称 smoke：32 条训练、8 条验证，梯度有限且分类头确有更新，未读取测试集。非法目录名称和重复运行分别被拒绝，现有七个正式神经 checkpoint 哈希未变。这些 smoke 不参与主指标。
 
 图模型的词汇输入仍为首 512 tokens。官方 graph builder 删除截断外 EDU 节点，但保留全篇关系节点及连接；因此结构信息可以超出词汇窗口。统一分析分别报告未截断与截断子集，并明确其只是描述性比较。
 

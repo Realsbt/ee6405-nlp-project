@@ -41,6 +41,7 @@ def main():
         originals.append(original)
         loaded.append(item)
     config = json.loads((PROJECT_ROOT / "experiments/configs/neural_v1.json").read_text())
+    config["architecture"]["backbone_model_path"] = str(PROJECT_ROOT / "assets/roberta-base")
     config.update(model_type="race")
     model = build_model(config, cached.metadata).eval()
     with torch.inference_mode():

@@ -20,7 +20,10 @@ venv/
 # Data, checkpoints, vendored source and the original smoke experiments stay local.
 /data/*
 !/data/README.md
+/assets/
 /local_validation/
+/experiments/hart_grouped_v1/
+/experiments/neural_runs/
 /experiments/PROGRESS.md
 outputs/
 runs/
