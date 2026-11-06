@@ -1,8 +1,8 @@
 # EE6405 本机实验主线
 
-2026-11-06：已完成数据审计、固定分组划分、TF-IDF、RoBERTa/RACE 各三种子与关闭对比损失的单次消融，并逐一重载复核完整测试集。四方法 HC3 与原始文本 Demo 也已验证。仓库保存正式代码与评估证据；数据、环境及模型放在原主机 `/data`。统一结果页见 [reports/comparison/REPORT.md](reports/comparison/REPORT.md)，验收记录见 [project_verification.json](reports/project_verification.json)，最终交付状态见 [提交准备](../docs/SUBMISSION.md)。
+2026-11-06：已完成数据审计、固定分组划分、TF-IDF 和架构 × 损失的完整 2×2 消融：RoBERTa／RACE 分别使用 CE／CE＋SupCon，每格三个种子，共十二次神经训练，并逐一重载复核完整测试集。四方法 HC3 与原始文本 Demo 也已验证。仓库保存正式代码与评估证据；数据、环境及模型放在原主机 `/data`。统一结果页见 [reports/comparison/REPORT.md](reports/comparison/REPORT.md)，验收记录见 [project_verification.json](reports/project_verification.json)，最终交付状态见 [提交准备](../docs/SUBMISSION.md)。
 
-仅克隆仓库时，可运行 `python3 scripts/check_results.py` 复核保存预测（在仓库根目录执行，无第三方依赖）。下文的训练、Demo 和完整验收需要原主机资源；新机器前提见 [数据与外部资源](../data/README.md)。报告 JSON 中的绝对路径与哈希保留原实验取证信息，不代表这些文件随 Git 提供。一般日志、smoke 输出及含原文摘录的错误清单仅保留在原工作区；`run_review.sh` 会在完整环境下重生成分析用错误清单。
+仅克隆仓库时，可运行 `python3 scripts/check_results.py` 复核保存预测（在仓库根目录执行，无第三方依赖）。训练和 Demo 需要外部资源，新机器可按 [复现指南](../docs/REPRODUCING.zh-CN.md) 安装与恢复；原主机的完整历史证据验收另需训练事件和源码快照。报告 JSON 中的绝对路径与哈希保留原实验取证信息，不代表这些文件随 Git 提供。一般日志、smoke 输出及含原文摘录的错误清单仅保留在原工作区；`run_review.sh` 会在完整环境下重生成分析用错误清单。
 
 ## 当前研究问题与状态
 
@@ -95,7 +95,7 @@ bash '/home/botao/文档/ChatGPT/小组作业/experiments/run_baseline.sh' tfidf
 
 ## 神经模型、复核与顺序队列
 
-环境 `/data/botao/ee6405-race-validation/.venv`，Python 3.11、PyTorch 2.7.0+cu128。它以 overlay 方式复用现有 `rl_robotlab` 的 PyTorch，额外依赖装在自己的环境中，没有修改机器人环境。关键版本见 `requirements-core.txt`。当前主机复跑已验证；全新系统的从零安装尚未验证。
+环境 `/data/botao/ee6405-race-validation/.venv`，Python 3.11、PyTorch 2.7.0+cu128。它以 overlay 方式复用现有 `rl_robotlab` 的 PyTorch，额外依赖装在自己的环境中，没有修改机器人环境。关键版本见 `requirements-core.txt`。当前主机的 GPU 训练与重载已验证；另在独立 Linux checkout、新建隔离 CPU 环境和新资源目录完成了四模型 Demo、数据重建与预处理验证，见 [迁移记录](../resources/portability_validation.json)。该迁移检查未覆盖全新操作系统、WSL2 或全新 CUDA 环境。
 
 `configs/neural_v1.json` 固定 batch 16、最多 20 轮、学习率 2.9e-5、warmup 10%、patience 5、四类平衡 batch；仅解冻 RoBERTa 最后一层。训练用 BF16，选模与测试用 FP32。RACE 使用官方 RGCN、root pooling 和 MLP；两种架构均可独立启用或关闭监督对比损失。`roberta_supcon` 使用已有 CLS 特征，`race_no_supcon` 仅关闭 RACE 的该损失，不改变各自分类头。RoBERTa 与 RACE 的分类头维度和模型容量不同，不能把两者之差完全归因为篇章结构。
 

@@ -4,7 +4,7 @@
 
 比较 **TF-IDF＋逻辑回归、RoBERTa、RACE**，并以 CE／CE＋SupCon 构成架构 × 损失的 2×2 消融，分析英文文本的创作与后续编辑来源。项目基于 [RACE](https://github.com/ICTMCG/RACE) 做课程复现与实验分析，新增固定分组划分、基线对照、多种子评估、解析审计和原始文本 Demo。
 
-**当前状态：[2×2 消融](docs/ABLATION_2X2.md) 缺少的五次训练、完整重载复核及汇总分析均已完成，保留原本机 Demo；正式 slides、真人视频和签名声明等提交材料待完成。** 详细清单见 [提交准备](docs/SUBMISSION.md)。GitHub 保存代码和评估证据，课程平台提交另行完成。
+**实验状态（2026-11-06）：[2×2 消融](docs/ABLATION_2X2.md) 已全部完成。** 四种神经配置各三个种子，共 **12 次神经训练＋1 次 TF-IDF 基线**；新增五次训练、完整测试集重载复核、配对分析及图表均已完成。四方法 HC3 辅助评估和原始文本 Demo 已验证。课程提交材料与平台状态单独记录在 [提交准备](docs/SUBMISSION.md)。
 
 ## 任务与数据
 
@@ -96,6 +96,8 @@ bash experiments/run_demo.sh
 ```
 
 Demo 地址为 <http://127.0.0.1:8765/>，默认 CPU。已有服务时直接打开地址。页面展示四类分数、输入截断、篇章树与耗时；无真实标签的自由输入仅用于功能演示。
+
+GitHub 已保存全部 13 组正式结果；`resources-v1` 仍提供原始 8 个模型，未包含本轮新增 5 个 checkpoint。Demo 保留原四种方法，未新增 RoBERTa＋SupCon 选项。
 
 Demo 需下载约 **4.28 GiB** 资源，另加 Python 环境。我们的 checkpoint 单独放在私有仓库的 [resources-v1 Release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1)，上游资源从固定版本的原始来源获取，不进入 Git。已经在迁移后的 Linux checkout、新建独立 CPU 环境中跑通四个 Demo 模型，并完成固定数据重建和预处理检查；提供 WSL2 步骤，但本次没有实际测试 WSL2。
 

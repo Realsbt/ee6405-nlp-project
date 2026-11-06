@@ -4,7 +4,7 @@
 
 A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), comparing **TF-IDF + logistic regression, RoBERTa, RACE**, with an architecture × objective 2×2 ablation (CE versus CE + supervised contrastive loss). The project adds a fixed grouped split, baseline comparisons, multiple training seeds, parser audits and an interactive raw-text demo.
 
-**Status:** the five-run [2×2 extension](docs/ABLATION_2X2.md), full checkpoint verification and updated analysis are complete. The original local demo is retained. Final slides, a video with human narration and signed submission documents remain to be completed. See the [submission checklist](docs/SUBMISSION.md). This repository contains code and evaluation evidence; submission to the course platform is a separate step.
+**Experiment status (2026-11-06): the [2×2 ablation](docs/ABLATION_2X2.md) is complete.** Four neural conditions have three seeds each: **12 neural runs plus one TF-IDF baseline**. All five added runs, full test-set checkpoint verification, paired analyses and figures are complete. The four-method HC3 auxiliary evaluation and raw-text demo have been verified. Course deliverables and platform submission status are tracked separately in the [submission checklist](docs/SUBMISSION.md).
 
 ## Task and data
 
@@ -96,6 +96,8 @@ bash experiments/run_demo.sh
 ```
 
 Open <http://127.0.0.1:8765/>. The demo uses the CPU by default and displays scores, input truncation, the parsed discourse tree and timing. Free-form input without a ground-truth label demonstrates functionality only.
+
+GitHub contains results for all 13 formal runs. The `resources-v1` release still provides the original eight models and excludes the five added checkpoints. The demo retains its original four methods; RoBERTa + SupCon is not a demo option.
 
 The demo downloads about **4.28 GiB** of resources plus its Python environment. Our checkpoints are distributed through the private [resources-v1 release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1); upstream resources are fetched from pinned original sources. They are not stored in Git. A relocated Linux checkout and a fresh isolated CPU environment have passed all four demo models, exact dataset reconstruction and preprocessing checks. WSL2 instructions are provided but were not exercised in this check.
 

@@ -7,7 +7,7 @@
 | RoBERTa | `roberta_s{seed}`，已有三个种子 | `roberta_supcon_s{seed}`，新增三个种子 |
 | RACE | `race_no_supcon_s{seed}`，保留 3407，新增 42、2026 | `race_s{seed}`，已有三个种子 |
 
-每格使用种子 3407、42、2026。当前完成状态、结果与逐种子差异以[统一报告](../experiments/reports/comparison/REPORT.md)和对应运行的 `result.json` / `verification.json` 为准；计划和 smoke 通过不代表正式实验完成。
+截至 2026-11-06，四格训练及完整测试集重载复核全部完成。每格使用种子 3407、42、2026，共十二次神经训练；加上 TF-IDF，共十三组正式结果。指标与逐种子差异见[统一报告](../experiments/reports/comparison/REPORT.md)，每次运行的 `result.json` / `verification.json` 保存结果与重载证据。
 
 ## 固定条件
 
