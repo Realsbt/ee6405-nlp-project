@@ -66,6 +66,55 @@ The 90-second explanation-loop limit is cooperative between forwards; it does no
 
 This package's included test report separately labels pure mathematical tests, lightweight synthetic-model contract tests, mock HTTP tests, and real Chromium with synthetic API fixtures. It is not a claim of real checkpoint validation on the user's machine.
 
+## v5 navigation layer
+
+The page now has two perspectives over one shared document, model and prediction.
+
+**Explore & Edit** — `Edit`, `Map`, `Passages`, `Coverage`.
+**Explain Prediction** — `Influence`, `Structure`.
+
+Switching perspective never recomputes anything; the frozen prediction, selected unit and active version are preserved.
+
+### Document Map
+
+`Map` groups the source text by real blank-line paragraph breaks. Each row shows a preview, the number of intersecting units, how many are explained, how many are pending, how many fall outside the lexical window, and the paragraph's share of the text. Selecting a row focuses the first computed unit in that paragraph and keeps the Map open.
+
+Paragraphs are navigation aids built from the actual text. They are never presented as RST nodes. An EDU that crosses a paragraph break keeps its real offsets and is not split.
+
+### Focus graph
+
+`Structure` renders only the visible subtree. The root is shown by default; relation nodes expand and collapse on click. Controls: `Collapse all`, `Expand selected branch`, `Show ancestors to root`, `Reset view`, `Full graph`. The counter reports `N of M nodes shown`.
+
+Selecting a unit in `Structure` no longer jumps to `Influence`. The graph stays open, the selected node and its ancestor path are highlighted, and the shared detail panel shows the effect on all four document scores.
+
+Three relationships stay visually distinct: parsed parent–child edges (solid), the selected unit's ancestor path (dashed blue), and node initializations directly changed by the intervention (highlighted outline). None of them is drawn as a weighted causal path.
+
+### On-demand explanation
+
+`Explain selected unit`, `Explain visible units` and `Continue explaining` replace the single `Explain first 8` action. The counter reports `N / M eligible units evaluated`. Unmeasured, out-of-window and failed units remain distinct states and never receive a fabricated number.
+
+Merged results are only reused when `text_sha256`, `method` and `document.model` all match. Editing the text, changing the model or switching version invalidates the cache.
+
+### What-if editing
+
+`Original` is frozen at analysis time. Editing the textarea marks the document dirty without touching the frozen prediction. `Reanalyze revised document` runs a real whole-document prediction on the revised text with the same model and stores it as `Revised`. The What-if card shows the four class scores before and after.
+
+A revised snapshot is only accepted when it belongs to the same model and a different text. Before/after prediction differences are labelled separately from feature-suppression effects; the two measurements are not interchangeable.
+
+### Tests
+
+`tests/test_document_map.py` covers paragraph segmentation, EDU/UTF-16 offset agreement, cross-paragraph units, unrequested units carrying no influence, batch limits, cache-key changes with text, and Original/Revised independence. Total suite: 46 tests.
+
+### Onboarding tour
+
+The tour is state-aware rather than a fixed four-step script. `TOUR_STEPS` holds fourteen entries; `tourAvailable()` keeps only those whose `when()` predicate passes and whose target exists in the DOM.
+
+- **First visit** — five steps: text, model, analyze, the two perspectives, and the fixed prediction panel.
+- **After the first analysis** — a `Show me the rest` button appears once and opens the full fourteen-step tour, which also covers Map, Passages, Coverage, Influence, on-demand controls, Structure, What-if, Compare and Export.
+- **About dialog** — `Replay quick start` runs the state-filtered tour; `Show all steps` runs all fourteen regardless of state.
+
+Each step may declare `app` and `mode`; `tourRender()` switches perspective and opens the relevant tab before positioning the highlight ring, so a step never points at a hidden element. Progress is shown as dots plus `N / M`, and ←/→/Esc work as navigation. Completion is stored under `ee6405.tour.v3` and `ee6405.tour.v3.deep`.
+
 ## Source references
 
 - Project main inference.py: https://github.com/Realsbt/ee6405-nlp-project/blob/e3b2d6c6d1b9df8a923abd6a0730fe4ebc0230b2/experiments/inference.py
