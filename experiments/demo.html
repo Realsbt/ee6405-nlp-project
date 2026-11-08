@@ -66,7 +66,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
 <div id="edit-panel" role="tabpanel" aria-labelledby="edit-tab"><div class="input-tools"><div><button id="import" class="tool"><svg><use href="#i-upload"/></svg>Import .txt</button><button id="sample" class="tool"><svg><use href="#i-sample"/></svg>Try an example</button></div><button id="clear" class="tool" aria-label="Clear document"><svg><use href="#i-clear"/></svg></button></div><div class="editor-wrap" id="dropzone"><label class="sr-only" for="document-editor">Document text</label><textarea id="document-editor" spellcheck="false" placeholder="Paste your English text here.&#10;&#10;After analysis, explore the highlighted passages or select an excerpt for a closer look."></textarea></div></div>
 <div id="inspect-panel" role="tabpanel" aria-labelledby="inspect-tab" hidden><div class="reader"><div class="reader-controls"><div class="reader-modes" role="tablist" aria-label="Highlight view"><button type="button" class="reader-mode-btn" data-mode="passages" role="tab" aria-selected="true">Passage predictions</button><button type="button" class="reader-mode-btn" data-mode="coverage" role="tab" aria-selected="false">Document input coverage</button><button type="button" class="reader-mode-btn" data-mode="structure" role="tab" aria-selected="false" disabled>Discourse units</button></div><div><button id="highlight-again" class="tool"><svg><use href="#i-scan"/></svg>Highlight passages</button><button id="edit-from-reader" class="tool">Edit text</button></div></div><div id="reader-text" class="reader-text" aria-label="Analyzed document. Select text to inspect an excerpt."></div><div id="selection-toolbar" class="selection-toolbar" hidden><div><span id="selection-count"></span></div><div><button id="inspect-selection" class="btn small primary">Inspect selection</button><button id="clear-selection" class="icon-btn" aria-label="Dismiss selection"><svg><use href="#i-close"/></svg></button></div></div><p id="reader-note" class="reader-note">Each highlight is a separate passage prediction, not a word-level authorship verdict.</p></div><div class="legend"><div class="legend-items"><span class="legend-item"><i class="swatch human"></i>Human-written</span><span class="legend-item"><i class="swatch polished"></i>AI-polished</span><span class="legend-item"><i class="swatch generated"></i>AI-generated</span><span class="legend-item"><i class="swatch rewritten"></i>AI-rewritten</span></div><span id="highlight-count" class="legend-label">No passages inspected</span></div></div>
 <div class="editor-counts"><span id="word-count">0 words</span><span id="char-count">0 / 12,000 characters</span></div>
-<div class="sheet-actions"><span class="sheet-actions-note">Passage highlights run automatically after analysis.</span><button id="analyze" class="btn primary analyze-btn" disabled>Analyze document<svg><use href="#i-arrow"/></svg></button></div>
+<div class="sheet-actions"><span class="sheet-actions-note">Passage highlights run automatically after analysis.</span><button id="open-inspect" class="btn small" type="button" hidden>View highlights<svg><use href="#i-arrow"/></svg></button><button id="analyze" class="btn primary analyze-btn" disabled>Analyze document<svg><use href="#i-arrow"/></svg></button></div>
 <input id="file-input" type="file" accept=".txt,text/plain" hidden>
 </section>
 <aside class="inspector" id="inspector" aria-labelledby="analysis-heading"><div class="inspector-title"><h2 id="analysis-heading">Analysis</h2><small id="scope-label">DOCUMENT</small></div><div class="model-config"><label class="field-label" for="model">Detection model</label><select id="model" class="model-select" aria-label="Detection model"><option>Loading models…</option></select><p id="model-hint" class="model-hint">Connecting to the local service.</p></div>
@@ -122,6 +122,7 @@ function updateControls(){
  $('document-editor').readOnly=state.busy;
  for(const id of ['import','sample','clear'])$(id).disabled=state.busy;
  $('inspect-tab').disabled=!state.document;
+ $('open-inspect').hidden=!state.document;
  $('export-open').disabled=!state.document;
  $('compare-open').disabled=state.busy||!isCurrent()||state.models.filter(m=>m.available).length<2;
  $('highlight-again').disabled=state.busy||!isCurrent();
@@ -140,10 +141,10 @@ function switchModel(nextId){
  if(hit){
   state.modelId=nextId;state.source=source;state.document=hit;
   state.passages=makePassages(source);state.selection=null;state.manual=null;
-  const mode=pickReaderMode(hit,source);
-  state.active={kind:'document'};state.mode=mode;setReaderMode(mode);
+  state.active={kind:'document'};
   setStructureEnabled(!!validLeaves(hit.rst_tree,source).length);
-  renderReader();renderResult();setView('inspect');updateControls();
+  const mode=resolveReaderMode(hit,source);state.mode=mode;setReaderMode(mode);
+  renderReader();renderResult();updateControls();
   toast('Restored cached result for this model.');
   return;
  }
@@ -268,7 +269,7 @@ function makePassages(text){
 }
 async function analyzeDocument(){
  if($('analyze').disabled)return;clearError();const source=$('document-editor').value,model=$('model').value,auto=true;resetAnalysis();state.source=source;state.modelId=model;state.passages=makePassages(source);const nPass=Math.min(state.passages.length,MAX_PASSAGES);startJob('document','Analyzing document…',1+nPass,[costOf(model,'document'),...Array(nPass).fill(costOf(model,'passage'))]);
- try{const d=await predictCached(source,model);state.document=d;setProgress(1,state.progress?.total||1);state.active={kind:'document'};const mode=pickReaderMode(d,source);state.mode=mode;setReaderMode(mode);setStructureEnabled(!!validLeaves(d.rst_tree,source).length);renderReader();renderResult();setView('inspect');
+ try{const d=await predictCached(source,model);state.document=d;setProgress(1,state.progress?.total||1);state.active={kind:'document'};setStructureEnabled(!!validLeaves(d.rst_tree,source).length);const mode=resolveReaderMode(d,source);state.mode=mode;setReaderMode(mode);renderReader();renderResult();
  if(auto&&!state.stopRequested)await inspectPassages();else renderReader();}
  catch(e){showError(e.message);}finally{endJob();}
 }
@@ -288,6 +289,18 @@ function pickReaderMode(d,source){
  // otherwise fall back to passage predictions.
  if(d&&validLeaves(d.rst_tree,source).length)return 'structure';
  return 'passages';
+}
+function modeAvailable(mode,d,source){
+ if(mode==='structure')return !!validLeaves(d?.rst_tree,source).length;
+ if(mode==='coverage')return coveredEnd(d,source)!==null;
+ if(mode==='passages')return true;
+ return false;
+}
+function resolveReaderMode(d,source){
+ // Keep whatever the reader already chose; only fall back when it is unavailable.
+ const current=state.mode;
+ if(current&&modeAvailable(current,d,source))return current;
+ return pickReaderMode(d,source);
 }
 function setReaderMode(mode){
  for(const b of document.querySelectorAll('.reader-mode-btn'))b.setAttribute('aria-selected',String(b.dataset.mode===mode));
@@ -600,7 +613,7 @@ setTimeout(()=>startTour(false),900);
 })();
 $('model').addEventListener('change',()=>{clearError();switchModel($('model').value);});$('sample').addEventListener('click',()=>{$('document-editor').value=EXAMPLE;resetAnalysis();clearError();toast('Unlabeled example loaded.');});$('clear').addEventListener('click',()=>{if(state.busy)return;$('document-editor').value='';resetAnalysis();clearError();$('document-editor').focus();});$('import').addEventListener('click',()=>$('file-input').click());$('file-input').addEventListener('change',e=>importFile(e.target.files[0]));
 for(const type of ['dragenter','dragover'])$('dropzone').addEventListener(type,e=>{e.preventDefault();if(!state.busy)$('dropzone').classList.add('dragging');});$('dropzone').addEventListener('dragleave',()=>$('dropzone').classList.remove('dragging'));$('dropzone').addEventListener('drop',e=>{e.preventDefault();$('dropzone').classList.remove('dragging');if(e.dataTransfer.files.length)importFile(e.dataTransfer.files[0]);});
-$('edit-tab').addEventListener('click',()=>setView('edit'));$('inspect-tab').addEventListener('click',()=>{if(state.document)setView('inspect');});$('edit-from-reader').addEventListener('click',()=>{setView('edit');$('document-editor').focus();});
+$('edit-tab').addEventListener('click',()=>setView('edit'));$('inspect-tab').addEventListener('click',()=>{if(state.document)setView('inspect');});$('edit-from-reader').addEventListener('click',()=>{setView('edit');$('document-editor').focus();});$('open-inspect').addEventListener('click',()=>{if(state.document)setView('inspect');});
 for(const id of ['edit-tab','inspect-tab'])$(id).addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const other=$(id==='edit-tab'?'inspect-tab':'edit-tab');if(!other.disabled){other.focus();other.click();}}});
 for(const b of document.querySelectorAll('.reader-mode-btn'))b.addEventListener('click',()=>{if(b.disabled)return;state.mode=b.dataset.mode;state.selection=null;window.getSelection()?.removeAllRanges();setReaderMode(state.mode);renderReader();});$('highlight-again').addEventListener('click',highlightAgain);$('reader-text').addEventListener('mouseup',captureSelection);$('reader-text').addEventListener('keyup',captureSelection);document.addEventListener('selectionchange',()=>{if(!state.busy)captureSelection();});$('inspect-selection').addEventListener('click',inspectSelection);$('clear-selection').addEventListener('click',()=>{state.selection=null;window.getSelection()?.removeAllRanges();showSelection();});$('back-document').addEventListener('click',()=>{state.active={kind:'document'};renderResult();renderReader();});$('stop').addEventListener('click',()=>{
  state.stopRequested=true;
