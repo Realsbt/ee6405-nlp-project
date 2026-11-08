@@ -55,7 +55,7 @@ def report(batch):
     final_path = batch / 'final_evaluation/result.json'
     if final_path.exists():
         final = json.loads(final_path.read_text())
-        groups = dict(historical, improved=[x['test'] for x in final['members']])
+        groups = dict(historical, candidate=[x['test'] for x in final['members']])
         names = list(groups)
         fig, axes = plt.subplots(1, 2, figsize=(12,5))
         for ax, metric in zip(axes, ('macro_f1','macro_auroc_ovr')):
@@ -65,7 +65,7 @@ def report(batch):
             ax.set_ylabel(metric+' (%)'); ax.tick_params(axis='x', rotation=25)
         fig.tight_layout(); fig.savefig(batch/'historical_test_comparison.png',dpi=160); plt.close(fig)
         fig, ax = plt.subplots(figsize=(10,5)); x=np.arange(4); width=.36
-        for i, name in enumerate(('roberta_supcon','improved')):
+        for i, name in enumerate(('roberta_supcon','candidate')):
             mean=[100*np.mean([r['per_class'][c]['f1'] for r in groups[name]]) for c in LABELS]
             ax.bar(x+(i-.5)*width,mean,width,label=name)
         ax.set_xticks(x,LABELS); ax.set_ylabel('Test class F1 (%)'); ax.legend(); fig.tight_layout()

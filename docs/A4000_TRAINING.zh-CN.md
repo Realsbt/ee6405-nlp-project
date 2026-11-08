@@ -29,4 +29,4 @@ bash experiments/run_neural.sh --model-type roberta --supcon --seed 3407 \
 
 训练报告现在与训练产物一同保存在资源目录：`experiments/neural_runs/reports/<run_id>/`。权重、事件、状态和源码快照仍保存在 `experiments/neural_runs/<run_id>/`。历史 `experiments/reports/` 保持不变。
 
-本部署修复不改变模型、优化器或选模计算。当前完整基线依然会在选定 checkpoint 后评估 test；后续筛选之前必须先完成训练/测试分离及显式 final evaluator，不能把基线入口直接用于改进筛选。
+原部署修复不改变模型、优化器或选模计算。后续研究改造现已实现：普通训练默认不加载 test，显式 `--evaluate-test` 仅用于一次性评估；正式研究请使用带独立 watchdog、冻结 manifest 和 final evaluator 的队列入口，见[训练与参数指南](../README.zh-CN.md)。历史 A4000 基线是在改造前完成，保留其原始评估结果。
