@@ -314,6 +314,8 @@ def main():
         "parameters": parameter_info,
         "efficiency": {"training_validation_checkpoint_seconds": fit_total_seconds,
                        "fit_seconds_per_epoch": fit_epochs,
+                       "validation_forward_seconds": val_seconds,
+                       "validation_samples_per_second": len(val_records) / val_seconds,
                        "samples_per_second": len(loader) * config["batch_size"] * len(fit_epochs) / sum(fit_epochs) if fit_epochs else None,
                        "peak_cuda_allocated_mib": torch.cuda.max_memory_allocated() / 1024**2,
                        "peak_cuda_reserved_mib": torch.cuda.max_memory_reserved() / 1024**2}}

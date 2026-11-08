@@ -1,5 +1,7 @@
 # EE6405 — A4000 training and research
 
+> **Current entry point:** `bash experiments/run_research.sh --max-hours 12 --push-branch Realsbt` automatically creates a UTC timestamp batch directory containing all checkpoints (`runs/`), logs (`logs/`), per-run summaries, `SUMMARY.md`, a detailed Chinese figure guide, and process/error logs. Only a positive final three-seed mean test Macro-F1 gain triggers a push, exclusively to `Realsbt`.
+
 [中文训练与参数指南](README.zh-CN.md) · [Environment setup](docs/REPRODUCING.md) · [Historical results](experiments/reports/comparison/REPORT.md)
 
 HART English four-class source detection, with a frozen 11,190 / 1,600 / 3,194 grouped split and a 512-token RoBERTa window. Select checkpoints and methods using validation Macro-F1 only.

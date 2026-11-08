@@ -26,6 +26,8 @@ class Pipeline:
         # Never start any experiments without authenticated self-hibernation preflight.
         preflight=Hyperstack().preflight()
         self.batch.mkdir(parents=True)
+        (self.batch/'logs').mkdir()
+        self.operation('preflight_passed', vm_id=preflight['vm_id'])
         write_json(self.batch/'hyperstack-preflight.json',preflight)
         self.state={'phase':'setup','run_root':str(RUN_ROOT),'completed_runs':[], 'created':time.time(),
                     'git_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=PROJECT_ROOT,text=True).strip(),
@@ -45,6 +47,13 @@ class Pipeline:
             raise RuntimeError('Watchdog arming timed out; no training started')
         self.progress('休眠 watchdog 已装好；训练结束/失败后最多 10 分钟进行收尾，然后调用 Hyperstack API。')
 
+    def operation(self, event, **details):
+        record = {'time_utc': datetime.now(timezone.utc).isoformat(), 'event': event, **details}
+        with (self.batch/'PROCESS_LOG.jsonl').open('a') as stream:
+            stream.write(json.dumps(record, ensure_ascii=False)+'\n')
+        with (self.batch/'PROCESS_LOG.md').open('a') as stream:
+            stream.write(f"- {record['time_utc']} **{event}**: {json.dumps(details, ensure_ascii=False)}\n")
+
     def save(self):
         atomic(self.batch/'pipeline.json',self.state)
 
@@ -56,7 +65,8 @@ class Pipeline:
     def command(self, command, log, phase, timeout=7200):
         if not alive(self.watch.pid):
             raise RuntimeError('Watchdog not alive; refusing more compute')
-        with (self.batch/log).open('w') as stream:
+        self.operation('command_start', phase=phase, command=command, log=log)
+        with (self.batch/'logs'/log).open('w') as stream:
             process=subprocess.Popen(command,cwd=PROJECT_ROOT,stdout=stream,stderr=subprocess.STDOUT)
             self.state.update(phase=phase,training_pid=process.pid if phase=='training' else None,
                               training_deadline=time.time()+timeout if phase=='training' else None)
@@ -78,11 +88,13 @@ class Pipeline:
                     self.state['last_training_exit'] = time.time()
                 self.state.update(phase='postprocessing',training_pid=None,training_deadline=None)
                 self.save()
+        self.operation('command_end', phase=phase, exit_code=code, log=log)
         if code:
             raise RuntimeError(f'{phase} failed with exit {code}; see {log}')
 
     def train(self, tag, config):
-        run_id=f'{self.args.name}_{tag}_s{config["seed"]}'
+        timestamp=datetime.now(timezone.utc).strftime('%Y-%m-%d_%H-%M-%S')
+        run_id=f'{timestamp}_{tag}_s{config["seed"]}'
         path=self.batch/'configs'/f'{run_id}.json'; write_json(path,config)
         if shutil.disk_usage(self.batch).free < 12 * 1024**3:
             raise RuntimeError('Less than 12 GiB free; preserving existing experiments')
@@ -98,6 +110,9 @@ class Pipeline:
         if result['test_partition_loaded'] or file_hash(RUN_ROOT/run_id/'best.pt')!=result['checkpoint_sha256']:
             raise RuntimeError('Screening leaked test or checkpoint hash mismatch')
         self.state['completed_runs'].append(run_id); self.save()
+        from experiments.experiment_summary import summarize_run
+        summarize_run(self.batch, run_id)
+        self.operation('run_complete', run_id=run_id, validation_macro_f1=result['validation']['macro_f1'])
         self.progress(f'完成 `{run_id}`，validation Macro-F1={result["validation"]["macro_f1"]:.4%}；best/last checkpoint 已保存。')
         return result
 
@@ -163,7 +178,25 @@ class Pipeline:
         checks=json.loads((self.batch/'artifacts.json').read_text())
         if not all(file_hash(self.batch/p)==h for p,h in checks.items()):
             raise RuntimeError('Report/visualization integrity failure')
-        self.progress('训练结束、三种子 final evaluation 完成；checkpoint 哈希、报告、混淆矩阵和初始 Git 结果对比图均已校验。即将休眠。')
+        from experiments.experiment_summary import summarize_batch
+        summarize_batch(self.batch)
+        inventory = {}
+        for run_id in self.state['completed_runs']:
+            for name in ('best.pt','last.pt'):
+                checkpoint = RUN_ROOT/run_id/name
+                if checkpoint.stat().st_size == 0:
+                    raise RuntimeError('Empty checkpoint')
+                inventory[str(checkpoint.relative_to(self.batch))] = file_hash(checkpoint)
+        write_json(self.batch/'checkpoint_inventory.json', inventory)
+        from experiments.publish_results import publish_if_improved
+        published = publish_if_improved(self.batch, self.args.push_branch, timeout=90)
+        self.operation('publication_decision', **published)
+        for name in ('SUMMARY.md','详细报告与图解.md','score_change.json','publication.json','checkpoint_inventory.json','PROCESS_LOG.md','PROCESS_LOG.jsonl'):
+            checks[name] = file_hash(self.batch/name)
+        write_json(self.batch/'artifacts.json', checks)
+        if not all(file_hash(self.batch/p)==h for p,h in checks.items()):
+            raise RuntimeError('Final summary or log integrity failure')
+        self.progress('训练结束、三种子 final evaluation 完成；checkpoint、报告、对比图及条件推送决定均已保存。即将休眠。')
         self.state.update(phase='complete',ready_to_hibernate=True,completed=time.time()); self.save()
         os.sync()
 
@@ -172,6 +205,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--config',type=Path,default=PROJECT_ROOT/'experiments/configs/a4000_research.json')
     p.add_argument('--name',required=True)
+    p.add_argument('--push-branch', default='Realsbt', help='Only this branch may be pushed, and only on positive final three-seed mean Macro-F1 gain')
     p.add_argument('--single-config', action='store_true', help='Skip search; train this recipe for all three seeds, then evaluate/report/hibernate')
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--progress',type=Path,default=PROJECT_ROOT.parent/'PROGRESS.md')
@@ -180,11 +214,15 @@ def main():
     args=p.parse_args()
     from experiments.train_neural import run_name
     run_name(args.name)
+    if args.push_branch != 'Realsbt': p.error('Only the authorized branch Realsbt may receive pushes')
     if len(args.name)>32: p.error('Batch name must be <=32 chars')
     if not 180<=args.grace_seconds<=600 or not 0<args.max_hours<=24: p.error('grace=180..600; max-hours=(0,24]')
     if subprocess.check_output(['git','status','--porcelain'],cwd=PROJECT_ROOT,text=True).strip():
         p.error('Commit reviewed changes before running a research batch')
-    lock=(RUN_ROOT.parent/'research.lock'); lock.parent.mkdir(parents=True,exist_ok=True)
+    global RUN_ROOT
+    RUN_ROOT=args.output.resolve()/'runs'
+    os.environ['EE6405_RUN_ROOT']=str(RUN_ROOT)
+    lock=(DATA_ROOT.parent/'research.lock'); lock.parent.mkdir(parents=True,exist_ok=True)
     with lock.open('w') as locked:
         fcntl.flock(locked,fcntl.LOCK_EX|fcntl.LOCK_NB)
         pipeline=Pipeline(args)
@@ -192,6 +230,8 @@ def main():
         except BaseException as error:
             pipeline.state.update(phase='failed',error_type=type(error).__name__,error=str(error),training_pid=None)
             pipeline.save()
+            import traceback
+            pipeline.operation('pipeline_error', error_type=type(error).__name__, error=str(error), traceback=traceback.format_exc())
             pipeline.progress(f'队列失败：{type(error).__name__}；保留配置/日志，watchdog 将在训练停止后的期限内休眠，不无限重试训练。')
             try: report(pipeline.batch)
             except Exception: pass

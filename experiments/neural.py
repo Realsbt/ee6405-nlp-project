@@ -1,6 +1,7 @@
 """Shared data/model interfaces for the RoBERTa and RACE comparisons."""
 
 import json
+import os
 from pathlib import Path
 
 from experiments.paths import PROJECT_ROOT, UPSTREAM, BACKBONE, resolve_recorded_path
@@ -14,7 +15,7 @@ from transformers import AutoTokenizer
 from experiments.common import DATA_ROOT, LABELS, file_hash, read_jsonl
 
 
-RUN_ROOT = DATA_ROOT.parent / "neural_runs"
+RUN_ROOT = Path(os.environ.get("EE6405_RUN_ROOT", DATA_ROOT.parent / "neural_runs")).expanduser().resolve()
 
 
 def import_upstream():

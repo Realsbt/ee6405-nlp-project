@@ -90,6 +90,28 @@ class ResearchTests(unittest.TestCase):
                 api=Hyperstack()
                 with patch.object(api,'request',return_value={'instance':{'id':123,'name':'not-this-vm','status':'ACTIVE'}}):
                     with self.assertRaisesRegex(RuntimeError,'identity'): api.preflight()
+    def test_api_uses_explicit_application_user_agent(self):
+        with tempfile.TemporaryDirectory() as d:
+            f=Path(d)/'key'; f.write_text('test-secret'); f.chmod(0o600)
+            with patch.dict(os.environ,{'HYPERSTACK_VM_ID':'123','HYPERSTACK_API_KEY_FILE':str(f)}):
+                api=Hyperstack()
+                with patch('experiments.hyperstack.urllib.request.urlopen') as opened:
+                    opened.return_value.__enter__.return_value.read.return_value=b'{"status": true}'
+                    api.request()
+                    request=opened.call_args.args[0]
+                    self.assertEqual(request.get_header('User-agent'),'ee6405-training/1.0')
+    def test_no_push_without_gain_or_to_another_branch(self):
+        from experiments.publish_results import publish_if_improved
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            (root/'score_change.json').write_text(json.dumps({'publish_eligible':False,'paired_gain_pp':-.1}))
+            with patch('experiments.publish_results.subprocess.run') as run:
+                self.assertEqual(publish_if_improved(root,'Realsbt')['status'],'skipped_no_confirmed_gain')
+                run.assert_not_called()
+            (root/'score_change.json').write_text(json.dumps({'publish_eligible':True,'paired_gain_pp':.1}))
+            with patch('experiments.publish_results.subprocess.check_output',return_value='other-branch'), patch('experiments.publish_results.subprocess.run') as run:
+                self.assertEqual(publish_if_improved(root,'Realsbt')['status'],'publication_failed')
+                run.assert_not_called()
     def test_api_secret_permissions(self):
         with tempfile.TemporaryDirectory() as d:
             f=Path(d)/'key'; f.write_text('test-secret'); f.chmod(0o644)

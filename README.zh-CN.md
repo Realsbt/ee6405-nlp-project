@@ -1,5 +1,7 @@
 # EE6405：A4000 训练与模型改进
 
+> **最新操作方式**：`bash experiments/run_research.sh --max-hours 12 --push-branch Realsbt` 自动生成UTC日期时间批次目录。每批全部权重、配置、日志和报告位于同一目录的 `runs/`、`logs/` 等子目录。新增逐实验 `SUMMARY.md`、总 `SUMMARY.md`、`详细报告与图解.md` 和 `PROCESS_LOG.md/.jsonl`。只有最终三种子test Macro-F1均值高于原始三种子均值时才尝试推送，唯一目标分支为 `Realsbt`；不改test选择方法。
+
 [English](README.md) · [环境部署](docs/REPRODUCING.zh-CN.md) · [原项目方法](experiments/METHOD_NOTES.md) · [历史结果](experiments/reports/comparison/REPORT.md)
 
 本仓库用于 HART 英文文本来源四分类。固定 train/validation/test 为 11,190/1,600/3,194，输入最多 512 token，按 validation Macro-F1 选模。当前改进实现了多层解冻、分层学习率、SupCon 投影头、内容来源/后处理辅助头，以及训练收尾后的 Hyperstack 自动休眠。**实现与测试通过不等于提分；最终指标以实际批次报告为准。**
@@ -104,8 +106,9 @@ bash experiments/run_neural.sh --config experiments/configs/my_research.json \
 
 ```bash
 tail -n 60 /home/ubuntu/6405/PROGRESS.md
-cat "$EE6405_STORAGE/experiments/research_batches/a4000_r01/pipeline.json"
-cat "$EE6405_STORAGE/experiments/research_batches/a4000_r01/watchdog.json"
+BATCH="$(ls -d "$EE6405_STORAGE"/experiments/research_batches/20* | sort | tail -n 1)"
+cat "$BATCH/pipeline.json"
+cat "$BATCH/watchdog.json"
 # 每个实验的 config、status、events、best.pt、last.pt：
 ls "$EE6405_STORAGE/experiments/neural_runs/"
 ```

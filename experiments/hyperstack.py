@@ -28,7 +28,8 @@ class Hyperstack:
 
     def request(self, suffix=''):
         req = urllib.request.Request(f'{BASE}/{self.vm_id}{suffix}',
-                                     headers={'api_key': self.key, 'accept': 'application/json'})
+                                     headers={'api_key': self.key, 'accept': 'application/json',
+                                              'User-Agent': 'ee6405-training/1.0'})
         try:
             with urllib.request.urlopen(req, timeout=15) as response:
                 data = json.load(response)
