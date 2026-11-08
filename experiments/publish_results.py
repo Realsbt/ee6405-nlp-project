@@ -16,15 +16,15 @@ def publish_if_improved(batch, branch, timeout=90):
         record['status']='skipped_no_confirmed_gain'; write_json(batch/'publication.json',record); return record
     try:
         current=subprocess.check_output(['git','branch','--show-current'],cwd=PROJECT_ROOT,text=True).strip()
-        if branch!='Realsbt' or current!=branch:
-            raise RuntimeError('Refusing to push outside the single authorized branch Realsbt')
+        if branch!='yuzhe' or current!=branch:
+            raise RuntimeError('Refusing to push outside the single authorized branch yuzhe')
         if subprocess.check_output(['git','status','--porcelain'],cwd=PROJECT_ROOT,text=True).strip():
             raise RuntimeError('Refusing to mix unrelated uncommitted changes')
         target=PROJECT_ROOT/'experiments/research_results'/batch.name
         if target.exists(): raise FileExistsError('Preserving previous published artifacts')
         files=[]
         for p in batch.rglob('*'):
-            if p.is_file() and p.suffix.lower() in ('.json','.jsonl','.md','.png','.sha256','.log') and 'source' not in p.relative_to(batch).parts:
+            if p.is_file() and p.suffix.lower() in ('.json','.jsonl','.md','.png','.sha256','.log') and 'source' not in p.relative_to(batch).parts and 'wandb' not in p.relative_to(batch).parts:
                 # Never publish weights, source text partitions, or a secret file.
                 files.append(p)
         key=Path(os.environ['HYPERSTACK_API_KEY_FILE']).read_bytes().strip()
@@ -36,7 +36,7 @@ def publish_if_improved(batch, branch, timeout=90):
             out=target/p.relative_to(batch); out.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(p,out)
         relative=str(target.relative_to(PROJECT_ROOT))
         subprocess.run(['git','add','--',relative],cwd=PROJECT_ROOT,check=True,timeout=10)
-        subprocess.run(['git','-c','user.name=Realsbt','-c','user.email=Realsbt@users.noreply.github.com','commit','-m',
+        subprocess.run(['git','-c','user.name=Codex Agent','-c','user.email=codex@localhost','commit','-m',
                         f'Report verified research gain {gain["paired_gain_pp"]:.3f}pp ({batch.name})'],cwd=PROJECT_ROOT,check=True,timeout=15)
         env=dict(os.environ,GIT_TERMINAL_PROMPT='0')
         push=subprocess.run(['git','push','--set-upstream','origin',f'HEAD:refs/heads/{branch}'],cwd=PROJECT_ROOT,

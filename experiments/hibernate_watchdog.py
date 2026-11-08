@@ -25,6 +25,17 @@ def alive(pid):
 
 def decision(state, now, idle_since, grace, absolute_deadline):
     active = alive(state.get('training_pid')) if state.get('phase') == 'training' else False
+    finished = None
+    if active and state.get('run_root') and state.get('current_run'):
+        try:
+            marker = json.loads((Path(state['run_root'])/state['current_run']/'training_finished.json').read_text())
+            if marker.get('pid') == state.get('training_pid'):
+                finished = marker['time']
+        except (FileNotFoundError, json.JSONDecodeError, KeyError):
+            pass
+    if finished is not None:
+        active = False
+        idle_since = finished if idle_since is None else min(idle_since,finished)
     if active:
         idle_since = None
     elif idle_since is None:

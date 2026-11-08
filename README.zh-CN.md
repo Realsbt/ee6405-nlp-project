@@ -1,6 +1,6 @@
 # EE6405：A4000 训练与模型改进
 
-> **最新操作方式**：`bash experiments/run_research.sh --max-hours 12 --push-branch Realsbt` 自动生成UTC日期时间批次目录。每批全部权重、配置、日志和报告位于同一目录的 `runs/`、`logs/` 等子目录。新增逐实验 `SUMMARY.md`、总 `SUMMARY.md`、`详细报告与图解.md` 和 `PROCESS_LOG.md/.jsonl`。只有最终三种子test Macro-F1均值高于原始三种子均值时才尝试推送，唯一目标分支为 `Realsbt`；不改test选择方法。
+> **最新操作方式**：`bash experiments/run_research.sh --max-hours 12 --push-branch yuzhe` 自动生成UTC日期时间批次目录。每批全部权重、配置、日志和报告位于同一目录的 `runs/`、`logs/` 等子目录。新增逐实验 `SUMMARY.md`、总 `SUMMARY.md`、`详细报告与图解.md` 和 `PROCESS_LOG.md/.jsonl`。只有最终三种子test Macro-F1均值高于原始三种子均值时才尝试推送，唯一目标分支为 `yuzhe`；不改test选择方法。
 
 [English](README.md) · [环境部署](docs/REPRODUCING.zh-CN.md) · [原项目方法](experiments/METHOD_NOTES.md) · [历史结果](experiments/reports/comparison/REPORT.md)
 
@@ -130,3 +130,16 @@ ls "$EE6405_STORAGE/experiments/neural_runs/"
 分层微调参考 [ULMFiT](https://aclanthology.org/P18-1031/)，训练投影空间参考 [Supervised Contrastive Learning](https://arxiv.org/abs/2004.11362)。两项迁移到本任务的收益仍需实验验证。内容来源与后处理辅助头是本项目的可检验假设：尝试把四分类拆成两个相关因素，观察 ai_humanized 的 precision/recall/F1，不预设其必然有效。
 
 历史三种子 RoBERTa+SupCon：test Macro-F1 **91.15% ± 0.24**。A4000 原始复跑单种子：validation **91.64%**、test **90.65%**。保留原始证据；新研究结果尚待训练，不在 README 填入推测分数。
+
+## W&B 详细追踪
+
+当前W&B项目：[ee6405-a4000-research](https://forge.coreweave.com/wandb/zyu14865-shang/ee6405-a4000-research)。使用用户已登录的SDK服务地址，不强制改回其他域名。环境额外依赖 `pip install -r experiments/requirements-tracking.txt`。
+
+- 每个smoke/完整训练是独立run，同一UTC批次用group归组；smoke有独立job type，避免与正式分数混淆。
+- 每10个batch记录总loss、CE、SupCon、辅助loss、clip前梯度范数、每个参数组LR、实际步数、step时间/数据等待/吞吐及当前和峰值allocated/reserved显存。
+- 每epoch记录完整validation宏平均/逐类precision、recall、F1、AUROC、TPR、support、16个混淆格、早停状态、训练/验证耗时。
+- 每500步记录参数与梯度分布；SDK持续采集GPU/CPU等系统资源。对最终最佳validation记录ROC、PR曲线、置信度、混淆矩阵、仅含ID/标签/概率的预测表。
+- 配置、参数清单、源码哈希、checkpoint哈希、事件日志和结果作为metadata artifacts；完整模型权重保留本地持久磁盘，不默认上传大权重。最终批次上传报告与图表。
+- 本地W&B缓存位于各run目录；`wandb_run.json`保存链接，`tracking_errors.jsonl`记录同步错误。本地原有日志/报告/监控不依赖W&B；同步失败不无限阻止休眠，finish最长30秒。
+
+配置项：`wandb_enabled=true`、`wandb_project`、`wandb_entity`、`wandb_log_interval=10`、`wandb_watch=all`、`wandb_watch_frequency=500`。本轮额外增加最佳深度的4组LR/层间衰减对照（1e-5/2e-5 × .8/.9），全部串行，共15个正式训练（含补种子）及各自smoke。

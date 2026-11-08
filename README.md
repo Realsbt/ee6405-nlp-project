@@ -1,6 +1,6 @@
 # EE6405 — A4000 training and research
 
-> **Current entry point:** `bash experiments/run_research.sh --max-hours 12 --push-branch Realsbt` automatically creates a UTC timestamp batch directory containing all checkpoints (`runs/`), logs (`logs/`), per-run summaries, `SUMMARY.md`, a detailed Chinese figure guide, and process/error logs. Only a positive final three-seed mean test Macro-F1 gain triggers a push, exclusively to `Realsbt`.
+> **Current entry point:** `bash experiments/run_research.sh --max-hours 12 --push-branch yuzhe` automatically creates a UTC timestamp batch directory containing all checkpoints (`runs/`), logs (`logs/`), per-run summaries, `SUMMARY.md`, a detailed Chinese figure guide, and process/error logs. Only a positive final three-seed mean test Macro-F1 gain triggers a push, exclusively to `yuzhe`.
 
 [中文训练与参数指南](README.zh-CN.md) · [Environment setup](docs/REPRODUCING.md) · [Historical results](experiments/reports/comparison/REPORT.md)
 
@@ -56,3 +56,7 @@ The watchdog appends progress approximately every ten minutes. Its hibernation r
 Historical RoBERTa+SupCon test Macro-F1 is **91.15% ± 0.24** across three seeds. The A4000 baseline reproduction scored **91.64% validation / 90.65% test** for seed 3407. New improvements are hypotheses until measured. Comparisons reuse the same fixed test set and are not fresh independent tests.
 
 Research motivations: [discriminative fine-tuning](https://aclanthology.org/P18-1031/), [supervised contrastive learning](https://arxiv.org/abs/2004.11362/); creator/edit auxiliary targets are a task-specific hypothesis. Original methods, data and attribution remain in [METHOD_NOTES](experiments/METHOD_NOTES.md), [SOURCES](experiments/SOURCES.md), and [data documentation](data/README.md).
+
+## Detailed W&B tracking
+
+[Project dashboard](https://forge.coreweave.com/wandb/zyu14865-shang/ee6405-a4000-research). Install `experiments/requirements-tracking.txt`; existing login/base URL is respected. Every smoke/train run belongs to its UTC batch group. Log batch losses, gradient norms, all optimizer learning rates, CUDA memory, data/step timings and throughput every 10 batches; parameter/gradient histograms every 500 steps; full validation metrics and timings every epoch. Best-validation prediction tables, ROC/PR and confusion plots, config/source/checkpoint hashes and metadata artifacts are recorded; raw text and full weights are not uploaded. Local files remain authoritative and W&B finish is bounded to 30 seconds. Four additional LR/decay ablations run serially, for 15 formal runs including final seeds. The only publication branch is `yuzhe`.

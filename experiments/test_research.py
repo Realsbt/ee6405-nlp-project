@@ -106,11 +106,11 @@ class ResearchTests(unittest.TestCase):
             root=Path(d)
             (root/'score_change.json').write_text(json.dumps({'publish_eligible':False,'paired_gain_pp':-.1}))
             with patch('experiments.publish_results.subprocess.run') as run:
-                self.assertEqual(publish_if_improved(root,'Realsbt')['status'],'skipped_no_confirmed_gain')
+                self.assertEqual(publish_if_improved(root,'yuzhe')['status'],'skipped_no_confirmed_gain')
                 run.assert_not_called()
             (root/'score_change.json').write_text(json.dumps({'publish_eligible':True,'paired_gain_pp':.1}))
             with patch('experiments.publish_results.subprocess.check_output',return_value='other-branch'), patch('experiments.publish_results.subprocess.run') as run:
-                self.assertEqual(publish_if_improved(root,'Realsbt')['status'],'publication_failed')
+                self.assertEqual(publish_if_improved(root,'yuzhe')['status'],'publication_failed')
                 run.assert_not_called()
     def test_api_secret_permissions(self):
         with tempfile.TemporaryDirectory() as d:

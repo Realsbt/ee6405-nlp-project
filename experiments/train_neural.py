@@ -34,6 +34,7 @@ from experiments.neural import (BACKBONE, PROJECT_ROOT, RUN_ROOT, BalancedBatchS
 
 STOP_REQUESTED = False
 RUN_OUTPUT = None
+TRACKER = None
 
 
 def stop_handler(signum, frame):
@@ -74,7 +75,7 @@ def evaluate(model, dataset, batch_size):
 
 
 def main():
-    global RUN_OUTPUT
+    global RUN_OUTPUT, TRACKER
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=Path("experiments/configs/neural_v1.json"))
     parser.add_argument("--model-type", choices=["roberta", "race", "race_no_supcon"],
@@ -118,7 +119,7 @@ def main():
             raise RuntimeError(f"Recorded process {prior['pid']} is still alive; inspect it before resuming")
     RUN_OUTPUT = output
     source_files = [Path(__file__), PROJECT_ROOT / "experiments/neural.py", PROJECT_ROOT / "experiments/common.py",
-                    PROJECT_ROOT / "experiments/ablation.py", PROJECT_ROOT / "experiments/paths.py", PROJECT_ROOT / "experiments/research.py"]
+                    PROJECT_ROOT / "experiments/ablation.py", PROJECT_ROOT / "experiments/paths.py", PROJECT_ROOT / "experiments/research.py", PROJECT_ROOT / "experiments/tracking.py"]
     if config["model_type"] != "roberta":
         source_files.append(PROJECT_ROOT / "experiments/graph_data.py")
     source_hashes = {}
@@ -144,11 +145,16 @@ def main():
     write_json(output / "status.json", status)
     write_json(output / "config.json", config)
     write_json(report_dir / "config.json", config)
+    if config.get("wandb_enabled", False):
+        from experiments.tracking import Tracker
+        TRACKER = Tracker(output, config, resume=args.resume, job_type="smoke" if args.smoke else "train")
     def event(kind, **values):
         record = {"event": kind, "time_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(), **values}
         with (output / "events.jsonl").open("a") as stream:
             stream.write(json.dumps(record, allow_nan=False) + "\n")
         print(json.dumps(record), flush=True)
+        if TRACKER is not None:
+            TRACKER.event(kind, record)
     tokenizer = tokenizer_local()
     train_records, val_records = load_records("train"), load_records("val")
     if args.smoke:
@@ -167,6 +173,8 @@ def main():
                         pin_memory=config.get("pin_memory", False),
                         persistent_workers=bool(workers and config.get("persistent_workers", False)))
     model = build_model(config, metadata).cuda()
+    if TRACKER is not None:
+        TRACKER.watch(model, config)
     forward_model = torch.compile(model) if config.get("torch_compile", False) else model
     trainable = [(name, parameter) for name, parameter in model.named_parameters() if parameter.requires_grad]
     groups = optimizer_groups(model, config)
@@ -208,7 +216,10 @@ def main():
         sampler.epoch = epoch
         epoch_started = time.perf_counter()
         running_loss = running_ce = running_supcon = 0.0
+        last_step_done = time.perf_counter()
         for step, batch in enumerate(loader):
+            step_started = time.perf_counter()
+            data_wait = step_started - last_step_done
             if step % accumulation == 0:
                 optimizer.zero_grad(set_to_none=True)
             with torch.autocast("cuda", dtype=torch.bfloat16):
@@ -223,7 +234,8 @@ def main():
                         features = model.supcon_projection(features)
                     loss_supcon = criterion_supcon(F.normalize(features.float(), dim=1), labels)
                     loss = loss + config["supcon_weight"] * loss_supcon
-                loss = loss + auxiliary_loss(model, prediction["features"], labels, config)
+                loss_aux = auxiliary_loss(model, prediction["features"], labels, config)
+                loss = loss + loss_aux
             if not torch.isfinite(loss):
                 raise FloatingPointError("Non-finite training loss")
             window = min(accumulation, len(loader) - (step // accumulation) * accumulation)
@@ -249,6 +261,22 @@ def main():
                 event("train_step", epoch=epoch + 1, batch=step + 1, batches=len(loader), global_step=global_step,
                       loss=float(loss.detach()), loss_ce=float(loss_ce.detach()), loss_supcon=float(loss_supcon.detach()),
                       gradient_norm=float(gradient_norm), learning_rate=scheduler.get_last_lr()[0])
+            if TRACKER is not None and (step % TRACKER.log_interval == 0 or step == len(loader)-1):
+                torch.cuda.synchronize()
+                elapsed = time.perf_counter() - step_started
+                telemetry = {"batch_step":epoch*len(loader)+step+1, "train/epoch":epoch+1,
+                    "train/global_optimizer_step":global_step, "train/loss":float(loss.detach()),
+                    "train/ce_loss":float(loss_ce.detach()),"train/supcon_loss":float(loss_supcon.detach()),
+                    "train/auxiliary_loss":float(loss_aux.detach()),"train/gradient_norm_before_clip":float(gradient_norm),
+                    "train/step_seconds":elapsed,"train/data_wait_seconds":data_wait,
+                    "train/samples_per_second":len(batch["labels"])/elapsed,
+                    "memory/allocated_mib":torch.cuda.memory_allocated()/1024**2,
+                    "memory/reserved_mib":torch.cuda.memory_reserved()/1024**2,
+                    "memory/peak_allocated_mib":torch.cuda.max_memory_allocated()/1024**2,
+                    "memory/peak_reserved_mib":torch.cuda.max_memory_reserved()/1024**2}
+                telemetry.update({f"lr/{g['name']}_{i}":g["lr"] for i,g in enumerate(optimizer.param_groups)})
+                TRACKER.log(telemetry)
+            last_step_done = time.perf_counter()
             if STOP_REQUESTED:
                 status.update(status="interrupted", last_completed_epoch=epoch, resume_checkpoint=str(output / "last.pt") if (output / "last.pt").exists() else None)
                 write_json(output / "status.json", status)
@@ -279,6 +307,7 @@ def main():
         if STOP_REQUESTED or stale >= config["early_stopping_patience"]:
             break
     fit_total_seconds = time.perf_counter() - training_started
+    write_json(output / "training_finished.json", {"pid":os.getpid(), "time":time.time(), "fit_seconds":fit_total_seconds})
     if not config.get("unfreeze_embeddings", False):
         assert torch.equal(frozen_before, model.bert_model.embeddings.word_embeddings.weight[0].detach())
     assert not torch.equal(trained_before, model.classifier.out_proj.weight.detach()), "Classifier was not updated"
@@ -306,6 +335,8 @@ def main():
     write_jsonl(output / "validation_predictions.jsonl", [
         {"item_id": r["item_id"], "true_label": r["label"],
          "probabilities": dict(zip(LABELS, p.tolist()))} for r, p in zip(val_records, val_probs)])
+    if TRACKER is not None:
+        TRACKER.evaluation(val_metrics, val_probs, val_records)
     validation_result = {
         "status": "completed", "run_id": run_id, "config": config, "best_epoch": best_epoch,
         "validation": val_metrics, "test_partition_loaded": False,
@@ -368,6 +399,8 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as error:
+        if TRACKER is not None:
+            TRACKER.log({"error/type":type(error).__name__, "error/message":str(error)})
         if RUN_OUTPUT is not None and (RUN_OUTPUT / "status.json").exists():
             status = json.loads((RUN_OUTPUT / "status.json").read_text())
             status.update(status="failed", error_type=type(error).__name__, error=str(error),
@@ -376,3 +409,13 @@ if __name__ == "__main__":
                           peak_cuda_reserved_mib=torch.cuda.max_memory_reserved() / 1024**2 if torch.cuda.is_initialized() else None)
             write_json(RUN_OUTPUT / "status.json", status)
         raise
+    finally:
+        if TRACKER is not None:
+            summary = None
+            status = "failed"
+            if RUN_OUTPUT is not None:
+                if (RUN_OUTPUT / "status.json").exists():
+                    status = json.loads((RUN_OUTPUT / "status.json").read_text())["status"]
+                if (RUN_OUTPUT / "result.json").exists():
+                    summary = json.loads((RUN_OUTPUT / "result.json").read_text())
+            TRACKER.finish(status, summary)

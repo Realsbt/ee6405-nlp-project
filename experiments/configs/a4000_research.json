@@ -56,5 +56,11 @@
   "exclude_norm_bias_decay": false,
   "supcon_projection": false,
   "aux_content_weight": 0.0,
-  "aux_edit_weight": 0.0
+  "aux_edit_weight": 0.0,
+  "wandb_enabled": true,
+  "wandb_project": "ee6405-a4000-research",
+  "wandb_entity": "zyu14865-shang",
+  "wandb_log_interval": 10,
+  "wandb_watch": "all",
+  "wandb_watch_frequency": 500
 }

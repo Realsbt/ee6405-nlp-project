@@ -26,6 +26,7 @@ class Pipeline:
         # Never start any experiments without authenticated self-hibernation preflight.
         preflight=Hyperstack().preflight()
         self.batch.mkdir(parents=True)
+        os.environ['EE6405_BATCH_NAME']=self.batch.name
         (self.batch/'logs').mkdir()
         self.operation('preflight_passed', vm_id=preflight['vm_id'])
         write_json(self.batch/'hyperstack-preflight.json',preflight)
@@ -140,6 +141,11 @@ class Pipeline:
                         results.append(self.train('u6_b8_after_oom',c))
                     else: raise
             best=max(results,key=lambda x:x['validation']['macro_f1'])
+            depth_choice=copy.deepcopy(best['config'])
+            for lr,decay in ((1e-5,.8),(1e-5,.9),(2e-5,.8),(2e-5,.9)):
+                c=copy.deepcopy(depth_choice);c.update(learning_rate=lr,layer_lr_decay=decay)
+                results.append(self.train(f'lr{lr:g}_decay{decay}',c))
+            best=max(results,key=lambda x:x['validation']['macro_f1'])
             c=copy.deepcopy(best['config']); c['supcon_projection']=True
             projection=self.train('projection',c)
             # Projection is retained only when validation improves; no test used.
@@ -155,7 +161,7 @@ class Pipeline:
             members.append(self.train('selected',c))
         manifest={'data_protocol_sha256':file_hash(DATA_ROOT/'protocol.json'),
                   'git_commit':self.state['git_commit'],'initial_git_commit':INITIAL_COMMIT,
-                  'seeds':[3407,42,2026], 'selection_rule':('Predeclared single recipe; no structure search' if self.args.single_config else 'Max validation Macro-F1; depth -> projection -> fixed auxiliary ablations; no test selection'),
+                  'seeds':[3407,42,2026], 'selection_rule':('Predeclared single recipe; no structure search' if self.args.single_config else 'Max validation Macro-F1; depth -> 4 LR settings -> projection -> fixed auxiliary ablations; no test selection'),
                   'ensemble_rule':'Three selected-config seeds, fixed equal probability average',
                   'test_command':f'{sys.executable} -m experiments.final_evaluate --manifest {self.batch / "final_manifest.json"}',
                   'evaluation_source_sha256':{str(PROJECT_ROOT/'experiments'/n): file_hash(PROJECT_ROOT/'experiments'/n)
@@ -180,6 +186,12 @@ class Pipeline:
             raise RuntimeError('Report/visualization integrity failure')
         from experiments.experiment_summary import summarize_batch
         summarize_batch(self.batch)
+        if config_tracking := json.loads(self.args.config.read_text()).get('wandb_enabled', False):
+            from experiments.tracking import upload_batch
+            try:
+                upload_batch(self.batch, json.loads(self.args.config.read_text()))
+            except Exception as tracking_error:
+                self.operation('wandb_report_upload_error', error_type=type(tracking_error).__name__, error=str(tracking_error))
         inventory = {}
         for run_id in self.state['completed_runs']:
             for name in ('best.pt','last.pt'):
@@ -205,7 +217,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--config',type=Path,default=PROJECT_ROOT/'experiments/configs/a4000_research.json')
     p.add_argument('--name',required=True)
-    p.add_argument('--push-branch', default='Realsbt', help='Only this branch may be pushed, and only on positive final three-seed mean Macro-F1 gain')
+    p.add_argument('--push-branch', default='yuzhe', help='Only this branch may be pushed, and only on positive final three-seed mean Macro-F1 gain')
     p.add_argument('--single-config', action='store_true', help='Skip search; train this recipe for all three seeds, then evaluate/report/hibernate')
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--progress',type=Path,default=PROJECT_ROOT.parent/'PROGRESS.md')
@@ -214,7 +226,7 @@ def main():
     args=p.parse_args()
     from experiments.train_neural import run_name
     run_name(args.name)
-    if args.push_branch != 'Realsbt': p.error('Only the authorized branch Realsbt may receive pushes')
+    if args.push_branch != 'yuzhe': p.error('Only the authorized branch yuzhe may receive pushes')
     if len(args.name)>32: p.error('Batch name must be <=32 chars')
     if not 180<=args.grace_seconds<=600 or not 0<args.max_hours<=24: p.error('grace=180..600; max-hours=(0,24]')
     if subprocess.check_output(['git','status','--porcelain'],cwd=PROJECT_ROOT,text=True).strip():

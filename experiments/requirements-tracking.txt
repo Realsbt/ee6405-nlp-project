@@ -1,0 +1,3 @@
+# Optional detailed online experiment tracking; compatible with isanlp.
+wandb==0.31.0
+protobuf==5.29.6
