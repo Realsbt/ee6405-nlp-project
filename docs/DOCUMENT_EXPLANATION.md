@@ -42,6 +42,24 @@ For every computed unit, all four `without_scores` are returned. `delta_pp[c] = 
 
 Display colors are not four-way authorship labels. Uncomputed and out-of-window units remain explicitly unmeasured. A partially visible RST unit only has its lexical portion probed and highlighted.
 
+### Lexical window cap
+
+Transformer models tokenize with `max_length=512, truncation=True`, so their lexical window is a hard **512-token** cap including special tokens — not a character limit. The 12,000-character limit is a separate request-size guard. Coverage is therefore bounded by tokens: a 9,000-character document typically exposes only ~2,900 characters to RoBERTa and RACE.
+
+**TF-IDF is exempt.** It has no position embeddings, so the 512-token window is a transformer limit that does not apply to it. `DetectorService.predict` and the explanation preparation both use the full text for `tfidf` and report `input.lexical_window = "full_text"`; every display segment is then `coverage: "full"` and explainable. The other three models report `"512_tokens"`.
+
+`Coverage` states this explicitly: a header with `N of M characters` and either `T / 512 tokens` or `T tokens · no position limit`, plus a sentence explaining that everything past the boundary is not classified, not explained and has no influence value. The score panel reports `32% of text` or `100% (full)` with the same explanation in its tooltip. Out-of-window units are reported as `Outside lexical window`, never as zero influence.
+
+Measured on a 9,000-character document:
+
+| Model | Window | Covered | Eligible units |
+| --- | --- | --- | --- |
+| TF-IDF | full text | 9,000 / 9,000 (100%) | 68 / 68 |
+| RoBERTa | 512 tokens | 2,859 / 9,000 (32%) | 22 / 68 |
+| RACE | 512 tokens | 2,859 / 9,000 (32%) | 57 / 179 |
+
+Raising the cap for the transformer models is not a configuration change: `roberta-base` has `max_position_embeddings = 514`, so 512 is the architecture limit. The options are sliding-window aggregation (changes what "whole-document prediction" means), or a long-context encoder (requires retraining and invalidates the existing checkpoints).
+
 RACE units are actual preprocessed RST EDUs. Non-RACE units are deterministic display segments. Offsets are emitted in Python code points and JavaScript UTF-16 units, validated against the original text. RACE truncation alignment must form the expected visible prefix; mismatches fail closed rather than labeling the wrong unit.
 
 ## API
@@ -52,9 +70,31 @@ RACE units are actual preprocessed RST EDUs. Non-RACE units are deterministic di
 {"model":"race","text":"Full document…","max_units":8}
 ```
 
-Optional `unit_ids` requests up to eight specific existing IDs. The response includes the original `document`, `method`, `units`, actual `graph`, captured `stages`, source hash, replay and restoration differences, and timing. It does not cache document text persistently. Requests are serialized under the existing service lock during hooks. Parsing is not repeated per unit.
+Optional `unit_ids` requests up to eight specific existing IDs. Optional `prepare_only: true` returns the reusable metadata (units, coverage, parsed graph, stages) without running any intervention. Optional `refresh: true` rebuilds the cached preparation instead of reusing it. The response includes the original `document`, `method`, `units`, actual `graph`, captured `stages`, source hash, replay and restoration differences, `timing` (`prepare_seconds`, `units_seconds`) and `cache` (`preparation: hit|miss` plus counters). It does not cache document text persistently. Requests are serialized under the existing service lock during hooks.
 
 The 90-second explanation-loop limit is cooperative between forwards; it does not kill an active operation. The normal prediction/parser startup is separate from this loop budget. UI timeout does not mean server cancellation.
+
+## v5.1 preparation cache
+
+`explain_document()` is split into three stages so a new unit batch never repeats work that only depends on the document:
+
+1. **Document prediction** — `DetectorService.predict`, unchanged. `/api/predict` hands its result to the explanation path through `remember_document()`, so the first explanation does not run a second full forward.
+2. **Preparation** — tokenization with offsets, the RST parse, graph construction, unit derivation and coverage. Cached per `(preprocessing_version, model, service instance, text)` in a bounded LRU (`PREP_CACHE_ENTRIES = 4`). The service instance is part of the key because prepared state holds that instance's model objects and tensors.
+3. **Baseline and interventions** — the traced baseline forward is deferred until influence is actually requested (`_ensure_baseline`), so `prepare_only` stays cheap. Each requested unit then runs exactly one intervened forward.
+
+`PREPROCESSING_VERSION` is part of the key, so a change in tokenization, graph building or unit derivation can never reuse stale state. `cache_stats()` is exposed through `/api/telemetry` as `explanation_cache`; `clear_preparation_cache()` and `reset_cache_stats()` exist for tests and diagnostics.
+
+Measured on the local CPU service with the real RACE checkpoint:
+
+| Case | Before | After |
+| --- | --- | --- |
+| First analyze (395-char example) | ~17.8 s | ~17.8 s (prediction only) |
+| Metadata for the same document | n/a | ~0.9 s, no intervention |
+| First 3-unit Quick preview | ~2.9 s incl. preparation | ~2.9 s |
+| Next 8 units (Continue) | full re-prepare | ~5.9 s, preparation cache hit |
+| Re-clicking a fully evaluated document | re-ran inference | no request at all |
+
+For an 11,861-character document the prediction took ~31 s, metadata preparation ~14 s (RST parse dominates), and 244 units were derived of which 57 were inside the lexical window and 187 were reported as outside it.
 
 ## Verification
 
@@ -79,6 +119,8 @@ Switching perspective never recomputes anything; the frozen prediction, selected
 
 `Map` groups the source text by real blank-line paragraph breaks. Each row shows a preview, the number of intersecting units, how many are explained, how many are pending, how many fall outside the lexical window, and the paragraph's share of the text. Selecting a row focuses the first computed unit in that paragraph and keeps the Map open.
 
+Before unit metadata exists a row reports `Not loaded` rather than `0 EDUs`. A passage prediction is labelled `Passage: …` because it covers only the passage span, not the whole paragraph.
+
 Paragraphs are navigation aids built from the actual text. They are never presented as RST nodes. An EDU that crosses a paragraph break keeps its real offsets and is not split.
 
 ### Focus graph
@@ -91,19 +133,29 @@ Three relationships stay visually distinct: parsed parent–child edges (solid),
 
 ### On-demand explanation
 
-`Explain selected unit`, `Explain visible units` and `Continue explaining` replace the single `Explain first 8` action. The counter reports `N / M eligible units evaluated`. Unmeasured, out-of-window and failed units remain distinct states and never receive a fabricated number.
+`Explain selected unit`, `Explain visible units`, `Quick preview` and `Continue explaining` replace the single `Explain first 8` action. The counter reports `N / M eligible units evaluated`, then the number of units outside the lexical window and the total unit count, so the three numbers are never conflated.
+
+- `Explain selected unit` measures the selected unit regardless of its position.
+- `Explain visible units` resolves to the paragraph containing the selection, or to units actually inside the reader viewport. It never silently becomes "the first eight".
+- `Quick preview` samples at most three pending units at the start, middle and end of the lexical window and is labelled as positional sampling, not an impact ranking.
+- `Continue explaining` keeps the eight-unit request cap and skips units that already have a value.
+- `Recompute` is the only action that re-runs an already measured unit (`refresh: true`).
+
+Unit states are explicit: `Not loaded`, `Not evaluated`, `Queued`, `Computing`, `Evaluated`, `Outside lexical window`, `Failed`. A unit is never reported as failed or as zero influence merely because it has not been measured. The generic `Explain prediction` button only requests pending units and reports when nothing is left to measure.
 
 Merged results are only reused when `text_sha256`, `method` and `document.model` all match. Editing the text, changing the model or switching version invalidates the cache.
+
+`auto-explain` is off by default: `Analyze document` guarantees the real whole-document prediction, then loads metadata, and only runs influence when the checkbox is on.
 
 ### What-if editing
 
 `Original` is frozen at analysis time. Editing the textarea marks the document dirty without touching the frozen prediction. `Reanalyze revised document` runs a real whole-document prediction on the revised text with the same model and stores it as `Revised`. The What-if card shows the four class scores before and after.
 
-A revised snapshot is only accepted when it belongs to the same model and a different text. Before/after prediction differences are labelled separately from feature-suppression effects; the two measurements are not interchangeable.
+A revised snapshot is only accepted when it belongs to the same model and a different text. The card also shows the literal changed region (removed text struck through, added text highlighted) so the score change can be read against the actual edit. Before/after prediction differences are labelled separately from feature-suppression effects; the two measurements are not interchangeable.
 
 ### Tests
 
-`tests/test_document_map.py` covers paragraph segmentation, EDU/UTF-16 offset agreement, cross-paragraph units, unrequested units carrying no influence, batch limits, cache-key changes with text, and Original/Revised independence. Total suite: 46 tests.
+`tests/test_document_map.py` covers paragraph segmentation, EDU/UTF-16 offset agreement, cross-paragraph units, unrequested units carrying no influence, batch limits, cache-key changes with text, and Original/Revised independence. `tests/test_explanation_cache.py` covers `prepare_only` metadata, preparation reuse across batches, identical baselines after reuse, `refresh`, key separation by text/model/service, `remember_document` avoiding a second prediction, bounded capacity, hit/miss counters, cache clearing and hook cleanup. Total suite: 62 tests.
 
 ### Onboarding tour
 

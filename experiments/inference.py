@@ -151,6 +151,9 @@ class DetectorService:
             end = max((end for start, end in encoded["offset_mapping"] if end > start), default=0)
             if end == 0:
                 raise ValueError("The input has no usable text tokens")
+            # TF-IDF has no position embeddings, so the 512-token window is a
+            # transformer limit that does not apply to it. It reads the whole text.
+            lexical_end = len(text) if name == "tfidf" else end
             record = {"item_id": "interactive", "article": text, "label_id": -1}
             parsed, startup = None, None
             if name.startswith("race"):
@@ -163,7 +166,7 @@ class DetectorService:
                 torch.cuda.synchronize()
             forward_started = time.perf_counter()
             if name == "tfidf":
-                scores = model.predict_proba([text[:end]])[0]
+                scores = model.predict_proba([text[:lexical_end]])[0]
             else:
                 with torch.inference_mode():
                     logits = model(collate_batch([dataset[0]]))["logits"].float()
@@ -176,7 +179,8 @@ class DetectorService:
             result = {"model": name, "run_id": RUN_NAMES[name], "prediction": LABELS[int(np.argmax(scores))],
                       "scores": dict(zip(LABELS, map(float, scores))), "ai_creator_score": float(scores[2] + scores[3]),
                       "input": {"characters": len(text), "lexical_tokens_with_specials": len(encoded["input_ids"]),
-                                "lexical_covered_characters": end, "lexical_truncated": end < len(text.rstrip()),
+                                "lexical_covered_characters": lexical_end, "lexical_truncated": lexical_end < len(text.rstrip()),
+                                "lexical_window": "full_text" if name == "tfidf" else "512_tokens",
                                 "rst_scope": "full document" if parsed else None, "edu_count": parsed["edus"] if parsed else None},
                       "timing": {"end_to_end_seconds": total_seconds, "detector_model_load_seconds": loading_seconds,
                                  "detector_forward_seconds": forward_seconds,

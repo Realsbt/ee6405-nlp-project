@@ -25,7 +25,7 @@ def process_memory_mib():
         return None
 
 
-def make_handler(service, explain, page, reading_page, port):
+def make_handler(service, explain, page, reading_page, port, cache_stats=None, remember=None):
     """Small factory permits HTTP contract tests without loading ML checkpoints."""
     class Handler(BaseHTTPRequestHandler):
         def respond(self, code, body, kind="application/json; charset=utf-8"):
@@ -49,7 +49,10 @@ def make_handler(service, explain, page, reading_page, port):
             elif path == '/reading':
                 self.respond(200, reading_page, 'text/html; charset=utf-8')
             elif path == '/api/telemetry':
-                self.respond(200, {'process_memory_mib': process_memory_mib()})
+                body = {'process_memory_mib': process_memory_mib()}
+                if cache_stats is not None:
+                    body['explanation_cache'] = cache_stats()
+                self.respond(200, body)
             elif path == '/api/models':
                 registry = service.registry()
                 registry['explanation_api'] = 'ee6405.document-explanation/v1'
@@ -78,9 +81,12 @@ def make_handler(service, explain, page, reading_page, port):
                     raise ValueError('Send a JSON object')
                 if self.path == '/api/predict':
                     result = service.predict(request.get('text'), request.get('model'))
+                    if remember is not None:
+                        remember(request.get('text'), request.get('model'), result)
                 else:
                     result = explain(service, request.get('text'), request.get('model'),
-                                     unit_ids=request.get('unit_ids'), max_units=request.get('max_units', 8))
+                                     unit_ids=request.get('unit_ids'), max_units=request.get('max_units', 8),
+                                     refresh=bool(request.get('refresh')), prepare_only=bool(request.get('prepare_only')))
                 self.respond(200, result)
             except (ValueError, KeyError, json.JSONDecodeError) as error:
                 self.respond(400, {'error': str(error)})
@@ -95,13 +101,14 @@ def main():
     parser.add_argument('--device', choices=('cpu', 'cuda'), default='cpu')
     args = parser.parse_args()
     from experiments.inference import DetectorService
-    from experiments.document_explanations import explain_document
+    from experiments.document_explanations import cache_stats, explain_document, remember_document
     service = DetectorService(args.device)
     parent = Path(__file__).parent
     page = (parent / 'document_explorer.html').read_bytes()
     reading = (parent / 'demo.html').read_bytes()
     server = ThreadingHTTPServer(('127.0.0.1', args.port),
-                                 make_handler(service, explain_document, page, reading, args.port))
+                                 make_handler(service, explain_document, page, reading, args.port,
+                                              cache_stats=cache_stats, remember=remember_document))
     print(f'EE6405 Text Lab: http://127.0.0.1:{args.port}/ · {args.device} · legacy tools /reading', flush=True)
     try:
         server.serve_forever()
