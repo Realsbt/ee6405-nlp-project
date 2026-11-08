@@ -95,7 +95,7 @@ def main():
         config.update(max_epochs=1, early_stopping_patience=1)
     run_id = ("smoke_" if args.smoke else "") + (args.run_name or f"{condition_name(config)}_s{seed}")
     output = RUN_ROOT / run_id
-    report_dir = PROJECT_ROOT / "experiments/reports" / run_id
+    report_dir = RUN_ROOT / "reports" / run_id
     if not args.resume and (output.exists() or report_dir.exists()):
         raise FileExistsError(f"Preserving existing run {output} / {report_dir}; choose a new --run-name or use --resume for a stopped run")
     output.mkdir(parents=True, exist_ok=True)
