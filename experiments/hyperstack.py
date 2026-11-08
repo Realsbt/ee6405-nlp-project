@@ -13,6 +13,8 @@ BASE = 'https://infrahub-api.nexgencloud.com/v1/core/virtual-machines'
 
 class Hyperstack:
     def __init__(self):
+        if not os.environ.get('HYPERSTACK_VM_ID') or not os.environ.get('HYPERSTACK_API_KEY_FILE'):
+            raise ValueError('Set HYPERSTACK_VM_ID and HYPERSTACK_API_KEY_FILE before training')
         self.vm_id = int(os.environ['HYPERSTACK_VM_ID'])
         if self.vm_id <= 0:
             raise ValueError('VM ID must be positive')
