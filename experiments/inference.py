@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 from experiments.paths import STORAGE, BACKBONE, UPSTREAM, resolve_recorded_path, parser_python
-import select
+import queue
 import subprocess
 import threading
 import time
@@ -37,6 +37,8 @@ class DetectorService:
         self.models = {}
         self.tokenizer = tokenizer_local()
         self.parser = None
+        self.parser_queue = None
+        self.parser_reader = None
         self.lock = threading.Lock()
         self.runtime = STORAGE / "experiments/demo_runtime"
         self.runtime.mkdir(parents=True, exist_ok=True)
@@ -88,9 +90,12 @@ class DetectorService:
         return model, time.perf_counter() - started
 
     def _parser_message(self, timeout):
-        if self.parser is None or not select.select([self.parser.stdout], [], [], timeout)[0]:
+        if self.parser is None or self.parser_queue is None:
+            raise RuntimeError("RST parser is not running")
+        try:
+            line = self.parser_queue.get(timeout=timeout)
+        except queue.Empty:
             raise TimeoutError("RST parser response timed out; inspect the local parser log")
-        line = self.parser.stdout.readline()
         if not line:
             raise RuntimeError("RST parser stopped; inspect the local parser log")
         message = json.loads(line)
@@ -107,8 +112,18 @@ class DetectorService:
                            "PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "2", "OPENBLAS_NUM_THREADS": "2"}
             self.parser = subprocess.Popen([parser_python(), "-u", "-m", "experiments.rst_service"],
                                            cwd=PROJECT_ROOT, env=environment, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                           stderr=log, text=True, bufsize=1)
+                                           stderr=log, text=True, encoding="utf-8", bufsize=1)
             log.close()
+            self.parser_queue = queue.Queue()
+            parser_queue = self.parser_queue
+            def read_parser_output():
+                try:
+                    for line in self.parser.stdout:
+                        parser_queue.put(line)
+                finally:
+                    parser_queue.put(None)
+            self.parser_reader = threading.Thread(target=read_parser_output, daemon=True)
+            self.parser_reader.start()
             try:
                 startup = self._parser_message(180)
                 assert startup["status"] == "ready"
@@ -182,3 +197,5 @@ class DetectorService:
                 self.parser.kill()
                 self.parser.wait()
         self.parser = None
+        self.parser_queue = None
+        self.parser_reader = None

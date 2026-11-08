@@ -29,8 +29,17 @@ def resolve_recorded_path(value):
 def parser_python():
     override = os.environ.get('EE6405_RST_PYTHON')
     if override:
-        return str(Path(override).expanduser())
-    for candidate in (STORAGE / '.venv-rst/bin/python', STORAGE / '.venv/bin/python'):
+        candidate = Path(override).expanduser()
+        if not candidate.is_file():
+            raise FileNotFoundError(f'EE6405_RST_PYTHON does not exist: {candidate}')
+        return str(candidate)
+    candidates = (
+        STORAGE / '.venv-rst/Scripts/python.exe',
+        STORAGE / '.venv-rst/bin/python',
+        STORAGE / '.venv/Scripts/python.exe',
+        STORAGE / '.venv/bin/python',
+    )
+    for candidate in candidates:
         if candidate.is_file():
             return str(candidate)
     return sys.executable
