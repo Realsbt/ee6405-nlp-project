@@ -25,6 +25,7 @@ from torch.utils.data import DataLoader
 from transformers import get_linear_schedule_with_warmup
 
 from experiments.common import DATA_ROOT, DOMAINS, LABELS, classification_metrics, file_hash, write_json, write_jsonl
+from experiments.research import validate, optimizer_groups, auxiliary_loss
 from experiments.ablation import condition_name, resolve_config
 from experiments.neural import (BACKBONE, PROJECT_ROOT, RUN_ROOT, BalancedBatchSampler, TextDataset,
                                 balanced_smoke_records, build_model, collate_batch, import_upstream,
@@ -85,11 +86,13 @@ def main():
                         help="Alternative output name; existing runs are preserved; smoke runs add a smoke_ prefix")
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--evaluate-test", action="store_true", help="Explicit held-out evaluation; never for screening")
     args = parser.parse_args()
     try:
         config = resolve_config(json.loads(args.config.read_text()), args.model_type, args.seed, args.supcon)
     except ValueError as error:
         parser.error(str(error))
+    validate(config)
     seed = config["seed"]
     if args.smoke:
         config.update(max_epochs=1, early_stopping_patience=1)
@@ -115,7 +118,7 @@ def main():
             raise RuntimeError(f"Recorded process {prior['pid']} is still alive; inspect it before resuming")
     RUN_OUTPUT = output
     source_files = [Path(__file__), PROJECT_ROOT / "experiments/neural.py", PROJECT_ROOT / "experiments/common.py",
-                    PROJECT_ROOT / "experiments/ablation.py", PROJECT_ROOT / "experiments/paths.py"]
+                    PROJECT_ROOT / "experiments/ablation.py", PROJECT_ROOT / "experiments/paths.py", PROJECT_ROOT / "experiments/research.py"]
     if config["model_type"] != "roberta":
         source_files.append(PROJECT_ROOT / "experiments/graph_data.py")
     source_hashes = {}
@@ -159,16 +162,23 @@ def main():
         train_data, val_data = GraphDataset("train", train_records), GraphDataset("val", val_records)
         metadata = train_data.metadata
     sampler = BalancedBatchSampler(train_data.labels, config["batch_size"], seed)
-    loader = DataLoader(train_data, batch_sampler=sampler, collate_fn=collate_batch, num_workers=0)
+    workers = config.get("dataloader_num_workers", 0)
+    loader = DataLoader(train_data, batch_sampler=sampler, collate_fn=collate_batch, num_workers=workers,
+                        pin_memory=config.get("pin_memory", False),
+                        persistent_workers=bool(workers and config.get("persistent_workers", False)))
     model = build_model(config, metadata).cuda()
+    forward_model = torch.compile(model) if config.get("torch_compile", False) else model
     trainable = [(name, parameter) for name, parameter in model.named_parameters() if parameter.requires_grad]
-    assert all(not name.startswith("bert_model.") or name.startswith("bert_model.encoder.layer.11.") for name, _ in trainable)
-    optimizer = torch.optim.AdamW([parameter for _, parameter in trainable], lr=config["learning_rate"], weight_decay=config["weight_decay"])
-    total_steps = config["max_epochs"] * len(loader)
+    groups = optimizer_groups(model, config)
+    optimizer = torch.optim.AdamW(groups, fused=config.get("fused_adamw", False))
+    accumulation = config.get("gradient_accumulation_steps", 1)
+    total_steps = config["max_epochs"] * math.ceil(len(loader) / accumulation)
     scheduler = get_linear_schedule_with_warmup(optimizer, int(total_steps * config["warmup_ratio"]), total_steps)
     criterion_supcon = import_upstream()[2](temperature=config["supcon_temperature"])
     parameter_info = {"total": sum(p.numel() for p in model.parameters()), "trainable": sum(p.numel() for _, p in trainable),
                       "trainable_parameter_names": [name for name, _ in trainable]}
+    parameter_info["trainable_layers"] = list(range(12 - config["architecture"]["unfreeze_bert_layers"], 12))
+    parameter_info["optimizer_groups"] = [{k: v for k, v in g.items() if k != "params"} for g in groups]
     write_json(output / "parameters.json", parameter_info)
     event("initialized", train_records=len(train_data), val_records=len(val_data), batches_per_epoch=len(loader),
           trainable_parameters=parameter_info["trainable"], gpu=torch.cuda.get_device_name(0))
@@ -192,33 +202,46 @@ def main():
         event("resume_from_base", reason="No completed epoch checkpoint; partial epoch is discarded")
     torch.cuda.reset_peak_memory_stats()
     training_started = time.perf_counter()
+    fit_epochs = []
     for epoch in range(start_epoch, config["max_epochs"]):
         model.train()
         sampler.epoch = epoch
         epoch_started = time.perf_counter()
         running_loss = running_ce = running_supcon = 0.0
         for step, batch in enumerate(loader):
-            optimizer.zero_grad(set_to_none=True)
+            if step % accumulation == 0:
+                optimizer.zero_grad(set_to_none=True)
             with torch.autocast("cuda", dtype=torch.bfloat16):
-                prediction = model(batch)
+                prediction = forward_model(batch)
                 labels = batch["labels"].cuda()
                 loss_ce = F.cross_entropy(prediction["logits"].float(), labels)
                 loss = loss_ce
                 loss_supcon = loss_ce.new_zeros(())
                 if config["use_supcon"]:
-                    loss_supcon = criterion_supcon(F.normalize(prediction["features"].float(), dim=1), labels)
+                    features = prediction["features"]
+                    if config.get("supcon_projection", False):
+                        features = model.supcon_projection(features)
+                    loss_supcon = criterion_supcon(F.normalize(features.float(), dim=1), labels)
                     loss = loss + config["supcon_weight"] * loss_supcon
+                loss = loss + auxiliary_loss(model, prediction["features"], labels, config)
             if not torch.isfinite(loss):
                 raise FloatingPointError("Non-finite training loss")
-            loss.backward()
-            gradient_norm = torch.nn.utils.clip_grad_norm_([p for _, p in trainable], config["gradient_clip"], error_if_nonfinite=True)
+            window = min(accumulation, len(loader) - (step // accumulation) * accumulation)
+            (loss / window).backward()
+            update = (step + 1) % accumulation == 0 or step == len(loader) - 1
+            gradient_norm = torch.nn.utils.clip_grad_norm_([p for _, p in trainable], config["gradient_clip"] if update else float("inf"), error_if_nonfinite=True)
             if args.smoke:
                 assert model.classifier.out_proj.weight.grad is not None
                 assert model.bert_model.encoder.layer[-1].attention.self.query.weight.grad is not None
-                assert all(p.grad is None for p in model.bert_model.encoder.layer[0].parameters())
-            optimizer.step()
-            scheduler.step()
-            global_step += 1
+                first = 12 - config["architecture"]["unfreeze_bert_layers"]
+                for layer in model.bert_model.encoder.layer[:first]:
+                    assert all(p.grad is None for p in layer.parameters())
+                for layer in model.bert_model.encoder.layer[first:]:
+                    assert layer.attention.self.query.weight.grad is not None
+            if update:
+                optimizer.step()
+                scheduler.step()
+                global_step += 1
             running_loss += float(loss.detach())
             running_ce += float(loss_ce.detach())
             running_supcon += float(loss_supcon.detach())
@@ -233,6 +256,7 @@ def main():
                 return
         torch.cuda.synchronize()
         fit_seconds = time.perf_counter() - epoch_started
+        fit_epochs.append(fit_seconds)
         metrics, _, _, eval_seconds = evaluate(model, val_data, config["batch_size"])
         improved = metrics["macro_f1"] > best_score
         if improved:
@@ -255,11 +279,12 @@ def main():
         if STOP_REQUESTED or stale >= config["early_stopping_patience"]:
             break
     fit_total_seconds = time.perf_counter() - training_started
-    assert torch.equal(frozen_before, model.bert_model.embeddings.word_embeddings.weight[0].detach())
+    if not config.get("unfreeze_embeddings", False):
+        assert torch.equal(frozen_before, model.bert_model.embeddings.word_embeddings.weight[0].detach())
     assert not torch.equal(trained_before, model.classifier.out_proj.weight.detach()), "Classifier was not updated"
     if args.smoke:
         smoke = {"status": "passed", "run_id": run_id, "training_only_smoke": True,
-                 "test_partition_loaded": False, "finite_gradients": True, "frozen_layer_unchanged": True,
+                 "test_partition_loaded": False, "finite_gradients": True, "frozen_layer_unchanged": not config.get("unfreeze_embeddings", False),
                  "classifier_updated": True, "peak_cuda_allocated_mib": torch.cuda.max_memory_allocated() / 1024**2,
                  "validation": metrics, "config": config,
                  "mean_train_ce": running_ce / len(loader), "mean_train_supcon": running_supcon / len(loader)}
@@ -276,6 +301,29 @@ def main():
     # The selected model is frozen before opening the held-out test partition.
     best = torch.load(output / "best.pt", map_location="cpu", weights_only=True)
     model.load_state_dict(best["model_state_dict"], strict=True)
+    val_metrics, val_probs, val_ids, val_seconds = evaluate(model, val_data, config["batch_size"])
+    assert val_ids == [r["item_id"] for r in val_records]
+    write_jsonl(output / "validation_predictions.jsonl", [
+        {"item_id": r["item_id"], "true_label": r["label"],
+         "probabilities": dict(zip(LABELS, p.tolist()))} for r, p in zip(val_records, val_probs)])
+    validation_result = {
+        "status": "completed", "run_id": run_id, "config": config, "best_epoch": best_epoch,
+        "validation": val_metrics, "test_partition_loaded": False,
+        "checkpoint_path": str(output / "best.pt"), "checkpoint_sha256": file_hash(output / "best.pt"),
+        "data_protocol_sha256": file_hash(DATA_ROOT / "protocol.json"), "code_sha256": source_hashes,
+        "parameters": parameter_info,
+        "efficiency": {"training_validation_checkpoint_seconds": fit_total_seconds,
+                       "fit_seconds_per_epoch": fit_epochs,
+                       "samples_per_second": len(loader) * config["batch_size"] * len(fit_epochs) / sum(fit_epochs) if fit_epochs else None,
+                       "peak_cuda_allocated_mib": torch.cuda.max_memory_allocated() / 1024**2,
+                       "peak_cuda_reserved_mib": torch.cuda.max_memory_reserved() / 1024**2}}
+    if not args.evaluate_test:
+        write_json(output / "result.json", validation_result)
+        write_json(report_dir / "result.json", validation_result)
+        status.update(status="completed", test_partition_loaded=False)
+        write_json(output / "status.json", status)
+        event("completed", validation_macro_f1=val_metrics["macro_f1"], test_partition_loaded=False)
+        return
     test_records = load_records("test")
     if config["model_type"] == "roberta":
         test_data = TextDataset(test_records, tokenizer)
@@ -294,7 +342,7 @@ def main():
         mask = np.asarray([row["domain"] == domain for row in test_records])
         by_domain[domain] = classification_metrics(y_test[mask], probabilities[mask])
     result = {"status": "completed", "run_id": run_id, "config": config, "best_epoch": best_epoch,
-              "validation": best["validation"], "test": metrics, "test_by_domain": by_domain,
+              "validation": best["validation"], "test_partition_loaded": True, "test": metrics, "test_by_domain": by_domain,
               "initialization": {"kind": "base pretraining only", "path": str(BACKBONE),
                                  "model_safetensors_sha256": file_hash(BACKBONE / "model.safetensors")},
               "data_protocol_sha256": file_hash(DATA_ROOT / "protocol.json"),
@@ -320,6 +368,9 @@ if __name__ == "__main__":
     except Exception as error:
         if RUN_OUTPUT is not None and (RUN_OUTPUT / "status.json").exists():
             status = json.loads((RUN_OUTPUT / "status.json").read_text())
-            status.update(status="failed", error_type=type(error).__name__, error=str(error))
+            status.update(status="failed", error_type=type(error).__name__, error=str(error),
+                          oom=isinstance(error, torch.OutOfMemoryError),
+                          peak_cuda_allocated_mib=torch.cuda.max_memory_allocated() / 1024**2 if torch.cuda.is_initialized() else None,
+                          peak_cuda_reserved_mib=torch.cuda.max_memory_reserved() / 1024**2 if torch.cuda.is_initialized() else None)
             write_json(RUN_OUTPUT / "status.json", status)
         raise

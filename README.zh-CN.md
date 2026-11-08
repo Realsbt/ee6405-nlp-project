@@ -1,133 +1,129 @@
-# EE6405 · 英文文本创作与编辑来源检测
+# EE6405：A4000 训练与模型改进
 
-[English](README.md) | **简体中文**
+[English](README.md) · [环境部署](docs/REPRODUCING.zh-CN.md) · [原项目方法](experiments/METHOD_NOTES.md) · [历史结果](experiments/reports/comparison/REPORT.md)
 
-比较 **TF-IDF＋逻辑回归、RoBERTa、RACE**，并以 CE／CE＋SupCon 构成架构 × 损失的 2×2 消融，分析英文文本的创作与后续编辑来源。项目基于 [RACE](https://github.com/ICTMCG/RACE) 做课程复现与实验分析，新增固定分组划分、基线对照、多种子评估、解析审计和原始文本 Demo。
+本仓库用于 HART 英文文本来源四分类。固定 train/validation/test 为 11,190/1,600/3,194，输入最多 512 token，按 validation Macro-F1 选模。当前改进实现了多层解冻、分层学习率、SupCon 投影头、内容来源/后处理辅助头，以及训练收尾后的 Hyperstack 自动休眠。**实现与测试通过不等于提分；最终指标以实际批次报告为准。**
 
-**实验状态（2026-11-06）：[2×2 消融](docs/ABLATION_2X2.md) 已全部完成。** 四种神经配置各三个种子，共 **12 次神经训练＋1 次 TF-IDF 基线**；新增五次训练、完整测试集重载复核、配对分析及图表均已完成。四方法 HC3 辅助评估和原始文本 Demo 已验证。课程提交材料与平台状态单独记录在 [提交准备](docs/SUBMISSION.md)。
-
-## 任务与数据
-
-| 标签 | 数据集中的操作定义 |
-|---|---|
-| `human_written` | 人工原文 |
-| `human_ai_polished` | 人工内容经 AI 润色 |
-| `ai_generated` | AI 内容，包括发布版本中的 AI 到 AI 改写链 |
-| `ai_humanized` | AI 内容经人工或工具改写；不等于已确认真人编辑 |
-
-主实验使用 **HART**：清理后 15,984 条，按同源文本及重复关联分组隔离，训练／验证／测试为 **11,190／1,600／3,194**。其 arxiv、essay、news、writing 是同一基准的四个子域。
-
-独立辅助评估使用 **HC3** 的 1,000 条人类／ChatGPT 回答。HC3 只有二分类真值，不能用于验证创作者／编辑者四分类泛化。数据版本、获取位置和运行前提见 [数据与外部资源](data/README.md)。
-
-### 方法概览
-
-```mermaid
-flowchart TB
-    T["英文正文"] --> V["首 512 tokens 对应文本"]
-    V --> F["TF-IDF＋逻辑回归"]
-    V --> B["RoBERTa 编码"]
-    B --> C["CLS＋MLP"]
-    T --> G["全文 RST／EDU 关系图"]
-    B --> R["EDU 池化＋RGCN<br/>Root＋MLP"]
-    G --> R
-    F --> Y["四类分数"]
-    C --> Y
-    R --> Y
-```
-
-各模型独立训练；RoBERTa 与 RACE 使用相同基础初始化。HART 使用作者发布的 RST 树，Demo／HC3 使用本机解析器。两种神经架构分别启用或关闭 SupCon；损失开关不改变各自推理结构。
-
-## 实验结果
-
-使用固定 HART 分组测试集，神经模型只按验证集 Macro-F1 选 checkpoint。十二次神经运行均完成完整测试集重载复核，保留原确定性 TF-IDF 基线。
-
-![传统基线与四个神经配置的 HART 结果](experiments/reports/comparison/main_metrics.png)
-
-| 方法 | 训练次数 | Macro-F1 | Macro-AUROC |
-|---|---:|---:|---:|
-| TF-IDF + logistic regression | 1 | 79.40% | 96.24% |
-| RoBERTa · CE | 3 | 90.72% ± 0.25 | 98.89% ± 0.02 |
-| RoBERTa · CE + SupCon | 3 | 91.15% ± 0.24 | 98.90% ± 0.06 |
-| RACE · CE | 3 | 89.92% ± 0.90 | 98.34% ± 0.11 |
-| RACE · CE + SupCon | 3 | 90.37% ± 0.60 | 98.67% ± 0.11 |
-
-四个神经配置各使用种子 3407、42、2026；报告均值 ± 样本标准差，标准差单位为百分点。
-
-- 同种子配对后，SupCon 对 RoBERTa 的平均 Macro-F1 增益为 **+0.44 个百分点**，对 RACE 为 **+0.45 个百分点**。
-- 相同目标下，RACE−RoBERTa 的差异为：**CE 下 -0.80**、**CE＋SupCon 下 -0.78 个百分点**。交互项（RACE 的损失增益 − RoBERTa 的损失增益）为 **+0.01 个百分点**。逐种子差值及其 SD 见完整报告。
-- 架构差异仍包含 pooling、表示维度、参数量和全篇结构信息，不能全部归因于篇章图。
-- 本轮五次补跑在查看原有结果后确定，沿用同一保留测试集；三个训练种子不构成新增独立测试，也不能证明广泛泛化。
-- HC3 仍是原单种子辅助二分类比较：完整 RACE 的 Macro-F1 为 38.69%、AI 召回为 8.40%。本轮 2×2 补跑针对 HART，不能据此推出 HC3 上也有相同收益。
-
-![四格结果与同种子成对差异](experiments/reports/comparison/ablation_2x2.png)
-
-完整结果见 [实验报告](experiments/reports/comparison/REPORT.md)；运行与证据边界见 [2×2 消融协议](docs/ABLATION_2X2.md)。另有 [错误案例](experiments/reports/comparison/CASE_STUDIES.md)、[HC3 分析](experiments/reports/auxiliary/REPORT.md) 和 [方法说明](experiments/METHOD_NOTES.md)。
-
-## 快速查看与运行
-
-### 仅克隆仓库：复核保存结果
-
-在仓库根目录执行，使用 Python 3 标准库，无需 GPU、数据集或模型权重：
+## 1. 加载现有 VM 环境
 
 ```bash
-python3 scripts/check_results.py
+cd /home/ubuntu/6405
+source ./env-a4000.sh
+cd ee6405-a4000-codex
 ```
 
-脚本从逐条预测重新计算指标，核对十三个正式运行、四组 HC3 结果、汇总表与五个配对消融差异。它检验保存结果的内部一致性；重新加载 checkpoint 推理仍需要外部资源。
+换机器需先按部署指南安装 Python 3.11、CUDA/BF16 环境，下载 `full --skip-checkpoints` 资源、恢复冻结数据。`EE6405_STORAGE` 必须指向仓库外的持久磁盘，`EE6405_UPSTREAM` 指向资源目录内固定版本的 RACE 源码。
 
-### 在 Linux / Windows WSL2 运行英文 Demo
+## 2. 配置自动休眠（启动正式队列的前置条件）
 
-<p align="center">
-  <img src="experiments/reports/demo_race.jpg" alt="RACE 英文 Demo 实际界面：文本输入、模型选择、四类分数和篇章解析信息" width="800">
-</p>
-
-*Demo 界面及演示材料使用英文。示例没有真实来源标签；图中耗时仅为该次请求记录，不是冷启动基准。*
+从 Hyperstack 控制台取得 API key 和当前 VM 的数字 ID。将 key 通过安全 secret 注入为仓库外的只读/私有文件，权限 **600**，不要把内容写入 JSON、Git、命令参数或日志。
 
 ```bash
-# 先安装 Python 3.11、Git、GitHub CLI、C/C++ 编译器。
-# 每位组员需要私有仓库读取权限，并执行 gh auth login。
-export EE6405_STORAGE="$HOME/ee6405-resources"
-python3 scripts/setup_environment.py --python python3.11 --torch cpu
-export EE6405_PYTHON="$EE6405_STORAGE/.venv/bin/python"
-
-"$EE6405_PYTHON" scripts/fetch_resources.py --profile demo
-"$EE6405_PYTHON" scripts/check_installation.py --predict
-bash experiments/run_demo.sh
+export HYPERSTACK_API_KEY_FILE=/你的安全挂载目录/hyperstack_api_key
+export HYPERSTACK_VM_ID=你的数字VM_ID
+"$EE6405_PYTHON" -m experiments.hyperstack --preflight
 ```
 
-Demo 地址为 <http://127.0.0.1:8765/>，默认 CPU。已有服务时直接打开地址。页面展示四类分数、输入截断、篇章树与耗时；无真实标签的自由输入仅用于功能演示。
+预检只读，检查鉴权、ACTIVE 状态，以及 API 返回的 VM 与本机 cloud UUID/hostname 是否一致；**不会执行休眠**。不匹配时停止，不能跳过身份检查或选择名称相似的机器。能读取 VM 不必然意味着角色有休眠权限：API key 对应角色还必须允许 Hibernate，该权限需在控制台确认。
 
-GitHub 已保存全部 13 组正式结果；`resources-v1` 仍提供原始 8 个模型，未包含本轮新增 5 个 checkpoint。Demo 保留原四种方法，未新增 RoBERTa＋SupCon 选项。
+## 3. 一条命令启动完整研究队列
 
-Demo 需下载约 **4.28 GiB** 资源，另加 Python 环境。我们的 checkpoint 单独放在私有仓库的 [resources-v1 Release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1)，上游资源从固定版本的原始来源获取，不进入 Git。已经在迁移后的 Linux checkout、新建独立 CPU 环境中跑通四个 Demo 模型，并完成固定数据重建和预处理检查；提供 WSL2 步骤，但本次没有实际测试 WSL2。
+使用新批次名；不覆盖已有运行。代码改动须先提交到自己的分支，然后在 tmux 中启动：
 
-系统准备、完整数据恢复、硬件要求和 GPU 训练见 **[Linux / WSL2 复现指南](docs/REPRODUCING.zh-CN.md)**。原来的 `/data/botao/ee6405-race-validation/` 继续作为本机资源目录；组员自行设置 `EE6405_STORAGE`。历史结果中的路径在读取时映射，保留原始来源记录。
-
-## 仓库内容
-
-```text
-README.md                 英文项目概况、结果、运行入口
-README.zh-CN.md           中文项目概况
-docs/                     课程原文、要求整理、提交清单
-data/README.md            外部数据、权重与环境说明
-experiments/              数据处理、训练、评估、RST 与 Demo
-  configs/                冻结的实验配置
-  reports/                正式指标、逐条预测、图表与审计记录
-  METHOD_NOTES.md          实际模型与实验方法
-  SOURCES.md               论文、代码、数据与版本来源
-  VIDEO_OUTLINE.md         9 分 20 秒真人讲解提纲
-scripts/check_results.py   无额外依赖的结果一致性复核
-scripts/                  环境安装、资源下载与校验入口
-resources/                固定资源清单和 HC3 原始选择记录
+```bash
+tmux new -s a4000-research
+# 在 tmux 内重新加载第 1、2 节环境变量，然后：
+bash experiments/run_research.sh \
+  --name a4000_r01 \
+  --config experiments/configs/a4000_research.json \
+  --output "$EE6405_STORAGE/experiments/research_batches/a4000_r01" \
+  --grace-seconds 600 --max-hours 8
 ```
 
-原始数据、模型权重、Python 环境、官方源码副本和一般运行日志不进入 Git。历史 smoke、旧版辅助输出和含正文的错误清单保留在原工作区，相关分析可在完整环境中重生成。提交的逐条预测保存 ID、标签和模型分数，不包含原始文章正文。视频成品及其可编辑工程保留在本地，不进入 Git，以保持仓库简洁。
+先按 `Ctrl+B` 再按 `D` 离开，训练继续。重连：`tmux attach -t a4000-research`。队列只允许一个实例；运行期间不要在同一 VM 启动其他独立训练，因为 watchdog 会休眠整台 VM。
 
-## 提交前待完成
+执行顺序：
 
-- 制作理论／结果 slides，按 [讲解提纲](experiments/VIDEO_OUTLINE.md) 录制不超过 10 分钟的真人视频。
-- 整理小组反思、真实成员贡献及全员签名，填写课程正式 GAI declaration 模板。
-- 按课程平台要求整理代码附件；确认模型资源的交接方式和实际演示环境。
-- 每位成员完成个人互评，并由小组完成课程平台上传与回执核查。
+1. 每项先 GPU smoke，再跑 seed 3407：解冻 1 → 2 → 4 → 6 → 12 层；12 层用真实 batch 8 和 gradient checkpointing；6 层 batch 16 OOM 时保留失败记录，另开 batch 8 运行。
+2. 对验证集最佳深度比较投影头；仅 validation 改善时保留。
+3. 在同一选定主干上比较内容头、后处理头、双头（权重各 0.1），不会在三个消融间偷偷更换主干。
+4. 选择 validation Macro-F1 最高的配置，补齐 seed 42 和 2026；固定三种子等权概率集成。
+5. 冻结含数据、源码、配置和 checkpoint 哈希的 final manifest，独立运行一次最终 test evaluator。
+6. 检查权重与恢复点、评估输出、Markdown 报告、学习曲线、逐类 F1、混淆矩阵及**初始 Git 提交结果的对比图**，核验产物哈希后请求休眠。
 
-以上事项的状态与验收方式见 [提交准备](docs/SUBMISSION.md)。课程原文和评分标准见 [课程要求](docs/course-requirements.md)，第三方来源与使用边界见 [SOURCES](experiments/SOURCES.md)。
+只训练你指定的一套配置、跳过结构搜索时，在队列命令中加 `--single-config`；仍自动完成三个种子、最终评估、报告与休眠。该模式读取你的深度/batch/投影/辅助头设置，不覆盖为搜索网格。
+
+此队列是有限的第一轮研究，不执行交接文档中所有 LR/速度搜索组合。胜者即使没有超过基线，也如实交付负结果，不扩大搜索来追逐 test 分数。
+
+## 4. 如何改参数
+
+复制配置，不修改历史冻结配置：
+
+```bash
+cp experiments/configs/a4000_research.json experiments/configs/my_research.json
+# 用编辑器修改 JSON，保存并提交；启动时传 --config experiments/configs/my_research.json
+```
+
+| 参数 | 默认 | 何时修改 / 边界 |
+| --- | --- | --- |
+| `learning_rate` | 1.5e-5 | 编码器顶层 LR；后续只做有限验证集扫参 |
+| `head_learning_rate` | 3e-5 | 分类/投影/辅助头 LR |
+| `layer_lr_decay` | 0.85 | 向下一层逐层相乘，范围 (0,1] |
+| `architecture.unfreeze_bert_layers` | 1 | 单次训练支持 1/2/4/6/12；完整队列自动遍历，覆盖此值 |
+| `batch_size` | 16 | SupCon 必须 ≥8、可被4整除；队列覆盖为 16，12层为8 |
+| `gradient_checkpointing` | false | 显存不足时开启；队列对12层自动开启 |
+| `gradient_accumulation_steps` | 1 | 扩大更新 batch，**不扩大 SupCon 真实对比集合** |
+| `max_epochs` / `early_stopping_patience` | 20 / 5 | 正式对照保持一致；提前停止只看 validation |
+| `supcon_temperature` / `supcon_weight` | 0.07 / 1.0 | 控制对比目标；投影头消融时先不同时修改 |
+| `supcon_projection` | false | 单次训练可开；完整队列在深度选择后自动消融 |
+| `aux_content_weight` / `aux_edit_weight` | 0 / 0 | 0关闭对应头；队列自动做0.1的三种消融 |
+| `dataloader_num_workers` | 4 | CPU/内存紧张时降为0；persistent_workers 只在 workers>0启用 |
+| `pin_memory` / `persistent_workers` | true / true | DataLoader 性能开关 |
+| `fused_adamw` | true | 融合 AdamW 开关 |
+| `attention_implementation` | sdpa | 支持 sdpa/eager，速度对照须保持其他参数不变 |
+| `torch_compile` | false | 可开，但包含首次编译成本；非默认提分方法 |
+| `unfreeze_embeddings` | false | 仅12层允许；开启需单列方法 |
+| `embedding_learning_rate` | 2e-6 | 必须 ≤2.5e-6，仅 embeddings 解冻时生效 |
+| `seed` / `use_supcon` | 3407 / true | 本研究队列要求此值，自动补齐42/2026；单次入口可覆盖 |
+| `weight_decay` / `warmup_ratio` / `gradient_clip` | 0.01 / 0.1 / 1.0 | 第一轮保持固定，避免混杂 |
+
+保持标签、数据协议/哈希、512 token 窗口、validation 选模规则不变。不要修改 `architecture.backbone_model_path` 指向其他模型后仍称作同一 RoBERTa 基线；历史绝对路径由项目路径模块映射到当前资源目录。
+
+**只跑一个实验（无自动休眠，调试入口）：**
+
+```bash
+bash experiments/run_neural.sh --config experiments/configs/my_research.json \
+  --run-name my_debug_01 --smoke
+# 去掉 --smoke 为完整训练；默认只读 train/validation。
+# 中断恢复：使用相同 --config、--run-name，另加 --resume。
+```
+
+当前节的裸训练命令不会自动装 watchdog。要满足本项目的强制休眠要求，应使用第 3 节队列入口；不要在无人值守时单独启动裸命令。`--evaluate-test` 是显式一次性测试开关，**不得在配置筛选中使用**；正式队列使用冻结 manifest 的独立 evaluator。
+
+## 5. 查看进度和结果
+
+```bash
+tail -n 60 /home/ubuntu/6405/PROGRESS.md
+cat "$EE6405_STORAGE/experiments/research_batches/a4000_r01/pipeline.json"
+cat "$EE6405_STORAGE/experiments/research_batches/a4000_r01/watchdog.json"
+# 每个实验的 config、status、events、best.pt、last.pt：
+ls "$EE6405_STORAGE/experiments/neural_runs/"
+```
+
+批次目录保存配置、逐运行日志、`final_manifest.json` 和 `.sha256`、`final_evaluation/`、`REPORT.md`、五张 PNG 图、`artifacts.json`、`hibernate-request.json`。`initial_git_results.json` 来自固定提交 `877f12bb5b83a4825780f654309ecd9959f74f5a`，不会读取后续修改的历史报告来充当原始基线。
+
+测试报告包含三种子均值 ± sample SD、Accuracy、Macro-AUROC、TPR@1% FPR、逐类 precision/recall/F1、混淆矩阵及与原 RoBERTa+SupCon 的逐种子差异。历史结果是同一固定测试集上的持续比较；硬件/运行环境也有差异，不把配对差异全归因于模型改动。
+
+## 6. 强制休眠与异常处理
+
+- API：`GET /core/virtual-machines/{id}/hibernate?retain_ip=true`；保留公网 IP 便于恢复，IP/磁盘可能继续产生费用。[官方接口](https://docs.hyperstack.cloud/docs/virtual-machines/manage-vm-state/)、[休眠行为](https://docs.hyperstack.cloud/docs/virtual-machines/hibernation/)。
+- 正常情况：确认所有必需产物后立即请求休眠。
+- 异常情况：独立 watchdog 观察训练 PID；训练停止后最多 **600秒** 给评估/报告收尾，到期即请求休眠，未完成项会明确标记。主进程崩溃也不取消该期限；另有8小时全队列硬上限。
+- API 每次请求有超时，失败每5秒重试，不会用 Linux shutdown 或 Stop 冒充休眠。`accepted` 仅代表 API 已接收请求；最终 `HIBERNATED` 状态须在控制台核实。本机遇断网、API 拒绝、watchdog 被杀或宿主故障时，不能绝对保证远端休眠；不能用“无条件保证成功”的措辞掩盖这些限制。
+- 休眠是释放 GPU/RAM 的 VM 生命周期操作，不承诺保留进程内存。代码、数据与 checkpoint 必须在持久磁盘。失败后检查 `pipeline.json`、`hibernate-error.json`、日志；不要删除已有批次重跑。完整队列不支持自动续跑旧批次，以避免覆盖正式测试；单个中断实验可用相同源码/配置恢复。
+
+## 研究依据
+
+分层微调参考 [ULMFiT](https://aclanthology.org/P18-1031/)，训练投影空间参考 [Supervised Contrastive Learning](https://arxiv.org/abs/2004.11362)。两项迁移到本任务的收益仍需实验验证。内容来源与后处理辅助头是本项目的可检验假设：尝试把四分类拆成两个相关因素，观察 ai_humanized 的 precision/recall/F1，不预设其必然有效。
+
+历史三种子 RoBERTa+SupCon：test Macro-F1 **91.15% ± 0.24**。A4000 原始复跑单种子：validation **91.64%**、test **90.65%**。保留原始证据；新研究结果尚待训练，不在 README 填入推测分数。

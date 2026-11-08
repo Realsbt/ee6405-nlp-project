@@ -30,8 +30,10 @@ def build_model(config, metadata=None):
     model_class = baseline if config["model_type"] == "roberta" else race
     architecture = dict(config["architecture"])
     architecture["backbone_model_path"] = str(resolve_recorded_path(architecture["backbone_model_path"]))
-    return model_class(feature_dim=128, gnn_hidden_dim=512, num_heads=4, num_classes=4,
-                       config=architecture, metadata=metadata, output_features=True)
+    model = model_class(feature_dim=128, gnn_hidden_dim=512, num_heads=4, num_classes=4,
+                        config=architecture, metadata=metadata, output_features=True)
+    from experiments.research import configure_model
+    return configure_model(model, config)
 
 
 class TextDataset(Dataset):

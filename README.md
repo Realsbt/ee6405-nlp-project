@@ -1,133 +1,56 @@
-# EE6405 · Text Creation and Editing Detection
+# EE6405 — A4000 training and research
 
-**English** | [简体中文](README.zh-CN.md)
+[中文训练与参数指南](README.zh-CN.md) · [Environment setup](docs/REPRODUCING.md) · [Historical results](experiments/reports/comparison/REPORT.md)
 
-A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), comparing **TF-IDF + logistic regression, RoBERTa, RACE**, with an architecture × objective 2×2 ablation (CE versus CE + supervised contrastive loss). The project adds a fixed grouped split, baseline comparisons, multiple training seeds, parser audits and an interactive raw-text demo.
+HART English four-class source detection, with a frozen 11,190 / 1,600 / 3,194 grouped split and a 512-token RoBERTa window. Select checkpoints and methods using validation Macro-F1 only.
 
-**Experiment status (2026-11-06): the [2×2 ablation](docs/ABLATION_2X2.md) is complete.** Four neural conditions have three seeds each: **12 neural runs plus one TF-IDF baseline**. All five added runs, full test-set checkpoint verification, paired analyses and figures are complete. The four-method HC3 auxiliary evaluation and raw-text demo have been verified. Course deliverables and platform submission status are tracked separately in the [submission checklist](docs/SUBMISSION.md).
-
-## Task and data
-
-| Label | Operational definition in the released dataset |
-|---|---|
-| `human_written` | Human-written text |
-| `human_ai_polished` | Human-written content polished by AI |
-| `ai_generated` | AI-created content, including AI-to-AI rewriting chains |
-| `ai_humanized` | AI-created content rewritten by a person or a tool; this does not confirm human editing |
-
-The main benchmark is **HART**: 15,984 records after cleaning, with source-related and duplicate-linked texts kept in the same partition. The train / validation / test sizes are **11,190 / 1,600 / 3,194**. The arxiv, essay, news and writing subsets are domains within this benchmark.
-
-An independent auxiliary evaluation uses 1,000 human / ChatGPT answers from **HC3**. HC3 provides binary labels only and cannot validate generalization of the four creation-and-editing classes. See [data and external resources](data/README.md) for versions, sources and runtime requirements.
-
-### Method overview
-
-```mermaid
-flowchart TB
-    T["English text"] --> V["Text covered by the first 512 tokens"]
-    V --> F["TF-IDF + logistic regression"]
-    V --> B["RoBERTa encoder"]
-    B --> C["CLS + MLP"]
-    T --> G["Full-text RST / EDU relation graph"]
-    B --> R["EDU pooling + RGCN<br/>Root + MLP"]
-    G --> R
-    F --> Y["Four-class scores"]
-    C --> Y
-    R --> Y
-```
-
-Models are trained independently. RoBERTa and RACE use the same base-pretrained initialization. HART uses the released RST trees; the demo and HC3 use the local parser. Each neural architecture is trained both with and without SupCon; changing the objective leaves its inference architecture intact.
-
-## Results
-
-Results use the fixed HART grouped test set. Neural checkpoints are selected by validation Macro-F1. All twelve neural runs have complete test-set reload verification; the deterministic TF-IDF baseline is retained.
-
-![HART results for the lexical baseline and four neural conditions](experiments/reports/comparison/main_metrics.png)
-
-| Method | Runs | Macro-F1 | Macro-AUROC |
-|---|---:|---:|---:|
-| TF-IDF + logistic regression | 1 | 79.40% | 96.24% |
-| RoBERTa · CE | 3 | 90.72% ± 0.25 | 98.89% ± 0.02 |
-| RoBERTa · CE + SupCon | 3 | 91.15% ± 0.24 | 98.90% ± 0.06 |
-| RACE · CE | 3 | 89.92% ± 0.90 | 98.34% ± 0.11 |
-| RACE · CE + SupCon | 3 | 90.37% ± 0.60 | 98.67% ± 0.11 |
-
-Neural results use seeds 3407, 42 and 2026. Values are means ± sample SD; SD is in percentage points. Each cell of the architecture × objective matrix has three runs.
-
-- SupCon changes Macro-F1 by **+0.44 percentage points in RoBERTa** and **+0.45 in RACE**, using matched-seed mean differences.
-- RACE − RoBERTa is **-0.80 points under CE** and **-0.78 under CE + SupCon**. The interaction (RACE's loss effect minus RoBERTa's) is **+0.01 points**. Per-seed differences and their SDs are in the report.
-- Architecture comparisons also include pooling, representation dimension, parameter count and full-document structural information; they do not isolate graph structure alone.
-- The five added runs extend an analysis whose original test results were already inspected. Three training seeds on the same split are not a new independent test or evidence of broad generalization.
-- HC3 remains the original single-seed binary auxiliary comparison: full RACE has 38.69% Macro-F1 and 8.40% AI recall. This 2×2 extension concerns HART and does not establish an analogous HC3 improvement.
-
-![Four-cell comparison and paired seed contrasts](experiments/reports/comparison/ablation_2x2.png)
-
-See the [experimental report](experiments/reports/comparison/REPORT.md), [2×2 protocol and commands](docs/ABLATION_2X2.md), [error cases](experiments/reports/comparison/CASE_STUDIES.md), [HC3 analysis](experiments/reports/auxiliary/REPORT.md) and [method notes](experiments/METHOD_NOTES.md).
-
-## Quick start
-
-### Check saved results after cloning
-
-Run from the repository root with the Python 3 standard library. No GPU, dataset or model weights are needed:
+## Start training on the prepared VM
 
 ```bash
-python3 scripts/check_results.py
+cd /home/ubuntu/6405
+source env-a4000.sh
+cd ee6405-a4000-codex
+export HYPERSTACK_API_KEY_FILE=/secure/mounted/hyperstack_api_key
+export HYPERSTACK_VM_ID=YOUR_NUMERIC_VM_ID
+"$EE6405_PYTHON" -m experiments.hyperstack --preflight
 ```
 
-The script recomputes metrics from individual predictions and checks thirteen formal runs, four HC3 evaluations, aggregate tables and five paired factorial contrasts. It checks internal consistency of the saved evidence; checkpoint inference still requires external resources.
+Supply the API key through a private external file (mode 600), never Git, JSON or command arguments. Preflight verifies API authentication and that the requested ACTIVE VM matches the local cloud UUID/hostname; it does not hibernate. Ensure the key's role also permits Hibernate.
 
-### Run the English demo on Linux / Windows WSL2
-
-<p align="center">
-  <img src="experiments/reports/demo_race.jpg" alt="English RACE demo: text input, model selection, four-class scores and discourse parsing information" width="800">
-</p>
-
-*The interface and demonstration materials are in English. The example has no ground-truth authorship label. The displayed request time is an individual measurement, not a cold-start benchmark.*
+Commit configuration/code changes on your own branch. Start inside tmux with a fresh batch name:
 
 ```bash
-# First install Python 3.11, Git, GitHub CLI and a C/C++ compiler.
-# Each teammate needs access to this private repository and gh auth login.
-export EE6405_STORAGE="$HOME/ee6405-resources"
-python3 scripts/setup_environment.py --python python3.11 --torch cpu
-export EE6405_PYTHON="$EE6405_STORAGE/.venv/bin/python"
-
-"$EE6405_PYTHON" scripts/fetch_resources.py --profile demo
-"$EE6405_PYTHON" scripts/check_installation.py --predict
-bash experiments/run_demo.sh
+bash experiments/run_research.sh --name a4000_r01 \
+  --config experiments/configs/a4000_research.json \
+  --output "$EE6405_STORAGE/experiments/research_batches/a4000_r01" \
+  --grace-seconds 600 --max-hours 8
 ```
 
-Open <http://127.0.0.1:8765/>. The demo uses the CPU by default and displays scores, input truncation, the parsed discourse tree and timing. Free-form input without a ground-truth label demonstrates functionality only.
+The bounded queue runs 1/2/4/6/12-layer unfreezing, a SupCon projection ablation, and content/edit auxiliary-head ablations. It selects using validation only, completes seeds 42 and 2026, freezes a hash-checked manifest and equal ensemble weights, evaluates test independently, generates a report and five figures against the initial Git results, verifies artifacts, then requests VM hibernation.
 
-GitHub contains results for all 13 formal runs. The `resources-v1` release still provides the original eight models and excludes the five added checkpoints. The demo retains its original four methods; RoBERTa + SupCon is not a demo option.
+An independent watchdog requests hibernation within a 10-minute cleanup deadline after training exits, even if evaluation/reporting or the parent fails. An eight-hour batch limit is also enforced. Provider/network failures are logged and retried; a local script cannot guarantee a remote state transition during outages. No ordinary shutdown/SHUTOFF fallback is used. Only run this queue on a VM dedicated to it.
 
-The demo downloads about **4.28 GiB** of resources plus its Python environment. Our checkpoints are distributed through the private [resources-v1 release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1); upstream resources are fetched from pinned original sources. They are not stored in Git. A relocated Linux checkout and a fresh isolated CPU environment have passed all four demo models, exact dataset reconstruction and preprocessing checks. WSL2 instructions are provided but were not exercised in this check.
+To train one supplied recipe without the search grid, add `--single-config`; the supervised entry still completes three seeds, final evaluation, figures and hibernation.
 
-Follow the **[Linux / WSL2 reproduction guide](docs/REPRODUCING.md)** for prerequisites, full-data restoration, hardware requirements and GPU training. The original `/data/botao/ee6405-race-validation/` directory remains a local resource store; teammates choose their own `EE6405_STORAGE`. Historical result paths are resolved at read time without changing their provenance.
+## Change parameters
 
-## Repository contents
+Copy `experiments/configs/a4000_research.json` to a new JSON and pass `--config`. See the [parameter table](README.zh-CN.md#4-如何改参数) for every supported control and queue overrides.
 
-```text
-README.md                 English project overview, results and entry points
-README.zh-CN.md           Chinese version of the project overview
-docs/                     Original course documents and submission checklist
-data/README.md            External data, weights and environment requirements
-experiments/              Data preparation, training, evaluation, RST and demo
-  configs/                Frozen experiment configurations
-  reports/                Formal metrics, predictions, plots and audit records
-  METHOD_NOTES.md          Implemented models and experimental methods
-  SOURCES.md               Papers, code, data and version references
-  VIDEO_OUTLINE.md         9-minute-20-second human presentation outline
-scripts/check_results.py   Dependency-free saved-result consistency check
-scripts/                  Environment setup, resource download and validation
-resources/                Pinned resource manifest and frozen HC3 selection
-```
+- Tune top-layer `learning_rate` (1.5e-5), `head_learning_rate` (3e-5), `layer_lr_decay` (.85), and SupCon temperature/weight in bounded validation experiments.
+- `architecture.unfreeze_bert_layers` supports 1/2/4/6/12. The research queue overrides depth, batch, checkpointing, projection and auxiliary settings for its planned ablations.
+- Real SupCon batch must be at least 8 and divisible by four. Accumulation changes update batch, not the contrastive set.
+- `gradient_checkpointing`, worker/pinning options, fused AdamW, SDPA/eager and `torch_compile` are explicit performance controls.
+- Embeddings stay frozen by default; only full-depth training may unfreeze them, with LR ≤2.5e-6.
+- Keep the task, data hashes, window, validation selection metric and formal seeds fixed. The research queue requires seed 3407 and SupCon enabled before completing the other seeds.
 
-Raw datasets, model weights, Python environments, official source copies and routine logs are excluded from Git. Historical smoke runs, superseded auxiliary outputs and error lists containing full text remain in the original workspace. Submitted prediction tables contain IDs, labels and scores, without the source articles. Video renders and their editable local project remain outside Git to keep the repository small.
+For manual debugging, `bash experiments/run_neural.sh --config YOUR.json --run-name UNIQUE --smoke` runs a smoke check. Without `--smoke` it trains using train/validation by default; `--resume` requires the same configuration/source. **This bare entry point does not arm auto-hibernation; use the supervised research queue for unattended work.** Do not use `--evaluate-test` during method screening.
 
-## Before submission
+## Outputs
 
-- Prepare theory and results slides, and record a video of no more than 10 minutes with human narration, following the [presentation outline](experiments/VIDEO_OUTLINE.md).
-- Complete the group reflection, actual member contributions, all required signatures and the official GAI declaration template.
-- Package the code as required by the course platform and confirm how model resources and the demonstration environment will be provided.
-- Each member must complete the individual peer evaluation. The group must upload the final materials and verify the submission receipt.
+`$EE6405_STORAGE/experiments/research_batches/<name>/` contains configs, logs, the final manifest, evaluation metrics/predictions, `REPORT.md`, learning curves, historical test/class-F1 comparisons, a confusion matrix and artifact hashes. Original comparison data are read with `git show` from commit `877f12bb5b83a4825780f654309ecd9959f74f5a`. Model checkpoints and status/events remain under `experiments/neural_runs/<run_id>/` in storage.
 
-See the [submission checklist](docs/SUBMISSION.md) for status and acceptance criteria, the [course requirements](docs/course-requirements.md) for the brief and rubric, and [SOURCES](experiments/SOURCES.md) for third-party provenance and usage boundaries.
+The watchdog appends progress approximately every ten minutes. Its hibernation request/error files record the outcome; an accepted request is not proof that the VM reached HIBERNATED. Confirm the final state in Hyperstack. Storage and a retained IP may still bill. [Official API](https://docs.hyperstack.cloud/docs/virtual-machines/manage-vm-state/), [hibernation behavior](https://docs.hyperstack.cloud/docs/virtual-machines/hibernation/).
+
+Historical RoBERTa+SupCon test Macro-F1 is **91.15% ± 0.24** across three seeds. The A4000 baseline reproduction scored **91.64% validation / 90.65% test** for seed 3407. New improvements are hypotheses until measured. Comparisons reuse the same fixed test set and are not fresh independent tests.
+
+Research motivations: [discriminative fine-tuning](https://aclanthology.org/P18-1031/), [supervised contrastive learning](https://arxiv.org/abs/2004.11362/); creator/edit auxiliary targets are a task-specific hypothesis. Original methods, data and attribution remain in [METHOD_NOTES](experiments/METHOD_NOTES.md), [SOURCES](experiments/SOURCES.md), and [data documentation](data/README.md).
