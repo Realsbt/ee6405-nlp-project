@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark"><meta name="description" content="Explore how a fixed text classifier combines features into a document prediction.">
+<title>Text Lab — Evidence Studio</title>
+<style>
+/* Hide scrollbars everywhere while keeping scrolling functional. */
+*{scrollbar-width:none;-ms-overflow-style:none}
+*::-webkit-scrollbar{width:0;height:0;display:none}
+html,body{scrollbar-width:none;-ms-overflow-style:none}
+html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
+:root{--bg:#f3f3f2;--paper:#fff;--wash:#f5f5f4;--ink:#272c2a;--muted:#767f78;--line:#e2e4e1;--accent:#245b47;--accent-soft:#edf4eb;--support:#4e65a0;--support-bg:#e9edf9;--oppose:#9c6727;--oppose-bg:#faefd9;--neutral:#efefed;--danger:#ae4539;--radius:13px;--shadow:0 8px 40px #20332c05;--mono:ui-monospace,SFMono-Regular,Consolas,monospace;--green:#245b47;--green-soft:#edf4eb;--border:#e2e4e1;--surface:#fff;--surface-2:#fafafa;--surface-3:#f5f5f4;--surface-5:#efefed;--hover:#eeefed;--ink-soft:#525950;--ink-ghost-2:#929a8f;--primary-ink:#fff;--primary-hover:#194734;--human:#266952;--human-bg:#e3f0e5;--polished:#4e65a0;--polished-bg:#e9edf9;--generated:#9c6727;--generated-bg:#faefd9;--rewritten:#7d5896;--rewritten-bg:#f0e6f7}
+:root[data-theme=dark]{--bg:#121411;--paper:#1b1d1a;--wash:#212420;--ink:#e7e8e6;--muted:#9ca59c;--line:#2d322c;--accent:#5fa87f;--accent-soft:#1e2a22;--support:#a8c0f0;--support-bg:#2f3d63;--oppose:#f0c274;--oppose-bg:#5c4520;--neutral:#242823;--danger:#e07a6c;--shadow:0 8px 40px #00000040;--green:#5fa87f;--green-soft:#1e2a22;--border:#2d322c;--surface:#1a1f18;--surface-2:#1e211d;--surface-3:#1d1f1c;--surface-5:#242823;--hover:#262a25;--ink-soft:#c4c8c2;--ink-ghost-2:#8b978a;--primary-ink:#0d120c;--primary-hover:#4a8a63;--human:#8fd9ab;--human-bg:#2c5c40;--polished:#a8c0f0;--polished-bg:#2f3d63;--generated:#f0c274;--generated-bg:#5c4520;--rewritten:#cfa8e8;--rewritten-bg:#4a3560}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-width:1024px}button,input,textarea,select{font:inherit}button,a,select,input{touch-action:manipulation}button,a{ -webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}a{color:var(--accent)}button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--support);outline-offset:3px}button,input,select,textarea{color:inherit}button{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:9px 13px}button:hover:not(:disabled){background:var(--wash)}.primary{background:var(--green);color:var(--primary-ink);border-color:var(--green);font-weight:600;box-shadow:0 3px 7px var(--btn-shadow,transparent)}.primary:hover:not(:disabled){background:var(--primary-hover)}.ghost{background:transparent}.small{font-size:12px;padding:6px 10px}.pill{border-radius:30px;padding:5px 10px;background:var(--wash);font-size:11px;color:var(--muted);border:1px solid var(--line)}.eyebrow{font-size:9px;letter-spacing:1.1px;text-transform:uppercase;font-weight:600;color:var(--muted)}.muted{color:var(--muted)}.mono{font-family:var(--mono)}[hidden]{display:none!important}
+.topbar{height:70px;background:var(--paper);border-bottom:1px solid var(--line)}.topbar-inner{max-width:1500px;height:100%;padding:0 32px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;white-space:nowrap}.brand-name{font-weight:680;font-size:19px;letter-spacing:-.5px;color:var(--ink)}.brand-divider{height:19px;width:1px;background:var(--line);margin:0 5px}.brand-section{color:var(--muted);font-size:11px;letter-spacing:.9px;font-weight:600;text-transform:uppercase}.top-actions{display:flex;align-items:center;gap:10px}.top-link{font-size:12px;text-decoration:none;color:var(--muted);padding:6px 8px;border-radius:7px}.top-link:hover{background:var(--wash);color:var(--ink)}.connection{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);padding:7px 10px;border-radius:7px;background:transparent;border:0}.connection:hover{background:var(--wash)}.status-dot{width:6px;height:6px;background:var(--muted);border-radius:100%;flex:none}.connection[data-status=ready] .status-dot{background:#3f9a63;box-shadow:0 0 0 3px #3f9a6322}.connection[data-status=offline] .status-dot{background:var(--danger)}.icon-btn{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--ink)}.icon-btn:hover{background:var(--wash)}.icon-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.theme-toggle{position:relative}.theme-toggle .icon-sun,.theme-toggle .icon-moon{position:absolute;transition:opacity .18s,transform .18s}.theme-toggle .icon-moon{opacity:0;transform:rotate(-35deg) scale(.7)}[data-theme=dark] .theme-toggle .icon-sun{opacity:0;transform:rotate(35deg) scale(.7)}[data-theme=dark] .theme-toggle .icon-moon{opacity:1;transform:none}.btn.small{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}.btn.small svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.btn.small:hover:not(:disabled){background:var(--wash)}.page{max-width:1500px;margin:0 auto;padding:30px 32px 36px}.hero{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:23px}.hero h1{font:30px/1.25 Georgia,serif;letter-spacing:-.5px;margin:6px 0 8px;font-weight:400}.hero p{margin:0;color:var(--muted);max-width:780px;font-size:13px}.hero-tools{display:flex;gap:8px;flex-shrink:0}.toolbar{border:1px solid var(--line);border-radius:13px;background:var(--paper);padding:13px 16px;display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:20px;box-shadow:var(--shadow)}.select-group{display:flex;flex-direction:column;gap:5px;align-items:stretch;min-width:0;flex:1;max-width:420px}.select-group label{font-size:10px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--muted)}.select-group select{border:1px solid var(--line);background:var(--wash);border-radius:8px;padding:11px 10px;font-size:12px;min-height:42px;width:100%;color:var(--ink)}.run-tools{display:flex;align-items:center;gap:14px}.check{font-size:11px;color:var(--muted);display:flex;gap:7px;align-items:center}.check input{accent-color:var(--green)}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 355px;gap:20px;align-items:start}.workspace>div{min-width:0}.card{border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow);min-width:0;overflow:hidden}#reader-card{resize:vertical;overflow:hidden;min-height:430px;display:flex;flex-direction:column}#reader-card>.reader,#reader-card>.edit-area,#reader-card>.graph-wrap{flex:1 1 auto;min-height:0}.section-head{padding:15px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.section-head h2{font-size:13px;font-weight:600;margin:0}.section-head .meta{font-size:11px;color:var(--muted)}.tabs{display:flex;gap:2px;background:var(--surface-3);border:1px solid var(--line);border-radius:8px;padding:3px}.tab{border:0;background:none;padding:5px 11px;border-radius:5px;font-size:11px;font-weight:600;color:var(--muted)}.tab:hover:not(:disabled){color:var(--ink)}.tab[aria-selected=true]{background:var(--paper);color:var(--ink);box-shadow:0 1px 4px #16241910}.tab:disabled{opacity:.45;cursor:not-allowed}.reader-tools{border-bottom:1px solid var(--line);padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.reader-info{font-size:12px;color:var(--muted)}.reader-info strong{color:var(--ink);font-weight:600}.legend{display:flex;gap:13px;font-size:10px;color:var(--muted);flex-wrap:wrap}.legend span:before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--neutral);margin-right:5px}.legend .positive:before{background:var(--support)}.legend .negative:before{background:var(--oppose)}.reader{padding:26px 38px 28px;min-height:310px;max-height:none;overflow:auto;font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:2;white-space:pre-wrap;overflow-wrap:anywhere}.reader mark{color:inherit;border-bottom:2px solid transparent;background:transparent;border-radius:3px;cursor:pointer;padding:3px 0;box-decoration-break:clone;-webkit-box-decoration-break:clone}.reader mark.support{background:var(--support-bg);border-color:var(--support)}.reader mark.oppose{background:var(--oppose-bg);border-color:var(--oppose)}.reader mark.minimal{background:var(--neutral)}.reader mark.uncomputed{border-bottom:1px dotted var(--muted)}.reader mark.outside{color:var(--muted);background:repeating-linear-gradient(135deg,transparent,transparent 4px,var(--neutral) 4px,var(--neutral) 5px)}.reader mark.selected{outline:2px solid var(--accent);outline-offset:3px}.reader .coverage{background:var(--neutral);border-bottom:2px solid var(--muted)}.reader .uncovered{color:var(--muted)}.unit-index{font:9px var(--mono);vertical-align:super;color:var(--muted);user-select:none;margin-right:4px}.edit-area{width:100%;min-height:315px;border:0;outline:none;background:var(--paper);resize:none;padding:26px 38px 28px;font:17px/2 Georgia,"Times New Roman",serif;color:var(--ink)}.reader-footer{padding:12px 22px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:14px}.reader-footer>span{flex:1;min-width:0;line-height:1.5}.reader-footer .actions{display:flex;gap:8px;align-items:center;flex:none;white-space:nowrap}.reader-footer .actions .check{white-space:nowrap}.reader-footer .actions .primary{padding:8px 14px;font-size:12px}.busy-line{height:3px;overflow:hidden;background:var(--neutral)}.busy-line:before{content:"";display:block;height:100%;width:30%;background:var(--accent);animation:slide 1.3s infinite ease-in-out}@keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(430%)}}.notice{font-size:12px;padding:11px 14px;border:1px solid var(--line);background:var(--wash);border-radius:10px;margin-bottom:15px;overflow-wrap:anywhere}.error{border-color:var(--danger);color:var(--danger)}.notice-row{display:flex;align-items:center;justify-content:space-between;gap:10px}.score-panel{position:sticky;top:20px}.score-content{padding:24px}.document-label{font:22px/1.3 Georgia,serif;font-weight:400;letter-spacing:-.3px;margin:11px 0 7px}.document-caption{font-size:11px;color:var(--muted);margin-bottom:20px}.score-row{border:0;background:none;width:100%;display:block;text-align:left;padding:10px 0;border-radius:5px}.score-row:hover:not(:disabled){background:var(--wash)}.score-row[aria-pressed=true] .score-top{color:var(--accent);font-weight:650}.score-top{display:flex;justify-content:space-between;font-size:12px;gap:10px;margin-bottom:6px}.score-top .pct{font-variant-numeric:tabular-nums}.bar-track{height:5px;background:var(--neutral);border-radius:8px;overflow:hidden}.bar-fill{height:100%;background:#b2bac9;border-radius:8px}.score-row[aria-pressed=true] .bar-fill{background:var(--accent)}.target-hint{font-size:10px;color:var(--muted);margin:10px 0 17px}.stats{display:flex;gap:16px;border-top:1px solid var(--line);padding-top:15px;flex-wrap:wrap}.stat{font-size:10px;color:var(--muted)}.stat strong{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-top:3px}.influence{border-top:1px solid var(--line);padding:22px 24px;background:var(--wash)}.influence h3{margin:5px 0 11px;font-size:14px}.influence p{font-size:12px;color:var(--muted);margin:6px 0}.delta{font-size:26px;font-weight:650;letter-spacing:-.4px;margin:8px 0}.delta.support{color:var(--support)}.delta.oppose{color:var(--oppose)}.before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.before-after>div{background:var(--paper);padding:11px;border-radius:9px;border:1px solid var(--line);font-size:10px;color:var(--muted)}.before-after strong{display:block;font-size:20px;color:var(--ink);margin-top:4px;font-weight:600}.mini-note{font-size:10px!important;line-height:1.55}.flow{margin-top:20px}.flow-body{padding:21px 24px}.flow-chain{display:flex;gap:7px;align-items:stretch}.flow-step{flex:1;min-width:0;padding:13px 11px;border:1px solid var(--line);border-radius:11px;background:var(--wash)}.flow-step strong{display:block;font-size:11px;font-weight:650;line-height:1.4}.flow-step small{font-size:10px;display:block;color:var(--muted);margin-top:7px}.flow-step .step-no{font:10px var(--mono);color:var(--accent);margin-bottom:8px}.flow-arrow{display:grid;align-items:center;color:var(--muted);font-size:16px}.flow-note{font-size:11px;color:var(--muted);margin:14px 0 0}.trace-list{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}.trace-chip{font:10px var(--mono);background:var(--paper);padding:7px 9px;border:1px solid var(--line);border-radius:7px}.graph-wrap{overflow:auto;max-height:none;padding:20px;min-height:250px}.graph-svg{display:block;margin:auto;max-width:none}.graph-node{cursor:pointer}.graph-node rect{fill:var(--wash);stroke:var(--line);stroke-width:1.5}.graph-node text{fill:var(--ink);font-family:system-ui,sans-serif;font-size:10px}.graph-node.selected rect{stroke:var(--accent);stroke-width:3}.graph-node.affected rect{fill:var(--accent-soft);stroke:var(--accent)}.graph-edge{stroke:var(--line);stroke-width:1.4;fill:none}.graph-edge.relevant{stroke:var(--accent)}.graph-legend{font-size:11px;color:var(--muted);padding:0 24px 18px}.bottom-note{font-size:11px;line-height:1.7;color:var(--muted);max-width:980px;margin:21px 0 0}.bottom-note strong{font-weight:600}.empty{padding:40px 24px;text-align:center;color:var(--muted)}.empty .empty-symbol{font:36px Georgia,serif;color:var(--accent);opacity:.6}.empty strong{font-size:13px;display:block;color:var(--ink);margin:12px 0 6px}.empty p{font-size:12px;max-width:270px;margin:0 auto}.modal{border:1px solid var(--line);border-radius:18px;padding:0;background:var(--paper);color:var(--ink);max-width:850px;width:calc(100% - 32px);max-height:85vh;overflow:auto;box-shadow:0 25px 90px #0003}.modal::backdrop{background:#101b3370;backdrop-filter:blur(2px)}.modal-head{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.modal-head h2{font-size:17px;margin:0}.modal-body{padding:20px 24px}.model-state{padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;display:flex;justify-content:space-between;gap:15px}.model-state:last-child{border:0}.model-state small{display:block;color:var(--muted);margin-top:4px}.compare-progress{font-size:11px;color:var(--muted);min-height:18px;margin-top:9px}.cmp-chart{border:1px solid var(--line);border-radius:10px;padding:15px 18px 16px;background:var(--surface-2);margin-top:14px}.cmp-legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:14px}.cmp-legend-item{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--ink-soft);white-space:nowrap}.cmp-legend-dot{width:8px;height:8px;border-radius:2px;display:inline-block;flex:none}.cmp-stack{display:flex;flex-direction:column;gap:13px}.cmp-stack-row{display:flex;flex-direction:column;gap:5px}.cmp-stack-head{display:flex;align-items:center;gap:7px;font-size:10px}.cmp-stack-name{color:var(--ink);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cmp-stack-pred{color:var(--muted);margin-left:auto;white-space:nowrap}.cmp-stack-score{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--green);white-space:nowrap;min-width:42px;text-align:right}.cmp-stack-track{display:flex;height:22px;border-radius:5px;overflow:hidden;background:var(--surface-5);gap:1px}.cmp-stack-seg{height:100%;display:flex;align-items:center;justify-content:center;transition:filter .15s;cursor:help;min-width:0;overflow:hidden}.cmp-stack-seg:hover{filter:brightness(1.18)}.cmp-stack-val{font-family:var(--mono);font-size:8px;font-weight:600;color:#fff;text-shadow:0 1px 2px #00000060;white-space:nowrap;pointer-events:none}.cmp-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:11px;margin-top:16px}.cmp-metric{border:1px solid var(--line);border-radius:9px;padding:11px 13px 12px;background:var(--surface-2);min-width:0}.cmp-metric-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}.cmp-metric-title{font-size:9px;font-weight:650;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}.cmp-metric-unit{font-size:9px;color:var(--muted);font-family:var(--mono)}.cmp-metric-row{display:grid;grid-template-columns:1fr auto;gap:4px 8px;align-items:center;margin-bottom:8px}.cmp-metric-row:last-child{margin-bottom:0}.cmp-metric-name{font-size:9px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px;min-width:0}.cmp-metric-name span{overflow:hidden;text-overflow:ellipsis}.cmp-metric-val{font-family:var(--mono);font-size:9px;color:var(--ink);white-space:nowrap}.cmp-metric-track{grid-column:1/-1;height:6px;border-radius:3px;background:var(--surface-5);overflow:hidden;display:flex;gap:1px}.cmp-metric-fill{height:100%;border-radius:3px;transition:width .3s ease;min-width:0}.cmp-metric-fill.load{opacity:.42}.cmp-metric-note{grid-column:1/-1;font-size:8px;color:var(--muted);margin-top:1px}.cmp-error-row{display:flex;gap:8px;align-items:baseline;padding:10px 12px;border:1px solid var(--line);background:var(--wash);border-radius:8px;font-size:11px;color:var(--danger);margin-top:10px}.json{font:11px/1.6 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;background:var(--wash);padding:12px;border-radius:9px;max-height:240px;overflow:auto}.sr-only{position:absolute;width:1px;height:1px;clip:rect(0,0,0,0);overflow:hidden}.drop-active{outline:3px dashed var(--accent);outline-offset:-5px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;margin-top:16px}.about-grid h3{font-size:11px;margin:0 0 4px;letter-spacing:.02em}.about-grid p{font-size:11px;color:var(--muted);line-height:1.6;margin:0}.about-actions{display:flex;gap:9px;margin-top:20px;flex-wrap:wrap}.tour{position:fixed;inset:0;z-index:80;pointer-events:none}.tour-ring{position:fixed;border-radius:10px;box-shadow:0 0 0 9999px #0b120e99;border:2px solid var(--green);transition:all .22s ease;pointer-events:none}.tour-card{position:fixed;pointer-events:auto;width:min(320px,calc(100vw - 32px));background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 60px #00000040;padding:15px 17px 14px;transition:all .22s ease}.tour-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}.tour-step{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.6px;color:var(--green);text-transform:uppercase}.tour-skip{border:0;background:none;font-size:10px;color:var(--ink-ghost-2);border-bottom:1px solid var(--line);padding:1px 0;cursor:pointer}.tour-skip:hover{color:var(--ink)}.tour-card h3{font-size:13px;margin:0 0 5px}.tour-card p{font-size:11px;color:var(--muted);line-height:1.55;margin:0}.tour-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:13px}.tour-foot .btn.small{padding:5px 12px;font-size:11px}
+.model-config{margin:0 0 14px}.field-label{font-size:10px;color:var(--ink-ghost-2);margin-bottom:5px;display:block;font-weight:600}.model-select{width:100%;padding:11px 10px;border:1px solid var(--border);border-radius:8px;background:var(--wash);font-size:12px;min-height:42px;color:var(--ink)}.model-hint{font-size:10px;color:var(--ink-ghost-2);line-height:1.55;margin-top:6px}.runtime{display:flex;flex-direction:column;gap:7px;background:var(--wash);border-bottom:1px solid var(--line);padding:10px 22px 11px;font-size:11px;color:var(--muted)}.runtime-row{display:flex;align-items:center;gap:9px}.runtime-row #progress-text{min-width:0;flex:1}.runtime time{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap}.runtime-pct{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--green);min-width:34px;text-align:right;white-space:nowrap}.spinner{width:13px;height:13px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--green);animation:spin .9s linear infinite;flex:none}@keyframes spin{to{transform:rotate(360deg)}}.progress-track{height:5px;border-radius:4px;background:var(--surface-5);overflow:hidden;position:relative}.progress-fill{height:100%;width:0;border-radius:4px;background:var(--green);transition:width .25s ease}.stop-square{display:grid;place-items:center;width:22px;height:22px;padding:0;border:0;border-radius:4px;background:none;color:var(--danger);flex:none;cursor:pointer;transition:opacity .15s,transform .15s}.stop-square svg{width:16px;height:16px;display:block}.stop-square:hover:not(:disabled){opacity:.72}.stop-square:active:not(:disabled){transform:scale(.9)}.stop-square:disabled{opacity:.3;cursor:default}.stop-square.stopping{opacity:.3}
+.model-switch{position:relative;flex:1;min-width:0}.model-toggle{display:inline-flex;align-items:center;gap:7px;border:0;background:none;border-radius:7px;padding:2px 4px 2px 0;font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ink);cursor:pointer;max-width:100%;transition:color .15s}.model-toggle:hover:not(:disabled){color:var(--green)}.model-toggle:disabled{opacity:.5;cursor:default}.model-toggle span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.model-toggle svg{width:14px;height:14px;flex:none;color:var(--muted);transition:transform .15s}.model-toggle[aria-expanded=true] svg{transform:rotate(180deg)}.model-list{position:absolute;left:0;top:calc(100% + 8px);z-index:40;min-width:250px;background:var(--paper);border:1px solid var(--line);border-radius:9px;box-shadow:0 14px 40px #00000040;padding:5px;display:flex;flex-direction:column;gap:1px}.model-list[hidden]{display:none}.model-option{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;border-radius:6px;padding:7px 9px;font-size:11px;color:var(--ink);text-align:left;cursor:pointer}.model-option:hover:not(:disabled){background:var(--hover)}.model-option[aria-selected=true]{background:var(--wash);font-weight:600}.model-option:disabled{opacity:.42;cursor:default}.model-option .tick{width:12px;flex:none;color:var(--green);font-size:10px}.model-option .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.model-option .tag{font-size:9px;color:var(--muted);font-family:var(--mono);flex:none}
+.mode-switch{display:inline-flex;border:1px solid var(--line);border-radius:9px;background:var(--wash);padding:2px;gap:2px}.mode-btn{border:0;background:none;border-radius:7px;padding:6px 13px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}.mode-btn:hover:not([aria-selected=true]){color:var(--ink)}.mode-btn[aria-selected=true]{background:var(--paper);color:var(--ink);box-shadow:0 1px 3px #0000001a}.hero-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.passage-mark{display:inline;border-radius:3px;padding:1px 2px;cursor:pointer;border-bottom:2px solid transparent;transition:background .15s}.passage-mark:hover{filter:brightness(.96)}.passage-mark.selected{outline:2px solid var(--ink);outline-offset:1px}.passage-mark .passage-tag{font-family:var(--mono);font-size:8px;font-weight:700;vertical-align:super;margin-left:2px;opacity:.75}.passage-card{border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin-bottom:9px;background:var(--surface-2)}.passage-card.selected{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}.passage-card-head{display:flex;align-items:center;gap:7px;font-size:10px;margin-bottom:6px}.passage-card-head .idx{font-family:var(--mono);font-weight:700;color:var(--muted)}.passage-card-head .pred{margin-left:auto;font-weight:600}.passage-card p{font-size:11px;line-height:1.55;color:var(--ink-soft);margin:0}#unit-body .bars{margin-top:9px;display:flex;flex-direction:column;gap:5px}#unit-body .bar-row{display:grid;grid-template-columns:78px 1fr 40px;gap:7px;align-items:center;font-size:10px;color:var(--muted)}#unit-body .bar-row .track{height:5px;border-radius:3px;background:var(--surface-5);overflow:hidden}#unit-body .bar-row .fill{height:100%;border-radius:3px}#unit-body .bar-row .val{font-family:var(--mono);text-align:right;color:var(--ink)}
+.cmp-intro{display:flex;align-items:flex-start;gap:16px;justify-content:space-between;margin-bottom:4px}.cmp-intro-text{font-size:12px;color:var(--muted);line-height:1.6;margin:0;max-width:520px}.cmp-intro .primary{flex:none;padding:8px 15px;font-size:12px}.cmp-metric-hint{font-size:9px;color:var(--muted);line-height:1.5;margin:0 0 10px}.cmp-metric-title{font-size:10px;font-weight:650;letter-spacing:.2px;color:var(--ink);text-transform:none}.cmp-metric-unit{font-size:9px;color:var(--muted);font-family:var(--mono)}.cmp-metric-head{margin-bottom:6px}.cmp-metric{padding:13px 14px 14px}.cmp-metric-row{margin-bottom:9px}.cmp-metric-name{font-size:10px}.cmp-metric-val{font-size:10px;font-weight:600}.cmp-metric-track{height:7px;border-radius:4px}.cmp-metric-fill{border-radius:4px}.cmp-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}.cmp-chart{padding:16px 18px 18px}.cmp-stack-track{height:24px}.cmp-stack-name{font-size:11px}.cmp-stack-pred{font-size:10px}.cmp-stack-score{font-size:11px}.modal-body{padding:22px 26px 26px}.modal-head{padding:20px 26px}.modal-head h2{font-size:18px;letter-spacing:-.01em}
+.unit-classes{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}.unit-classes-title{font-size:9px;font-weight:650;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}.unit-class-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:10px;padding:3px 0;color:var(--ink-soft)}.unit-class-row.target{color:var(--ink);font-weight:600}.unit-class-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.unit-class-val{font-family:var(--mono);font-size:10px;white-space:nowrap}.unit-class-val.support{color:var(--support)}.unit-class-val.oppose{color:var(--oppose)}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.busy-line:before{animation:none;width:100%;opacity:.4}}
+</style>
+</head>
+<body>
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 17v4h16v-4"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+</defs></svg>
+<header class="topbar"><div class="topbar-inner"><div class="brand"><span class="brand-name">RACE / TEXT LAB</span><span class="brand-divider"></span><span class="brand-section">EE6405 NLP PROJECT · GROUP 2</span></div><div class="top-actions"><button id="status-button" class="connection" data-status="connecting" type="button" title="Models and connection"><span class="status-dot"></span><span id="connection" class="status-text">Connecting</span></button><button id="theme" class="icon-btn theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode"><svg class="icon-sun"><use href="#i-sun"/></svg><svg class="icon-moon"><use href="#i-moon"/></svg></button><button id="export" class="btn small" type="button" disabled><svg><use href="#i-download"/></svg>Export</button><button id="help-open" class="icon-btn" type="button" aria-label="About this page" title="About this page"><svg><use href="#i-info"/></svg></button></div></div></header>
+<main class="page">
+<section class="hero"><div><div class="eyebrow">EE6405 · DOCUMENT-LEVEL EXPLANATIONS</div><h1>See what shapes the prediction.</h1><p>Follow the model’s computation, then inspect how each unit affects the same document’s score.</p></div><div class="hero-tools"><button id="compare" type="button" disabled>Compare models</button></div></section>
+<div id="error" class="notice error" role="alert" hidden><div class="notice-row"><span id="error-text"></span><button id="dismiss" class="small" type="button">Dismiss</button></div></div>
+<div id="resource-note" class="notice" hidden></div>
+
+<div class="workspace">
+<div>
+<section class="card" id="reader-card"><div class="section-head"><h2>Your document</h2><div class="tabs" role="tablist" aria-label="Document view"><button class="tab" id="tab-edit" role="tab" aria-selected="true" type="button" data-mode="edit">Edit</button><button class="tab" id="tab-passages" role="tab" aria-selected="false" type="button" data-mode="passages" disabled>Passages</button><button class="tab" id="tab-influence" role="tab" aria-selected="false" type="button" data-mode="influence" disabled>Influence</button><button class="tab" id="tab-coverage" role="tab" aria-selected="false" type="button" data-mode="coverage" disabled>Coverage</button><button class="tab" id="tab-structure" role="tab" aria-selected="false" type="button" data-mode="structure" disabled>Structure</button></div></div>
+<div id="runtime" class="runtime" hidden><div class="runtime-row"><span class="spinner" aria-hidden="true"></span><span id="progress-text">Analyzing document…</span><time id="elapsed">0 s</time><span id="progress-pct" class="runtime-pct">0%</span><button id="stop" class="stop-square" type="button" aria-label="Stop now" title="Stop now"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5" fill="currentColor" stroke="none"/></svg></button></div><div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div></div>
+<div class="reader-tools" id="reader-tools" hidden><div class="reader-info" id="reader-info"></div><div id="legend" class="legend"></div></div>
+<textarea id="text" class="edit-area" aria-label="English document" placeholder="Paste an English document here…&#10;&#10;Analyze the document once. Then explore how its features shape the result." spellcheck="false"></textarea>
+<div id="reader" class="reader" role="region" aria-label="Document influence highlights" hidden></div>
+<div id="graph-wrap" class="graph-wrap" hidden></div><div id="graph-legend" class="graph-legend" hidden></div>
+<div class="reader-footer"><span id="counter">0 characters</span><div class="actions"><button class="small ghost" id="example" type="button">Example</button><button class="small ghost" id="import" type="button">Import .txt</button><button class="small ghost" id="clear" type="button">Clear</button></div></div>
+</section>
+<div class="reader-footer" style="border:0;padding-left:0;padding-right:0"><span id="progress" role="status" aria-live="polite">Text stays in this local service.</span><div class="actions"><label class="check"><input id="auto-explain" type="checkbox" checked>Explain document influence</label><button id="more" class="small" type="button" hidden>Explain next 8</button><button id="explain" class="small" type="button" disabled>Explain prediction</button><button class="primary" id="analyze" type="button" disabled>Analyze document</button></div></div>
+<section class="card flow" id="flow-card" hidden><div class="section-head"><h2>From text to document prediction</h2><span class="meta" id="flow-status">Model computation</span></div><div class="flow-body"><div id="flow-chain" class="flow-chain"></div><p class="flow-note" id="flow-note"></p><p id="model-hint" class="model-hint" hidden>Connecting to the local service.</p><div id="trace-list" class="trace-list"></div></div></section>
+<p class="bottom-note" id="color-note" hidden><strong>How to read the colors.</strong> Blue supports the selected document class under this feature-suppression test; amber opposes it. Effects are not text percentages, do not add up to 100%, and do not establish authorship. Unmeasured text has no assigned influence.</p>
+</div>
+<aside class="card score-panel" aria-label="Document result"><div class="section-head"><div class="model-switch" id="model-switch"><button id="model-toggle" class="model-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Detection model"><span id="model-toggle-name">Loading…</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="model-list" class="model-list" role="listbox" aria-label="Detection model" hidden></div></div></div><select id="model" class="sr-only" aria-label="Detection model" tabindex="-1"></select><div id="score-empty" class="empty"><div class="empty-symbol">∑</div><strong>One document. One prediction.</strong><p>Analyze your text to see the four model scores and the computation behind them.</p></div><div class="score-content" id="score-content" hidden><div class="eyebrow">ORIGINAL DOCUMENT · UNCHANGED</div><div class="document-label" id="prediction"></div><div class="document-caption" id="prediction-caption"></div><div id="scores"></div><p class="target-hint">Select a class above to explain its score. These are model scores, not percentages of the text.</p><div class="stats"><div class="stat">Lexical tokens<strong id="token-stat">—</strong></div><div class="stat">Input coverage<strong id="coverage-stat">—</strong></div><div class="stat">Prediction time<strong id="time-stat">—</strong></div></div></div><section class="influence" id="influence"><div class="eyebrow">SELECTED UNIT</div><h3 id="unit-title">Select text to follow its influence</h3><div id="unit-body"><p>After explanation, click a highlighted unit. The document prediction above stays fixed.</p></div></section></aside>
+</div>
+
+</main>
+<input type="file" id="file" accept=".txt,text/plain" hidden>
+<dialog id="resources-dialog" class="modal"><div class="modal-head"><h2>Model availability</h2><button data-close="resources-dialog" type="button" aria-label="Close model availability">×</button></div><div class="modal-body"><div id="resource-list"></div><p class="muted" style="font-size:12px">This page does not download weights or change model resources.</p><button id="refresh" type="button">Refresh connection</button></div></dialog>
+<dialog id="compare-dialog" class="modal"><div class="modal-head"><h2>One document, different models.</h2><button data-close="compare-dialog" type="button" aria-label="Close comparison">×</button></div><div class="modal-body"><div class="cmp-intro"><p class="cmp-intro-text">Independent predictions for the same text. Model scores are not an accuracy ranking.</p><button id="run-comparison" class="primary" type="button">Run comparison</button></div><p id="compare-progress" class="compare-progress"></p><div id="comparison-grid"></div></div></dialog>
+<dialog id="export-dialog" class="modal"><div class="modal-head"><h2>Export this analysis</h2><button data-close="export-dialog" type="button" aria-label="Close export">×</button></div><div class="modal-body"><p class="muted">Original text and raw discourse text stay out of the report by default.</p><label class="check"><input id="include-text" type="checkbox">Include the original document text</label><div style="display:flex;gap:10px;margin:20px 0"><button id="download" class="primary" type="button">Download JSON</button><button id="copy" type="button">Copy JSON</button></div><pre id="export-preview" class="json"></pre></div></dialog>
+<dialog id="about-dialog" class="modal"><div class="modal-head"><h2>About this page</h2><button data-close="about-dialog" type="button" aria-label="Close about">×</button></div><div class="modal-body"><p class="dialog-intro" style="font-size:12px;color:var(--muted);line-height:1.6;margin:0">A local document-explanation workbench for the EE6405 text-provenance project. Everything runs on your machine.</p><div class="about-grid"><div><h3>What it does</h3><p>Classifies an English document into four writing categories, then measures how each discourse unit affects one selected class score.</p></div><div><h3>How to use it</h3><p>Paste or import text, pick a model, then choose Analyze document. Switch to Influence, Coverage or Structure to inspect the same prediction.</p></div><div><h3>Four models</h3><p>TF-IDF, RoBERTa, RACE and RACE without contrastive loss. Each is an independent classifier; scores are never fused.</p></div><div><h3>Reading the output</h3><p>Whole-document scores on the right never change. Left-side colors show the effect of suppressing a unit on the selected class, not a passage label.</p></div><div><h3>Privacy</h3><p>Text goes only to the local service on this machine. Nothing is uploaded, stored or sent to a third party.</p></div><div><h3>Limits</h3><p>Scores are learned patterns, not calibrated authorship probabilities or proof of who wrote the text.</p></div></div><div class="about-actions"><button id="about-tour" class="btn small" type="button">Replay quick start</button></div></div></dialog>
+<div id="tour" class="tour" hidden><div class="tour-ring" id="tour-ring"></div><div class="tour-card" id="tour-card" role="dialog" aria-modal="false" aria-labelledby="tour-title"><div class="tour-head"><span class="tour-step" id="tour-step">1 / 4</span><button id="tour-skip" class="tour-skip" type="button">Skip</button></div><h3 id="tour-title"></h3><p id="tour-body"></p><div class="tour-foot"><button id="tour-prev" class="btn small" type="button">Back</button><button id="tour-next" class="btn primary small" type="button">Next</button></div></div></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const CLASSES=['human_written','human_ai_polished','ai_generated','ai_humanized'];
+const NAMES=['Human-written','AI-polished','AI-generated','AI-rewritten'];
+const CLASS_COLORS={human_written:'#739e80',human_ai_polished:'#8199cc',ai_generated:'#c7a062',ai_humanized:'#b093c4'};
+const METHODS={race_contextual_edu_content_suppression:'RACE contextual EDU content suppression',roberta_word_embedding_suppression:'RoBERTa word-embedding suppression',tfidf_occurrence_share_suppression:'TF-IDF occurrence-share suppression'};
+const EXAMPLE='The library extended its opening hours during the examination period. Students can now reserve a quiet study room online.\n\nHowever, the booking system has caused confusion among first-year students. Several reported that the interface was difficult to navigate.\n\nThe university plans to publish a short guide next week. It will explain how to reserve a room and cancel a booking without penalty.';
+const state={models:[],device:'',ready:false,explainAPI:false,busy:false,doc:null,exp:null,text:'',model:'',target:null,selected:null,mode:'edit',serial:0,comparison:[],progress:null,stepStarted:0,started:0,timer:null,stopRequested:false,abort:null,cost:{},passages:[],selectedPassage:null};
+function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
+function finite(x){return typeof x==='number'&&Number.isFinite(x)}
+function validScores(s){return s&&CLASSES.every(c=>finite(s[c])&&s[c]>=0&&s[c]<=1)&&Math.abs(CLASSES.reduce((a,c)=>a+s[c],0)-1)<1e-4}
+function label(c){return NAMES[CLASSES.indexOf(c)]||c}
+function fmt(x){return finite(x)?(100*x).toFixed(1)+'%':'—'}
+function signed(x){return (x>0?'+':'')+x.toFixed(2)}
+function cpTo16(text,n){return Array.from(text).slice(0,n).join('').length}
+function showError(message){$('error-text').textContent=message;$('error').hidden=false}
+function validatePrediction(d){if(!d||!validScores(d.scores)||!CLASSES.includes(d.prediction)||!d.input||!d.timing)throw Error('The service returned an invalid document result.');return d}
+function validateExplanation(d){
+ if(!d||d.schema!=='ee6405.document-explanation/v1'||!Array.isArray(d.units)||d.units.length>256)throw Error('The explanation API returned an unsupported format.');
+ validatePrediction(d.document);
+ if(d.graph){const g=d.graph;if(!Array.isArray(g.nodes)||!Array.isArray(g.edges)||g.nodes.length>512)throw Error('Invalid graph payload.');const indices=new Set(g.nodes.map(n=>n.index));if(indices.size!==g.nodes.length||g.edges.some(e=>!indices.has(e.source)||!indices.has(e.target)||!Array.isArray(e.type)))throw Error('Invalid graph references.');}
+ if(d.document.model!==state.model||CLASSES.some(c=>Math.abs(d.document.scores[c]-state.doc.scores[c])>2e-5))throw Error('Explanation does not match the original document prediction. Results were not merged.');
+ let last=0;const ids=new Set();
+ for(const u of d.units){
+  if(typeof u.id!=='string'||ids.has(u.id)||!Number.isInteger(u.start)||!Number.isInteger(u.end)||u.start<last||u.end<=u.start||u.end>Array.from(state.text).length)throw Error('Invalid explanation source spans.');
+  if(u.start_utf16!==cpTo16(state.text,u.start)||u.end_utf16!==cpTo16(state.text,u.end))throw Error('Source-text offsets do not match.');
+  if(u.coverage==='partial'&&(!Number.isInteger(u.visible_end_utf16)||u.visible_end_utf16<=u.start_utf16||u.visible_end_utf16>u.end_utf16))throw Error('Invalid partial coverage boundary.');
+  ids.add(u.id);last=u.end;
+  if(u.status==='computed'){
+   if(!validScores(u.without_scores)||!u.delta_pp||CLASSES.some(c=>!finite(u.delta_pp[c])||Math.abs(u.delta_pp[c]-100*(state.doc.scores[c]-u.without_scores[c]))>0.002))throw Error('Invalid influence calculation returned by service.');
+  }
+ }
+ return d;
+}
+async function api(url,body){const controller=new AbortController();state.abort=controller;const timer=setTimeout(()=>controller.abort(),420000);try{const r=await fetch(url,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,signal:controller.signal});let d;try{d=await r.json()}catch{throw Error('The local service returned a non-JSON response.')}if(!r.ok)throw Error(d.error||'Request failed ('+r.status+').');return d}catch(e){if(e.name==='AbortError')throw Error('The browser stopped waiting. The server may still be finishing its current request.');if(e instanceof TypeError)throw Error('Could not reach the local service. Check that the Demo is running, then reconnect.');throw e}finally{clearTimeout(timer);if(state.abort===controller)state.abort=null}}
+// ---- Runtime progress, stop control and cost learning (Reading Studio behaviour) ----
+const COST_SEED={tfidf:{document:0.5,unit:0.4},roberta:{document:5,unit:4},race:{document:24,unit:3},race_no_supcon:{document:4,unit:3}};
+function costOf(model,kind){const k=model+':'+kind;if(state.cost&&state.cost[k])return state.cost[k];return COST_SEED[model]?.[kind]??5}
+function learnCost(model,kind,seconds){if(!(seconds>0.05)||!model)return;state.cost=state.cost||{};const k=model+':'+kind;state.cost[k]=state.cost[k]?state.cost[k]*0.5+seconds*0.5:seconds}
+function paintProgress(pct){const v=Math.max(0,Math.min(100,pct));const fill=$('progress-fill'),bar=$('progress-bar'),label=$('progress-pct');if(fill)fill.style.width=v.toFixed(1)+'%';if(bar)bar.setAttribute('aria-valuenow',String(Math.round(v)));if(label)label.textContent=Math.round(v)+'%'}
+function progressPct(){
+ const p=state.progress;
+ if(!p||!p.total)return 0;
+ if(p.done>=p.total)return 100;
+ const w=p.weights;let acc=0,sum=0;
+ for(let i=0;i<p.total;i++){const wi=Number(w?w[i]:1)||1;sum+=wi;if(i<p.done)acc+=wi}
+ const cur=Number(w?w[p.done]:1)||1;
+ const elapsed=(performance.now()-(state.stepStarted||performance.now()))/1000;
+ const frac=1-Math.exp(-elapsed/(Math.max(cur,0.4)*0.7));
+ const pct=sum>0?(acc+cur*Math.min(frac,0.95))/sum*100:0;
+ return Number.isFinite(pct)?pct:0;
+}
+function tickProgress(){if(state.progress)paintProgress(progressPct())}
+function setProgress(done,total,weights){
+ const prev=state.progress;
+ if(prev&&done>prev.done&&state.stepStarted){
+  const dt=(performance.now()-state.stepStarted)/1000;
+  learnCost(state.model,prev.done===0?'document':'unit',dt);
+ }
+ state.progress={done,total,weights:weights||(prev&&prev.total===total?prev.weights:null)};
+ state.stepStarted=performance.now();
+ paintProgress(progressPct());
+}
+function startJob(message,total,weights){
+ state.stopRequested=false;state.started=performance.now();
+ $('runtime').hidden=false;$('progress-text').textContent=message;
+ $('stop').disabled=false;$('stop').classList.remove('stopping');
+ $('elapsed').textContent='0 s';
+ setProgress(0,total,weights);
+ clearInterval(state.timer);
+ state.timer=setInterval(()=>{
+  $('elapsed').textContent=Math.floor((performance.now()-state.started)/1000)+' s';
+  tickProgress();
+ },150);
+}
+function endJob(){clearInterval(state.timer);state.timer=null;$('runtime').hidden=true;state.progress=null;paintProgress(0)}
+function requestStop(){
+ if(!state.busy||state.stopRequested)return;
+ state.stopRequested=true;
+ $('stop').disabled=true;$('stop').classList.add('stopping');
+ $('progress-text').textContent='Stopping after the current request…';
+ if(state.abort)state.abort.abort();
+}
+$('stop').onclick=requestStop;
+function setBusy(value,message){state.busy=value;if(message)$('progress').textContent=message;if(!value)endJob();updateControls()}
+function modelName(){return state.models.find(x=>x.id===(state.model||$('model').value))?.name||state.model||'Model'}
+function renderModelSwitch(){
+ const list=$('model-list'),toggle=$('model-toggle'),name=$('model-toggle-name');
+ if(!list||!toggle)return;
+ const current=state.models.find(m=>m.id===$('model').value);
+ name.textContent=current?current.name:(state.ready?'No model':'Loading…');
+ toggle.disabled=state.busy||!state.ready;
+ list.replaceChildren();
+ for(const m of state.models){
+  const b=el('button','model-option');
+  b.type='button';b.setAttribute('role','option');
+  b.setAttribute('aria-selected',String(m.id===$('model').value));
+  b.disabled=!m.available;
+  b.append(el('span','tick',m.id===$('model').value?'✓':''),el('span','name',m.name));
+  if(!m.available)b.append(el('span','tag','unavailable'));
+  b.onclick=()=>{closeModelList();if(m.id===$('model').value)return;$('model').value=m.id;$('model').dispatchEvent(new Event('change'))};
+  list.append(b);
+ }
+}
+function openModelList(){const list=$('model-list'),toggle=$('model-toggle');if(!list||toggle.disabled)return;renderModelSwitch();list.hidden=false;toggle.setAttribute('aria-expanded','true')}
+function closeModelList(){const list=$('model-list'),toggle=$('model-toggle');if(!list)return;list.hidden=true;toggle.setAttribute('aria-expanded','false')}
+$('model-toggle').onclick=e=>{e.stopPropagation();$('model-list').hidden?openModelList():closeModelList()};
+// Scroll over the model title cycles through the available models.
+$('model-switch').addEventListener('wheel',e=>{
+ if(state.busy||!state.ready)return;
+ const usable=state.models.filter(m=>m.available);
+ if(usable.length<2)return;
+ e.preventDefault();
+ const at=usable.findIndex(m=>m.id===$('model').value);
+ const step=e.deltaY>0?1:-1;
+ const next=usable[(at+step+usable.length)%usable.length];
+ if(!next||next.id===$('model').value)return;
+ $('model').value=next.id;
+ $('model').dispatchEvent(new Event('change'));
+}, {passive:false});
+document.addEventListener('click',e=>{if(!e.target.closest?.('.model-switch'))closeModelList()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModelList()});
+function updateModelHint(){
+ const m=state.models.find(x=>x.id===$('model').value);
+ const hint=$('model-hint');
+ if(!hint)return;
+ hint.hidden=false;
+ if(!state.ready){hint.textContent='Connecting to the local service.';return}
+ if(!m){hint.textContent='No model is available on this service.';return}
+ if(!m.available){hint.textContent=m.availability_reason||'This model is unavailable.';return}
+ hint.textContent=m.requires_rst?'Text plus discourse structure. The Structure tab shows the parsed graph.':'Text only. The Structure tab explains why this model has no discourse graph.';
+}
+function updateControls(){const m=state.models.find(x=>x.id===$('model').value),hasText=$('text').value.trim().length>0,validLength=Array.from($('text').value).length<=12000;
+ $('analyze').disabled=state.busy||!state.ready||!m?.available||!hasText||!validLength;
+ for(const id of ['model','example','import','clear','text','auto-explain'])$(id).disabled=state.busy;
+ $('explain').disabled=state.busy||!state.doc||!state.explainAPI;
+ $('compare').disabled=state.busy||!state.doc;
+ $('export').disabled=state.busy||!state.doc;
+ $('run-comparison').disabled=state.busy||!state.doc;
+ $('more').disabled=state.busy;
+ $('stop').disabled=!state.busy||state.stopRequested;
+ $('model-toggle').disabled=state.busy||!state.ready;
+ if(state.busy)closeModelList();
+ for(const mode of ['influence','coverage','passages','structure'])$('tab-'+mode).disabled=!state.doc;
+ $('counter').textContent=Array.from($('text').value).length.toLocaleString()+' / 12,000 characters';
+ syncContext();
+}
+async function refresh(){try{const data=await api('/api/models');if(!data||!Array.isArray(data.models))throw Error('Invalid model registry');state.models=data.models;state.device=data.device;state.ready=true;state.explainAPI=data.explanation_api==='ee6405.document-explanation/v1';const prev=$('model').value;
+ $('model').replaceChildren();
+ for(const m of state.models){const o=el('option',null,m.name+(m.available?'':' — unavailable'));o.value=m.id;o.disabled=!m.available;$('model').append(o)}
+ $('model').value=state.models.some(x=>x.id===prev&&x.available)?prev:(state.models.find(x=>x.id==='race'&&x.available)||state.models.find(x=>x.available))?.id||'';
+ renderModelSwitch();$('connection').textContent='Local · '+String(data.device||'CPU').toUpperCase();const available=state.models.filter(x=>x.available).length;$('resource-note').hidden=available>0&&state.explainAPI;$('resource-note').textContent=available===0?'Service online, but no model weights are available. Open model availability to see the reasons.':(!state.explainAPI?'This server does not have the document-explanation backend. Install the complete update, then restart.':'');$('resource-list').replaceChildren();for(const m of state.models){const r=el('div','model-state'),d=el('div',null,m.name);d.append(el('small',null,m.run_id||m.id));r.append(d,el('span','muted',m.available?'Available':m.availability_reason||'Unavailable'));$('resource-list').append(r)}renderFlow();updateModelHint();renderModelSwitch();updateControls()}catch(e){state.ready=false;$('connection').textContent='Disconnected';showError(e.message);updateControls()}}
+function invalidate(){state.serial++;state.doc=null;state.exp=null;state.model='';state.selected=null;state.comparison=[];state.passages=[];state.selectedPassage=null;state.mode='edit';$('score-content').hidden=true;$('score-empty').hidden=false;$('progress').textContent='Text changed. Analyze again to compute a new result.';$('more').hidden=true;setMode('edit');renderUnit();renderFlow();updateControls()}
+// ---- Passage-level independent classification (Passages tab) ----
+const MAX_PASSAGES=8;
+function makePassages(text){
+ if(!text)return [];
+ let sentences=[];
+ if(typeof Intl.Segmenter==='function'){
+  for(const part of new Intl.Segmenter('en',{granularity:'sentence'}).segment(text))sentences.push({start:part.index,end:part.index+part.segment.length});
+ }else{
+  const re=/[^.!?]+[.!?]*\s*/g;let m;
+  while((m=re.exec(text)))sentences.push({start:m.index,end:m.index+m[0].length});
+ }
+ const out=[];let cur=null;
+ for(const s of sentences){
+  const raw=text.slice(s.start,s.end);
+  if(!raw.trim())continue;
+  if(!cur)cur={start:s.start,end:s.end};
+  else if(cur.end-cur.start<220)cur.end=s.end;
+  else{out.push(cur);cur={start:s.start,end:s.end}}
+ }
+ if(cur)out.push(cur);
+ return out.map((p,i)=>({index:i,start:p.start,end:p.end,status:'pending',result:null,error:null}));
+}
+
+async function inspectPassages(){
+ if(!state.doc||state.busy)return;
+ const todo=state.passages.slice(0,MAX_PASSAGES);
+ const pending=todo.filter(p=>p.status!=='complete');
+ if(!pending.length)return;
+ const serial=state.serial;
+ setBusy(true,'Classifying each passage independently…');
+ startJob('Classifying each passage independently…',pending.length+1,[costOf(state.model,'document'),...Array(pending.length).fill(costOf(state.model,'unit'))]);
+ let done=0;
+ try{
+  for(const p of pending){
+   if(state.stopRequested)break;
+   if(serial!==state.serial)return;
+   p.status='loading';renderPassages();
+   $('progress-text').textContent='Classifying passage '+(p.index+1)+' of '+todo.length+'…';
+   try{
+    const text=state.text.slice(p.start,p.end);
+    const d=text===state.text?state.doc:validatePrediction(await api('/api/predict',{text,model:state.model}));
+    p.result=d;p.status='complete';
+   }catch(e){
+    if(state.stopRequested)break;
+    p.status='error';p.error=e.message;showError('Passage classification stopped: '+e.message+' The document result is retained.');break;
+   }finally{done++;setProgress(1+done,state.progress?.total||(1+pending.length));renderPassages();renderPassageDetail()}
+  }
+ }finally{setBusy(false)}
+ const complete=state.passages.filter(p=>p.status==='complete').length;
+ $('progress').textContent=complete+' of '+state.passages.length+' passages classified independently · whole-document prediction unchanged';
+}
+function passageColor(c){return CLASS_COLORS[c]}
+function renderPassages(){
+ const out=$('reader');out.replaceChildren();
+ if(!state.doc)return;
+ $('reader-info').textContent='Independent passage predictions — not a decomposition of the document score';
+ renderLegend(CLASSES.map(c=>[c,label(c)]));
+ const marks=el('div','passage-text');
+ let cursor=0;
+ for(const p of state.passages){
+  if(p.start>cursor)marks.append(document.createTextNode(state.text.slice(cursor,p.start)));
+  const m=el('span','passage-mark');
+  const pred=p.result?p.result.prediction:null;
+  m.style.background=pred?passageColor(pred)+'2e':'transparent';
+  m.style.borderBottomColor=pred?passageColor(pred):'var(--line)';
+  if(p.index===state.selectedPassage)m.classList.add('selected');
+  m.dataset.passage=String(p.index);
+  m.setAttribute('role','button');m.tabIndex=0;
+  m.setAttribute('aria-label','Passage '+(p.index+1)+(pred?': '+label(pred):': not classified'));
+  m.append(document.createTextNode(state.text.slice(p.start,p.end)));
+  if(pred)m.append(el('span','passage-tag',String(p.index+1)));
+  m.onclick=()=>{state.selectedPassage=p.index;renderPassages();renderPassageDetail()};
+  marks.append(m);
+  cursor=p.end;
+ }
+ if(cursor<state.text.length)marks.append(document.createTextNode(state.text.slice(cursor)));
+ out.append(marks);
+ if(state.selectedPassage===null&&state.passages.length)state.selectedPassage=0;
+ renderPassageDetail();
+}
+function renderPassageDetail(){
+ const host=$('unit-body');
+ if(!host)return;
+ host.replaceChildren();
+ const p=state.passages[state.selectedPassage];
+ if(!p){host.append(el('p',null,'Select a passage to see its independent classification.'));return}
+ $('unit-title').textContent='Passage '+(p.index+1);
+ if(p.status==='pending'||p.status==='loading'){host.append(el('p',null,'Not classified yet.'));return}
+ if(p.status==='error'){host.append(el('p',null,p.error||'Classification failed.'));return}
+ const d=p.result;
+ host.append(el('p',null,'This passage alone is classified as '+label(d.prediction)+' at '+fmt(d.scores[d.prediction])+'.'));
+ const bars=el('div','bars');
+ for(const c of CLASSES){
+  const row=el('div','bar-row');
+  row.append(el('span',null,label(c)));
+  const track=el('div','track'),fill=el('div','fill');
+  fill.style.width=(100*d.scores[c])+'%';fill.style.background=CLASS_COLORS[c];
+  track.append(fill);row.append(track,el('span','val',fmt(d.scores[c])));
+  bars.append(row);
+ }
+ host.append(bars);
+ host.append(el('p','mini-note','Passage scores are independent model outputs. They are not shares of the whole-document prediction.'));
+}
+function setMode(mode){state.mode=mode;for(const b of document.querySelectorAll('[data-mode]'))b.setAttribute('aria-selected',String(b.dataset.mode===mode));$('text').hidden=mode!=='edit';$('reader').hidden=mode==='edit'||mode==='structure';$('graph-wrap').hidden=mode!=='structure';$('graph-legend').hidden=mode!=='structure';$('reader-tools').hidden=mode==='edit';if(mode==='structure')renderGraph();else if(mode==='passages')renderPassages();else renderReader();syncContext()}
+// The flow card and the colour key only make sense in specific states, so they are shown conditionally.
+function syncContext(){
+ const hasDoc=!!state.doc;
+ $('flow-card').hidden=!hasDoc;
+ $('color-note').hidden=!(hasDoc&&state.mode==='influence'&&!!state.exp);
+}
+function renderScores(){const d=state.doc;if(!d)return;$('score-empty').hidden=true;$('score-content').hidden=false;$('prediction').textContent=label(d.prediction);$('prediction-caption').textContent=fmt(d.scores[d.prediction])+' model score · not a text percentage';renderModelSwitch();$('scores').replaceChildren();for(const c of CLASSES){const b=el('button','score-row');b.type='button';b.setAttribute('aria-pressed',String(c===state.target));b.setAttribute('aria-label','Explain '+label(c));const top=el('div','score-top');top.append(el('span',null,label(c)),el('span','pct',fmt(d.scores[c])));const track=el('div','bar-track'),fill=el('div','bar-fill');fill.style.width=100*d.scores[c]+'%';track.append(fill);b.append(top,track);b.onclick=()=>{state.target=c;renderScores();renderReader();renderUnit()};$('scores').append(b)}$('token-stat').textContent=d.input.lexical_tokens_with_specials??'—';const n=d.input.characters,end=d.input.lexical_covered_characters;$('coverage-stat').textContent=finite(n)&&n>0&&finite(end)?Math.min(100,100*end/n).toFixed(0)+'%':'—';$('time-stat').textContent=finite(d.timing.end_to_end_seconds)?d.timing.end_to_end_seconds.toFixed(2)+' s':'—';}
+function renderLegend(items){$('legend').replaceChildren();for(const [cls,text] of items)$('legend').append(el('span',cls,text))}
+function renderReader(){if(!state.doc)return;const out=$('reader');out.replaceChildren();if(state.mode==='coverage'){$('reader-info').textContent='Lexical input boundary — not a class prediction';renderLegend([['','Included'],['','Outside window']]);const cp=Array.from(state.text);const end=state.doc.input.lexical_covered_characters;if(!Number.isInteger(end)||end<0||end>cp.length){out.textContent=state.text;return}out.append(el('span','coverage',cp.slice(0,end).join('')),el('span','uncovered',cp.slice(end).join('')));return}
+ $('reader-info').replaceChildren(document.createTextNode('Influence on '),el('strong',null,label(state.target)));renderLegend([['positive','Supports'],['negative','Opposes'],['','Not measured / small effect']]);
+ if(!state.exp){out.textContent=state.text;return}let cursor=0;for(const u of state.exp.units){out.append(document.createTextNode(state.text.slice(cursor,u.start_utf16)));const mark=el('mark');const effect=u.status==='computed'?u.delta_pp[state.target]:null;mark.className=effect===null?(u.coverage==='outside'?'outside':'uncomputed'):(Math.abs(effect)<.01?'minimal':effect>0?'support':'oppose');if(u.id===state.selected)mark.classList.add('selected');mark.dataset.unit=u.id;mark.tabIndex=0;mark.setAttribute('role','button');const msg=effect===null?(u.coverage==='outside'?'Outside lexical window':'Not measured'):(signed(effect)+' percentage points on '+label(state.target));mark.setAttribute('aria-label','Unit '+u.id+': '+msg);mark.title=msg;const paintedEnd=u.coverage==='partial'?u.visible_end_utf16:u.end_utf16;mark.textContent=state.text.slice(u.start_utf16,paintedEnd);mark.onclick=()=>chooseUnit(u.id);mark.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();chooseUnit(u.id)}};out.append(mark);if(paintedEnd<u.end_utf16){const tail=el('span','uncovered',state.text.slice(paintedEnd,u.end_utf16));tail.title='Outside the lexical part of this intervention';out.append(tail)}cursor=u.end_utf16}out.append(document.createTextNode(state.text.slice(cursor)))}
+function chooseUnit(id){state.selected=id;if(state.mode==='structure')setMode('influence');renderReader();renderUnit();renderFlow()}
+function renderUnit(){if(state.mode==='passages'){renderPassageDetail();return}
+const body=$('unit-body');body.replaceChildren();const u=state.exp?.units.find(x=>x.id===state.selected);if(!u){$('unit-title').textContent='Select a unit to see its effect';body.append(el('p',null,'Click the text after explanation. The original document scores above will not change.'));return}$('unit-title').textContent=(state.exp.units_kind==='actual_rst_edus'?'Discourse unit ':'Text unit ')+u.id.replace(/^u/,'')+' · '+label(state.target);
+ if(u.status!=='computed'){body.append(el('p',null,u.coverage==='outside'?'Outside the lexical window. No content influence was measured. RACE may still use retained relationship structure.':'Not measured yet. No influence value has been assigned.'));if(u.coverage!=='outside'){const b=el('button','small','Explain this unit');b.type='button';b.disabled=state.busy;b.onclick=()=>runExplanation([u.id]);body.append(b)}return}
+ const delta=u.delta_pp[state.target],direction=Math.abs(delta)<.01?'Little change':delta>0?'Supports this class':'Opposes this class';body.append(el('div','delta '+(delta>=0?'support':'oppose'),signed(delta)+' pp'),el('p',null,direction+' under the selected suppression test.'));
+const pair=el('div','before-after');for(const [title,value] of [['Original document',state.doc.scores[state.target]],['After suppression',u.without_scores[state.target]]]){const n=el('div',null,title);n.append(el('strong',null,fmt(value)));pair.append(n)}body.append(pair);
+ // Direct link: this unit's effect on all four document class scores.
+ const all=el('div','unit-classes');
+ all.append(el('div','unit-classes-title','Effect on all four document scores'));
+ for(const c of CLASSES){
+  const d=u.delta_pp?.[c];
+  const row=el('div','unit-class-row'+(c===state.target?' target':''));
+  row.append(el('span','unit-class-name',label(c)));
+  row.append(el('span','unit-class-val'+(finite(d)?(d>=0?' support':' oppose'):''),finite(d)?signed(d)+' pp':'—'));
+  all.append(row);
+ }
+ body.append(all);
+ body.append(el('p','mini-note',state.exp.method==='race_contextual_edu_content_suppression'?'The unit’s contextual content and its shares in relation-node means are zeroed. Types and graph edges stay fixed.':state.exp.method==='roberta_word_embedding_suppression'?'Only this unit’s word embeddings are zeroed; the complete lexical window is re-encoded. Positions and masks stay fixed.':'This unit’s occurrence share is removed from the fixed TF-IDF vector. Vocabulary, IDF and the original normalization stay fixed.'));
+ if(u.coverage==='partial')body.append(el('p','mini-note','Only the visible lexical part of this unit was suppressed.'));
+ if(u.delta_logits&&finite(u.delta_logits[state.target]))body.append(el('p','mini-note','Target logit change: '+signed(u.delta_logits[state.target])+'. This can remain informative when softmax scores saturate.'));
+ if(u.directly_affected_node_indices)body.append(el('p','mini-note',u.directly_affected_node_indices.length+' graph node initializations affected directly. Other nodes can change during message passing.'));
+}
+function renderFlow(){const name=state.model||$('model').value,race=name.startsWith('race');const flow=race?[
+ ['Contextual text','RoBERTa token representations'],['Discourse features','EDUs + descendant relation means'],['Typed graph layers','Two learned aggregation steps'],['Document vector','Root pooling'],['Four-class head','Logits → softmax']]:name==='tfidf'?[
+ ['Lexical window','First 512-token text prefix'],['Word & word pairs','Fixed vocabulary and IDF'],['Document vector','Normalized TF-IDF features'],['Linear classifier','Learned class coefficients'],['Four-class scores','Softmax probabilities']]:[
+ ['Lexical window','First 512 tokens'],['Word embeddings','Content + positions'],['Context encoder','RoBERTa layers'],['Document vector','Contextual CLS representation'],['Four-class head','Logits → softmax']];$('flow-chain').replaceChildren();flow.forEach((x,i)=>{if(i)$('flow-chain').append(el('span','flow-arrow','→'));const n=el('div','flow-step');n.append(el('div','step-no',String(i+1).padStart(2,'0')),el('strong',null,x[0]),el('small',null,x[1]));$('flow-chain').append(n)});$('flow-status').textContent=state.exp?'Observed forward trace':'Architecture · no trace yet';$('flow-note').textContent=race?'The model combines feature vectors, not separate sentence probabilities. Content also reaches relation nodes through descendant means.':'Units are display groups, not a discourse graph. Each probe recomputes the same document output.';$('trace-list').replaceChildren();const selected=state.exp?.units.find(u=>u.id===state.selected);for(const s of selected?.trace||state.exp?.stages||[]){const labelText=s.stage.replaceAll('_',' ')+' · '+s.tensor_shape.join(' × ')+(finite(s.change_rms)?' · ΔRMS '+s.change_rms.toFixed(4):'');$('trace-list').append(el('span','trace-chip',labelText))}if(selected?.trace)$('flow-note').textContent+=' ΔRMS is an activation change, not an additive class contribution.';syncContext();}
+function renderGraph(){const wrap=$('graph-wrap');wrap.replaceChildren();const g=state.exp?.graph;if(!g){const name=state.model||$('model').value;$('reader-info').textContent='No discourse structure for this model';$('legend').replaceChildren();$('graph-legend').hidden=true;wrap.append(el('p','empty','This model reads the document as one flat sequence of tokens, so there is no discourse graph to draw. '+(name==='tfidf'?'TF-IDF uses word and word-pair counts.':'RoBERTa uses contextual token representations.')+' Switch to Influence or Coverage to inspect the same prediction.'));return}$('graph-legend').hidden=false;$('reader-info').textContent='Actual model graph — edges do not represent importance';renderLegend([['','Discourse units'],['','Relation nodes']]);
+ const forward=g.tree_edges||g.edges.filter(e=>!String(e.type?.[1]||'').startsWith('rev_'));const depths=new Map([[g.root_index,0]]),queue=[g.root_index];while(queue.length){const p=queue.shift();for(const e of forward.filter(e=>e.source===p)){if(!depths.has(e.target)){depths.set(e.target,depths.get(p)+1);queue.push(e.target)}}}for(const n of g.nodes)if(!depths.has(n.index))depths.set(n.index,0);const levels=new Map();for(const n of g.nodes){const d=depths.get(n.index);if(!levels.has(d))levels.set(d,[]);levels.get(d).push(n)}const breadth=Math.max(1,...Array.from(levels.values(),x=>x.length));const W=Math.max(580,Math.min(1800,breadth*130)),H=100+Math.max(...depths.values())*80;const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.classList.add('graph-svg');svg.setAttribute('width',W);svg.setAttribute('height',Math.min(5000,H));svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('role','img');svg.setAttribute('aria-label','Actual RACE graph and typed relations');const pos=new Map();for(const [d,nodes] of levels){nodes.forEach((n,i)=>pos.set(n.index,[(i+.5)*W/nodes.length,40+d*80]))}const u=state.exp.units.find(x=>x.id===state.selected),touched=new Set(u?.directly_affected_node_indices||[]);for(const e of forward){const a=pos.get(e.source),b=pos.get(e.target);if(!a||!b)continue;const path=document.createElementNS(ns,'path');path.setAttribute('d',`M${a[0]},${a[1]+16} L${b[0]},${b[1]-16}`);path.setAttribute('class','graph-edge'+(touched.has(e.source)&&touched.has(e.target)?' relevant':''));const title=document.createElementNS(ns,'title');title.textContent=e.type.join(' / ');path.append(title);svg.append(path)}for(const n of g.nodes){const [x,y]=pos.get(n.index);const group=document.createElementNS(ns,'g');group.setAttribute('class','graph-node'+(touched.has(n.index)?' affected':'')+(n.unit_id===state.selected?' selected':''));group.setAttribute('transform',`translate(${x-48},${y-16})`);const r=document.createElementNS(ns,'rect');r.setAttribute('width',96);r.setAttribute('height',32);r.setAttribute('rx',8);const t=document.createElementNS(ns,'text');t.setAttribute('x',48);t.setAttribute('y',20);t.setAttribute('text-anchor','middle');t.textContent=n.kind==='edu_node'?'Unit '+n.unit_id.replace(/^u/,''):String(n.relation||'Relation').slice(0,15);group.append(r,t);if(n.unit_id){group.setAttribute('tabindex','0');group.setAttribute('role','button');group.setAttribute('aria-label','Select '+n.unit_id);group.onclick=()=>chooseUnit(n.unit_id);group.onkeydown=e=>{if(e.key==='Enter')chooseUnit(n.unit_id)}}svg.append(group)}wrap.append(svg);$('graph-legend').textContent=g.nodes.length+' nodes · '+g.edges.length+' directed edges in the actual graph. Drawing follows parsed parent–child direction; the report preserves all directed edges. Highlighted nodes are directly changed initializations, not learned importance weights. Click a unit to see its effect on all four document scores.';}
+async function runExplanation(ids){
+ if(!state.doc||state.busy)return;
+ const serial=state.serial;
+ const noun=state.exp?.units_kind==='actual_rst_edus'?'discourse units':'text units';
+ const requested=ids?ids.length:8;
+ setBusy(true,'Measuring how each '+noun.replace(/s$/,'')+' affects the selected class…');
+ startJob('Measuring how each '+noun.replace(/s$/,'')+' affects the selected class…',requested+1,[costOf(state.model,'document'),...Array(requested).fill(costOf(state.model,'unit'))]);
+ try{
+  const d=validateExplanation(await api('/api/explain',{text:state.text,model:state.model,max_units:8,...(ids?{unit_ids:ids}:{})}));
+  if(serial!==state.serial)return;
+  if(state.exp){const old=new Map(state.exp.units.filter(u=>u.status==='computed').map(u=>[u.id,u]));d.units=d.units.map(u=>u.status==='computed'?u:(old.get(u.id)||u))}
+  state.exp=d;
+  const visible=d.units.filter(u=>u.coverage!=='outside');
+  const done=d.units.filter(u=>u.status==='computed').length;
+  const pending=visible.filter(u=>u.status==='not_computed');
+  const noun2=d.units_kind==='actual_rst_edus'?'discourse units':'text units';
+  const total=d.total_units??visible.length;
+  let msg=done+' '+noun2+' measured';
+  if(pending.length)msg+=' · '+pending.length+' more available';
+  if(d.status==='budget_stopped')msg+=' · request budget reached';
+  $('progress').textContent=msg;
+  $('more').hidden=!pending.length;
+  if(!state.selected)state.selected=d.units.find(u=>u.status==='computed')?.id||null;
+  setProgress(requested+1,requested+1);
+  setMode('influence');renderScores();renderUnit();renderFlow();
+ }catch(e){
+  if(state.stopRequested)$('progress').textContent='Stopped. The original document prediction is unchanged.';
+  else{showError('Explanation unavailable: '+e.message);$('progress').textContent='Document prediction preserved. No influence values were fabricated.'}
+ }finally{setBusy(false)}
+}
+async function analyze(){
+ if(state.busy)return;
+ const text=$('text').value;
+ if(!text.trim()||Array.from(text).length>12000)return;
+ state.serial++;const serial=state.serial;
+ state.doc=null;state.exp=null;state.selected=null;state.text=text;state.model=$('model').value;state.comparison=[];state.passages=makePassages(text);state.selectedPassage=null;
+ $('error').hidden=true;$('score-content').hidden=true;$('score-empty').hidden=false;$('more').hidden=true;syncContext();
+ setBusy(true,'Computing the original document prediction…');
+ startJob('Computing the original document prediction…',1,[costOf(state.model,'document')]);
+ let ok=false;
+ try{
+  const d=validatePrediction(await api('/api/predict',{text,model:state.model}));
+  if(serial!==state.serial)return;
+  state.doc=d;state.target=d.prediction;
+  renderScores();renderUnit();renderFlow();setMode('influence');
+  setProgress(1,1);
+  $('progress').textContent='Document prediction ready. Explanation is a separate sensitivity calculation.';
+  ok=true;
+ }catch(e){
+  if(state.stopRequested){$('progress').textContent='Stopped. No prediction was produced.'}
+  else{showError(e.message);$('progress').textContent='No result available. Check the service and try again.'}
+ }finally{setBusy(false)}
+ if(ok&&!state.stopRequested&&$('auto-explain').checked&&state.explainAPI)await runExplanation();
+}
+const CMP_COLORS=['#4e65a0','#9c6727','#266952','#7d5896','#a04e5e','#3f7a8a'];
+function cmpColor(id){const i=state.models.findIndex(m=>m.id===id);return CMP_COLORS[(i<0?0:i)%CMP_COLORS.length]}
+function renderComparisons(){
+ const host=$('comparison-grid');host.replaceChildren();
+ const rows=state.comparison.filter(r=>!r.error&&r.result),failed=state.comparison.filter(r=>r.error);
+ if(!rows.length&&!failed.length)return;
+ if(rows.length){
+  const chart=el('div','cmp-chart');
+  const legend=el('div','cmp-legend');
+  for(const c of CLASSES){const item=el('span','cmp-legend-item');const dot=el('i','cmp-legend-dot');dot.style.background=CLASS_COLORS[c];item.append(dot,document.createTextNode(label(c)));legend.append(item)}
+  chart.append(legend);
+  const stack=el('div','cmp-stack');
+  for(const r of rows){
+   const d=r.result,row=el('div','cmp-stack-row'),head=el('div','cmp-stack-head');
+   const dot=el('i','cmp-legend-dot');dot.style.background=cmpColor(r.model);
+   head.append(dot,el('span','cmp-stack-name',state.models.find(m=>m.id===r.model)?.name||r.model));
+   head.append(el('span','cmp-stack-pred',label(d.prediction)));
+   head.append(el('span','cmp-stack-score',fmt(d.scores[d.prediction])));
+   row.append(head);
+   const track=el('div','cmp-stack-track');
+   for(const c of CLASSES){
+    const v=d.scores[c]*100;if(v<=0)continue;
+    const seg=el('div','cmp-stack-seg');seg.style.width=v+'%';seg.style.background=CLASS_COLORS[c];
+    seg.dataset.model=state.models.find(m=>m.id===r.model)?.name||r.model;
+    seg.dataset.cat=label(c);seg.dataset.val=v.toFixed(1);
+    seg.dataset.pred=label(d.prediction);seg.dataset.predval=(d.scores[d.prediction]*100).toFixed(1);
+    seg.dataset.time=(d.timing?.end_to_end_seconds??0).toFixed(2)+' s';
+    seg.setAttribute('aria-label',`${seg.dataset.model} ${label(c)} ${v.toFixed(1)} percent`);
+    if(v>=7)seg.append(el('span','cmp-stack-val',v.toFixed(1)));
+    track.append(seg);
+   }
+   row.append(track);stack.append(row);
+  }
+  chart.append(stack);host.append(chart);
+
+  const covPct=r=>{const i=r.result.input||{};return typeof i.lexical_covered_characters==='number'&&i.characters?i.lexical_covered_characters/i.characters*100:0};
+  const NEUTRAL='#8b9186';
+  const specs=[
+   {title:'Confidence in its own answer',unit:'%',max:100,hint:'How sure the model is about the class it picked. 100% = fully certain.',classColor:true,segs:r=>[{v:r.result.scores[r.result.prediction]*100,color:CLASS_COLORS[r.result.prediction]}],label:r=>fmt(r.result.scores[r.result.prediction])},
+   {title:'Time to answer',unit:'s',hint:'Faded = loading the model, solid = computing this document.',segs:r=>{const t=r.result.timing||{};return[{v:t.detector_model_load_seconds||0,cls:'load',color:NEUTRAL},{v:t.detector_forward_seconds||0,color:NEUTRAL}]},label:r=>(r.result.timing?.end_to_end_seconds??0).toFixed(2)+' s'},
+   {title:'Memory footprint',unit:'MiB',hint:'Resident memory of the local service measured after this model ran. Models stay loaded, so later rows include earlier ones.',segs:r=>[{v:r.memory||0,color:NEUTRAL}],label:r=>r.memory?Math.round(r.memory)+' MiB':'—'},
+   {title:'Share of text it could read',unit:'%',max:100,hint:'How much of your document fits inside the model input window.',segs:r=>[{v:covPct(r),color:NEUTRAL}],label:r=>Math.round(covPct(r))+'%'}
+  ];
+  const metrics=el('div','cmp-metrics');
+  for(const spec of specs){
+   const card=el('div','cmp-metric'),head=el('div','cmp-metric-head');
+   head.append(el('span','cmp-metric-title',spec.title),el('span','cmp-metric-unit',spec.unit));
+   card.append(head);
+   if(spec.hint)card.append(el('p','cmp-metric-hint',spec.hint));
+   const totals=rows.map(r=>spec.segs(r).reduce((s,g)=>s+(g.v||0),0));
+   const max=spec.max||Math.max(...totals,0.0001);
+   for(const r of rows){
+    const row=el('div','cmp-metric-row'),name=el('div','cmp-metric-name');
+    const dot=el('i','cmp-legend-dot');dot.style.background=spec.classColor?CLASS_COLORS[r.result.prediction]:NEUTRAL;
+    name.append(dot,el('span',null,state.models.find(m=>m.id===r.model)?.name||r.model));
+    row.append(name,el('span','cmp-metric-val',spec.label(r)));
+    const track=el('div','cmp-metric-track');
+    for(const g of spec.segs(r)){
+     if(!(g.v>0))continue;
+     const f=el('div','cmp-metric-fill'+(g.cls?' '+g.cls:''));
+     f.style.width=Math.max(0,Math.min(100,g.v/max*100))+'%';f.style.background=g.color;track.append(f);
+    }
+    row.append(track);card.append(row);
+   }
+   if(spec.note)card.append(el('div','cmp-metric-note',spec.note));
+   metrics.append(card);
+  }
+  host.append(metrics);
+ }
+ for(const r of failed){
+  const box=el('div','cmp-error-row');
+  box.append(el('strong',null,state.models.find(m=>m.id===r.model)?.name||r.model),el('span',null,r.error));
+  host.append(box);
+ }
+}
+async function compare(){
+ if(!state.doc||state.busy)return;
+ state.comparison=[];renderComparisons();
+ setBusy(true,'Comparing available models sequentially…');
+ const ids=state.models.filter(x=>x.available).map(m=>m.id);
+ let count=0;
+ try{
+  for(const id of ids){
+   const name=state.models.find(m=>m.id===id)?.name||id;
+   $('compare-progress').textContent=`${count} of ${ids.length} completed · requests run one at a time`;
+try{
+    const d=validatePrediction(await api('/api/predict',{text:state.text,model:id}));
+    let memory=null;
+    try{const t=await api('/api/telemetry');if(finite(t?.process_memory_mib))memory=t.process_memory_mib}catch{}
+    state.comparison.push({model:id,result:d,memory});
+   }
+   catch(e){state.comparison.push({model:id,error:e.message})}
+   count++;renderComparisons();
+  }
+ }finally{
+  $('compare-progress').textContent=`${count} of ${ids.length} completed. Predictions are not fused.`;
+  setBusy(false,'Comparison complete. Original prediction and explanation unchanged.');
+ }
+}
+function cleanDocument(d){if(!d)return null;const {rst_tree,...rest}=d;return rest}
+function exportObject(){const result={schema:'ee6405.evidence-studio/v4',notice:'Model sensitivity, not authorship proof. Probabilities and influence values are not text percentages.',document:cleanDocument(state.doc),target_class:state.target,selected_unit:state.selected,comparison:state.comparison.map(x=>({...x,result:cleanDocument(x.result)}))};if(state.exp)result.explanation={...state.exp,document:cleanDocument(state.exp.document)};if($('include-text').checked)result.text=state.text;return result}
+function showExport(){$('include-text').checked=false;updateExport();$('export-dialog').showModal()}
+function updateExport(){$('export-preview').textContent=JSON.stringify(exportObject(),null,2)}
+async function importFile(file){if(state.busy||!file)return;if(!/\.txt$/i.test(file.name)||file.size>100000){showError('Choose a UTF-8 .txt file smaller than 100 KB.');return}const version=state.serial;try{const text=new TextDecoder('utf-8',{fatal:true}).decode(await file.arrayBuffer());if(state.busy||version!==state.serial)return;if(Array.from(text).length>12000)throw Error('The file exceeds the 12,000-character limit.');$('text').value=text;invalidate();$('progress').textContent='Text imported. No content has been sent yet.'}catch(e){showError(e.message||'Could not read the text file.')}}
+$('analyze').onclick=analyze;$('explain').onclick=()=>runExplanation();$('more').onclick=()=>runExplanation(state.exp.units.filter(u=>u.status==='not_computed'&&u.coverage!=='outside').slice(0,8).map(u=>u.id));
+$('text').oninput=invalidate;$('model').onchange=()=>{renderFlow();updateModelHint();renderModelSwitch();if($('text').value.trim()&&!state.busy)analyze()};$('example').onclick=()=>{$('text').value=EXAMPLE;invalidate();$('progress').textContent='Unlabeled example — not an accuracy test.'};$('clear').onclick=()=>{$('text').value='';invalidate()};$('import').onclick=()=>$('file').click();$('file').onchange=()=>{importFile($('file').files[0]);$('file').value=''};
+for(const b of document.querySelectorAll('[data-mode]'))b.onclick=()=>setMode(b.dataset.mode);
+$('reader-card').ondragover=e=>{e.preventDefault();if(!state.busy)$('reader-card').classList.add('drop-active')};$('reader-card').ondragleave=()=>$('reader-card').classList.remove('drop-active');$('reader-card').ondrop=e=>{e.preventDefault();$('reader-card').classList.remove('drop-active');importFile(e.dataTransfer.files[0])};
+$('dismiss').onclick=()=>$('error').hidden=true;$('status-button').onclick=()=>$('resources-dialog').showModal();$('refresh').onclick=refresh;
+for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>$(b.dataset.close).close();for(const d of document.querySelectorAll('dialog'))d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}});
+$('compare').onclick=()=>$('compare-dialog').showModal();$('run-comparison').onclick=compare;
+$('export').onclick=showExport;$('include-text').onchange=updateExport;
+$('download').onclick=()=>{const blob=new Blob([JSON.stringify(exportObject(),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download='textlab-document-explanation.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(JSON.stringify(exportObject(),null,2));$('copy').textContent='Copied';setTimeout(()=>$('copy').textContent='Copy JSON',1500)}catch{$('export-preview').focus();showError('Clipboard unavailable. Use Download JSON instead.')}};
+$('theme').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('textlab-theme',t)}catch{}};
+try{document.documentElement.dataset.theme=localStorage.getItem('textlab-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{}
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&!$('analyze').disabled){e.preventDefault();analyze()}});
+$('help-open').onclick=()=>$('about-dialog').showModal();
+$('about-tour').onclick=()=>{$('about-dialog').close();startTour(true)};
+const TOUR_KEY='ee6405.tour.v2';
+const TOUR_STEPS=[
+ {sel:'#text',title:'Start with your text',body:'Paste English text here, or use Example / Import .txt. Up to 12,000 characters.'},
+ {sel:'#model-switch',title:'Pick a detection model',body:'Four independent classifiers. RACE models also expose the discourse graph; RoBERTa shows the encoder path.'},
+ {sel:'#analyze',title:'Analyze the document',body:'One click computes the whole-document prediction, then measures up to eight discourse units.'},
+ {sel:'.score-panel',title:'Read the result',body:'Whole-document scores stay fixed here. Switch Influence, Coverage or Structure to inspect the same prediction.'}
+];
+let tourIndex=0,tourActive=false;
+function tourPlace(){
+ const step=TOUR_STEPS[tourIndex],target=document.querySelector(step.sel);
+ const ring=$('tour-ring'),card=$('tour-card');
+ if(!target){card.style.left='50%';card.style.top='50%';card.style.transform='translate(-50%,-50%)';ring.style.width='0';ring.style.height='0';ring.style.left='-9999px';return}
+ const r=target.getBoundingClientRect();
+ if(!r.width&&!r.height){
+  card.style.left='50%';card.style.top='50%';card.style.transform='translate(-50%,-50%)';
+  ring.style.width='0';ring.style.height='0';ring.style.left='-9999px';
+  return;
+ }
+ card.style.transform='none';
+ const pad=6;
+ ring.style.left=(r.left-pad)+'px';ring.style.top=(r.top-pad)+'px';
+ ring.style.width=(r.width+pad*2)+'px';ring.style.height=(r.height+pad*2)+'px';
+ const cw=card.offsetWidth||320,ch=card.offsetHeight||170;
+ let left=r.left+r.width/2-cw/2;
+ left=Math.max(12,Math.min(left,innerWidth-cw-12));
+ let top=r.bottom+14;
+ if(top+ch>innerHeight-12)top=Math.max(12,r.top-ch-14);
+ card.style.left=left+'px';card.style.top=top+'px';
+}
+function tourRender(){
+ const step=TOUR_STEPS[tourIndex];
+ $('tour-step').textContent=(tourIndex+1)+' / '+TOUR_STEPS.length;
+ $('tour-title').textContent=step.title;
+ $('tour-body').textContent=step.body;
+ $('tour-prev').disabled=tourIndex===0;
+ $('tour-next').textContent=tourIndex===TOUR_STEPS.length-1?'Done':'Next';
+ tourPlace();
+}
+function startTour(force){
+ if(tourActive)return;
+ if(!force&&localStorage.getItem(TOUR_KEY)==='done')return;
+ tourActive=true;tourIndex=0;$('tour').hidden=false;tourRender();requestAnimationFrame(()=>{tourPlace();requestAnimationFrame(tourPlace)});
+}
+function endTour(){tourActive=false;$('tour').hidden=true;try{localStorage.setItem(TOUR_KEY,'done')}catch{}}
+$('tour-next').onclick=()=>{if(tourIndex>=TOUR_STEPS.length-1){endTour();return}tourIndex++;tourRender()};
+$('tour-prev').onclick=()=>{if(tourIndex>0){tourIndex--;tourRender()}};
+$('tour-skip').onclick=endTour;
+addEventListener('resize',()=>{if(tourActive)tourPlace()});
+addEventListener('scroll',()=>{if(tourActive)tourPlace()},true);
+document.addEventListener('keydown',e=>{if(tourActive&&e.key==='Escape')endTour()});
+setTimeout(()=>startTour(false),700);
+addEventListener('load',()=>{if(tourActive)tourPlace()});
+renderFlow();refresh();
+</script>
+</body>
+</html>
