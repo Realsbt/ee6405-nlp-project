@@ -1,0 +1,15 @@
+{
+  "paired_gain_pp": 0.00144338183427258,
+  "new_mean_macro_f1": 0.9115584822404242,
+  "old_mean_macro_f1": 0.9115440484220816,
+  "paired_differences_pp": [
+    0.9060842728779606,
+    -0.2864955065684516,
+    -0.6152586208066912
+  ],
+  "publish_eligible": false,
+  "meets_research_target": false,
+  "single_model_inference_speed_ratio": 1.111047825658684,
+  "gain_vs_six_layer_anchor_pp": 0.0,
+  "auroc_gain_vs_six_layer_anchor_pp": 0.0
+}

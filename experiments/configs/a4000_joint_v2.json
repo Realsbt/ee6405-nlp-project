@@ -1,0 +1,93 @@
+{
+  "protocol_id": "hart_grouped_v1",
+  "recipe_id": "a4000_research_v1",
+  "model_type": "roberta",
+  "seeds": [
+    3407,
+    42,
+    2026
+  ],
+  "seed": 3407,
+  "batch_size": 16,
+  "max_epochs": 20,
+  "learning_rate": 1.5e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "gradient_clip": 1.0,
+  "early_stopping_patience": 5,
+  "selection_metric": "validation_macro_f1",
+  "precision": "bfloat16 training; float32 evaluation",
+  "balanced_batches": true,
+  "use_supcon": true,
+  "supcon_temperature": 0.07,
+  "supcon_weight": 1.0,
+  "architecture": {
+    "backbone_model_path": "/data/botao/ee6405-race-validation/assets/roberta-base",
+    "bert_dim": 768,
+    "max_seq_length": 512,
+    "unfreeze_bert_layers": 6,
+    "feature_dim": 128,
+    "gnn_hidden_dim": 512,
+    "num_gnn_layers": 2,
+    "gnn_layer_type": "RGCN",
+    "rgcn_num_bases": 10,
+    "gnn_dropout": 0.5,
+    "proj_dropout": 0.1,
+    "rst_use_nuclearity": false,
+    "use_distinct_reverse_edges": false,
+    "pooling_strategy": "root",
+    "classifier_type": "mlp",
+    "classifier_dropout": 0.1,
+    "debug_save_graph_path": "",
+    "debug_save_batch_indices": []
+  },
+  "head_learning_rate": 3e-05,
+  "layer_lr_decay": 0.85,
+  "embedding_learning_rate": 2e-06,
+  "unfreeze_embeddings": false,
+  "gradient_checkpointing": false,
+  "gradient_accumulation_steps": 1,
+  "dataloader_num_workers": 4,
+  "pin_memory": true,
+  "persistent_workers": true,
+  "fused_adamw": true,
+  "torch_compile": false,
+  "attention_implementation": "sdpa",
+  "exclude_norm_bias_decay": false,
+  "supcon_projection": false,
+  "aux_content_weight": 0.0,
+  "aux_edit_weight": 0.0,
+  "wandb_enabled": true,
+  "wandb_project": "ee6405-a4000-research",
+  "wandb_entity": "zyu14865-shang",
+  "wandb_log_interval": 10,
+  "wandb_watch": "all",
+  "wandb_watch_frequency": 500,
+  "joint_plan": {
+    "anchor_run": "../ee6405-resources-a4000/experiments/research_batches/2026-11-08_21-11-30/runs/2026-11-08_22-30-46_u6_b16_s3407",
+    "min_f1_gain": 0.001,
+    "auroc_slack": 0.001,
+    "minority_f1_slack": 0.005,
+    "factorial_axes": {
+      "projection": [
+        false,
+        true
+      ],
+      "supcon_weight": [
+        1.0,
+        0.2
+      ],
+      "aux_content_and_edit_weights": [
+        0.0,
+        0.05
+      ]
+    },
+    "screening_seed": 3407,
+    "confirmation_seeds": [
+      42,
+      2026
+    ],
+    "max_new_training_runs": 13,
+    "selection_rule": "Validation only; >=0.1pp Macro-F1 gain, <=0.1pp AUROC regression, <=0.5pp minority F1 regression; confirm mean gain across matched seeds and >=2 positive seeds; otherwise retain anchor"
+  }
+}

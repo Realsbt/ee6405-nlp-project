@@ -54,21 +54,26 @@ def run_name(value):
     return value
 
 
-def evaluate(model, dataset, batch_size):
+def evaluate(model, dataset, batch_size, progress_interval=0):
     model.eval()
     loader = DataLoader(dataset, batch_size=batch_size, collate_fn=collate_batch, num_workers=0)
     logits, labels, ids = [], [], []
-    torch.cuda.synchronize()
+    device = next(model.parameters()).device
+    if device.type == "cuda":
+        torch.cuda.synchronize(device)
     started = time.perf_counter()
     with torch.inference_mode():
-        for batch in loader:
+        for step, batch in enumerate(loader, 1):
             output = model(batch)["logits"].float()
             if not torch.isfinite(output).all():
                 raise FloatingPointError("Non-finite evaluation logits")
             logits.append(output.cpu())
             labels.extend(batch["labels"].tolist())
             ids.extend(batch["id"])
-    torch.cuda.synchronize()
+            if progress_interval and (step % progress_interval == 0 or step == len(loader)):
+                print(f"Evaluation {len(ids)}/{len(dataset)} samples ({time.perf_counter() - started:.1f}s)", flush=True)
+    if device.type == "cuda":
+        torch.cuda.synchronize(device)
     seconds = time.perf_counter() - started
     probabilities = torch.cat(logits).softmax(dim=1).numpy()
     return classification_metrics(labels, probabilities), probabilities, ids, seconds

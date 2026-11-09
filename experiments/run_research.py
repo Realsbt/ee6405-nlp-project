@@ -18,6 +18,12 @@ from experiments.hibernate_watchdog import atomic, alive
 from experiments.research_report import report, INITIAL_COMMIT
 
 
+def make_run_id(tag, seed, timestamp=None):
+    from experiments.train_neural import run_name
+    timestamp = timestamp or datetime.now(timezone.utc).strftime('%Y-%m-%d_%H-%M-%S')
+    return run_name(f'{timestamp}_{tag.replace(".", "p")}_s{seed}')
+
+
 class Pipeline:
     def __init__(self, args):
         self.args=args; self.batch=args.output.resolve()
@@ -28,6 +34,8 @@ class Pipeline:
         self.batch.mkdir(parents=True)
         os.environ['EE6405_BATCH_NAME']=self.batch.name
         (self.batch/'logs').mkdir()
+        from experiments.joint_research import snapshot_sources
+        snapshot_sources(self.batch)
         self.operation('preflight_passed', vm_id=preflight['vm_id'])
         write_json(self.batch/'hyperstack-preflight.json',preflight)
         self.state={'phase':'setup','run_root':str(RUN_ROOT),'completed_runs':[], 'created':time.time(),
@@ -94,8 +102,7 @@ class Pipeline:
             raise RuntimeError(f'{phase} failed with exit {code}; see {log}')
 
     def train(self, tag, config):
-        timestamp=datetime.now(timezone.utc).strftime('%Y-%m-%d_%H-%M-%S')
-        run_id=f'{timestamp}_{tag}_s{config["seed"]}'
+        run_id=make_run_id(tag, config['seed'])
         path=self.batch/'configs'/f'{run_id}.json'; write_json(path,config)
         if shutil.disk_usage(self.batch).free < 12 * 1024**3:
             raise RuntimeError('Less than 12 GiB free; preserving existing experiments')
@@ -113,12 +120,18 @@ class Pipeline:
         self.state['completed_runs'].append(run_id); self.save()
         from experiments.experiment_summary import summarize_run
         summarize_run(self.batch, run_id)
+        if self.args.joint:
+            from experiments.joint_research import summarize_joint_run, verify_anchor
+            summarize_joint_run(self, run_id, verify_anchor(json.loads(self.args.config.read_text())))
         self.operation('run_complete', run_id=run_id, validation_macro_f1=result['validation']['macro_f1'])
         self.progress(f'完成 `{run_id}`，validation Macro-F1={result["validation"]["macro_f1"]:.4%}；best/last checkpoint 已保存。')
         return result
 
     def execute(self):
         base=json.loads(self.args.config.read_text())
+        if self.args.joint:
+            from experiments.joint_research import execute_joint
+            return execute_joint(self, base)
         self.progress('队列已启动；每个运行完成后写入验证指标，训练期间独立监控约每 10 分钟记录。')
         if base["seed"] != 3407 or not base["use_supcon"]:
             raise ValueError("Research queue requires seed 3407 and SupCon enabled")
@@ -159,9 +172,12 @@ class Pipeline:
         for seed in (42,2026):
             c=copy.deepcopy(best['config']); c['seed']=seed
             members.append(self.train('selected',c))
+        self.finalize(members)
+
+    def finalize(self, members, baseline_members=None):
         manifest={'data_protocol_sha256':file_hash(DATA_ROOT/'protocol.json'),
                   'git_commit':self.state['git_commit'],'initial_git_commit':INITIAL_COMMIT,
-                  'seeds':[3407,42,2026], 'selection_rule':('Predeclared single recipe; no structure search' if self.args.single_config else 'Max validation Macro-F1; depth -> 4 LR settings -> projection -> fixed auxiliary ablations; no test selection'),
+                  'seeds':[3407,42,2026], 'selection_rule':self.state.get('selection_rule', 'Predeclared single recipe; no structure search' if self.args.single_config else 'Max validation Macro-F1; depth -> 4 LR settings -> projection -> fixed auxiliary ablations; no test selection'),
                   'ensemble_rule':'Three selected-config seeds, fixed equal probability average',
                   'test_command':f'{sys.executable} -m experiments.final_evaluate --manifest {self.batch / "final_manifest.json"}',
                   'evaluation_source_sha256':{str(PROJECT_ROOT/'experiments'/n): file_hash(PROJECT_ROOT/'experiments'/n)
@@ -177,7 +193,13 @@ class Pipeline:
         with (self.batch/'final_manifest.json').open('x') as stream:
             json.dump(manifest,stream,indent=2); stream.flush(); os.fsync(stream.fileno())
         (self.batch/'final_manifest.sha256').write_text(file_hash(self.batch/'final_manifest.json')+'\n')
-        self.command([sys.executable,'-u','-m','experiments.final_evaluate','--manifest',str(self.batch/'final_manifest.json')],
+        if baseline_members is not None:
+            from experiments.joint_research import freeze_reference
+            reference_manifest = freeze_reference(self, baseline_members)
+            # Both manifests are immutable before either evaluation opens test.
+            self.command([sys.executable, '-u', '-m', 'experiments.final_evaluate', '--manifest', str(reference_manifest), '--device', 'cuda'],
+                         'baseline-final-evaluation.log', 'evaluation', timeout=240)
+        self.command([sys.executable,'-u','-m','experiments.final_evaluate','--manifest',str(self.batch/'final_manifest.json'),'--device','cuda'],
                      'final-evaluation.log','evaluation',timeout=self.args.grace_seconds-120)
         # The idle watchdog's timer covers both evaluation and report generation.
         if not report(self.batch): raise RuntimeError('Final evaluation incomplete')
@@ -186,6 +208,9 @@ class Pipeline:
             raise RuntimeError('Report/visualization integrity failure')
         from experiments.experiment_summary import summarize_batch
         summarize_batch(self.batch)
+        if self.args.joint:
+            from experiments.joint_research import finalize_comparison
+            finalize_comparison(self.batch)
         if config_tracking := json.loads(self.args.config.read_text()).get('wandb_enabled', False):
             from experiments.tracking import upload_batch
             try:
@@ -205,6 +230,8 @@ class Pipeline:
         self.operation('publication_decision', **published)
         for name in ('SUMMARY.md','详细报告与图解.md','score_change.json','publication.json','checkpoint_inventory.json','PROCESS_LOG.md','PROCESS_LOG.jsonl'):
             checks[name] = file_hash(self.batch/name)
+        for name in ('source_manifest.json', 'joint_validation.json', 'factorial_effects.json', 'joint_comparison.json', 'JOINT_REPORT.zh-CN.md'):
+            if (self.batch/name).exists(): checks[name] = file_hash(self.batch/name)
         write_json(self.batch/'artifacts.json', checks)
         if not all(file_hash(self.batch/p)==h for p,h in checks.items()):
             raise RuntimeError('Final summary or log integrity failure')
@@ -219,6 +246,8 @@ def main():
     p.add_argument('--name',required=True)
     p.add_argument('--push-branch', default='yuzhe', help='Only this branch may be pushed, and only on positive final three-seed mean Macro-F1 gain')
     p.add_argument('--single-config', action='store_true', help='Skip search; train this recipe for all three seeds, then evaluate/report/hibernate')
+    p.add_argument('--joint', action='store_true', help='Run the fixed 6-layer factorial plan and paired baseline confirmation')
+    p.add_argument('--snapshot-working-tree', action='store_true', help='Archive source hashes and the current Git diff instead of requiring a clean checkout')
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--progress',type=Path,default=PROJECT_ROOT.parent/'PROGRESS.md')
     p.add_argument('--grace-seconds',type=int,default=600)
@@ -229,7 +258,14 @@ def main():
     if args.push_branch != 'yuzhe': p.error('Only the authorized branch yuzhe may receive pushes')
     if len(args.name)>32: p.error('Batch name must be <=32 chars')
     if not 180<=args.grace_seconds<=600 or not 0<args.max_hours<=24: p.error('grace=180..600; max-hours=(0,24]')
-    if subprocess.check_output(['git','status','--porcelain'],cwd=PROJECT_ROOT,text=True).strip():
+    if args.joint and args.single_config: p.error('--joint and --single-config are mutually exclusive')
+    if args.joint:
+        from experiments.joint_research import preflight_plan
+        preflight_plan(json.loads(args.config.read_text()), args.output)
+    import torch
+    if not torch.cuda.is_available() or not torch.cuda.is_bf16_supported():
+        p.error('CUDA/BF16 unavailable; no training or hibernation watchdog has been started')
+    if not args.snapshot_working_tree and subprocess.check_output(['git','status','--porcelain'],cwd=PROJECT_ROOT,text=True).strip():
         p.error('Commit reviewed changes before running a research batch')
     global RUN_ROOT
     RUN_ROOT=args.output.resolve()/'runs'

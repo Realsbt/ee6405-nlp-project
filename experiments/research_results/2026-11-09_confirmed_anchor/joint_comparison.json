@@ -1,0 +1,26 @@
+{
+  "reference": "Current best six-layer recipe, matched seeds",
+  "seeds": [
+    3407,
+    42,
+    2026
+  ],
+  "baseline_f1_mean": 0.9115584822404242,
+  "candidate_f1_mean": 0.9115584822404242,
+  "paired_differences_pp": {
+    "macro_f1": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "macro_auroc_ovr": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "f1_gain_pp": 0.0,
+  "auroc_gain_pp": 0.0,
+  "anchor_fallback": true,
+  "scope": "Repeated existing fixed test; no independent new test"
+}

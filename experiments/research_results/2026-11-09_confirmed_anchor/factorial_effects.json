@@ -1,0 +1,124 @@
+{
+  "axes": [
+    "projection",
+    "weak_supcon",
+    "auxiliary"
+  ],
+  "effects": {
+    "macro_f1": {
+      "mean_main_effect_pp": {
+        "projection": -0.4664654038246563,
+        "weak_supcon": -0.6082939681113397,
+        "auxiliary": 0.08888438959437917
+      },
+      "mean_pair_interaction_pp": {
+        "projection__weak_supcon": 0.7614876970976348,
+        "projection__auxiliary": 0.1821072355218334,
+        "weak_supcon__auxiliary": 0.7646545547797756
+      },
+      "triple_interaction_pp": 0.8548592590991166,
+      "joint_gain_over_anchor_pp": -0.7721601675668266,
+      "sum_single_gains_pp": -2.0529800254165065,
+      "joint_gain_minus_sum_single_gains_pp": 1.2808198578496799
+    },
+    "macro_auroc_ovr": {
+      "mean_main_effect_pp": {
+        "projection": -0.8213249820254509,
+        "weak_supcon": 0.07569795745059338,
+        "auxiliary": 0.06663170734421131
+      },
+      "mean_pair_interaction_pp": {
+        "projection__weak_supcon": -0.13508943631962977,
+        "projection__auxiliary": 0.4542123218795491,
+        "weak_supcon__auxiliary": -1.7129350494608064
+      },
+      "triple_interaction_pp": -3.8085322428671686,
+      "joint_gain_over_anchor_pp": -1.6311283779474328,
+      "sum_single_gains_pp": -2.14158233548013,
+      "joint_gain_minus_sum_single_gains_pp": 0.5104539575326972
+    }
+  },
+  "cells": [
+    {
+      "bits": [
+        0,
+        0,
+        0
+      ],
+      "run_id": "2026-11-08_22-30-46_u6_b16_s3407",
+      "macro_f1": 0.9275962447218479,
+      "macro_auroc_ovr": 0.9854988944064944
+    },
+    {
+      "bits": [
+        0,
+        0,
+        1
+      ],
+      "run_id": "2026-11-09_11-31-46_f_p0_r0_h1_s3407",
+      "macro_f1": 0.9258884278140315,
+      "macro_auroc_ovr": 0.9829374945106749
+    },
+    {
+      "bits": [
+        0,
+        1,
+        0
+      ],
+      "run_id": "2026-11-09_12-00-44_f_p0_r1_h0_s3407",
+      "macro_f1": 0.9160197419290953,
+      "macro_auroc_ovr": 0.9859746658027345
+    },
+    {
+      "bits": [
+        0,
+        1,
+        1
+      ],
+      "run_id": "2026-11-09_12-25-34_f_p0_r1_h1_s3407",
+      "macro_f1": 0.9176841742735811,
+      "macro_auroc_ovr": 0.9853265766266428
+    },
+    {
+      "bits": [
+        1,
+        0,
+        0
+      ],
+      "run_id": "2026-11-09_12-50-33_f_p1_r0_h0_s3407",
+      "macro_f1": 0.9203507641682518,
+      "macro_auroc_ovr": 0.9661686995512725
+    },
+    {
+      "bits": [
+        1,
+        0,
+        1
+      ],
+      "run_id": "2026-11-09_13-21-30_f_p1_r0_h1_s3407",
+      "macro_f1": 0.9161897233201581,
+      "macro_auroc_ovr": 0.9871920840885843
+    },
+    {
+      "bits": [
+        1,
+        1,
+        0
+      ],
+      "run_id": "2026-11-09_13-42-39_f_p1_r1_h0_s3407",
+      "macro_f1": 0.9121148420509799,
+      "macro_auroc_ovr": 0.9843362377986521
+    },
+    {
+      "bits": [
+        1,
+        1,
+        1
+      ],
+      "run_id": "2026-11-09_14-05-38_f_p1_r1_h1_s3407",
+      "macro_f1": 0.9198746430461796,
+      "macro_auroc_ovr": 0.9691876106270201
+    }
+  ],
+  "scope": "Validation, seed3407; descriptive contrasts, not significance tests"
+}

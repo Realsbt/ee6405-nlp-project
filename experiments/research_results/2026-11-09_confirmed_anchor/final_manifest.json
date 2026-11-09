@@ -1,0 +1,74 @@
+{
+  "data_protocol_sha256": "a9ebdae25b53c91af5169f8327e8b9733758607a0b11cf56db6c29afdc20762b",
+  "git_commit": "96300c616847fab4d284cf8d887fa5bcec0aac77",
+  "initial_git_commit": "877f12bb5b83a4825780f654309ecd9959f74f5a",
+  "seeds": [
+    3407,
+    42,
+    2026
+  ],
+  "selection_rule": "Fixed 2x2x2 + two mechanism controls; validation F1/AUROC/minority gates and three matched seeds; no test selection",
+  "ensemble_rule": "Three selected-config seeds, fixed equal probability average",
+  "test_command": "/home/ubuntu/6405/ee6405-resources-a4000/.venv/bin/python -m experiments.final_evaluate --manifest /home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/final_manifest.json",
+  "evaluation_source_sha256": {
+    "/home/ubuntu/6405/ee6405-a4000-codex/experiments/final_evaluate.py": "dfe54f72ae37f9ca79282cbb0c46cab6a2463b0b8726ca6108758812cfcdb2c3",
+    "/home/ubuntu/6405/ee6405-a4000-codex/experiments/train_neural.py": "db8bc6df579f03affb34009000863dcaccadde0e5b3c5c956e21a35607149dfc",
+    "/home/ubuntu/6405/ee6405-a4000-codex/experiments/research.py": "7f3431659af860d3fde905899ef0d0455dd182695344ffb9ea19a66da3db17dc",
+    "/home/ubuntu/6405/ee6405-a4000-codex/experiments/neural.py": "fc8649b0b618c7ac6c0e47590be8487f4b7ec7974a0aa8aa635f858aa82f18ff",
+    "/home/ubuntu/6405/ee6405-a4000-codex/experiments/common.py": "44330f81bdac1e9e49b9ee9a835112af4388fc88246fb7ee38343f4306a03844",
+    "/home/ubuntu/6405/ee6405-a4000-codex/experiments/paths.py": "ffedf567c09cec84f507f1760b64ffa5d1cc8d81cdf374b47d99993e5a227bc3"
+  },
+  "members": [
+    {
+      "run_id": "2026-11-08_22-30-46_u6_b16_s3407",
+      "weight": 0.3333333333333333,
+      "checkpoint": "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-08_22-30-46_u6_b16_s3407/best.pt",
+      "checkpoint_sha256": "a113f587c50e6556be4641811b291c7de31c8680e0400ead4c31050eedea537e",
+      "config": "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-08_22-30-46_u6_b16_s3407/config.json",
+      "config_sha256": "ddf221ca300361d7803658431b91a28faa6702e735c0c347c2217600f19d4735",
+      "source_sha256": {
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-08_22-30-46_u6_b16_s3407/source/experiments/train_neural.py": "122adf75c9225e35235321c0f23cac42a63a400567f00250b835b0e2896bc7ba",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-08_22-30-46_u6_b16_s3407/source/experiments/neural.py": "fc8649b0b618c7ac6c0e47590be8487f4b7ec7974a0aa8aa635f858aa82f18ff",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-08_22-30-46_u6_b16_s3407/source/experiments/common.py": "44330f81bdac1e9e49b9ee9a835112af4388fc88246fb7ee38343f4306a03844",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-08_22-30-46_u6_b16_s3407/source/experiments/ablation.py": "1041c172b59bb246add9842a131c03f60766d733e9d61170fe2b53411981d692",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-08_22-30-46_u6_b16_s3407/source/experiments/paths.py": "ffedf567c09cec84f507f1760b64ffa5d1cc8d81cdf374b47d99993e5a227bc3",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-08_22-30-46_u6_b16_s3407/source/experiments/research.py": "7f3431659af860d3fde905899ef0d0455dd182695344ffb9ea19a66da3db17dc",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-08_22-30-46_u6_b16_s3407/source/experiments/tracking.py": "07e9975e75e64d8e0edca6975677dad1d3ed9eb4c58bb64d5150f643e2c0ba76"
+      }
+    },
+    {
+      "run_id": "2026-11-09_10-46-06_anchor_confirmation_s42",
+      "weight": 0.3333333333333333,
+      "checkpoint": "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_10-46-06_anchor_confirmation_s42/best.pt",
+      "checkpoint_sha256": "bee90bfeac37cb83c24b0f390aafadc6c692e1e725cd1ed9ca5a844ba90eacf6",
+      "config": "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_10-46-06_anchor_confirmation_s42/config.json",
+      "config_sha256": "43e83005b1909597cb9e87a543814603a9662fa35b3e24ec428b825de1b30910",
+      "source_sha256": {
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_10-46-06_anchor_confirmation_s42/source/experiments/train_neural.py": "db8bc6df579f03affb34009000863dcaccadde0e5b3c5c956e21a35607149dfc",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_10-46-06_anchor_confirmation_s42/source/experiments/neural.py": "fc8649b0b618c7ac6c0e47590be8487f4b7ec7974a0aa8aa635f858aa82f18ff",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_10-46-06_anchor_confirmation_s42/source/experiments/common.py": "44330f81bdac1e9e49b9ee9a835112af4388fc88246fb7ee38343f4306a03844",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_10-46-06_anchor_confirmation_s42/source/experiments/ablation.py": "1041c172b59bb246add9842a131c03f60766d733e9d61170fe2b53411981d692",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_10-46-06_anchor_confirmation_s42/source/experiments/paths.py": "ffedf567c09cec84f507f1760b64ffa5d1cc8d81cdf374b47d99993e5a227bc3",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_10-46-06_anchor_confirmation_s42/source/experiments/research.py": "7f3431659af860d3fde905899ef0d0455dd182695344ffb9ea19a66da3db17dc",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_10-46-06_anchor_confirmation_s42/source/experiments/tracking.py": "07e9975e75e64d8e0edca6975677dad1d3ed9eb4c58bb64d5150f643e2c0ba76"
+      }
+    },
+    {
+      "run_id": "2026-11-09_11-04-57_anchor_confirmation_s2026",
+      "weight": 0.3333333333333333,
+      "checkpoint": "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_11-04-57_anchor_confirmation_s2026/best.pt",
+      "checkpoint_sha256": "0cc351cd5a8964551b00951a65ceb561bf32aa47eb48fd55f07d4c3754eaee53",
+      "config": "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_11-04-57_anchor_confirmation_s2026/config.json",
+      "config_sha256": "f3c4ceb61d9529f1774c9d954de3612e2c173c7a2d44380ea61f447f48f9268e",
+      "source_sha256": {
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_11-04-57_anchor_confirmation_s2026/source/experiments/train_neural.py": "db8bc6df579f03affb34009000863dcaccadde0e5b3c5c956e21a35607149dfc",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_11-04-57_anchor_confirmation_s2026/source/experiments/neural.py": "fc8649b0b618c7ac6c0e47590be8487f4b7ec7974a0aa8aa635f858aa82f18ff",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_11-04-57_anchor_confirmation_s2026/source/experiments/common.py": "44330f81bdac1e9e49b9ee9a835112af4388fc88246fb7ee38343f4306a03844",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_11-04-57_anchor_confirmation_s2026/source/experiments/ablation.py": "1041c172b59bb246add9842a131c03f60766d733e9d61170fe2b53411981d692",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_11-04-57_anchor_confirmation_s2026/source/experiments/paths.py": "ffedf567c09cec84f507f1760b64ffa5d1cc8d81cdf374b47d99993e5a227bc3",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_11-04-57_anchor_confirmation_s2026/source/experiments/research.py": "7f3431659af860d3fde905899ef0d0455dd182695344ffb9ea19a66da3db17dc",
+        "/home/ubuntu/6405/ee6405-resources-a4000/experiments/research_batches/2026-11-09_joint_v2/runs/2026-11-09_11-04-57_anchor_confirmation_s2026/source/experiments/tracking.py": "07e9975e75e64d8e0edca6975677dad1d3ed9eb4c58bb64d5150f643e2c0ba76"
+      }
+    }
+  ]
+}

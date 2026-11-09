@@ -1,0 +1,35 @@
+{
+  "passed": false,
+  "reason": "No screened configuration passed the prespecified validation gates",
+  "selection_uses_test": false,
+  "screen_selected_run": "2026-11-08_22-30-46_u6_b16_s3407",
+  "final_selected_run": "2026-11-08_22-30-46_u6_b16_s3407",
+  "used_anchor_fallback": true,
+  "thresholds": {
+    "anchor_run": "../ee6405-resources-a4000/experiments/research_batches/2026-11-08_21-11-30/runs/2026-11-08_22-30-46_u6_b16_s3407",
+    "min_f1_gain": 0.001,
+    "auroc_slack": 0.001,
+    "minority_f1_slack": 0.005,
+    "factorial_axes": {
+      "projection": [
+        false,
+        true
+      ],
+      "supcon_weight": [
+        1.0,
+        0.2
+      ],
+      "aux_content_and_edit_weights": [
+        0.0,
+        0.05
+      ]
+    },
+    "screening_seed": 3407,
+    "confirmation_seeds": [
+      42,
+      2026
+    ],
+    "max_new_training_runs": 13,
+    "selection_rule": "Validation only; >=0.1pp Macro-F1 gain, <=0.1pp AUROC regression, <=0.5pp minority F1 regression; confirm mean gain across matched seeds and >=2 positive seeds; otherwise retain anchor"
+  }
+}

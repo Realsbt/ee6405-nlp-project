@@ -192,3 +192,17 @@ bash '/home/botao/文档/ChatGPT/小组作业/experiments/run_review.sh'
 统一分析还会自动刷新 `reports/comparison/CASE_STUDIES.md` 的四个可追溯案例和 `reports/auxiliary/REPORT.md` 的 HC3 输出分配/来源/长度分析。案例按说明的事后规则选取，不是代表性抽样；HC3 四个输出的分配不是四分类真值。`--require-complete` 同时要求预定训练和四个方法的辅助评估全部完成。
 
 `reports/protocol_and_alignment_checks.log` 记录 9 项协议、采样/padding 与 RST 对齐检查通过。`reports/parser_assets.json` 对 7 个 parser/tokenizer 文件做离线内容校验，匹配保存的 HF 固定 revision 与下载 etag；其中 2.545GB parser checkpoint 的 SHA-256 与 LFS 记录一致。最终 `verify_project` 核对每个训练配置、预训练初始化、验证最佳 epoch、源码快照、完整逐条预测及 Demo/解析证据，结果写入 `reports/project_verification.json`；任何必需证据缺失或不符都会返回 incomplete。
+
+## 无 GPU 时复核已冻结模型
+
+`experiments.final_evaluate --manifest <final_manifest.json> --device cpu` 可用 CPU FP32 重载已选定的 checkpoint，评估完整 test；不会训练。默认 `--device auto` 优先使用可用的 CUDA，否则使用 CPU。配置、权重、训练源码、评估源码和数据协议仍须通过 manifest 的哈希校验；输出目录已存在时拒绝覆盖。修改评估代码后应在打开 test 前建立新的 manifest，保留旧 manifest。
+
+CPU 评估每 10 个 batch 显示进度，逐模型结果记录设备与精度。CPU 推理耗时不能与历史 GPU 耗时直接比较。单种子复核结果也不能作为三种子均值；在现有固定 test 上重复评估不构成新的独立测试。
+
+## 最优6层配置的联合增强队列
+
+[经验、假设与固定实验矩阵](JOINT_EXPERIMENT_PLAN.zh-CN.md)对应 `configs/a4000_joint_v2.json`。使用 `bash experiments/run_research.sh --joint --snapshot-working-tree --config experiments/configs/a4000_joint_v2.json --max-hours 18 --grace-seconds 600`，先加载工作区 `env-a4000.sh`；入口自动生成全新批次目录。当前准备目录中另有固定批次名的 `launch.sh` 可直接使用。
+
+队列复用旧6层seed3407不可变权重，补42/2026参照；运行9项新筛选，最多给一个候选补两种子，共最多13次新增正式训练。筛选及配对确认只用validation，未通过则保留6层参照。基线和候选的全部manifest在任一test评估前同时冻结，分别计算三种子均值与等权集成。`factorial_effects.json`、`joint_validation.json`、`joint_comparison.json`和`JOINT_REPORT.zh-CN.md`提供交互及当前6层参照的差值。
+
+正式启动前检查CUDA/BF16、anchor哈希及完整实验磁盘预算，再检查云端本机身份。`--snapshot-working-tree`归档实际代码、配置、Git diff和哈希，可保留本任务未提交修改；未提交的工作树仍不能自动push。正常提交后也只有新三种子均值同时超过旧仓库及当前6层参照且AUROC满足界限时，才尝试既有yuzhe发布逻辑。所有训练、独立watchdog、W&B及本地产物继续保留。
