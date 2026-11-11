@@ -1,0 +1,32 @@
+figure,series,category,value,unit,scope
+baseline_hart,Macro-F1,TF-IDF + LR,79.40,percent,HART fixed grouped test
+baseline_hart,Macro-F1,RoBERTa CE,90.72,percent,HART three-seed mean
+baseline_hart,Macro-F1,RoBERTa CE + SupCon,91.15,percent,HART three-seed mean
+baseline_hart,Macro-F1,RACE CE,89.92,percent,HART three-seed mean
+baseline_hart,Macro-F1,RACE CE + SupCon,90.37,percent,HART three-seed mean
+cache_split,Records,Train,11190,count,Same-window v3 cache
+cache_split,Records,Validation,1600,count,Same-window v3 cache
+cache_split,Records,Test,3194,count,Same-window v3 cache
+relation_control,Relation nodes,Changed,467369,count,Deterministic per-graph relation reassignment
+relation_control,Relation nodes,Unchanged,170669,count,Deterministic per-graph relation reassignment
+parameters,Total,text,125.2393,million,Same-window model
+parameters,Trainable,text,7.68154,million,Same-window model
+parameters,Total,graph,128.617148,million,Same-window model
+parameters,Trainable,graph,11.059388,million,Same-window model
+parameters,Total,shuffled,128.617148,million,Same-window model
+parameters,Trainable,shuffled,11.059388,million,Same-window model
+parameters,Total,edu,125.305092,million,Same-window model
+parameters,Trainable,edu,7.747332,million,Same-window model
+external_transfer,HART,RoBERTa CE,90.75,percent,Seed 3407
+external_transfer,MixSet subset,RoBERTa CE,39.01,percent,359 texts and 91 source groups
+external_transfer,HART,RACE SupCon,90.84,percent,Seed 3407
+external_transfer,MixSet subset,RACE SupCon,33.38,percent,359 texts and 91 source groups
+external_transfer,HART,CE/RACE blend,92.10,percent,Existing checkpoint probabilities
+external_transfer,MixSet subset,CE/RACE blend,36.86,percent,359 texts and 91 source groups
+external_transfer,HART,CE + RACE + TF-IDF stack,93.61,percent,One underlying neural seed
+external_transfer,MixSet subset,CE + RACE + TF-IDF stack,36.22,percent,359 texts and 91 source groups
+external_transfer,HART,Length + structure LR,52.67,percent,Lightweight structural features
+external_transfer,MixSet subset,Length + structure LR,29.16,percent,359 texts and 91 source groups
+editing_sensitivity,Creator false-positive rate,Before AI polishing,4.00,percent,Human-origin paired texts
+editing_sensitivity,Creator false-positive rate,After AI polishing,40.00,percent,Human-origin paired texts
+editing_sensitivity,Creator recall,Original AI text,9.76,percent,RACE on 41 original AI texts

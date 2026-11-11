@@ -34,6 +34,13 @@ results. The formal 4 conditions × 3 seeds GPU matrix has **not** been run, so
 this branch does not claim that discourse graphs help or fail to help. Commands,
 hashes and acceptance criteria are in the [same-window protocol](docs/SAME_WINDOW_ABLATION.md).
 
+The individual contribution package also includes an editable
+[ten-slide PowerPoint section](deliverables/yingqi_same_window_ablation.pptx),
+[six presentation-ready figures](experiments/reports/same_window/figures/) and
+the [source data for every new chart](experiments/reports/same_window/figure_data.csv).
+The full problem-method-result-limitations record is in the
+[Yingqi contribution report](experiments/reports/same_window/REPORT.md).
+
 Exploratory reuse of existing checkpoints found that the HART gains did not
 transfer to the frozen 359-text MixSet subset:
 

@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "date": "2026-11-11",
+  "presentation": {
+    "path": "deliverables/yingqi_same_window_ablation.pptx",
+    "sha256": "8fdcf649ab4f1b53b54c3ca1e67029aa71fa433cf45a87b2ceb90e8eb6298cab",
+    "bytes": 63237,
+    "slides": 10,
+    "native_charts": 6,
+    "native_tables": 2,
+    "layout_findings": 0,
+    "package_findings": 0,
+    "first_party_import_passed": true,
+    "powerpoint_application_open_tested": false
+  },
+  "figures": {
+    "01_original_comparison.png": "38269d3e4fd337f7b14492b61c946f39b8108839bc31b0bea92f0cfd635b8b65",
+    "02_cache_readiness.png": "78106fe0dff8f6f7f8a8236ed603ef1ce2af037f02c32614c757405b538d03a7",
+    "03_relation_control.png": "26a71ed04410c49553e257e2f574f3eb291ac4da9e822e473ce542d5b2836995",
+    "04_parameter_and_smoke.png": "2f819c29aed9141ba726eceab67f353c27b0be3abedd0d04e1d1ef2c079cce78",
+    "05_external_transfer.png": "9e299f93b72cd8b62a8d011e76389df63f6f6d2459d9c1e2e51f49d94ff28f11",
+    "06_editing_sensitivity.png": "0a91939c7b2e4de35fe141fcf8aec0b33159550d749c44a98a0248df5b12b706"
+  },
+  "source_data": {
+    "path": "experiments/reports/same_window/figure_data.csv",
+    "sha256": "1ace1a97d44da2ec11c21e6578bb37207f3b093de7568cf6b18e914b3a76dfa0"
+  },
+  "report": {
+    "path": "experiments/reports/same_window/REPORT.md",
+    "sha256": "561892dc4f1a8bb2bc20eb12d432ef3069267c84e0ff697defd7976ea58ba5d2"
+  }
+}

@@ -16,6 +16,7 @@ venv/
 .DS_Store
 .idea/
 .vscode/
+/.build/
 
 # Data, checkpoints, vendored source and the original smoke experiments stay local.
 /data/*
