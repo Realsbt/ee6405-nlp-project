@@ -67,6 +67,44 @@ texts, creator false positives rise from 4% before AI polishing to 40% after
 polishing. This is an observational result. It supports a hypothesis that the
 detector relies on expression style, but it does not prove a causal mechanism.
 
+## Work that should not be repeated
+
+The main branch already completed the RoBERTa/RACE by CE/SupCon matrix over
+three seeds. The `yuzhe` branch already tested unfreezing 1, 2, 4, 6 and 12
+layers, a projection head, reduced SupCon weight, auxiliary heads, their
+2-by-2-by-2 combinations, three-seed confirmation and an equal-weight
+ensemble. Its six-layer seed 3407 result exceeded 92% Macro-F1, but the
+three-seed mean was effectively unchanged from the existing RoBERTa SupCon
+mean. These settings should not be rerun unchanged or presented from a single
+seed as a stable improvement.
+
+The useful part of `zsp` is the execution design: external resource roots,
+environment variables, CUDA/BF16 checks, serial queues, resumable jobs and
+checkpoint preservation. Current `main` already contains the path abstraction
+and reproduction setup, while `cloud/kaggle/` now supplies the missing portable
+GPU entry point. The older branch should therefore be reused selectively rather
+than cherry-picked wholesale.
+
+## Next experiments with distinct value
+
+1. Finish the same-window `text`, `graph`, `shuffled` and `edu` matrix over
+   three seeds. This is the only current experiment that can separate graph
+   relation information from text range and EDU aggregation.
+2. Reuse the existing head/middle/tail multiview inference implementation on a
+   saved checkpoint. Select aggregation weights on validation data only and
+   report the additional inference cost and larger information budget.
+3. After the four-condition runs, test validation-selected probability
+   ensembles only when component errors are measurably diverse. Compare against
+   the existing 91.70% equal-weight ensemble rather than another single-seed
+   maximum.
+4. Add leave-one-domain-out evaluation and low-false-positive calibration.
+   These address the observed external-transfer failure and are a stronger
+   paper contribution than another small in-domain HART gain.
+5. Treat 90% as a reproducibility floor, not the research target. Any claimed
+   improvement should use three seeds, validation-only selection and paired
+   comparisons; a single result above 92% is exploratory until it survives that
+   protocol.
+
 ## Formal GPU work
 
 Run four conditions with seeds 3407, 42 and 2026, for 12 formal runs. The primary
