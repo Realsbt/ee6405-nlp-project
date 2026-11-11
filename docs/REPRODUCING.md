@@ -8,7 +8,7 @@ The code and saved predictions live in Git. Large resources live in a separate d
 |---|---|
 | Recompute saved result tables | Python 3 standard library; no weights or GPU |
 | Run all four English demo models | CPU, Python 3.11; about **4.28 GiB** of downloaded resources, plus the environment |
-| Restore the original datasets and eight-run checkpoints | `full` profile: about **6.86 GiB**, plus environment and generated data |
+| Restore the original datasets and all 13 model files | `full` profile: about **9.21 GiB**, plus environment and generated data |
 | Retrain neural models | NVIDIA CUDA GPU with BF16 support; substantially more time and checkpoint space |
 
 For the CPU demo, allow about 15 GB of free disk space and preferably 16 GB of RAM. These are planning recommendations, not measured minimum requirements. For a full training campaign, reserve at least 40 GB of disk space and inspect the hardware measurements in the experiment reports before choosing a GPU.
@@ -59,7 +59,7 @@ unset HF_HUB_OFFLINE TRANSFORMERS_OFFLINE
 
 ## 3. Restore the frozen datasets and verify preprocessing
 
-The `full` profile adds original HART/HC3 files and the remaining checkpoints from the original eight-run comparison. It does not contain optimizer states, historical training logs or subsequent experiment checkpoints.
+The `full` profile adds the original HART/HC3 files and downloads all 13 model files from the private release. That covers the TF-IDF classifier and the four neural configurations with three seeds each.
 
 ```bash
 "$EE6405_PYTHON" scripts/fetch_resources.py --profile full
@@ -128,7 +128,7 @@ bash experiments/run_neural.sh --model-type race_no_supcon --seed 3407 --run-nam
   --report "$EE6405_STORAGE/experiments/reproduction_checks/race_reload.json"
 ```
 
-The release's RACE checkpoints use supervised contrastive loss; its no-SupCon checkpoint does not. Keep the frozen recipe when comparing with archived results. Training from base initialization does not require our trained checkpoints: `fetch_resources.py --profile full --skip-checkpoints` supports that case. Training creates new logs, source snapshots and checkpoints in the selected resource directory and new reports in the repository.
+Use the run name from the archived report to replay another model, such as `roberta_supcon_s3407` or `race_no_supcon_s42`. Each run uses its own frozen recipe. To train from base initialization, add `--skip-checkpoints` to the full resource download. Training creates new logs, source snapshots and checkpoints in the selected resource directory and new reports in the repository.
 
 HC3 RACE evaluation additionally needs parsing of the restored HC3 answers through `experiments.rst_worker`, followed by `experiments.evaluate_external`. See [the detailed experiment workflow](../experiments/README.md). Those commands write evaluation reports; use a separate working copy when independently replaying archived runs. The original host's complete provenance gate also inspects historical training events and source snapshots, which are not part of this compact release. It is not the teammate installation check.
 

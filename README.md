@@ -115,9 +115,9 @@ bash experiments/run_demo.sh
 
 Open <http://127.0.0.1:8765/> after the server starts. Text Lab uses the CPU by default.
 
-GitHub contains results for all 13 formal runs. The `resources-v1` release provides the original eight models and excludes the five added checkpoints.
+The private [resources-v1 release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1) contains the TF-IDF classifier and all 12 neural checkpoints. Use `scripts/fetch_resources.py --profile full` to download the weights and data needed for checkpoint replay.
 
-The demo downloads about **4.28 GiB** of resources plus its Python environment. Our checkpoints are distributed through the private [resources-v1 release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1); upstream resources are fetched from pinned original sources. They are not stored in Git. A relocated Linux checkout and a fresh isolated CPU environment have passed all four demo models, exact dataset reconstruction and preprocessing checks. WSL2 instructions are provided but were not exercised in this check.
+The demo profile downloads about **4.28 GiB** of resources plus its Python environment. Upstream resources come from pinned original sources. A relocated Linux checkout and a fresh isolated CPU environment have passed all four demo models, exact dataset reconstruction and preprocessing checks. WSL2 instructions are provided but were not exercised in this check.
 
 Follow the **[Linux / WSL2 reproduction guide](docs/REPRODUCING.md)** for prerequisites, full-data restoration, hardware requirements and GPU training. The original `/data/botao/ee6405-race-validation/` directory remains a local resource store; teammates choose their own `EE6405_STORAGE`. Historical result paths are resolved at read time without changing their provenance.
 

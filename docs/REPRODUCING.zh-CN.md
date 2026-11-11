@@ -8,7 +8,7 @@
 |---|---|
 | 核对已保存结果 | Python 3 标准库，不需要模型或显卡 |
 | 运行四模型英文 Demo | CPU、Python 3.11，下载资源约 4.28 GiB，另加环境 |
-| 恢复原始数据划分和八个正式模型 | `full` 资源约 6.86 GiB，另加环境与生成数据 |
+| 恢复原始数据划分和全部 13 个模型文件 | `full` 资源约 9.21 GiB，另加环境与生成数据 |
 | 重新训练神经模型 | 支持 BF16 的 NVIDIA CUDA 显卡，以及更多时间和磁盘空间 |
 
 Demo 建议预留约 15 GB 磁盘、16 GB 内存；这不是测定的最低配置。完整训练建议至少预留 40 GB 磁盘，显卡应结合实验报告的显存记录选择。没有显卡也能运行四模型 Demo 和 TF-IDF。
@@ -49,6 +49,8 @@ bash experiments/run_demo.sh
 安装器创建独立环境，不继承原机器的 Python 包；已有环境不会被覆盖。下载器按[资源清单](../resources/manifest.json)逐个检查大小和 SHA-256，也不会覆盖已有但不匹配的文件。推理在本地离线运行，下载阶段需要联网。如果终端之前启用了离线变量，先运行 `unset HF_HUB_OFFLINE TRANSFORMERS_OFFLINE`。
 
 ## 3. 恢复固定数据和图缓存
+
+`full` 会下载原始 HART／HC3 数据及私有 Release 中的全部 13 个模型文件，包括 TF-IDF 分类器和四种神经配置各三个种子的权重。
 
 ```bash
 "$EE6405_PYTHON" scripts/fetch_resources.py --profile full
@@ -111,7 +113,7 @@ bash experiments/run_neural.sh --model-type race_no_supcon --seed 3407 --run-nam
   --report "$EE6405_STORAGE/experiments/reproduction_checks/race_reload.json"
 ```
 
-Release 内完整 RACE 使用 SupCon，无 SupCon 版本不使用。比较原始结果时应保持冻结配置。仅从基础预训练初始化重新训练，可在 full 下载时加 `--skip-checkpoints`，无需下载我们的已训练模型。
+复跑其他模型时，将 `--run` 改为对应的历史运行名，例如 `roberta_supcon_s3407` 或 `race_no_supcon_s42`。每次运行使用其原始配置。从基础预训练权重重新训练时，可在 full 下载命令加 `--skip-checkpoints`。
 
 HC3 的 RACE 复跑还需要对恢复的回答执行 `experiments.rst_worker`，再执行 `experiments.evaluate_external`，见[详细实验流程](../experiments/README.md)。这些入口会写评估结果，独立复跑历史模型时请使用单独工作副本。原主机的完整证据检查还依赖历史训练事件和源码快照，它们不属于这个精简 Release；组员安装验收请用 `check_installation.py`。
 

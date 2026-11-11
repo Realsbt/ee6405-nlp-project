@@ -48,7 +48,7 @@ HC3 数据卡注明 CC-BY-SA-4.0，并保留原始来源中更严格的条款。
 
 新的安装入口创建独立 Python 3.11 环境，不依赖原机器的 overlay 环境；用 `EE6405_STORAGE` 指定自己的资源目录。配置和历史结果中的原始绝对路径保持不变，由 `experiments/paths.py` 在读取时映射。不要为迁移修改历史来源记录。
 
-`scripts/fetch_resources.py` 按 [manifest.json](../resources/manifest.json) 下载并检查资源的大小和 SHA-256。上游源码、数据和预训练资源来自原始来源；本项目八个原始正式模型由私有 [resources-v1 Release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1) 提供。Demo profile 约 4.28 GiB，full profile 约 6.86 GiB，均不含 Python 环境和后续生成数据。
+`scripts/fetch_resources.py` 按 [manifest.json](../resources/manifest.json) 下载并检查资源的大小和 SHA-256。上游源码、数据和预训练资源来自原始来源。私有 [resources-v1 Release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1) 提供全部 13 个模型文件。Demo profile 约 4.28 GiB，full profile 约 9.21 GiB，均不含 Python 环境和后续生成数据。
 
 完整步骤和 CPU / GPU 区别见[复现指南](../docs/REPRODUCING.zh-CN.md)。最小下载入口为：
 

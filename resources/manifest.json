@@ -284,6 +284,61 @@
       "tag": "resources-v1",
       "asset": "race_s2026-best.pt",
       "run": "race_s2026"
+    },
+    {
+      "path": "experiments/neural_runs/race_no_supcon_s42/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 514550389,
+      "sha256": "d0473c708f0ba21e28661b9e2c47665c2bf7fb06fa8c53707536b56ba1ed7eb9",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "race_no_supcon_s42-best.pt",
+      "run": "race_no_supcon_s42"
+    },
+    {
+      "path": "experiments/neural_runs/race_no_supcon_s2026/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 514550389,
+      "sha256": "a66dd2bd0b7ec7435f2623be39cb8a15c57286e6d6d9ba62d7191165a6c1ff85",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "race_no_supcon_s2026-best.pt",
+      "run": "race_no_supcon_s2026"
+    },
+    {
+      "path": "experiments/neural_runs/roberta_supcon_s3407/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 501031286,
+      "sha256": "30e50814f2e5b9e8271a054a1b3aef724264105b2a17e8a01267b8ae80a8d0c2",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "roberta_supcon_s3407-best.pt",
+      "run": "roberta_supcon_s3407"
+    },
+    {
+      "path": "experiments/neural_runs/roberta_supcon_s42/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 501031286,
+      "sha256": "a06f08fe0977718fa4050e91737472235c161ac1dbb81875635ade24724a52f1",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "roberta_supcon_s42-best.pt",
+      "run": "roberta_supcon_s42"
+    },
+    {
+      "path": "experiments/neural_runs/roberta_supcon_s2026/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 501031286,
+      "sha256": "c845ae945621044bb8ebbb5e0967605a5b09a91e17d69f763a6e70bdcdc04338",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "roberta_supcon_s2026-best.pt",
+      "run": "roberta_supcon_s2026"
     }
   ]
 }
