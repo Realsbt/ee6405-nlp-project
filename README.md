@@ -6,6 +6,50 @@ A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), co
 
 **Experiment status (2026-11-06): the [2×2 ablation](docs/ABLATION_2X2.md) is complete.** Four neural conditions have three seeds each: **12 neural runs plus one TF-IDF baseline**. All five added runs, full test-set checkpoint verification, paired analyses and figures are complete. The four-method HC3 auxiliary evaluation and raw-text demo have been verified. Course deliverables and platform submission status are tracked separately in the [submission checklist](docs/SUBMISSION.md).
 
+## Latest improvement: fair-window mechanism controls
+
+The original RoBERTa/RACE comparison changes the visible text range, pooling,
+parameter count and graph processing at the same time. A new protocol therefore
+reparses the **exact same visible 512-token prefix** and compares four CE-only
+conditions from the same base-pretrained initialization:
+
+| Condition | Controlled change | Parameters (total / trainable) |
+|---|---|---:|
+| `text` | RoBERTa CLS + MLP | 125,239,300 / 7,681,540 |
+| `graph` | RACE on the same visible prefix | 128,617,148 / 11,059,388 |
+| `shuffled` | Per-document relation assignments shuffled; topology and histogram preserved | 128,617,148 / 11,059,388 |
+| `edu` | Equal-weight EDU pooling + matched-width head; no GNN | 125,305,092 / 7,747,332 |
+
+The full cache covers **15,984 / 15,984 records** with train / validation /
+test sizes **11,190 / 1,600 / 3,194**, zero failed or pending records, zero
+cross-split exact visible-prefix duplicates and no EDU nodes outside the visible
+prefix. The relation control changes **467,369 / 638,038 relation nodes
+(73.25%)** and the same fraction of 2,552,152 directed edge types while
+preserving topology. All four conditions passed CPU forward/backward smoke
+checks with identical token fingerprints; the repository tests cover the
+deterministic control and Unicode offset recovery.
+
+These are implementation and data-integrity results, not model-performance
+results. The formal 4 conditions × 3 seeds GPU matrix has **not** been run, so
+this branch does not claim that discourse graphs help or fail to help. Commands,
+hashes and acceptance criteria are in the [same-window protocol](docs/SAME_WINDOW_ABLATION.md).
+
+Exploratory reuse of existing checkpoints found that the HART gains did not
+transfer to the frozen 359-text MixSet subset:
+
+| Existing model or analysis | HART Macro-F1 | MixSet subset Macro-F1 |
+|---|---:|---:|
+| RoBERTa CE, seed 3407 | 90.75% | 39.01% |
+| RACE CE + SupCon, seed 3407 | 90.84% | 33.38% |
+| CE/RACE probability blend | 92.10% | 36.86% |
+| CE + RACE + TF-IDF stacking | 93.61% | 36.22% |
+| Length + lightweight structure LR | 52.67% | 29.16% |
+
+MixSet here is a conservative 359-text / 91-source-group subset, not the full
+official benchmark. Stacking uses one underlying neural seed and the original
+HART test set had already been inspected, so these numbers are diagnostic rather
+than independent confirmation or a state-of-the-art claim.
+
 ## Task and data
 
 | Label | Operational definition in the released dataset |

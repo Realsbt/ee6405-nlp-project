@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "date": "2026-11-11",
+  "resolved_records": 15,
+  "source_splits": {"train": 7, "test": 8},
+  "deleted_parser_characters": {"U+200B": 15, "U+FEFF": 1, "U+200D": 2, "U+2581": 1},
+  "cross_character_nfkc_records": 2,
+  "original_model_text_changed": false,
+  "policy": "Only audited projection of U+200B/U+FEFF/U+200D/U+2581 or exact full NFKC equivalence; reject content changes and split compatibility expansions."
+}

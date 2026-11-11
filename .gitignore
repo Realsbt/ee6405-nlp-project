@@ -74,6 +74,7 @@ models/
 !/experiments/reports/retraining_invalid_name.log
 !/experiments/reports/runtime_rst.json
 !/experiments/reports/runtime_training.json
+!/experiments/reports/same_window/
 
 # Raw-text excerpts and superseded auxiliary IDs can be regenerated locally.
 /experiments/reports/comparison/error_cases.jsonl

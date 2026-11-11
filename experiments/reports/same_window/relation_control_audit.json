@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "graphs": 15984,
+  "relation_nodes": 638038,
+  "changed_relation_nodes": 467369,
+  "changed_relation_node_fraction": 0.7325096624338989,
+  "directed_edges": 2552152,
+  "changed_edge_types": 1869476,
+  "changed_edge_type_fraction": 0.7325096624338989,
+  "unchanged_graphs": 36,
+  "unchanged_graph_fraction": 0.0022522522522522522,
+  "single_or_zero_relation_graphs": 17,
+  "topology_preserved": true,
+  "relation_histogram_preserved_per_graph": true,
+  "deterministic": true,
+  "label_independent": true
+}

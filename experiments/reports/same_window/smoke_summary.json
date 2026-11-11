@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "training_only_smoke": true,
+  "test_evaluated": false,
+  "identical_batch_token_fingerprint": true,
+  "conditions": {
+    "text": {"total_parameters": 125239300, "trainable_parameters": 7681540},
+    "graph": {"total_parameters": 128617148, "trainable_parameters": 11059388},
+    "shuffled": {"total_parameters": 128617148, "trainable_parameters": 11059388},
+    "edu": {"total_parameters": 125305092, "trainable_parameters": 7747332}
+  },
+  "invariants": {
+    "finite_gradients": true,
+    "classifier_updated": true,
+    "last_encoder_updated": true,
+    "frozen_embeddings_unchanged": true,
+    "graph_and_shuffled_initialization_identical": true
+  },
+  "formal_gpu_results_available": false
+}

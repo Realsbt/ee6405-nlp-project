@@ -1,0 +1,23 @@
+{
+  "status": "exploratory",
+  "hart_test_previously_inspected": true,
+  "mixset_subset": {"texts": 359, "source_groups": 91, "official_full_benchmark": false},
+  "macro_f1": {
+    "roberta_ce_s3407": {"hart": 0.9075, "mixset_subset": 0.3901},
+    "race_supcon_s3407": {"hart": 0.9084, "mixset_subset": 0.3338},
+    "ce_race_probability_blend": {"hart": 0.9210, "mixset_subset": 0.3686},
+    "ce_race_tfidf_stacking": {"hart": 0.9361, "mixset_subset": 0.3622},
+    "length_structure_logistic_regression": {"hart": 0.5267, "mixset_subset": 0.2916}
+  },
+  "editing_pair_observation": {
+    "race_ai_original_creator_recall": 0.0976,
+    "human_origin_creator_false_positive_rate_before_polishing": 0.04,
+    "human_origin_creator_false_positive_rate_after_ai_polishing": 0.40,
+    "causal_claim": false
+  },
+  "limitations": [
+    "MixSet result uses a conservative subset rather than the full official benchmark.",
+    "Stacking uses one underlying neural seed.",
+    "These results are diagnostic and do not replace the pending same-window GPU matrix."
+  ]
+}

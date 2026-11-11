@@ -1,0 +1,20 @@
+{
+  "status": "ready",
+  "date": "2026-11-11",
+  "verified": 15984,
+  "failed": 0,
+  "pending": 0,
+  "counts": {"train": 11190, "val": 1600, "test": 3194},
+  "source_blocks_disjoint": true,
+  "cross_split_exact_visible_duplicates": 0,
+  "invisible_edu_nodes": 0,
+  "single_or_zero_relation_graphs": 17,
+  "full_cache_ready": true,
+  "text_budget": "512 tokens including specials; reparse the exact visible prefix",
+  "failure_policy": "Record failures; no silent exclusion; block formal training until all records verify.",
+  "protocol_sha256": "82112974df569083226aad59b31d25bd89c5e0afa1328c3f81c80431916705a9",
+  "inputs_sha256": "73f85ea047fdce4736fc8d923b5474405b0e72f615f3a4cb14103f2e0aa2ee14",
+  "parsed_sha256": "de984ff7f663054367fd7b75484c533ca54df65836de032f9d11c6dadc265406",
+  "graphs_sha256": "6f21f059a0074722266c64c8d6930bd77118ecbd28ad360442ccd74de799bd86",
+  "index_sha256": "1dee265017f5c67dbe190fcfc9e9735de493c1f663b070c4d1516bc0c688d5b2"
+}
