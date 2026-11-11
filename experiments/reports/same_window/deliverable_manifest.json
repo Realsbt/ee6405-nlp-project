@@ -1,18 +1,6 @@
 {
   "status": "passed",
   "date": "2026-11-11",
-  "presentation": {
-    "path": "deliverables/yingqi_same_window_ablation.pptx",
-    "sha256": "8fdcf649ab4f1b53b54c3ca1e67029aa71fa433cf45a87b2ceb90e8eb6298cab",
-    "bytes": 63237,
-    "slides": 10,
-    "native_charts": 6,
-    "native_tables": 2,
-    "layout_findings": 0,
-    "package_findings": 0,
-    "first_party_import_passed": true,
-    "powerpoint_application_open_tested": false
-  },
   "figures": {
     "01_original_comparison.png": "38269d3e4fd337f7b14492b61c946f39b8108839bc31b0bea92f0cfd635b8b65",
     "02_cache_readiness.png": "78106fe0dff8f6f7f8a8236ed603ef1ce2af037f02c32614c757405b538d03a7",
@@ -25,8 +13,16 @@
     "path": "experiments/reports/same_window/figure_data.csv",
     "sha256": "1ace1a97d44da2ec11c21e6578bb37207f3b093de7568cf6b18e914b3a76dfa0"
   },
+  "gpu_smoke": {
+    "path": "experiments/reports/same_window/kaggle_gpu_smoke.json",
+    "sha256": "eccb6eeec855724b1fcf3c4e89adad5dfd4ba19b6e4a02dec3c128cc128d271c",
+    "status": "passed",
+    "device": "Tesla T4",
+    "conditions": 4,
+    "test_evaluated": false
+  },
   "report": {
     "path": "experiments/reports/same_window/REPORT.md",
-    "sha256": "561892dc4f1a8bb2bc20eb12d432ef3069267c84e0ff697defd7976ea58ba5d2"
+    "sha256": "2f8f775cac160f76ab78893ae532f957dfd5c97206de225eded1993d4d5ffbc4"
   }
 }

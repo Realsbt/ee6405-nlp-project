@@ -1,7 +1,7 @@
 # Yingqi contribution report: fair-window mechanism ablation
 
-Updated 2026-11-11. This report separates completed evidence from GPU work that
-still needs to run.
+Updated 2026-11-11. This report separates completed evidence from formal GPU
+results that still need to run.
 
 ## Original problem
 
@@ -27,6 +27,8 @@ model fails to gain accuracy.
    and CPU forward/backward smoke checks for all four conditions.
 6. Consolidated external transfer and editing-pair diagnostics from existing
    checkpoints to determine which claims need stronger evidence.
+7. Packaged a private, minimal Kaggle dataset and passed all four training-only
+   smoke conditions on a Tesla T4 before submitting the first formal seed.
 
 ## Data and engineering results
 
@@ -42,10 +44,15 @@ model fails to gain accuracy.
 | Graphs unchanged by the permutation | 36 / 15,984 (0.23%) |
 | Repository tests after integration | 22 passed |
 | Four-condition CPU smoke | 4 / 4 passed; test split not evaluated |
+| Four-condition Kaggle CUDA smoke | 4 / 4 passed on Tesla T4; test split not evaluated |
 
 The parameter counts are 125.24M total / 7.68M trainable for `text`, 128.62M /
 11.06M for `graph` and `shuffled`, and 125.31M / 7.75M for `edu`. Parameter
 matching is improved but still not exact, so the paper must report the counts.
+Peak allocated CUDA memory was 653.89 MiB for `text`, 838.98 MiB for `graph`,
+838.99 MiB for `shuffled` and 655.39 MiB for `edu`. All four runs had finite
+gradients, updated the classifier and last encoder layer, and left frozen
+embeddings unchanged. The raw evidence is in `kaggle_gpu_smoke.json`.
 
 ## Existing model diagnostics
 
@@ -67,15 +74,19 @@ matched-seed comparisons are `graph - edu`, `graph - shuffled` and `graph - text
 Each run must save the frozen configuration, development curve, best checkpoint,
 validation and test probabilities, parameter counts, runtime and peak memory.
 
+The seed 3407 four-condition job was submitted to Kaggle after the CUDA smoke
+passed. It is not counted as completed evidence until its four `result.json`
+files and predictions have been downloaded and checked.
+
 The paper may currently claim that the fair-window implementation and data
 integrity checks are complete. It may not claim that graph structure helps or
 fails to help until all 12 GPU runs finish.
 
 ## Deliverables
 
-- `deliverables/yingqi_same_window_ablation.pptx`: editable ten-slide section.
 - `experiments/reports/same_window/figures/`: six presentation-ready figures.
 - `experiments/reports/same_window/figure_data.csv`: source values for all new charts.
+- `experiments/reports/same_window/kaggle_gpu_smoke.json`: raw CUDA smoke evidence.
 - `docs/SAME_WINDOW_ABLATION.md`: protocol and run commands.
 - `experiments/same_window_controls.py` and `experiments/train_same_window.py`:
   implementation and formal training entry point.

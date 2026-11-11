@@ -25,20 +25,25 @@ test sizes **11,190 / 1,600 / 3,194**, zero failed or pending records, zero
 cross-split exact visible-prefix duplicates and no EDU nodes outside the visible
 prefix. The relation control changes **467,369 / 638,038 relation nodes
 (73.25%)** and the same fraction of 2,552,152 directed edge types while
-preserving topology. All four conditions passed CPU forward/backward smoke
-checks with identical token fingerprints; the repository tests cover the
-deterministic control and Unicode offset recovery.
+preserving topology. All four conditions passed CPU and Kaggle CUDA
+forward/backward smoke checks with identical token fingerprints; the repository
+tests cover the deterministic control and Unicode offset recovery. The CUDA
+check used a Tesla T4 and measured peak allocated memory of 653.89 MiB for
+`text`, 838.98 MiB for `graph`, 838.99 MiB for `shuffled` and 655.39 MiB for
+`edu`. Gradients were finite, trainable layers changed, frozen embeddings did
+not change and the test split was not evaluated.
 
 These are implementation and data-integrity results, not model-performance
-results. The formal 4 conditions × 3 seeds GPU matrix has **not** been run, so
-this branch does not claim that discourse graphs help or fail to help. Commands,
-hashes and acceptance criteria are in the [same-window protocol](docs/SAME_WINDOW_ABLATION.md).
+results. The formal 4 conditions × 3 seeds GPU matrix is still incomplete; the
+first four-condition seed 3407 job has been submitted after the CUDA smoke
+passed. This branch therefore does not claim that discourse graphs help or fail
+to help. Commands, hashes and acceptance criteria are in the
+[same-window protocol](docs/SAME_WINDOW_ABLATION.md).
 
-The individual contribution package also includes an editable
-[ten-slide PowerPoint section](deliverables/yingqi_same_window_ablation.pptx),
-[six presentation-ready figures](experiments/reports/same_window/figures/) and
-the [source data for every new chart](experiments/reports/same_window/figure_data.csv).
-The full problem-method-result-limitations record is in the
+The individual contribution package also includes
+[six presentation-ready figures](experiments/reports/same_window/figures/),
+the [source data for every new chart](experiments/reports/same_window/figure_data.csv)
+and a reproducible data manifest. The full problem-method-result-limitations record is in the
 [Yingqi contribution report](experiments/reports/same_window/REPORT.md).
 
 Exploratory reuse of existing checkpoints found that the HART gains did not

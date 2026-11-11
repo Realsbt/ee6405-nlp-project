@@ -72,13 +72,18 @@ def main():
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--epochs", type=int, default=20)
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument("--device", choices=("cpu", "cuda"),
+                        help="Defaults to CPU for smoke and CUDA for formal training")
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output already exists; preserve prior runs and choose a new directory")
     if args.batch_size <= 0 or args.batch_size % 4 or args.epochs <= 0:
         parser.error("Batch size must be positive and divisible by four; epochs must be positive")
-    if not args.smoke and not torch.cuda.is_available():
-        parser.error("Formal same-window training requires CUDA; use --smoke for a CPU check")
+    device_name = args.device or ("cpu" if args.smoke else "cuda")
+    if not args.smoke and device_name != "cuda":
+        parser.error("Formal same-window training requires --device cuda")
+    if device_name == "cuda" and not torch.cuda.is_available():
+        parser.error("CUDA was requested but is unavailable")
 
     args.output.mkdir(parents=True)
     config = config_for(args.condition, args.seed)
@@ -104,7 +109,7 @@ def main():
     loader = DataLoader(train_view, batch_sampler=sampler, collate_fn=collate_batch, num_workers=0)
 
     seed_all(args.seed)
-    device = torch.device("cpu" if args.smoke else "cuda")
+    device = torch.device(device_name)
     model = model_for(config).to(device)
     trainable = [(name, parameter) for name, parameter in model.named_parameters() if parameter.requires_grad]
     if any(name.startswith("bert_model.embeddings") for name, _ in trainable):
@@ -124,6 +129,8 @@ def main():
     initial_classifier = model.classifier.out_proj.weight.detach().clone()
     initial_last_encoder = model.bert_model.encoder.layer[-1].attention.self.query.weight.detach().clone()
     initial_embeddings = model.bert_model.embeddings.word_embeddings.weight[0].detach().clone()
+    if device.type == "cuda":
+        torch.cuda.reset_peak_memory_stats()
 
     best_score = -1.0
     best_epoch = -1
@@ -187,6 +194,11 @@ def main():
             "training_only_smoke": True,
             "test_evaluated": False,
             "finite_gradients": True,
+            "device": device.type,
+            "gpu": torch.cuda.get_device_name(0) if device.type == "cuda" else None,
+            "peak_cuda_allocated_mib": (
+                torch.cuda.max_memory_allocated() / 1024 ** 2 if device.type == "cuda" else None
+            ),
             "classifier_updated": classifier_updated,
             "last_encoder_updated": last_encoder_updated,
             "frozen_embeddings_unchanged": frozen_embeddings_unchanged,
@@ -214,6 +226,8 @@ def main():
         "parameters": parameters,
         "best_checkpoint_sha256": file_hash(args.output / "best.pt"),
         "elapsed_seconds": time.perf_counter() - started,
+        "gpu": torch.cuda.get_device_name(0),
+        "peak_cuda_allocated_mib": torch.cuda.max_memory_allocated() / 1024 ** 2,
         "scope": "Same visible 512-token prefix, CE objective, base-pretrained initialization.",
     })
 
