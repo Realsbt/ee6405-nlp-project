@@ -6,6 +6,30 @@ A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), co
 
 **Experiment status (2026-11-06): the [2×2 ablation](docs/ABLATION_2X2.md) is complete.** Four neural conditions have three seeds each: **12 neural runs plus one TF-IDF baseline**. All five added runs, full test-set checkpoint verification, paired analyses and figures are complete. The four-method HC3 auxiliary evaluation and raw-text demo have been verified. Course deliverables and platform submission status are tracked separately in the [submission checklist](docs/SUBMISSION.md).
 
+## Text Lab demo
+
+Paste an English document and choose TF-IDF + logistic regression, RoBERTa, RACE, or RACE without SupCon. Text Lab runs locally and displays a score for each of the four classes.
+
+<p align="center">
+  <img src="docs/images/textlab-structure.png" alt="Text Lab Structure view with the RACE discourse graph, the four document scores, and the measured effects of a selected unit" width="880">
+</p>
+
+*RACE running the demo's unlabeled example with the model already loaded.*
+
+- In **Explore & Edit**, use **Map** to jump between paragraphs and check explanation progress, and **Passages** to run a separate prediction on an excerpt. **Coverage** shows the lexical input window. TF-IDF reads the full input, and RoBERTa and RACE use up to 512 tokens for lexical input.
+- In **Explain Prediction**, expand branches of the RACE discourse graph and request **Influence** for a selected unit or the visible units. The detail panel shows how suppressing a unit's features changes all four scores. Follow-up explanations can reuse preparation for the same text and model.
+- With **What-if editing**, revise the text and choose **Reanalyze revised document** to run the same model again. Text Lab keeps the **Original** result and shows it alongside **Revised**, with the changed text and all four scores.
+- **Compare models** runs independent predictions on the same text. **Export** saves a JSON report and includes the source text only if selected.
+
+<details>
+  <summary>See the score comparison after editing the example</summary>
+  <p align="center">
+    <img src="docs/images/textlab-revision.png" alt="Text Lab What-if editing panel showing the changed text and original and revised scores for all four classes" width="760">
+  </p>
+</details>
+
+[Run Text Lab locally](#run-text-lab-on-linux-or-windows-wsl2) · [How the influence measurements work](docs/DOCUMENT_EXPLANATION.md)
+
 ## Task and data
 
 | Label | Operational definition in the released dataset |
@@ -19,7 +43,7 @@ The main benchmark is **HART**: 15,984 records after cleaning, with source-relat
 
 An independent auxiliary evaluation uses 1,000 human / ChatGPT answers from **HC3**. HC3 provides binary labels only and cannot validate generalization of the four creation-and-editing classes. See [data and external resources](data/README.md) for versions, sources and runtime requirements.
 
-### Method overview
+### Experiment pipeline
 
 ```mermaid
 flowchart TB
@@ -75,13 +99,7 @@ python3 scripts/check_results.py
 
 The script recomputes metrics from individual predictions and checks thirteen formal runs, four HC3 evaluations, aggregate tables and five paired factorial contrasts. It checks internal consistency of the saved evidence; checkpoint inference still requires external resources.
 
-### Run the English demo on Linux / Windows WSL2
-
-<p align="center">
-  <img src="experiments/reports/demo_race.jpg" alt="English RACE demo: text input, model selection, four-class scores and discourse parsing information" width="800">
-</p>
-
-*The interface and demonstration materials are in English. The example has no ground-truth authorship label. The displayed request time is an individual measurement, not a cold-start benchmark.*
+### Run Text Lab on Linux or Windows WSL2
 
 ```bash
 # First install Python 3.11, Git, GitHub CLI and a C/C++ compiler.
@@ -95,9 +113,9 @@ export EE6405_PYTHON="$EE6405_STORAGE/.venv/bin/python"
 bash experiments/run_demo.sh
 ```
 
-Open <http://127.0.0.1:8765/>. The demo uses the CPU by default and displays scores, input truncation, the parsed discourse tree and timing. Free-form input without a ground-truth label demonstrates functionality only.
+Open <http://127.0.0.1:8765/> after the server starts. Text Lab uses the CPU by default.
 
-GitHub contains results for all 13 formal runs. The `resources-v1` release still provides the original eight models and excludes the five added checkpoints. The demo retains its original four methods; RoBERTa + SupCon is not a demo option.
+GitHub contains results for all 13 formal runs. The `resources-v1` release provides the original eight models and excludes the five added checkpoints.
 
 The demo downloads about **4.28 GiB** of resources plus its Python environment. Our checkpoints are distributed through the private [resources-v1 release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1); upstream resources are fetched from pinned original sources. They are not stored in Git. A relocated Linux checkout and a fresh isolated CPU environment have passed all four demo models, exact dataset reconstruction and preprocessing checks. WSL2 instructions are provided but were not exercised in this check.
 

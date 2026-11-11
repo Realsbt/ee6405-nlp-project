@@ -6,6 +6,30 @@
 
 **实验状态（2026-11-06）：[2×2 消融](docs/ABLATION_2X2.md) 已全部完成。** 四种神经配置各三个种子，共 **12 次神经训练＋1 次 TF-IDF 基线**；新增五次训练、完整测试集重载复核、配对分析及图表均已完成。四方法 HC3 辅助评估和原始文本 Demo 已验证。课程提交材料与平台状态单独记录在 [提交准备](docs/SUBMISSION.md)。
 
+## Text Lab 演示
+
+Text Lab 是在本机运行的英文 Demo。粘贴英文文本后，选择 TF-IDF＋逻辑回归、RoBERTa、RACE 或无 SupCon 的 RACE，即可查看四类分数。
+
+<p align="center">
+  <img src="docs/images/textlab-structure.png" alt="Text Lab 的 Structure 页面，显示 RACE 篇章图、四类文档分数和所选单元的实测影响" width="880">
+</p>
+
+*截图来自 RACE 模型载入后对内置无标签示例的实际预测。*
+
+- 在 **Explore & Edit** 中，通过 **Map** 按段落跳转并查看解释进度，通过 **Passages** 对选定片段单独预测。**Coverage** 显示词汇输入范围。TF-IDF 读取全文，RoBERTa 和 RACE 的词汇输入最多为 512 个 token。
+- 在 **Explain Prediction** 中，可以展开 RACE 篇章图的分支，对选定或可见的单元按需计算 **Influence**。详情面板显示抑制该单元特征后四类分数如何变化。同一文本和模型的后续解释请求可以复用预处理结果。
+- 使用 **What-if editing** 修改原文，然后点击 **Reanalyze revised document**，用同一个模型重新预测。Text Lab 保留 **Original** 的结果，与 **Revised** 一起显示四类分数和文本改动。
+- **Compare models** 对同一文本分别运行各模型。**Export** 可导出 JSON 报告，勾选后才会附上原文。
+
+<details>
+  <summary>查看修改示例后四类分数的对比</summary>
+  <p align="center">
+    <img src="docs/images/textlab-revision.png" alt="Text Lab 的改写对比面板，显示文本改动及修改前后四个类别的分数" width="760">
+  </p>
+</details>
+
+[在本机运行 Text Lab](#在-linux-或-windows-wsl2-上运行-text-lab) · [单元影响的计算方法](docs/DOCUMENT_EXPLANATION.md)
+
 ## 任务与数据
 
 | 标签 | 数据集中的操作定义 |
@@ -19,7 +43,7 @@
 
 独立辅助评估使用 **HC3** 的 1,000 条人类／ChatGPT 回答。HC3 只有二分类真值，不能用于验证创作者／编辑者四分类泛化。数据版本、获取位置和运行前提见 [数据与外部资源](data/README.md)。
 
-### 方法概览
+### 实验流程
 
 ```mermaid
 flowchart TB
@@ -75,13 +99,7 @@ python3 scripts/check_results.py
 
 脚本从逐条预测重新计算指标，核对十三个正式运行、四组 HC3 结果、汇总表与五个配对消融差异。它检验保存结果的内部一致性；重新加载 checkpoint 推理仍需要外部资源。
 
-### 在 Linux / Windows WSL2 运行英文 Demo
-
-<p align="center">
-  <img src="experiments/reports/demo_race.jpg" alt="RACE 英文 Demo 实际界面：文本输入、模型选择、四类分数和篇章解析信息" width="800">
-</p>
-
-*Demo 界面及演示材料使用英文。示例没有真实来源标签；图中耗时仅为该次请求记录，不是冷启动基准。*
+### 在 Linux 或 Windows WSL2 上运行 Text Lab
 
 ```bash
 # 先安装 Python 3.11、Git、GitHub CLI、C/C++ 编译器。
@@ -95,9 +113,9 @@ export EE6405_PYTHON="$EE6405_STORAGE/.venv/bin/python"
 bash experiments/run_demo.sh
 ```
 
-Demo 地址为 <http://127.0.0.1:8765/>，默认 CPU。已有服务时直接打开地址。页面展示四类分数、输入截断、篇章树与耗时；无真实标签的自由输入仅用于功能演示。
+服务启动后，打开 <http://127.0.0.1:8765/>。Text Lab 默认在 CPU 上运行。
 
-GitHub 已保存全部 13 组正式结果；`resources-v1` 仍提供原始 8 个模型，未包含本轮新增 5 个 checkpoint。Demo 保留原四种方法，未新增 RoBERTa＋SupCon 选项。
+GitHub 已保存全部 13 组正式结果。`resources-v1` 提供原始 8 个模型，未包含本轮新增 5 个 checkpoint。
 
 Demo 需下载约 **4.28 GiB** 资源，另加 Python 环境。我们的 checkpoint 单独放在私有仓库的 [resources-v1 Release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1)，上游资源从固定版本的原始来源获取，不进入 Git。已经在迁移后的 Linux checkout、新建独立 CPU 环境中跑通四个 Demo 模型，并完成固定数据重建和预处理检查；提供 WSL2 步骤，但本次没有实际测试 WSL2。
 
