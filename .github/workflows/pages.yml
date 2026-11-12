@@ -1,7 +1,8 @@
 name: Deploy static Text Lab demo
 
-# Publishes docs/ to GitHub Pages. The page is a frozen snapshot: it carries
-# real model outputs for the built-in example and needs no backend.
+# Publishes docs/demo to GitHub Pages. The page is a frozen snapshot: it
+# carries real model outputs for the built-in example and needs no backend.
+# Only docs/demo is uploaded, so course PDFs and report images stay off the site.
 on:
   push:
     branches: [main]
@@ -31,6 +32,8 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          # Publish only the demo, not the whole docs/ tree: docs/ also holds
+          # course PDFs and report images that do not belong on a public site.
+          path: docs/demo
       - id: deployment
         uses: actions/deploy-pages@v4
