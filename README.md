@@ -6,7 +6,7 @@ A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), co
 
 **Experiment status (2026-11-06): the [2×2 ablation](docs/ABLATION_2X2.md) is complete.** Four neural conditions have three seeds each: **12 neural runs plus one TF-IDF baseline**. All five added runs, full test-set checkpoint verification, paired analyses and figures are complete. The four-method HC3 auxiliary evaluation and raw-text demo have been verified. Course deliverables and platform submission status are tracked separately in the [submission checklist](docs/SUBMISSION.md).
 
-## Yingqi's contributions and current status
+## Contributions and current status
 
 **Snapshot: 2026-11-12, 13:22 Singapore (UTC+8).** These additions are separate
 from the shared, completed 2x2 study above. Full ownership, evidence and remaining
