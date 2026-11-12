@@ -2,6 +2,12 @@
 
 [English](#english) · [简体中文](#简体中文)
 
+**[视频和讲稿 · Video and script](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/untagged-cc115752d2bea3b46070)**
+
+登录具有仓库写权限的 GitHub 账号，在 Release 草稿的 **Assets** 下载 9 分 20 秒无声视频与完整讲稿。
+
+Download the 9:20 silent video and the full script under **Assets** in the draft release. Sign in with an account that has repository write access.
+
 ## English
 
 A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), comparing **TF-IDF + logistic regression, RoBERTa, RACE**, with an architecture × objective 2×2 ablation (CE versus CE + supervised contrastive loss). The project adds a fixed grouped split, baseline comparisons, multiple training seeds, parser audits and an interactive raw-text demo.
