@@ -1,0 +1,44 @@
+{
+  "superseded_by": "scripts/supervise_fusion_dfs.py",
+  "scope": "Private free-GPU execution only; do not switch to paid compute",
+  "stages": [
+    {
+      "kernel": "zhengyingqi/ee6405-text-edu-fusion-experiment-v1",
+      "submit": false,
+      "prefix": "edu_fusion_experiment_v1",
+      "output": "outputs/kaggle_fusion_experiment_v1",
+      "collector_pid": 49592,
+      "postprocess": [
+        "-B", "scripts/report_fusion_results.py",
+        "--input", "outputs/kaggle_fusion_experiment_v1/edu_fusion_experiment_v1",
+        "--output", "outputs/supervised_reports_v1/fusion"
+      ]
+    },
+    {
+      "kernel": "zhengyingqi/ee6405-fusion-scale-experiment-v1",
+      "submit": true,
+      "prefix": "fusion_scale_experiment_v1",
+      "package": "outputs/fusion_followup_package_v1/kernel",
+      "output": "outputs/kaggle_scale_experiment_v1",
+      "postprocess": [
+        "-B", "scripts/report_fusion_matrix.py",
+        "--kind", "scale",
+        "--input", "outputs/kaggle_scale_experiment_v1/fusion_scale_experiment_v1",
+        "--output", "outputs/supervised_reports_v1/scale"
+      ]
+    },
+    {
+      "kernel": "zhengyingqi/ee6405-fusion-extensions-experiment-v1",
+      "submit": true,
+      "prefix": "fusion_extensions_experiment_v1",
+      "package": "outputs/fusion_followup_package_v2/kernel",
+      "output": "outputs/kaggle_extensions_experiment_v1",
+      "postprocess": [
+        "-B", "scripts/report_fusion_matrix.py",
+        "--kind", "extensions",
+        "--input", "outputs/kaggle_extensions_experiment_v1/fusion_extensions_experiment_v1",
+        "--output", "outputs/supervised_reports_v1/extensions"
+      ]
+    }
+  ]
+}

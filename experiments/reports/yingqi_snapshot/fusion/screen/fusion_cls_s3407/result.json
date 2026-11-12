@@ -1,0 +1,126 @@
+{
+  "status": "validation_completed",
+  "condition": "fusion_cls",
+  "seed": 3407,
+  "best_epoch": 9,
+  "validation": {
+    "samples": 1600,
+    "accuracy": 0.940625,
+    "macro_f1": 0.9064350151761276,
+    "macro_precision": 0.9377296271390584,
+    "macro_recall": 0.8858917984189723,
+    "macro_auroc_ovr": 0.9850260215322837,
+    "macro_tpr_at_1pct_fpr_roc": 0.8122990777338603,
+    "per_class": {
+      "human_written": {
+        "support": 400,
+        "precision": 0.975609756097561,
+        "recall": 1.0,
+        "f1": 0.9876543209876543,
+        "auroc_ovr": 0.9994958333333334,
+        "tpr_at_1pct_fpr_roc": 1.0
+      },
+      "human_ai_polished": {
+        "support": 400,
+        "precision": 0.9395465994962217,
+        "recall": 0.9325,
+        "f1": 0.9360100376411543,
+        "auroc_ovr": 0.9885239583333334,
+        "tpr_at_1pct_fpr_roc": 0.86
+      },
+      "ai_generated": {
+        "support": 690,
+        "precision": 0.9243697478991597,
+        "recall": 0.9565217391304348,
+        "f1": 0.9401709401709402,
+        "auroc_ovr": 0.984854276158624,
+        "tpr_at_1pct_fpr_roc": 0.6710144927536232
+      },
+      "ai_humanized": {
+        "support": 110,
+        "precision": 0.9113924050632911,
+        "recall": 0.6545454545454545,
+        "f1": 0.7619047619047619,
+        "auroc_ovr": 0.9672300183038438,
+        "tpr_at_1pct_fpr_roc": 0.7181818181818181
+      }
+    },
+    "confusion_matrix": [
+      [
+        400,
+        0,
+        0,
+        0
+      ],
+      [
+        6,
+        373,
+        20,
+        1
+      ],
+      [
+        2,
+        22,
+        660,
+        6
+      ],
+      [
+        2,
+        2,
+        34,
+        72
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "test": null,
+  "test_evaluated": false,
+  "source_sha256": {
+    "common.py": "44330f81bdac1e9e49b9ee9a835112af4388fc88246fb7ee38343f4306a03844",
+    "edu_fusion.py": "a345c0247b8139fb86a2bd910d2b8964f27eaef9e9486aad5a0eff9c44d23a55",
+    "neural.py": "aae389ac20b0c121a07c8e4f03d5cee637388c94985120e29f21857519578c87",
+    "paths.py": "6d2c45d79f30646970e09258e920b234b02c470269f8edc466ae791753c1df13",
+    "train_edu_fusion.py": "a0223aaf13a6041991df105c7597ec4144fcca08ad6d7a26c1bc6958c23c4f1f",
+    "train_same_window.py": "165979c9a49bc317a8195ef7e81d02f6031f131b0fbc05a707ef04968611060d"
+  },
+  "parameters": {
+    "total": 125305092,
+    "trainable": 7747332,
+    "trainable_names": [
+      "bert_model.encoder.layer.11.attention.self.query.weight",
+      "bert_model.encoder.layer.11.attention.self.query.bias",
+      "bert_model.encoder.layer.11.attention.self.key.weight",
+      "bert_model.encoder.layer.11.attention.self.key.bias",
+      "bert_model.encoder.layer.11.attention.self.value.weight",
+      "bert_model.encoder.layer.11.attention.self.value.bias",
+      "bert_model.encoder.layer.11.attention.output.dense.weight",
+      "bert_model.encoder.layer.11.attention.output.dense.bias",
+      "bert_model.encoder.layer.11.attention.output.LayerNorm.weight",
+      "bert_model.encoder.layer.11.attention.output.LayerNorm.bias",
+      "bert_model.encoder.layer.11.intermediate.dense.weight",
+      "bert_model.encoder.layer.11.intermediate.dense.bias",
+      "bert_model.encoder.layer.11.output.dense.weight",
+      "bert_model.encoder.layer.11.output.dense.bias",
+      "bert_model.encoder.layer.11.output.LayerNorm.weight",
+      "bert_model.encoder.layer.11.output.LayerNorm.bias",
+      "projection.0.weight",
+      "projection.0.bias",
+      "projection.1.weight",
+      "projection.1.bias",
+      "classifier.dense.weight",
+      "classifier.dense.bias",
+      "classifier.out_proj.weight",
+      "classifier.out_proj.bias"
+    ]
+  },
+  "best_checkpoint_sha256": "f88126c5492b9161788373eacce28224339b2e263df6d7650ba265d1ca58b696",
+  "elapsed_seconds": 6620.906058492,
+  "gpu": "Tesla T4",
+  "peak_cuda_allocated_mib": 1335.52783203125,
+  "scope": "Same visible 512-token prefix, CE objective, base-pretrained initialization."
+}

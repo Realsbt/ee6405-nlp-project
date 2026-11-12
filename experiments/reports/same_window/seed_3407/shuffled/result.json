@@ -1,0 +1,200 @@
+{
+  "status": "completed",
+  "condition": "shuffled",
+  "seed": 3407,
+  "best_epoch": 9,
+  "validation": {
+    "samples": 1600,
+    "accuracy": 0.926875,
+    "macro_f1": 0.8933236663120414,
+    "macro_precision": 0.9199006792490421,
+    "macro_recall": 0.8740522068511198,
+    "macro_auroc_ovr": 0.9740982434868592,
+    "macro_tpr_at_1pct_fpr_roc": 0.7356357048748353,
+    "per_class": {
+      "human_written": {
+        "support": 400,
+        "precision": 0.9824561403508771,
+        "recall": 0.98,
+        "f1": 0.981226533166458,
+        "auroc_ovr": 0.9992166666666668,
+        "tpr_at_1pct_fpr_roc": 0.995
+      },
+      "human_ai_polished": {
+        "support": 400,
+        "precision": 0.922879177377892,
+        "recall": 0.8975,
+        "f1": 0.9100126742712294,
+        "auroc_ovr": 0.98326875,
+        "tpr_at_1pct_fpr_roc": 0.815
+      },
+      "ai_generated": {
+        "support": 690,
+        "precision": 0.9052197802197802,
+        "recall": 0.9550724637681159,
+        "f1": 0.9294781382228491,
+        "auroc_ovr": 0.9797037744863832,
+        "tpr_at_1pct_fpr_roc": 0.45072463768115945
+      },
+      "ai_humanized": {
+        "support": 110,
+        "precision": 0.8690476190476191,
+        "recall": 0.6636363636363637,
+        "f1": 0.7525773195876289,
+        "auroc_ovr": 0.9342037827943868,
+        "tpr_at_1pct_fpr_roc": 0.6818181818181818
+      }
+    },
+    "confusion_matrix": [
+      [
+        392,
+        6,
+        1,
+        1
+      ],
+      [
+        4,
+        359,
+        36,
+        1
+      ],
+      [
+        1,
+        21,
+        659,
+        9
+      ],
+      [
+        2,
+        3,
+        32,
+        73
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "test": {
+    "samples": 3194,
+    "accuracy": 0.9267376330619912,
+    "macro_f1": 0.9006939731458012,
+    "macro_precision": 0.9246911120545195,
+    "macro_recall": 0.8830585770231496,
+    "macro_auroc_ovr": 0.981850361692137,
+    "macro_tpr_at_1pct_fpr_roc": 0.8051943382057647,
+    "per_class": {
+      "human_written": {
+        "support": 798,
+        "precision": 0.9821882951653944,
+        "recall": 0.9674185463659147,
+        "f1": 0.9747474747474747,
+        "auroc_ovr": 0.9986867209760629,
+        "tpr_at_1pct_fpr_roc": 0.9949874686716792
+      },
+      "human_ai_polished": {
+        "support": 798,
+        "precision": 0.8964241676942046,
+        "recall": 0.9110275689223057,
+        "f1": 0.9036668738346799,
+        "auroc_ovr": 0.9878520382759906,
+        "tpr_at_1pct_fpr_roc": 0.7832080200501254
+      },
+      "ai_generated": {
+        "support": 1371,
+        "precision": 0.9161971830985915,
+        "recall": 0.9489423778264041,
+        "f1": 0.932282336080258,
+        "auroc_ovr": 0.983127898523326,
+        "tpr_at_1pct_fpr_roc": 0.6892778993435449
+      },
+      "ai_humanized": {
+        "support": 227,
+        "precision": 0.903954802259887,
+        "recall": 0.7048458149779736,
+        "f1": 0.7920792079207921,
+        "auroc_ovr": 0.9577347889931687,
+        "tpr_at_1pct_fpr_roc": 0.7533039647577092
+      }
+    },
+    "confusion_matrix": [
+      [
+        772,
+        20,
+        3,
+        3
+      ],
+      [
+        12,
+        727,
+        56,
+        3
+      ],
+      [
+        2,
+        57,
+        1301,
+        11
+      ],
+      [
+        0,
+        7,
+        60,
+        160
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "parameters": {
+    "total": 128617148,
+    "trainable": 11059388,
+    "trainable_names": [
+      "bert_model.encoder.layer.11.attention.self.query.weight",
+      "bert_model.encoder.layer.11.attention.self.query.bias",
+      "bert_model.encoder.layer.11.attention.self.key.weight",
+      "bert_model.encoder.layer.11.attention.self.key.bias",
+      "bert_model.encoder.layer.11.attention.self.value.weight",
+      "bert_model.encoder.layer.11.attention.self.value.bias",
+      "bert_model.encoder.layer.11.attention.output.dense.weight",
+      "bert_model.encoder.layer.11.attention.output.dense.bias",
+      "bert_model.encoder.layer.11.attention.output.LayerNorm.weight",
+      "bert_model.encoder.layer.11.attention.output.LayerNorm.bias",
+      "bert_model.encoder.layer.11.intermediate.dense.weight",
+      "bert_model.encoder.layer.11.intermediate.dense.bias",
+      "bert_model.encoder.layer.11.output.dense.weight",
+      "bert_model.encoder.layer.11.output.dense.bias",
+      "bert_model.encoder.layer.11.output.LayerNorm.weight",
+      "bert_model.encoder.layer.11.output.LayerNorm.bias",
+      "node_type_embedding.weight",
+      "node_proj.0.weight",
+      "node_proj.0.bias",
+      "node_proj.1.weight",
+      "node_proj.1.bias",
+      "convs.0.weight",
+      "convs.0.comp",
+      "convs.0.root",
+      "convs.0.bias",
+      "convs.1.weight",
+      "convs.1.comp",
+      "convs.1.root",
+      "convs.1.bias",
+      "classifier.dense.weight",
+      "classifier.dense.bias",
+      "classifier.out_proj.weight",
+      "classifier.out_proj.bias"
+    ]
+  },
+  "best_checkpoint_sha256": "9fbde11ed747c2459fe9fb3ea171c366d5789ceaa1c5a501de9e49a937c30863",
+  "elapsed_seconds": 13579.610271796999,
+  "gpu": "Tesla T4",
+  "peak_cuda_allocated_mib": 1431.54248046875,
+  "scope": "Same visible 512-token prefix, CE objective, base-pretrained initialization."
+}

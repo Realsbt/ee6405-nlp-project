@@ -5,9 +5,12 @@ to a four-class train/development smoke check and never opens the test split.
 """
 
 import argparse
+import importlib.metadata
+import inspect
 import json
 from pathlib import Path
 import random
+import shutil
 import time
 
 import numpy as np
@@ -18,6 +21,7 @@ from transformers import get_linear_schedule_with_warmup
 
 from experiments.common import LABELS, classification_metrics, file_hash, write_json, write_jsonl
 from experiments.neural import BalancedBatchSampler, collate_batch
+from experiments.paths import UPSTREAM, resolve_recorded_path
 from experiments.same_window_controls import CONDITIONS, IndexedSameWindowDataset, config_for, model_for
 from experiments.train_neural import save_checkpoint
 
@@ -63,18 +67,38 @@ def prediction_rows(dataset, probabilities, item_ids):
     } for row, probability in zip(dataset.records, probabilities)]
 
 
-def main():
+def evaluate_partitions(model, val_data, *, cache, condition, batch_size, output,
+                        dataset_factory, validation_only):
+    validation, probabilities, ids = evaluate(model, val_data, batch_size)
+    write_jsonl(output / "validation_predictions.jsonl", prediction_rows(val_data, probabilities, ids))
+    test = None
+    if not validation_only:
+        test_data = dataset_factory(cache, "test", condition)
+        test, probabilities, ids = evaluate(model, test_data, batch_size)
+        write_jsonl(output / "test_predictions.jsonl", prediction_rows(test_data, probabilities, ids))
+    return validation, test
+
+
+def main(argv=None, *, conditions=CONDITIONS, configuration_factory=config_for,
+         model_factory=model_for, dataset_factory=IndexedSameWindowDataset,
+         validation_only_default=False, extra_source_files=()):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--condition", required=True, choices=CONDITIONS)
+    parser.add_argument("--condition", required=True, choices=conditions)
     parser.add_argument("--cache", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seed", type=int, default=3407)
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--epochs", type=int, default=20)
     parser.add_argument("--smoke", action="store_true")
+    evaluation = parser.add_mutually_exclusive_group()
+    evaluation.add_argument("--validation-only", dest="validation_only", action="store_true",
+                            help="Screen on validation without opening the test partition")
+    evaluation.add_argument("--evaluate-test", dest="validation_only", action="store_false",
+                            help="Also evaluate test after validation selects the checkpoint")
+    parser.set_defaults(validation_only=validation_only_default)
     parser.add_argument("--device", choices=("cpu", "cuda"),
                         help="Defaults to CPU for smoke and CUDA for formal training")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     if args.output.exists():
         parser.error("Output already exists; preserve prior runs and choose a new directory")
     if args.batch_size <= 0 or args.batch_size % 4 or args.epochs <= 0:
@@ -86,7 +110,7 @@ def main():
         parser.error("CUDA was requested but is unavailable")
 
     args.output.mkdir(parents=True)
-    config = config_for(args.condition, args.seed)
+    config = configuration_factory(args.condition, args.seed)
     config.update(batch_size=4 if args.smoke else args.batch_size,
                   max_epochs=1 if args.smoke else args.epochs)
     evidence = args.cache / "manifest.json"
@@ -95,10 +119,31 @@ def main():
         "cache": str(args.cache.resolve()),
         "cache_manifest_sha256": file_hash(evidence),
         "training_only_smoke": args.smoke,
+        "validation_only": args.validation_only,
+    })
+    source_files = {Path(__file__), Path(inspect.getfile(configuration_factory)),
+                    Path(inspect.getfile(model_factory)), Path(inspect.getfile(dataset_factory)),
+                    Path(inspect.getfile(collate_batch)), Path(inspect.getfile(classification_metrics)),
+                    Path(inspect.getfile(resolve_recorded_path)), *extra_source_files}
+    source_hashes = {}
+    for source in sorted(source_files):
+        destination = args.output / "source" / source.name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+        source_hashes[source.name] = file_hash(source)
+    write_json(args.output / "source_hashes.json", source_hashes)
+    backbone = resolve_recorded_path(config["architecture"]["backbone_model_path"])
+    initialization_files = [backbone / "model.safetensors", backbone / "config.json",
+                            UPSTREAM / "models/flexible_model.py", UPSTREAM / "models/modules.py"]
+    write_json(args.output / "provenance.json", {
+        "initialization": "base-pretrained weights, not a prior task checkpoint",
+        "files_sha256": {str(path): file_hash(path) for path in initialization_files},
+        "packages": {name: importlib.metadata.version(name)
+                     for name in ("torch", "transformers", "torch-geometric", "numpy")},
     })
 
-    train_data = IndexedSameWindowDataset(args.cache, "train", args.condition)
-    val_data = IndexedSameWindowDataset(args.cache, "val", args.condition)
+    train_data = dataset_factory(args.cache, "train", args.condition)
+    val_data = dataset_factory(args.cache, "val", args.condition)
     if args.smoke:
         train_view, val_view = smoke_subset(train_data), smoke_subset(val_data)
         sampler_labels = [int(train_view[index]["label"]) for index in range(len(train_view))]
@@ -110,7 +155,7 @@ def main():
 
     seed_all(args.seed)
     device = torch.device(device_name)
-    model = model_for(config).to(device)
+    model = model_factory(config).to(device)
     trainable = [(name, parameter) for name, parameter in model.named_parameters() if parameter.requires_grad]
     if any(name.startswith("bert_model.embeddings") for name, _ in trainable):
         raise ValueError("Embedding layer must remain frozen")
@@ -137,10 +182,11 @@ def main():
     stale = 0
     started = time.perf_counter()
     for epoch in range(config["max_epochs"]):
+        epoch_started = time.perf_counter()
         model.train()
         sampler.epoch = epoch
         losses = []
-        for batch in loader:
+        for step, batch in enumerate(loader, start=1):
             optimizer.zero_grad(set_to_none=True)
             logits = model(batch)["logits"]
             loss = F.cross_entropy(logits.float(), batch["labels"].to(device))
@@ -152,6 +198,13 @@ def main():
             optimizer.step()
             scheduler.step()
             losses.append(float(loss.detach()))
+            if step % 100 == 0 or step == len(loader):
+                print(json.dumps({
+                    "event": "train_progress", "condition": args.condition,
+                    "seed": args.seed, "epoch": epoch + 1, "batch": step,
+                    "batches": len(loader), "mean_ce": float(np.mean(losses)),
+                    "epoch_elapsed_seconds": time.perf_counter() - epoch_started,
+                }), flush=True)
         validation, _, _ = evaluate(model, val_view, config["batch_size"])
         improved = validation["macro_f1"] > best_score
         if improved:
@@ -164,13 +217,17 @@ def main():
             })
         else:
             stale += 1
+        event = {
+            "event": "epoch_complete",
+            "epoch": epoch + 1,
+            "mean_ce": float(np.mean(losses)),
+            "validation_macro_f1": validation["macro_f1"],
+            "improved": improved,
+            "epoch_seconds": time.perf_counter() - epoch_started,
+        }
         with (args.output / "events.jsonl").open("a") as stream:
-            stream.write(json.dumps({
-                "epoch": epoch + 1,
-                "mean_ce": float(np.mean(losses)),
-                "validation_macro_f1": validation["macro_f1"],
-                "improved": improved,
-            }) + "\n")
+            stream.write(json.dumps(event) + "\n")
+        print(json.dumps(event), flush=True)
         if stale >= config["early_stopping_patience"]:
             break
 
@@ -209,20 +266,20 @@ def main():
 
     selected = torch.load(args.output / "best.pt", map_location=device, weights_only=True)
     model.load_state_dict(selected["model_state_dict"], strict=True)
-    validation, val_probabilities, val_ids = evaluate(model, val_data, config["batch_size"])
-    write_jsonl(args.output / "validation_predictions.jsonl",
-                prediction_rows(val_data, val_probabilities, val_ids))
-    test_data = IndexedSameWindowDataset(args.cache, "test", args.condition)
-    test, test_probabilities, test_ids = evaluate(model, test_data, config["batch_size"])
-    write_jsonl(args.output / "test_predictions.jsonl",
-                prediction_rows(test_data, test_probabilities, test_ids))
+    validation, test = evaluate_partitions(
+        model, val_data, cache=args.cache, condition=args.condition,
+        batch_size=config["batch_size"], output=args.output,
+        dataset_factory=dataset_factory, validation_only=args.validation_only,
+    )
     write_json(args.output / "result.json", {
-        "status": "completed",
+        "status": "validation_completed" if args.validation_only else "completed",
         "condition": args.condition,
         "seed": args.seed,
         "best_epoch": best_epoch,
         "validation": validation,
         "test": test,
+        "test_evaluated": not args.validation_only,
+        "source_sha256": source_hashes,
         "parameters": parameters,
         "best_checkpoint_sha256": file_hash(args.output / "best.pt"),
         "elapsed_seconds": time.perf_counter() - started,

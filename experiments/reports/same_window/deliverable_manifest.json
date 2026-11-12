@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "date": "2026-11-11",
+  "date": "2026-11-12",
   "figures": {
     "01_original_comparison.png": "38269d3e4fd337f7b14492b61c946f39b8108839bc31b0bea92f0cfd635b8b65",
     "02_cache_readiness.png": "78106fe0dff8f6f7f8a8236ed603ef1ce2af037f02c32614c757405b538d03a7",
@@ -23,6 +23,11 @@
   },
   "report": {
     "path": "experiments/reports/same_window/REPORT.md",
-    "sha256": "3eed3cde49eb3f356dd3fac3e38b0df54747fed0fc2587245c31fa20e56c457c"
+    "sha256": "8ed49a9233dcdb3f95c909397a6edf7d30e2210d98fc1d06cbe72d9c3a40f145"
+  },
+  "reuse_attribution": {
+    "path": "docs/REUSE_ATTRIBUTION.md",
+    "sha256": "970b3442e64fa0a1e4e80e420c8da531ea2e1562bbf699537d907ffc5ceebc81",
+    "reviewed_source_commits": 3
   }
 }

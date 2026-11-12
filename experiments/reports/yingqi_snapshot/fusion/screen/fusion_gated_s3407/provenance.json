@@ -1,0 +1,15 @@
+{
+  "initialization": "base-pretrained weights, not a prior task checkpoint",
+  "files_sha256": {
+    "/kaggle/input/datasets/zhengyingqi/ee6405-same-window-gpu-v1/resources/assets/roberta-base/model.safetensors": "5bde1d28afb363d0103324efeb5afc8b2b397fe5e04beabb9b1ef355255ade81",
+    "/kaggle/input/datasets/zhengyingqi/ee6405-same-window-gpu-v1/resources/assets/roberta-base/config.json": "ef0185e2aae6e06c5f105a285006952c340e20c7dbf43c86ec82601b13fc45e9",
+    "/kaggle/input/datasets/zhengyingqi/ee6405-same-window-gpu-v1/resources/RACE/models/flexible_model.py": "8ea2390f7185c9598a0f779082d2db939062377a235002a49d48efee35ff66ed",
+    "/kaggle/input/datasets/zhengyingqi/ee6405-same-window-gpu-v1/resources/RACE/models/modules.py": "eb25dae50667f5e15a764357c5d43ffcf4c802cb83e299013335aa991fd54fad"
+  },
+  "packages": {
+    "torch": "2.11.0+cu130",
+    "transformers": "5.20.2",
+    "torch-geometric": "2.6.1",
+    "numpy": "2.1.3"
+  }
+}

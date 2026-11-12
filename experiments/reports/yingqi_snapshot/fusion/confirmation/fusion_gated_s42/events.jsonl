@@ -1,0 +1,12 @@
+{"event": "epoch_complete", "epoch": 1, "mean_ce": 1.2093440976436216, "validation_macro_f1": 0.7581864577779318, "improved": true, "epoch_seconds": 531.2598083980047}
+{"event": "epoch_complete", "epoch": 2, "mean_ce": 0.48413673582592065, "validation_macro_f1": 0.8549989707595468, "improved": true, "epoch_seconds": 529.8415426060019}
+{"event": "epoch_complete", "epoch": 3, "mean_ce": 0.3343300774576241, "validation_macro_f1": 0.8668074061267298, "improved": true, "epoch_seconds": 530.0494404370038}
+{"event": "epoch_complete", "epoch": 4, "mean_ce": 0.2742459396691793, "validation_macro_f1": 0.8812921825052237, "improved": true, "epoch_seconds": 529.512997148995}
+{"event": "epoch_complete", "epoch": 5, "mean_ce": 0.23383368907472352, "validation_macro_f1": 0.8937135131478708, "improved": true, "epoch_seconds": 529.8272064060002}
+{"event": "epoch_complete", "epoch": 6, "mean_ce": 0.20597513235282042, "validation_macro_f1": 0.8846237209398564, "improved": false, "epoch_seconds": 528.7219357229988}
+{"event": "epoch_complete", "epoch": 7, "mean_ce": 0.18539061752522368, "validation_macro_f1": 0.8997229000198175, "improved": true, "epoch_seconds": 529.7601203550003}
+{"event": "epoch_complete", "epoch": 8, "mean_ce": 0.17036179261906964, "validation_macro_f1": 0.8976196065784057, "improved": false, "epoch_seconds": 529.3074736819981}
+{"event": "epoch_complete", "epoch": 9, "mean_ce": 0.15671451433158035, "validation_macro_f1": 0.8964012449213081, "improved": false, "epoch_seconds": 528.833682069002}
+{"event": "epoch_complete", "epoch": 10, "mean_ce": 0.1414630658215429, "validation_macro_f1": 0.9023957043776224, "improved": true, "epoch_seconds": 528.7061460750047}
+{"event": "epoch_complete", "epoch": 11, "mean_ce": 0.12392763651105361, "validation_macro_f1": 0.9074241473864827, "improved": true, "epoch_seconds": 529.5493636820029}
+{"event": "epoch_complete", "epoch": 12, "mean_ce": 0.12074888074844349, "validation_macro_f1": 0.9005134513891025, "improved": false, "epoch_seconds": 528.7421608170043}

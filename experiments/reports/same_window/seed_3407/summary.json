@@ -1,0 +1,784 @@
+{
+  "status": "completed",
+  "seed": 3407,
+  "conditions": {
+    "text": {
+      "status": "completed",
+      "condition": "text",
+      "seed": 3407,
+      "best_epoch": 10,
+      "validation": {
+        "samples": 1600,
+        "accuracy": 0.93875,
+        "macro_f1": 0.9137793970340603,
+        "macro_precision": 0.9289843233796405,
+        "macro_recall": 0.9025238801054019,
+        "macro_auroc_ovr": 0.9853479028661495,
+        "macro_tpr_at_1pct_fpr_roc": 0.7984107378129118,
+        "per_class": {
+          "human_written": {
+            "support": 400,
+            "precision": 0.9801488833746899,
+            "recall": 0.9875,
+            "f1": 0.9838107098381071,
+            "auroc_ovr": 0.9991625,
+            "tpr_at_1pct_fpr_roc": 0.9975
+          },
+          "human_ai_polished": {
+            "support": 400,
+            "precision": 0.9026128266033254,
+            "recall": 0.95,
+            "f1": 0.925700365408039,
+            "auroc_ovr": 0.9904625,
+            "tpr_at_1pct_fpr_roc": 0.8275
+          },
+          "ai_generated": {
+            "support": 690,
+            "precision": 0.9430656934306569,
+            "recall": 0.936231884057971,
+            "f1": 0.9396363636363636,
+            "auroc_ovr": 0.9854761904761904,
+            "tpr_at_1pct_fpr_roc": 0.6231884057971014
+          },
+          "ai_humanized": {
+            "support": 110,
+            "precision": 0.8901098901098901,
+            "recall": 0.7363636363636363,
+            "f1": 0.8059701492537313,
+            "auroc_ovr": 0.9662904209884075,
+            "tpr_at_1pct_fpr_roc": 0.7454545454545455
+          }
+        },
+        "confusion_matrix": [
+          [
+            395,
+            5,
+            0,
+            0
+          ],
+          [
+            4,
+            380,
+            15,
+            1
+          ],
+          [
+            2,
+            33,
+            646,
+            9
+          ],
+          [
+            2,
+            3,
+            24,
+            81
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "test": {
+        "samples": 3194,
+        "accuracy": 0.9370695053224797,
+        "macro_f1": 0.9127984331857841,
+        "macro_precision": 0.9241913904241374,
+        "macro_recall": 0.9035056251759253,
+        "macro_auroc_ovr": 0.9893642959796607,
+        "macro_tpr_at_1pct_fpr_roc": 0.8342118303161098,
+        "per_class": {
+          "human_written": {
+            "support": 798,
+            "precision": 0.9788293897882939,
+            "recall": 0.9849624060150376,
+            "f1": 0.9818863210493441,
+            "auroc_ovr": 0.9987847854193078,
+            "tpr_at_1pct_fpr_roc": 0.993734335839599
+          },
+          "human_ai_polished": {
+            "support": 798,
+            "precision": 0.9130966952264382,
+            "recall": 0.9348370927318296,
+            "f1": 0.9238390092879257,
+            "auroc_ovr": 0.9886899008790757,
+            "tpr_at_1pct_fpr_roc": 0.8020050125313283
+          },
+          "ai_generated": {
+            "support": 1371,
+            "precision": 0.9368191721132898,
+            "recall": 0.9409190371991247,
+            "f1": 0.9388646288209607,
+            "auroc_ovr": 0.9862599341504314,
+            "tpr_at_1pct_fpr_roc": 0.7789934354485777
+          },
+          "ai_humanized": {
+            "support": 227,
+            "precision": 0.868020304568528,
+            "recall": 0.7533039647577092,
+            "f1": 0.8066037735849056,
+            "auroc_ovr": 0.9837225634698274,
+            "tpr_at_1pct_fpr_roc": 0.762114537444934
+          }
+        },
+        "confusion_matrix": [
+          [
+            786,
+            11,
+            0,
+            1
+          ],
+          [
+            13,
+            746,
+            37,
+            2
+          ],
+          [
+            3,
+            55,
+            1290,
+            23
+          ],
+          [
+            1,
+            5,
+            50,
+            171
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "parameters": {
+        "total": 125239300,
+        "trainable": 7681540,
+        "trainable_names": [
+          "bert_model.encoder.layer.11.attention.self.query.weight",
+          "bert_model.encoder.layer.11.attention.self.query.bias",
+          "bert_model.encoder.layer.11.attention.self.key.weight",
+          "bert_model.encoder.layer.11.attention.self.key.bias",
+          "bert_model.encoder.layer.11.attention.self.value.weight",
+          "bert_model.encoder.layer.11.attention.self.value.bias",
+          "bert_model.encoder.layer.11.attention.output.dense.weight",
+          "bert_model.encoder.layer.11.attention.output.dense.bias",
+          "bert_model.encoder.layer.11.attention.output.LayerNorm.weight",
+          "bert_model.encoder.layer.11.attention.output.LayerNorm.bias",
+          "bert_model.encoder.layer.11.intermediate.dense.weight",
+          "bert_model.encoder.layer.11.intermediate.dense.bias",
+          "bert_model.encoder.layer.11.output.dense.weight",
+          "bert_model.encoder.layer.11.output.dense.bias",
+          "bert_model.encoder.layer.11.output.LayerNorm.weight",
+          "bert_model.encoder.layer.11.output.LayerNorm.bias",
+          "classifier.dense.weight",
+          "classifier.dense.bias",
+          "classifier.out_proj.weight",
+          "classifier.out_proj.bias"
+        ]
+      },
+      "best_checkpoint_sha256": "fbcbf08208374613234389fbfe1127e095690f809f7280f467fb1db69b8e11bc",
+      "elapsed_seconds": 7581.112304476999,
+      "gpu": "Tesla T4",
+      "peak_cuda_allocated_mib": 1334.9013671875,
+      "scope": "Same visible 512-token prefix, CE objective, base-pretrained initialization."
+    },
+    "graph": {
+      "status": "completed",
+      "condition": "graph",
+      "seed": 3407,
+      "best_epoch": 9,
+      "validation": {
+        "samples": 1600,
+        "accuracy": 0.9275,
+        "macro_f1": 0.893163876496943,
+        "macro_precision": 0.9325665988019513,
+        "macro_recall": 0.8678952569169961,
+        "macro_auroc_ovr": 0.9734689436587753,
+        "macro_tpr_at_1pct_fpr_roc": 0.7518025362318841,
+        "per_class": {
+          "human_written": {
+            "support": 400,
+            "precision": 0.972972972972973,
+            "recall": 0.99,
+            "f1": 0.9814126394052045,
+            "auroc_ovr": 0.9986625,
+            "tpr_at_1pct_fpr_roc": 0.9975
+          },
+          "human_ai_polished": {
+            "support": 400,
+            "precision": 0.9386666666666666,
+            "recall": 0.88,
+            "f1": 0.9083870967741936,
+            "auroc_ovr": 0.9848666666666667,
+            "tpr_at_1pct_fpr_roc": 0.83
+          },
+          "ai_generated": {
+            "support": 690,
+            "precision": 0.8975741239892183,
+            "recall": 0.9652173913043478,
+            "f1": 0.9301675977653632,
+            "auroc_ovr": 0.9793948080904603,
+            "tpr_at_1pct_fpr_roc": 0.4797101449275362
+          },
+          "ai_humanized": {
+            "support": 110,
+            "precision": 0.9210526315789473,
+            "recall": 0.6363636363636364,
+            "f1": 0.7526881720430108,
+            "auroc_ovr": 0.9309517998779744,
+            "tpr_at_1pct_fpr_roc": 0.7
+          }
+        },
+        "confusion_matrix": [
+          [
+            396,
+            3,
+            0,
+            1
+          ],
+          [
+            7,
+            352,
+            40,
+            1
+          ],
+          [
+            2,
+            18,
+            666,
+            4
+          ],
+          [
+            2,
+            2,
+            36,
+            70
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "test": {
+        "samples": 3194,
+        "accuracy": 0.926111458985598,
+        "macro_f1": 0.8969321650253522,
+        "macro_precision": 0.9250886522662816,
+        "macro_recall": 0.8767896694714934,
+        "macro_auroc_ovr": 0.9812411440652242,
+        "macro_tpr_at_1pct_fpr_roc": 0.7845954788068118,
+        "per_class": {
+          "human_written": {
+            "support": 798,
+            "precision": 0.9728395061728395,
+            "recall": 0.9874686716791979,
+            "f1": 0.9800995024875622,
+            "auroc_ovr": 0.998369515190313,
+            "tpr_at_1pct_fpr_roc": 0.9899749373433584
+          },
+          "human_ai_polished": {
+            "support": 798,
+            "precision": 0.9297082228116711,
+            "recall": 0.8784461152882206,
+            "f1": 0.9033505154639175,
+            "auroc_ovr": 0.9875748427830845,
+            "tpr_at_1pct_fpr_roc": 0.7418546365914787
+          },
+          "ai_generated": {
+            "support": 1371,
+            "precision": 0.9018531228551819,
+            "recall": 0.9584245076586433,
+            "f1": 0.9292786421499293,
+            "auroc_ovr": 0.9822846735509035,
+            "tpr_at_1pct_fpr_roc": 0.6973012399708242
+          },
+          "ai_humanized": {
+            "support": 227,
+            "precision": 0.8959537572254336,
+            "recall": 0.6828193832599119,
+            "f1": 0.775,
+            "auroc_ovr": 0.956735544736596,
+            "tpr_at_1pct_fpr_roc": 0.7092511013215859
+          }
+        },
+        "confusion_matrix": [
+          [
+            788,
+            5,
+            3,
+            2
+          ],
+          [
+            19,
+            701,
+            73,
+            5
+          ],
+          [
+            3,
+            43,
+            1314,
+            11
+          ],
+          [
+            0,
+            5,
+            67,
+            155
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "parameters": {
+        "total": 128617148,
+        "trainable": 11059388,
+        "trainable_names": [
+          "bert_model.encoder.layer.11.attention.self.query.weight",
+          "bert_model.encoder.layer.11.attention.self.query.bias",
+          "bert_model.encoder.layer.11.attention.self.key.weight",
+          "bert_model.encoder.layer.11.attention.self.key.bias",
+          "bert_model.encoder.layer.11.attention.self.value.weight",
+          "bert_model.encoder.layer.11.attention.self.value.bias",
+          "bert_model.encoder.layer.11.attention.output.dense.weight",
+          "bert_model.encoder.layer.11.attention.output.dense.bias",
+          "bert_model.encoder.layer.11.attention.output.LayerNorm.weight",
+          "bert_model.encoder.layer.11.attention.output.LayerNorm.bias",
+          "bert_model.encoder.layer.11.intermediate.dense.weight",
+          "bert_model.encoder.layer.11.intermediate.dense.bias",
+          "bert_model.encoder.layer.11.output.dense.weight",
+          "bert_model.encoder.layer.11.output.dense.bias",
+          "bert_model.encoder.layer.11.output.LayerNorm.weight",
+          "bert_model.encoder.layer.11.output.LayerNorm.bias",
+          "node_type_embedding.weight",
+          "node_proj.0.weight",
+          "node_proj.0.bias",
+          "node_proj.1.weight",
+          "node_proj.1.bias",
+          "convs.0.weight",
+          "convs.0.comp",
+          "convs.0.root",
+          "convs.0.bias",
+          "convs.1.weight",
+          "convs.1.comp",
+          "convs.1.root",
+          "convs.1.bias",
+          "classifier.dense.weight",
+          "classifier.dense.bias",
+          "classifier.out_proj.weight",
+          "classifier.out_proj.bias"
+        ]
+      },
+      "best_checkpoint_sha256": "85b9b871d5d27e83decba75cda4c8feb1f6d1f1c427c1c37c569e07d3bac4787",
+      "elapsed_seconds": 13462.221032518,
+      "gpu": "Tesla T4",
+      "peak_cuda_allocated_mib": 1431.53515625,
+      "scope": "Same visible 512-token prefix, CE objective, base-pretrained initialization."
+    },
+    "shuffled": {
+      "status": "completed",
+      "condition": "shuffled",
+      "seed": 3407,
+      "best_epoch": 9,
+      "validation": {
+        "samples": 1600,
+        "accuracy": 0.926875,
+        "macro_f1": 0.8933236663120414,
+        "macro_precision": 0.9199006792490421,
+        "macro_recall": 0.8740522068511198,
+        "macro_auroc_ovr": 0.9740982434868592,
+        "macro_tpr_at_1pct_fpr_roc": 0.7356357048748353,
+        "per_class": {
+          "human_written": {
+            "support": 400,
+            "precision": 0.9824561403508771,
+            "recall": 0.98,
+            "f1": 0.981226533166458,
+            "auroc_ovr": 0.9992166666666668,
+            "tpr_at_1pct_fpr_roc": 0.995
+          },
+          "human_ai_polished": {
+            "support": 400,
+            "precision": 0.922879177377892,
+            "recall": 0.8975,
+            "f1": 0.9100126742712294,
+            "auroc_ovr": 0.98326875,
+            "tpr_at_1pct_fpr_roc": 0.815
+          },
+          "ai_generated": {
+            "support": 690,
+            "precision": 0.9052197802197802,
+            "recall": 0.9550724637681159,
+            "f1": 0.9294781382228491,
+            "auroc_ovr": 0.9797037744863832,
+            "tpr_at_1pct_fpr_roc": 0.45072463768115945
+          },
+          "ai_humanized": {
+            "support": 110,
+            "precision": 0.8690476190476191,
+            "recall": 0.6636363636363637,
+            "f1": 0.7525773195876289,
+            "auroc_ovr": 0.9342037827943868,
+            "tpr_at_1pct_fpr_roc": 0.6818181818181818
+          }
+        },
+        "confusion_matrix": [
+          [
+            392,
+            6,
+            1,
+            1
+          ],
+          [
+            4,
+            359,
+            36,
+            1
+          ],
+          [
+            1,
+            21,
+            659,
+            9
+          ],
+          [
+            2,
+            3,
+            32,
+            73
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "test": {
+        "samples": 3194,
+        "accuracy": 0.9267376330619912,
+        "macro_f1": 0.9006939731458012,
+        "macro_precision": 0.9246911120545195,
+        "macro_recall": 0.8830585770231496,
+        "macro_auroc_ovr": 0.981850361692137,
+        "macro_tpr_at_1pct_fpr_roc": 0.8051943382057647,
+        "per_class": {
+          "human_written": {
+            "support": 798,
+            "precision": 0.9821882951653944,
+            "recall": 0.9674185463659147,
+            "f1": 0.9747474747474747,
+            "auroc_ovr": 0.9986867209760629,
+            "tpr_at_1pct_fpr_roc": 0.9949874686716792
+          },
+          "human_ai_polished": {
+            "support": 798,
+            "precision": 0.8964241676942046,
+            "recall": 0.9110275689223057,
+            "f1": 0.9036668738346799,
+            "auroc_ovr": 0.9878520382759906,
+            "tpr_at_1pct_fpr_roc": 0.7832080200501254
+          },
+          "ai_generated": {
+            "support": 1371,
+            "precision": 0.9161971830985915,
+            "recall": 0.9489423778264041,
+            "f1": 0.932282336080258,
+            "auroc_ovr": 0.983127898523326,
+            "tpr_at_1pct_fpr_roc": 0.6892778993435449
+          },
+          "ai_humanized": {
+            "support": 227,
+            "precision": 0.903954802259887,
+            "recall": 0.7048458149779736,
+            "f1": 0.7920792079207921,
+            "auroc_ovr": 0.9577347889931687,
+            "tpr_at_1pct_fpr_roc": 0.7533039647577092
+          }
+        },
+        "confusion_matrix": [
+          [
+            772,
+            20,
+            3,
+            3
+          ],
+          [
+            12,
+            727,
+            56,
+            3
+          ],
+          [
+            2,
+            57,
+            1301,
+            11
+          ],
+          [
+            0,
+            7,
+            60,
+            160
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "parameters": {
+        "total": 128617148,
+        "trainable": 11059388,
+        "trainable_names": [
+          "bert_model.encoder.layer.11.attention.self.query.weight",
+          "bert_model.encoder.layer.11.attention.self.query.bias",
+          "bert_model.encoder.layer.11.attention.self.key.weight",
+          "bert_model.encoder.layer.11.attention.self.key.bias",
+          "bert_model.encoder.layer.11.attention.self.value.weight",
+          "bert_model.encoder.layer.11.attention.self.value.bias",
+          "bert_model.encoder.layer.11.attention.output.dense.weight",
+          "bert_model.encoder.layer.11.attention.output.dense.bias",
+          "bert_model.encoder.layer.11.attention.output.LayerNorm.weight",
+          "bert_model.encoder.layer.11.attention.output.LayerNorm.bias",
+          "bert_model.encoder.layer.11.intermediate.dense.weight",
+          "bert_model.encoder.layer.11.intermediate.dense.bias",
+          "bert_model.encoder.layer.11.output.dense.weight",
+          "bert_model.encoder.layer.11.output.dense.bias",
+          "bert_model.encoder.layer.11.output.LayerNorm.weight",
+          "bert_model.encoder.layer.11.output.LayerNorm.bias",
+          "node_type_embedding.weight",
+          "node_proj.0.weight",
+          "node_proj.0.bias",
+          "node_proj.1.weight",
+          "node_proj.1.bias",
+          "convs.0.weight",
+          "convs.0.comp",
+          "convs.0.root",
+          "convs.0.bias",
+          "convs.1.weight",
+          "convs.1.comp",
+          "convs.1.root",
+          "convs.1.bias",
+          "classifier.dense.weight",
+          "classifier.dense.bias",
+          "classifier.out_proj.weight",
+          "classifier.out_proj.bias"
+        ]
+      },
+      "best_checkpoint_sha256": "9fbde11ed747c2459fe9fb3ea171c366d5789ceaa1c5a501de9e49a937c30863",
+      "elapsed_seconds": 13579.610271796999,
+      "gpu": "Tesla T4",
+      "peak_cuda_allocated_mib": 1431.54248046875,
+      "scope": "Same visible 512-token prefix, CE objective, base-pretrained initialization."
+    },
+    "edu": {
+      "status": "completed",
+      "condition": "edu",
+      "seed": 3407,
+      "best_epoch": 10,
+      "validation": {
+        "samples": 1600,
+        "accuracy": 0.935625,
+        "macro_f1": 0.9090893866072338,
+        "macro_precision": 0.9348001236226589,
+        "macro_recall": 0.8902527997364954,
+        "macro_auroc_ovr": 0.9788589783455104,
+        "macro_tpr_at_1pct_fpr_roc": 0.7587994071146246,
+        "per_class": {
+          "human_written": {
+            "support": 400,
+            "precision": 0.9799498746867168,
+            "recall": 0.9775,
+            "f1": 0.9787234042553191,
+            "auroc_ovr": 0.9993645833333332,
+            "tpr_at_1pct_fpr_roc": 0.9975
+          },
+          "human_ai_polished": {
+            "support": 400,
+            "precision": 0.9195979899497487,
+            "recall": 0.915,
+            "f1": 0.9172932330827067,
+            "auroc_ovr": 0.9842416666666667,
+            "tpr_at_1pct_fpr_roc": 0.7875
+          },
+          "ai_generated": {
+            "support": 690,
+            "precision": 0.9220055710306406,
+            "recall": 0.9594202898550724,
+            "f1": 0.9403409090909091,
+            "auroc_ovr": 0.9814269788182832,
+            "tpr_at_1pct_fpr_roc": 0.4956521739130435
+          },
+          "ai_humanized": {
+            "support": 110,
+            "precision": 0.9176470588235294,
+            "recall": 0.7090909090909091,
+            "f1": 0.8,
+            "auroc_ovr": 0.9504026845637584,
+            "tpr_at_1pct_fpr_roc": 0.7545454545454545
+          }
+        },
+        "confusion_matrix": [
+          [
+            391,
+            7,
+            1,
+            1
+          ],
+          [
+            5,
+            366,
+            29,
+            0
+          ],
+          [
+            2,
+            20,
+            662,
+            6
+          ],
+          [
+            1,
+            5,
+            26,
+            78
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "test": {
+        "samples": 3194,
+        "accuracy": 0.9329993738259236,
+        "macro_f1": 0.9089187489522184,
+        "macro_precision": 0.9269578769095684,
+        "macro_recall": 0.8944501371900142,
+        "macro_auroc_ovr": 0.9845717440218976,
+        "macro_tpr_at_1pct_fpr_roc": 0.8088574526765057,
+        "per_class": {
+          "human_written": {
+            "support": 798,
+            "precision": 0.9823008849557522,
+            "recall": 0.9736842105263158,
+            "f1": 0.9779735682819384,
+            "auroc_ovr": 0.9989900669871674,
+            "tpr_at_1pct_fpr_roc": 0.9924812030075187
+          },
+          "human_ai_polished": {
+            "support": 798,
+            "precision": 0.9154040404040404,
+            "recall": 0.9085213032581454,
+            "f1": 0.9119496855345912,
+            "auroc_ovr": 0.9882422040075146,
+            "tpr_at_1pct_fpr_roc": 0.7543859649122807
+          },
+          "ai_generated": {
+            "support": 1371,
+            "precision": 0.9212376933895922,
+            "recall": 0.9555069292487236,
+            "f1": 0.9380594343000358,
+            "auroc_ovr": 0.9837758714024901,
+            "tpr_at_1pct_fpr_roc": 0.7308533916849015
+          },
+          "ai_humanized": {
+            "support": 227,
+            "precision": 0.8888888888888888,
+            "recall": 0.7400881057268722,
+            "f1": 0.8076923076923077,
+            "auroc_ovr": 0.9672788336904184,
+            "tpr_at_1pct_fpr_roc": 0.7577092511013216
+          }
+        },
+        "confusion_matrix": [
+          [
+            777,
+            17,
+            2,
+            2
+          ],
+          [
+            12,
+            725,
+            55,
+            6
+          ],
+          [
+            2,
+            46,
+            1310,
+            13
+          ],
+          [
+            0,
+            4,
+            55,
+            168
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ]
+      },
+      "parameters": {
+        "total": 125305092,
+        "trainable": 7747332,
+        "trainable_names": [
+          "bert_model.encoder.layer.11.attention.self.query.weight",
+          "bert_model.encoder.layer.11.attention.self.query.bias",
+          "bert_model.encoder.layer.11.attention.self.key.weight",
+          "bert_model.encoder.layer.11.attention.self.key.bias",
+          "bert_model.encoder.layer.11.attention.self.value.weight",
+          "bert_model.encoder.layer.11.attention.self.value.bias",
+          "bert_model.encoder.layer.11.attention.output.dense.weight",
+          "bert_model.encoder.layer.11.attention.output.dense.bias",
+          "bert_model.encoder.layer.11.attention.output.LayerNorm.weight",
+          "bert_model.encoder.layer.11.attention.output.LayerNorm.bias",
+          "bert_model.encoder.layer.11.intermediate.dense.weight",
+          "bert_model.encoder.layer.11.intermediate.dense.bias",
+          "bert_model.encoder.layer.11.output.dense.weight",
+          "bert_model.encoder.layer.11.output.dense.bias",
+          "bert_model.encoder.layer.11.output.LayerNorm.weight",
+          "bert_model.encoder.layer.11.output.LayerNorm.bias",
+          "projection.0.weight",
+          "projection.0.bias",
+          "projection.1.weight",
+          "projection.1.bias",
+          "classifier.dense.weight",
+          "classifier.dense.bias",
+          "classifier.out_proj.weight",
+          "classifier.out_proj.bias"
+        ]
+      },
+      "best_checkpoint_sha256": "eca33f9ab7dce6fca6d2f09e116e0118b85c5f6ca21803ec6e3e3d64c89c2fd9",
+      "elapsed_seconds": 7948.696446866001,
+      "gpu": "Tesla T4",
+      "peak_cuda_allocated_mib": 1337.40234375,
+      "scope": "Same visible 512-token prefix, CE objective, base-pretrained initialization."
+    }
+  }
+}

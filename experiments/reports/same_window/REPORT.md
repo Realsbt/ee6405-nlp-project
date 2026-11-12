@@ -1,7 +1,7 @@
 # Yingqi contribution report: fair-window mechanism ablation
 
-Updated 2026-11-11. This report separates completed evidence from formal GPU
-results that still need to run.
+Updated 2026-11-12. Current cross-experiment contribution and GPU status:
+[`docs/YINGQI_STATUS.md`](../../../docs/YINGQI_STATUS.md).
 
 ## Original problem
 
@@ -42,7 +42,7 @@ model fails to gain accuracy.
 | Relation nodes changed | 467,369 / 638,038 (73.25%) |
 | Directed edge types changed | 1,869,476 / 2,552,152 (73.25%) |
 | Graphs unchanged by the permutation | 36 / 15,984 (0.23%) |
-| Repository tests after integration | 22 passed |
+| Repository tests at same-window integration | 22 passed |
 | Four-condition CPU smoke | 4 / 4 passed; test split not evaluated |
 | Four-condition Kaggle CUDA smoke | 4 / 4 passed on Tesla T4; test split not evaluated |
 
@@ -112,13 +112,21 @@ matched-seed comparisons are `graph - edu`, `graph - shuffled` and `graph - text
 Each run must save the frozen configuration, development curve, best checkpoint,
 validation and test probabilities, parameter counts, runtime and peak memory.
 
-The seed 3407 four-condition job was submitted to Kaggle after the CUDA smoke
-passed. It is not counted as completed evidence until its four `result.json`
-files and predictions have been downloaded and checked.
+The seed 3407 four-condition job is complete. All four `result.json` files and
+full development/test predictions have been downloaded; the dependency-free
+`scripts/check_yingqi_results.py` recomputes their Macro-F1.
 
-The paper may currently claim that the fair-window implementation and data
-integrity checks are complete. It may not claim that graph structure helps or
-fails to help until all 12 GPU runs finish.
+| Condition | Validation Macro-F1 | Test Macro-F1 |
+|---|---:|---:|
+| text | 91.3779% | 91.2798% |
+| graph | 89.3164% | 89.6932% |
+| shuffled | 89.3324% | 90.0694% |
+| edu | 90.9089% | 90.8919% |
+
+Raw evidence is in `seed_3407/`. Seeds 42 and 2026 remain incomplete. This
+single-seed result favors text and does not support the original relation
+assignment over shuffled relations, but does not establish a stable multi-seed
+effect or a universal conclusion about graph structure.
 
 ## Deliverables
 
@@ -128,3 +136,29 @@ fails to help until all 12 GPU runs finish.
 - `docs/SAME_WINDOW_ABLATION.md`: protocol and run commands.
 - `experiments/same_window_controls.py` and `experiments/train_same_window.py`:
   implementation and formal training entry point.
+
+## Fusion extension: reuse and attribution
+
+The subsequent Text-EDU fusion candidate reuses this phase's frozen same-window
+cache, indexed loader and EDU model scaffold, as well as the group's base
+encoder, balanced sampler, metrics, path mapping and training/checkpoint helpers.
+These are prior or shared contributions, not new fusion work.
+
+The new extension is the CLS-preserving residual readout, EDU attention and gate,
+four matched-head variants, validation-only screening and reload/example export.
+It adds 17 unit tests to the existing 22, for 39 passing experiment tests, plus
+four real-backbone CPU smoke and reload checks. New, separate fusion Tesla T4
+smoke evidence now passes all four `fusion_*` conditions. Completed single-seed
+validation screening gives CLS/mean/attention/gated Macro-F1 of
+90.64%/90.85%/90.90%/91.36%; gated was frozen as the candidate before test access.
+These are selection-validation results, not final test evidence. The first
+fusion job ended in cancellation after about 12 hours, retaining five complete
+training runs; a continuation job is running to complete the three missing
+confirmation trainings and final evaluations. No final three-seed test result
+has been verified in this snapshot. The older
+Tesla T4 evidence above remains specific to `text/graph/shuffled/edu`.
+
+Only code, resources, weights and results actually used by this extension are
+listed in `docs/REUSE_ATTRIBUTION.md`; unused idea references are omitted.
+Fusion starts from base-pretrained weights, not a teammate's task checkpoint.
+Fusion design and execution commands are in `docs/EDU_FUSION.md`.

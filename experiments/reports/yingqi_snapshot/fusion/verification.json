@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "scope": "Single-seed validation screening only",
+  "test_opened": false,
+  "prediction_sha256": {
+    "fusion_cls": "e44a660a50c01ab72f440696363ebbdc2683e1d3c14c94a180d163590809f995",
+    "fusion_mean": "a992237710db289f2c39fbdff2a1840c93f56613df7cbf1dceeed22f5da5bdee",
+    "fusion_attention": "0b653e8778c51827f11e7aa52a210d48d04b1966e38a93e3f13efa1fa2781a48",
+    "fusion_gated": "b24f306f0320d50fe9e03b04f0eb161908b49447870294ef4cde07c122bf18a5"
+  },
+  "selection_sha256": "dcfc425dba177ebbc7647194b9ef0332912bf29d3432191bf2b9e8840199a7a8"
+}

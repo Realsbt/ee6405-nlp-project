@@ -1,0 +1,17 @@
+{
+  "scope": "Finish the already frozen root experiment; DFS replaces the old exhaustive follow-ups",
+  "stages": [
+    {
+      "kernel": "zhengyingqi/ee6405-text-edu-fusion-experiment-v1",
+      "submit": false,
+      "prefix": "edu_fusion_experiment_v1",
+      "output": "outputs/kaggle_fusion_experiment_v1",
+      "collector_pid": 49592,
+      "postprocess": [
+        "-B", "scripts/report_fusion_results.py",
+        "--input", "outputs/kaggle_fusion_experiment_v1/edu_fusion_experiment_v1",
+        "--output", "outputs/supervised_reports_v1/fusion"
+      ]
+    }
+  ]
+}

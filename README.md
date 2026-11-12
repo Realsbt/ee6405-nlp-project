@@ -6,7 +6,52 @@ A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), co
 
 **Experiment status (2026-11-06): the [2×2 ablation](docs/ABLATION_2X2.md) is complete.** Four neural conditions have three seeds each: **12 neural runs plus one TF-IDF baseline**. All five added runs, full test-set checkpoint verification, paired analyses and figures are complete. The four-method HC3 auxiliary evaluation and raw-text demo have been verified. Course deliverables and platform submission status are tracked separately in the [submission checklist](docs/SUBMISSION.md).
 
-## Latest improvement: fair-window mechanism controls
+## Yingqi's contributions and current status
+
+**Snapshot: 2026-11-12, 13:22 Singapore (UTC+8).** These additions are separate
+from the shared, completed 2x2 study above. Full ownership, evidence and remaining
+work are recorded in [Yingqi's contribution/status report](docs/YINGQI_STATUS.md).
+
+- **Method extension:** RoBERTa + residual Text-EDU fusion,
+  `CLS + gate(CLS, EDU_context) * EDU_context`, with matched CLS / mean /
+  attention / gated variants. This is Yingqi's added project module, not a
+  claim to invent RoBERTa, CLS, EDU, attention or gating.
+- **Controlled evaluation:** same-visible-window text / graph / shuffled-relation /
+  EDU controls, audited parsing/cache, reproducible training and predictions.
+- **Completed ensemble result:** CPU-fitted CE + RACE + TF-IDF stacking achieves
+  **93.61% HART test Macro-F1**. This is a real single-seed, exploratory ensemble
+  result, not the new fusion model's result or a three-seed mean.
+- **Reliability analysis:** external transfer, low-FPR diagnostics and editing
+  sensitivity; the stacking gain does not transfer to the frozen MixSet subset.
+
+| Work | Compute and verified completion | Still incomplete |
+|---|---|---|
+| Same-window controls | Tesla T4: all 4 conditions, seed 3407, complete test predictions | Seeds 42 / 2026: 8 planned runs not completed |
+| Text-EDU fusion | Tesla T4: 4 CUDA smokes; 4 seed-3407 screening trainings + CLS seed 42 complete | Three remaining confirmation runs and final three-seed test report |
+| Fusion continuation | Kaggle API reports `RUNNING`; original job reports `CANCEL_ACKNOWLEDGED` | Not counted as completed; no verified final summary yet |
+| Probability blend / stacking | Frozen neural checkpoints reused; CPU selection, meta-model fitting and evaluation complete | No new GPU encoder training for these analyses |
+| Gate-strength controls / segmentation + consistency / calibration | Code, CPU checks and reporting/DFS runners included | Formal GPU results not completed; no gain claimed |
+
+Fusion **validation** Macro-F1 at seed 3407 is CLS **90.6435%**, mean **90.8501%**,
+attention **90.8956%**, gated **91.3643%**. Gated was selected on validation
+(+0.7208 percentage points over matched CLS); this is not final test improvement.
+The continuation preserves completed runs and reruns missing training from base
+pretraining; it does not count interrupted partial training as a completed run.
+
+Entry points: [fusion design and commands](docs/EDU_FUSION.md),
+[reuse attribution](docs/REUSE_ATTRIBUTION.md),
+[unfinished follow-up experiments](docs/FUSION_NEXT_STEPS.zh-CN.md),
+[saved snapshot evidence](experiments/reports/yingqi_snapshot/).
+Model weights, private source texts and credentials are not uploaded.
+
+```bash
+python3 scripts/check_yingqi_results.py
+```
+
+This dependency-free check recomputes the saved same-window/fusion/stacking
+Macro-F1 values and checks evidence hashes. It does not rerun GPU inference.
+
+### Fair-window mechanism controls
 
 The original RoBERTa/RACE comparison changes the visible text range, pooling,
 parameter count and graph processing at the same time. A new protocol therefore
@@ -33,11 +78,21 @@ check used a Tesla T4 and measured peak allocated memory of 653.89 MiB for
 `edu`. Gradients were finite, trainable layers changed, frozen embeddings did
 not change and the test split was not evaluated.
 
-These are implementation and data-integrity results, not model-performance
-results. The formal 4 conditions × 3 seeds GPU matrix is still incomplete; the
-first four-condition seed 3407 job has been submitted after the CUDA smoke
-passed. This branch therefore does not claim that discourse graphs help or fail
-to help. Commands, hashes and acceptance criteria are in the
+The seed-3407 formal GPU run is now complete, with all 3,194 test predictions
+per condition downloaded and metrics independently recomputed:
+
+| Same-window condition | Validation Macro-F1 | Test Macro-F1 |
+|---|---:|---:|
+| `text` | 91.38% | **91.28%** |
+| `graph` | 89.32% | 89.69% |
+| `shuffled` | 89.33% | 90.07% |
+| `edu` | 90.91% | 90.89% |
+
+At this seed, text is strongest and the original relation assignment does not
+beat the shuffled control. The 4 conditions × 3 seeds matrix remains incomplete:
+this does not establish a stable multi-seed ranking or that graphs are generally
+useless. [Raw results and predictions](experiments/reports/same_window/seed_3407/)
+are included. Commands, hashes and acceptance criteria are in the
 [same-window protocol](docs/SAME_WINDOW_ABLATION.md).
 
 The individual contribution package also includes
