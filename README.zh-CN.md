@@ -126,7 +126,17 @@ bash experiments/run_demo.sh
 
 Demo profile 下载约 **4.28 GiB** 资源，另加 Python 环境。上游资源从固定版本的原始来源获取。已经在迁移后的 Linux checkout 和新建独立 CPU 环境中跑通四个 Demo 模型，并完成固定数据重建和预处理检查。提供 WSL2 步骤，本次验证在 Linux 完成。
 
-系统准备、完整数据恢复、硬件要求和 GPU 训练见 **[Linux / WSL2 复现指南](docs/REPRODUCING.zh-CN.md)**。原来的 `/data/botao/ee6405-race-validation/` 继续作为本机资源目录；组员自行设置 `EE6405_STORAGE`。历史结果中的路径在读取时映射，保留原始来源记录。
+系统准备、完整数据恢复、硬件要求和 GPU 训练见 **[Linux / WSL2 复现指南](docs/REPRODUCING.zh-CN.md)**。
+
+### 在小型 VPS 上托管演示
+
+完整演示需要 torch 和每个模型 500 MB 的 transformer，1 GiB 内存装不下。TF-IDF 可以：约 **130 MiB** 常驻内存，每次预测约 **1 ms**。`experiments/tfidf_server.py` 只提供该模型，其余模型标为不可用，页面会禁用它们而不是请求时才报错。
+
+```bash
+sudo bash scripts/deploy_tfidf_vps.sh
+```
+
+脚本会安装依赖、创建服务用户、克隆仓库、只安装 `joblib`、`numpy` 和 `scikit-learn`、下载并校验模型，并安装加固的 systemd 服务。无需域名，直接用 IP 即可访问。防火墙、更新和后续加 TLS 见 **[VPS 部署](docs/DEPLOY_VPS.md)**。原来的 `/data/botao/ee6405-race-validation/` 继续作为本机资源目录；组员自行设置 `EE6405_STORAGE`。历史结果中的路径在读取时映射，保留原始来源记录。
 
 ## 仓库内容
 
