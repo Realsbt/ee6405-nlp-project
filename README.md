@@ -16,7 +16,7 @@ Paste an English document and choose TF-IDF + logistic regression, RoBERTa, RACE
 
 *RACE running the demo's unlabeled example with the model already loaded.*
 
-**Try it without installing anything:** the [static Text Lab demo](https://realsbt.github.io/ee6405-nlp-project/) runs the real interface in the browser with frozen model outputs for the built-in example. It needs no backend, so it can only replay that example; run the local service below to analyze your own text.
+**Try it without installing anything:** the [static Text Lab demo](https://realsbt.github.io/ee6405-nlp-project/) runs the real interface in the browser. **TF-IDF scores any text you paste**, computed locally from the exported weights and bit-identical to the server. RoBERTa and RACE replay frozen outputs for the built-in example, because a 500 MB transformer cannot run in a page.
 
 - In **Explore & Edit**, use **Map** to jump between paragraphs and check explanation progress, and **Passages** to run a separate prediction on an excerpt. **Coverage** shows the lexical input window. TF-IDF reads the full input, and RoBERTa and RACE use up to 512 tokens for lexical input.
 - In **Explain Prediction**, expand branches of the RACE discourse graph and request **Influence** for a selected unit or the visible units. The detail panel shows how suppressing a unit's features changes all four scores. Follow-up explanations can reuse preparation for the same text and model.
