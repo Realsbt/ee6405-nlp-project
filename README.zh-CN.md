@@ -16,7 +16,7 @@ Text Lab 是在本机运行的英文 Demo。粘贴英文文本后，选择 TF-ID
 
 *截图来自 RACE 模型载入后对内置无标签示例的实际预测。*
 
-**不需安装即可体验：**[静态 Text Lab 演示](https://realsbt.github.io/ee6405-nlp-project/demo/) 在浏览器中运行真实界面，内置示例使用冻结的真实模型输出。它不需要后端，因此只能回放该示例；要分析自己的文本请使用下方的本机服务。
+**不需安装即可体验：**[静态 Text Lab 演示](https://realsbt.github.io/ee6405-nlp-project/) 在浏览器中运行真实界面，内置示例使用冻结的真实模型输出。它不需要后端，因此只能回放该示例；要分析自己的文本请使用下方的本机服务。
 
 - 在 **Explore & Edit** 中，通过 **Map** 按段落跳转并查看解释进度，通过 **Passages** 对选定片段单独预测。**Coverage** 显示词汇输入范围。TF-IDF 读取全文，RoBERTa 和 RACE 的词汇输入最多为 512 个 token。
 - 在 **Explain Prediction** 中，可以展开 RACE 篇章图的分支，对选定或可见的单元按需计算 **Influence**。详情面板显示抑制该单元特征后四类分数如何变化。同一文本和模型的后续解释请求可以复用预处理结果。
