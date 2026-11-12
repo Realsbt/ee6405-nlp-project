@@ -6,9 +6,11 @@ A course reproduction and analysis of [RACE](https://github.com/ICTMCG/RACE), co
 
 **Experiment status (2026-11-06): the [2×2 ablation](docs/ABLATION_2X2.md) is complete.** Four neural conditions have three seeds each: **12 neural runs plus one TF-IDF baseline**. All five added runs, full test-set checkpoint verification, paired analyses and figures are complete. The four-method HC3 auxiliary evaluation and raw-text demo have been verified. Course deliverables and platform submission status are tracked separately in the [submission checklist](docs/SUBMISSION.md).
 
+[Full experiment ledger and archived evidence (中文)](docs/project-archive/README.md)
+
 ## Contributions and current status
 
-**Snapshot: 2026-11-12, 13:22 Singapore (UTC+8).** These additions are separate
+**Updated: 2026-11-13 Singapore (UTC+8).** These additions are separate
 from the shared, completed 2x2 study above. Full ownership, evidence and remaining
 work are recorded in [Yingqi's contribution/status report](docs/YINGQI_STATUS.md).
 
@@ -27,16 +29,20 @@ work are recorded in [Yingqi's contribution/status report](docs/YINGQI_STATUS.md
 | Work | Compute and verified completion | Still incomplete |
 |---|---|---|
 | Same-window controls | Tesla T4: all 4 conditions, seed 3407, complete test predictions | Seeds 42 / 2026: 8 planned runs not completed |
-| Text-EDU fusion | Tesla T4: 4 CUDA smokes; 4 seed-3407 screening trainings + CLS seed 42 complete | Three remaining confirmation runs and final three-seed test report |
-| Fusion continuation | Kaggle API reports `RUNNING`; original job reports `CANCEL_ACKNOWLEDGED` | Not counted as completed; no verified final summary yet |
+| Text-EDU fusion | Tesla T4: 4 CUDA smokes and 8 formal trainings; continuation completed the 3 missing runs | Mean/attention were screening-only; no external fusion evaluation |
 | Probability blend / stacking | Frozen neural checkpoints reused; CPU selection, meta-model fitting and evaluation complete | No new GPU encoder training for these analyses |
 | Gate-strength controls / segmentation + consistency / calibration | Code, CPU checks and reporting/DFS runners included | Formal GPU results not completed; no gain claimed |
 
 Fusion **validation** Macro-F1 at seed 3407 is CLS **90.6435%**, mean **90.8501%**,
 attention **90.8956%**, gated **91.3643%**. Gated was selected on validation
 (+0.7208 percentage points over matched CLS); this is not final test improvement.
-The continuation preserves completed runs and reruns missing training from base
-pretraining; it does not count interrupted partial training as a completed run.
+The [Kaggle continuation](docs/project-archive/latest/fusion/summary.json) retained
+five finished runs and restarted missing training from base pretraining. On the
+existing HART test set, matched CLS scored **90.41 / 90.98 / 91.64%** and gated
+fusion **90.96 / 90.41 / 90.79%** (seeds 3407/42/2026). Means were **91.01%**
+and **90.72%**, a paired mean difference of **−0.30 percentage points**. Replacing
+RACE with averaged gated predictions in stacking also reduced test Macro-F1
+from **93.61% to 93.17%**.
 
 Entry points: [fusion design and commands](docs/EDU_FUSION.md),
 [reuse attribution](docs/REUSE_ATTRIBUTION.md),
@@ -44,20 +50,23 @@ Entry points: [fusion design and commands](docs/EDU_FUSION.md),
 [saved snapshot evidence](experiments/reports/yingqi_snapshot/).
 Model weights, private source texts and credentials are not uploaded.
 
-**Later follow-up, 2026-11-12:** a bounded, validation-only paired
-DeBERTa-v3-base / all-layer RoBERTa pilot is implemented with CPU checks.
-Kaggle rejected its launch because the weekly GPU quota was exhausted.
-With user approval, a free Colab T4 passed both CUDA checks and launched the
-DeBERTa validation pilot at **14:54 Singapore**; RoBERTa is queued serially.
-**Not complete, no new formal score, no 97% claim**. This is separate from the
-fusion continuation above. See the [pilot protocol and diagnostics](docs/ENCODER_PILOT.md).
+**Encoder pilot, 2026-11-12.** DeBERTa-v3-base and all-layer RoBERTa each
+completed four epochs on a Colab T4. Validation Macro-F1 was **89.87%** and
+**91.48%**, respectively. Both recovered fewer AI-humanized examples than
+the existing gated model. The pilot is closed after one seed and validation
+only. Equal blending with gated fusion gave **91.99%** (DeBERTa) and **91.58%**
+(RoBERTa). A targeted threshold on the gated + DeBERTa blend achieved **93.27%**
+and **85/110** AI-humanized hits in five grouped validation folds. The underlying
+checkpoints had already used this validation set for selection; there is no
+DeBERTa test result. The analogous threshold on existing stacking reduced its
+historical test Macro-F1 to **93.54%**. See the [pilot, failures and replay](docs/ENCODER_PILOT.md).
 
 ```bash
 python3 scripts/check_yingqi_results.py
 ```
 
-This dependency-free check recomputes the saved same-window/fusion/stacking
-Macro-F1 values and checks evidence hashes. It does not rerun GPU inference.
+This dependency-free check recomputes saved Macro-F1 values from predictions,
+including the fusion continuation and Colab pilot. It does not rerun GPU inference.
 
 ### Fair-window mechanism controls
 
@@ -204,7 +213,7 @@ The script recomputes metrics from individual predictions and checks thirteen fo
 
 ```bash
 # First install Python 3.11, Git, GitHub CLI and a C/C++ compiler.
-# Each teammate needs access to this private repository and gh auth login.
+# Authenticate with gh if needed for access to GitHub release assets.
 export EE6405_STORAGE="$HOME/ee6405-resources"
 python3 scripts/setup_environment.py --python python3.11 --torch cpu
 export EE6405_PYTHON="$EE6405_STORAGE/.venv/bin/python"

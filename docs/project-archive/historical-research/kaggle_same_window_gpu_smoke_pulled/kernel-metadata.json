@@ -1,0 +1,19 @@
+{
+  "id": "zhengyingqi/ee6405-same-window-gpu-smoke",
+  "id_no": 144378221,
+  "title": "EE6405 Same-Window GPU Smoke",
+  "code_file": "ee6405-same-window-gpu-smoke.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "zhengyingqi/ee6405-same-window-gpu-v1"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "model_sources": []
+}

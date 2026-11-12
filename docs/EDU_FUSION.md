@@ -1,12 +1,10 @@
 # Text-EDU residual fusion
 
-Implementation date: 2026-11-11. Status updated 2026-11-12: four CUDA smokes,
-four validation-screening trainings and CLS seed 42 are complete. Gated was
-selected at 91.3643% validation Macro-F1 versus matched CLS 90.6435%.
-The original job ended in cancellation; a continuation is running. Final
-three-seed test comparisons remain incomplete. See [current status](YINGQI_STATUS.md)
-for saved evidence and contribution boundaries. The protocol below retains the
-original design; its eight-run matrix is not a claim of eight completed runs.
+Implementation date: 2026-11-11. The continuation finished all eight formal
+trainings. Gated fusion was selected on validation (91.3643% versus matched CLS
+90.6435%), but its three-seed HART test mean was **90.7176%**, below matched
+CLS (**91.0130%**). See the [saved summary](project-archive/latest/fusion/summary.json).
+The run history and original protocol follow.
 
 ## Research question
 

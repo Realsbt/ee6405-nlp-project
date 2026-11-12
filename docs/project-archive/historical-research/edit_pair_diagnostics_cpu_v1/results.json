@@ -1,0 +1,460 @@
+{
+  "scope": "Exploratory paired editing sensitivity, equal source weight; not randomized causal effects. Fixed models, no retraining/selection uncertainty or multiplicity correction.",
+  "data_sha256": "2e9ef849fa39c83f6c8e8b6f93491444024cb1e5c2543e442aa19ad770cf52ab",
+  "script_sha256": "983d7437e2799ce8dc2bd4a2ccdea9a4568d4cdd66ebaf89d18244f41deeb346",
+  "models": {
+    "roberta_ce_s3407": {
+      "prediction_sha256": "b96d1258529b908b69ba568fe877c81ea941f0aa667dfec1de081df02f0953e0",
+      "by_creator": {
+        "human": {
+          "fixed_0_5": {
+            "source_groups": 50,
+            "edited_variants": 200,
+            "source_balanced_mean_ai_score_original": 0.1591744346200578,
+            "source_balanced_mean_ai_score_edited": 0.30877404281701165,
+            "paired_mean_ai_score_delta": 0.14959960819695392,
+            "source_bootstrap_95_percentile": [
+              0.06828797121283438,
+              0.23282307935426755
+            ],
+            "fraction_ai_original_at_threshold": 0.12,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.295,
+            "threshold": 0.5
+          },
+          "hart_locked": {
+            "source_groups": 50,
+            "edited_variants": 200,
+            "source_balanced_mean_ai_score_original": 0.1591744346200578,
+            "source_balanced_mean_ai_score_edited": 0.30877404281701165,
+            "paired_mean_ai_score_delta": 0.14959960819695392,
+            "source_bootstrap_95_percentile": [
+              0.06828797121283438,
+              0.23282307935426755
+            ],
+            "fraction_ai_original_at_threshold": 0.0,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.205,
+            "threshold": 0.9125268468397225
+          }
+        },
+        "ai": {
+          "fixed_0_5": {
+            "source_groups": 41,
+            "edited_variants": 68,
+            "source_balanced_mean_ai_score_original": 0.17560918447686236,
+            "source_balanced_mean_ai_score_edited": 0.21948262538466665,
+            "paired_mean_ai_score_delta": 0.043873440907804324,
+            "source_bootstrap_95_percentile": [
+              -0.014554297347902992,
+              0.10858930309536209
+            ],
+            "fraction_ai_original_at_threshold": 0.1951219512195122,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.18292682926829268,
+            "threshold": 0.5
+          },
+          "hart_locked": {
+            "source_groups": 41,
+            "edited_variants": 68,
+            "source_balanced_mean_ai_score_original": 0.17560918447686236,
+            "source_balanced_mean_ai_score_edited": 0.21948262538466665,
+            "paired_mean_ai_score_delta": 0.043873440907804324,
+            "source_bootstrap_95_percentile": [
+              -0.014554297347902992,
+              0.10858930309536209
+            ],
+            "fraction_ai_original_at_threshold": 0.07317073170731707,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.07317073170731707,
+            "threshold": 0.9125268468397225
+          }
+        }
+      },
+      "by_operation": {
+        "2llama_polish_sentence": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.1591744346200578,
+          "source_balanced_mean_ai_score_edited": 0.41380972603939015,
+          "paired_mean_ai_score_delta": 0.25463529141933244,
+          "source_bootstrap_95_percentile": [
+            0.14259298401114595,
+            0.37001013676181055
+          ],
+          "fraction_ai_original_at_threshold": 0.12,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.36,
+          "threshold": 0.5
+        },
+        "2llama_polish_token": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.1591744346200578,
+          "source_balanced_mean_ai_score_edited": 0.20284051930574143,
+          "paired_mean_ai_score_delta": 0.0436660846856837,
+          "source_bootstrap_95_percentile": [
+            -0.031993004342873825,
+            0.13211230485804393
+          ],
+          "fraction_ai_original_at_threshold": 0.12,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.18,
+          "threshold": 0.5
+        },
+        "MGT_polish_sentence": {
+          "source_groups": 27,
+          "edited_variants": 27,
+          "source_balanced_mean_ai_score_original": 0.14040843351142127,
+          "source_balanced_mean_ai_score_edited": 0.13128441703379204,
+          "paired_mean_ai_score_delta": -0.009124016477629249,
+          "source_bootstrap_95_percentile": [
+            -0.073444171606842,
+            0.050945384694746985
+          ],
+          "fraction_ai_original_at_threshold": 0.14814814814814814,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.1111111111111111,
+          "threshold": 0.5
+        },
+        "MGT_polish_token": {
+          "source_groups": 41,
+          "edited_variants": 41,
+          "source_balanced_mean_ai_score_original": 0.17560918447686236,
+          "source_balanced_mean_ai_score_edited": 0.23047882553328003,
+          "paired_mean_ai_score_delta": 0.05486964105641771,
+          "source_bootstrap_95_percentile": [
+            -0.002665549056167371,
+            0.12025402302260932
+          ],
+          "fraction_ai_original_at_threshold": 0.1951219512195122,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.1951219512195122,
+          "threshold": 0.5
+        },
+        "gpt4_polish_sentence": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.1591744346200578,
+          "source_balanced_mean_ai_score_edited": 0.45624361202922825,
+          "paired_mean_ai_score_delta": 0.29706917740917055,
+          "source_bootstrap_95_percentile": [
+            0.17328075504410775,
+            0.4218380077275838
+          ],
+          "fraction_ai_original_at_threshold": 0.12,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.48,
+          "threshold": 0.5
+        },
+        "gpt4_polish_token": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.1591744346200578,
+          "source_balanced_mean_ai_score_edited": 0.16220231389368678,
+          "paired_mean_ai_score_delta": 0.003027879273629008,
+          "source_bootstrap_95_percentile": [
+            -0.07723566029918978,
+            0.09121738191135131
+          ],
+          "fraction_ai_original_at_threshold": 0.12,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.16,
+          "threshold": 0.5
+        }
+      }
+    },
+    "race_s3407": {
+      "prediction_sha256": "8f9a36ba5230aa3e4b20cdf778cdbed1ed236f2586dae27500762171aa8992ff",
+      "by_creator": {
+        "human": {
+          "fixed_0_5": {
+            "source_groups": 50,
+            "edited_variants": 200,
+            "source_balanced_mean_ai_score_original": 0.07448713240707817,
+            "source_balanced_mean_ai_score_edited": 0.40599846143068213,
+            "paired_mean_ai_score_delta": 0.33151132902360403,
+            "source_bootstrap_95_percentile": [
+              0.24062019720211242,
+              0.41799065728239754
+            ],
+            "fraction_ai_original_at_threshold": 0.04,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.4,
+            "threshold": 0.5
+          },
+          "hart_locked": {
+            "source_groups": 50,
+            "edited_variants": 200,
+            "source_balanced_mean_ai_score_original": 0.07448713240707817,
+            "source_balanced_mean_ai_score_edited": 0.40599846143068213,
+            "paired_mean_ai_score_delta": 0.33151132902360403,
+            "source_bootstrap_95_percentile": [
+              0.24062019720211242,
+              0.41799065728239754
+            ],
+            "fraction_ai_original_at_threshold": 0.0,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.17,
+            "threshold": 0.990419464450979
+          }
+        },
+        "ai": {
+          "fixed_0_5": {
+            "source_groups": 41,
+            "edited_variants": 68,
+            "source_balanced_mean_ai_score_original": 0.12714244978097114,
+            "source_balanced_mean_ai_score_edited": 0.19320296991278194,
+            "paired_mean_ai_score_delta": 0.06606052013181078,
+            "source_bootstrap_95_percentile": [
+              0.01978418679955197,
+              0.12022813014161644
+            ],
+            "fraction_ai_original_at_threshold": 0.0975609756097561,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.1951219512195122,
+            "threshold": 0.5
+          },
+          "hart_locked": {
+            "source_groups": 41,
+            "edited_variants": 68,
+            "source_balanced_mean_ai_score_original": 0.12714244978097114,
+            "source_balanced_mean_ai_score_edited": 0.19320296991278194,
+            "paired_mean_ai_score_delta": 0.06606052013181078,
+            "source_bootstrap_95_percentile": [
+              0.01978418679955197,
+              0.12022813014161644
+            ],
+            "fraction_ai_original_at_threshold": 0.07317073170731707,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.06097560975609756,
+            "threshold": 0.990419464450979
+          }
+        }
+      },
+      "by_operation": {
+        "2llama_polish_sentence": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.07448713240707817,
+          "source_balanced_mean_ai_score_edited": 0.5531316844286449,
+          "paired_mean_ai_score_delta": 0.47864455202156675,
+          "source_bootstrap_95_percentile": [
+            0.34300067306773147,
+            0.605855823192069
+          ],
+          "fraction_ai_original_at_threshold": 0.04,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.56,
+          "threshold": 0.5
+        },
+        "2llama_polish_token": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.07448713240707817,
+          "source_balanced_mean_ai_score_edited": 0.3158631765524648,
+          "paired_mean_ai_score_delta": 0.2413760441453866,
+          "source_bootstrap_95_percentile": [
+            0.1454681328601741,
+            0.3414439083958856
+          ],
+          "fraction_ai_original_at_threshold": 0.04,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.3,
+          "threshold": 0.5
+        },
+        "MGT_polish_sentence": {
+          "source_groups": 27,
+          "edited_variants": 27,
+          "source_balanced_mean_ai_score_original": 0.060068938747101654,
+          "source_balanced_mean_ai_score_edited": 0.11146830942673468,
+          "paired_mean_ai_score_delta": 0.05139937067963302,
+          "source_bootstrap_95_percentile": [
+            0.002595865899425694,
+            0.11411016928737513
+          ],
+          "fraction_ai_original_at_threshold": 0.037037037037037035,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.1111111111111111,
+          "threshold": 0.5
+        },
+        "MGT_polish_token": {
+          "source_groups": 41,
+          "edited_variants": 41,
+          "source_balanced_mean_ai_score_original": 0.12714244978097114,
+          "source_balanced_mean_ai_score_edited": 0.19456985315533706,
+          "paired_mean_ai_score_delta": 0.06742740337436592,
+          "source_bootstrap_95_percentile": [
+            0.019976989302361015,
+            0.12377344792668536
+          ],
+          "fraction_ai_original_at_threshold": 0.0975609756097561,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.1951219512195122,
+          "threshold": 0.5
+        },
+        "gpt4_polish_sentence": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.07448713240707817,
+          "source_balanced_mean_ai_score_edited": 0.5295647668956143,
+          "paired_mean_ai_score_delta": 0.4550776344885361,
+          "source_bootstrap_95_percentile": [
+            0.33498409686600605,
+            0.5683267697240615
+          ],
+          "fraction_ai_original_at_threshold": 0.04,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.52,
+          "threshold": 0.5
+        },
+        "gpt4_polish_token": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.07448713240707817,
+          "source_balanced_mean_ai_score_edited": 0.22543421784600448,
+          "paired_mean_ai_score_delta": 0.15094708543892627,
+          "source_bootstrap_95_percentile": [
+            0.05698324679476766,
+            0.2492948619567068
+          ],
+          "fraction_ai_original_at_threshold": 0.04,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.22,
+          "threshold": 0.5
+        }
+      }
+    },
+    "stack_all_original": {
+      "prediction_sha256": "2fca1c0d17171ba0df77cd8281239fa4fb618f320fe1b0d2c254b62b40ee6f0a",
+      "by_creator": {
+        "human": {
+          "fixed_0_5": {
+            "source_groups": 50,
+            "edited_variants": 200,
+            "source_balanced_mean_ai_score_original": 0.1541212939547416,
+            "source_balanced_mean_ai_score_edited": 0.352889111917506,
+            "paired_mean_ai_score_delta": 0.1987678179627644,
+            "source_bootstrap_95_percentile": [
+              0.12189735172875178,
+              0.274134546831604
+            ],
+            "fraction_ai_original_at_threshold": 0.12,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.325,
+            "threshold": 0.5
+          },
+          "hart_locked": {
+            "source_groups": 50,
+            "edited_variants": 200,
+            "source_balanced_mean_ai_score_original": 0.1541212939547416,
+            "source_balanced_mean_ai_score_edited": 0.352889111917506,
+            "paired_mean_ai_score_delta": 0.1987678179627644,
+            "source_bootstrap_95_percentile": [
+              0.12189735172875178,
+              0.274134546831604
+            ],
+            "fraction_ai_original_at_threshold": 0.06,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.22,
+            "threshold": 0.7426616657429362
+          }
+        },
+        "ai": {
+          "fixed_0_5": {
+            "source_groups": 41,
+            "edited_variants": 68,
+            "source_balanced_mean_ai_score_original": 0.17297166967557123,
+            "source_balanced_mean_ai_score_edited": 0.19913051698474782,
+            "paired_mean_ai_score_delta": 0.026158847309176572,
+            "source_bootstrap_95_percentile": [
+              -0.016310593811660338,
+              0.07389352087409545
+            ],
+            "fraction_ai_original_at_threshold": 0.12195121951219512,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.13414634146341464,
+            "threshold": 0.5
+          },
+          "hart_locked": {
+            "source_groups": 41,
+            "edited_variants": 68,
+            "source_balanced_mean_ai_score_original": 0.17297166967557123,
+            "source_balanced_mean_ai_score_edited": 0.19913051698474782,
+            "paired_mean_ai_score_delta": 0.026158847309176572,
+            "source_bootstrap_95_percentile": [
+              -0.016310593811660338,
+              0.07389352087409545
+            ],
+            "fraction_ai_original_at_threshold": 0.04878048780487805,
+            "source_balanced_fraction_ai_edited_at_threshold": 0.06097560975609756,
+            "threshold": 0.7426616657429362
+          }
+        }
+      },
+      "by_operation": {
+        "2llama_polish_sentence": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.1541212939547416,
+          "source_balanced_mean_ai_score_edited": 0.4685701318007125,
+          "paired_mean_ai_score_delta": 0.3144488378459709,
+          "source_bootstrap_95_percentile": [
+            0.21202051046797607,
+            0.4198609200327244
+          ],
+          "fraction_ai_original_at_threshold": 0.12,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.42,
+          "threshold": 0.5
+        },
+        "2llama_polish_token": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.1541212939547416,
+          "source_balanced_mean_ai_score_edited": 0.2956879431668725,
+          "paired_mean_ai_score_delta": 0.14156664921213089,
+          "source_bootstrap_95_percentile": [
+            0.05794937785415845,
+            0.2311476641875226
+          ],
+          "fraction_ai_original_at_threshold": 0.12,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.28,
+          "threshold": 0.5
+        },
+        "MGT_polish_sentence": {
+          "source_groups": 27,
+          "edited_variants": 27,
+          "source_balanced_mean_ai_score_original": 0.12861602908961747,
+          "source_balanced_mean_ai_score_edited": 0.1620735023686884,
+          "paired_mean_ai_score_delta": 0.03345747327907093,
+          "source_bootstrap_95_percentile": [
+            -0.03244237044751554,
+            0.11723044945207799
+          ],
+          "fraction_ai_original_at_threshold": 0.07407407407407407,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.1111111111111111,
+          "threshold": 0.5
+        },
+        "MGT_polish_token": {
+          "source_groups": 41,
+          "edited_variants": 41,
+          "source_balanced_mean_ai_score_original": 0.17297166967557123,
+          "source_balanced_mean_ai_score_edited": 0.19473350533218475,
+          "paired_mean_ai_score_delta": 0.0217618356566135,
+          "source_bootstrap_95_percentile": [
+            -0.011648497946242753,
+            0.05923212091162056
+          ],
+          "fraction_ai_original_at_threshold": 0.12195121951219512,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.12195121951219512,
+          "threshold": 0.5
+        },
+        "gpt4_polish_sentence": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.1541212939547416,
+          "source_balanced_mean_ai_score_edited": 0.44072126505482595,
+          "paired_mean_ai_score_delta": 0.2865999711000843,
+          "source_bootstrap_95_percentile": [
+            0.17695634829710405,
+            0.3952262565486824
+          ],
+          "fraction_ai_original_at_threshold": 0.12,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.44,
+          "threshold": 0.5
+        },
+        "gpt4_polish_token": {
+          "source_groups": 50,
+          "edited_variants": 50,
+          "source_balanced_mean_ai_score_original": 0.1541212939547416,
+          "source_balanced_mean_ai_score_edited": 0.20657710764761317,
+          "paired_mean_ai_score_delta": 0.052455813692871535,
+          "source_bootstrap_95_percentile": [
+            -0.025442535729255165,
+            0.1378677409286854
+          ],
+          "fraction_ai_original_at_threshold": 0.12,
+          "source_balanced_fraction_ai_edited_at_threshold": 0.16,
+          "threshold": 0.5
+        }
+      }
+    }
+  }
+}

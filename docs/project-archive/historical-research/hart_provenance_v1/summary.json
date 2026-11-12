@@ -1,0 +1,33 @@
+{
+  "scope": "Normalized-text AND source-group match against original metadata; dataset provenance, not independent historical authorship verification.",
+  "raw_commit": "3adce1bb596be8eada8b81c38e940cea8b21f8ae",
+  "script_sha256": "6280f2078165a1af2752d90d6499a063c0fefeb344d9a13fd80e671be5ae912b",
+  "input_sha256": {
+    "resources/truth-mirror/benchmark/hart/arxiv.dev.json": "cc261ccbe32bd056d9734820cb29c85f2d8a152eafacbf8e69c881e3d3d17795",
+    "resources/truth-mirror/benchmark/hart/arxiv.test.json": "6a8aaf26a76c90c374c93c7963293ad78881eae6b23fe9a038bd73bf9f67a8b4",
+    "resources/truth-mirror/benchmark/hart/essay.dev.json": "57d2115db2fc65e0550b0c8ca112dbc96957e5454628f379f3e1b039d81f7e6b",
+    "resources/truth-mirror/benchmark/hart/essay.test.json": "2cad92a9eaf8648196222c12b42f1b6e2f31950487f528843d9590da1199ad42",
+    "resources/truth-mirror/benchmark/hart/news.dev.json": "a6c3aa283635d97355b99ef9bc22a72060b652f95d28e4687fcbb9617163a6fc",
+    "resources/truth-mirror/benchmark/hart/news.test.json": "d17db12e974badc98539a5af5f96b36e6eb5373c44dd1ef978afa29ad8dc7e75",
+    "resources/truth-mirror/benchmark/hart/writing.dev.json": "a8cd2513c22d2812127654f941159ff566e3c5ca069275f48c863561dfe33e4d",
+    "resources/truth-mirror/benchmark/hart/writing.test.json": "6252c109215431e439a5ed8390c4583a2b2b3c825fc35ca86d4a6b09fd4d0e78",
+    "resources/assets/hart_official/test_graph.jsonl": "2acaf62ea42359266efd69e6c6023bcf5ec8c544991555bf1285638a560cc51c",
+    "resources/assets/hart_official/train_graph.jsonl": "ffedcc941c35c42a636d6e0ff3fe25b9971e2efd1ab88cb7998574d9eea7e9e6",
+    "resources/assets/hart_official/val_graph.jsonl": "791d635a7a472b9569ac5b9776076b428973eb4f05b1860f2bee1cb9adde9bad"
+  },
+  "n_released": 16000,
+  "status_counts": {
+    "matched_label": 15988,
+    "ambiguous_metadata": 12
+  },
+  "published_labels": {
+    "human_ai_polished": 4000,
+    "human_written": 4000,
+    "ai_generated": 6985,
+    "ai_humanized": 1015
+  },
+  "matched_humanized_actors": {
+    "humanize:tool": 765,
+    "humanize:human": 250
+  }
+}

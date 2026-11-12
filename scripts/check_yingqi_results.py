@@ -3,6 +3,7 @@
 import hashlib
 import json
 import math
+import statistics
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -90,6 +91,33 @@ def main():
     )
     print(f"fusion: {count} completed validation-only trainings, selected {selected['selected']}")
     print(f"stacking: HART {score:.4%}; MixSet subset {external:.4%}")
+    latest = ROOT / "docs/project-archive/latest"
+    summary = read(latest / "fusion/summary.json")
+    if summary["status"] != "completed" or summary["formal_training_runs"] != 8:
+        raise ValueError("Fusion continuation incomplete")
+    scores = {}
+    for condition in ("fusion_cls", "fusion_gated"):
+        scores[condition] = [
+            check_score(latest / f"fusion/evaluation/{condition}_s{seed}/test_predictions.jsonl",
+                        3194, summary["test"][condition][str(seed)]["macro_f1"])
+            for seed in (3407, 42, 2026)
+        ]
+        mean = statistics.mean(scores[condition])
+        if not math.isclose(mean, summary["macro_f1"][condition]["mean"], abs_tol=1e-12):
+            raise ValueError(f"Fusion mean mismatch: {condition}")
+        print(f"fusion continuation {condition}: three-seed test mean {mean:.4%}")
+    delta = statistics.mean(g - c for g, c in zip(scores["fusion_gated"], scores["fusion_cls"]))
+    if not math.isclose(delta, summary["paired_candidate_minus_baseline"]["mean"], abs_tol=1e-12):
+        raise ValueError("Fusion paired difference mismatch")
+    for condition in ("deberta_full", "roberta_full"):
+        run = latest / "encoder-pilot/formal" / condition
+        result = read(run / "result.json")
+        if (result["status"] != "validation_completed" or result["completed_epochs"] != 4
+                or result["test_evaluated"] or result["test"] is not None):
+            raise ValueError(f"Incomplete or mislabeled encoder pilot: {condition}")
+        score = check_score(run / "validation_predictions.jsonl", 1600,
+                            result["validation"]["macro_f1"])
+        print(f"encoder pilot {condition}: validation {score:.4%}")
     print("PASS: hashes, counts, labels, probabilities and saved Macro-F1 verified")
 
 

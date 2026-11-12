@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-09",
+  "device": "cpu",
+  "training": false,
+  "model": "race_s3407 CE+SupCon; original full-text graph protocol",
+  "evaluation": "Complete missing external results of previously frozen methods, no new selection.",
+  "frozen_artifact_sha256": {
+    "cpu_improvement_v1/selection.json": "ef64ebff4141213886f0ae8c0f8e0ac3f4a74e227c2af396bd5d6ad707f43d96",
+    "race_cpu_v1/calibration.json": "e757f9451e40eaefb6d9c047090feb6f475fd1aba91b5f3d40c8b94629aed9ae",
+    "cpu_stacking_v1/selection.json": "e6d3b0c43f40fe3648d18b70182cb76eef6d0029f45f255fd64f89079df5087e",
+    "cpu_stacking_v1/meta_model.joblib": "aed36b2fb07b1084d9957677004e8fbfe0c1f14d534c2febb575ff5dab079145",
+    "cpu_stacking_controls_v1/frozen_models.json": "a0b352d8bb60d545447e1b3980067b4b3755ff7cfc25d1b8245c7d597c530f09",
+    "cpu_stacking_controls_v1/ce_race.joblib": "972343f78a384bea61f32cc3cbe9581724f33efacfebb07670d631fde8a80daf",
+    "cpu_stacking_controls_v1/ce_race_oof_predictions.jsonl": "e83d5f68e9001cf2a83ac767c037cb257d7d24ceb1e3572e69bef2e7b022bf9c",
+    "transfer_tfidf_v1/threshold.json": "7ded6f6abc1aa2ea6cd4fc598832553569aee771bbdb3ef7b7234a4631ff466a",
+    "cpu_stacking_controls_v1/ce_only_oof_predictions.jsonl": "85e16c57c555cde55e5b9c3bb44414fbcdafb761583c4a5251ce24cf28831fdc",
+    "cpu_stacking_controls_v1/ce_only_mixset_predictions.jsonl": "0549c3e67023d83b89c26fb7aed6e4c940de11d863d4b628941d1640f797d643",
+    "cpu_stacking_controls_v1/ce_tfidf_oof_predictions.jsonl": "b300b825476159636eaae1ad416aa4ca722dc8ea07191fe1056d46e4d0404705",
+    "cpu_stacking_controls_v1/ce_tfidf_mixset_predictions.jsonl": "852d3e9630e6140e3b1f2d6e60bacda1083cb225e74687cbde95efc5027db4c2",
+    "cpu_stacking_controls_v1/ce_newlex_oof_predictions.jsonl": "bcd87b3bd922a70bb1b01a8f00124699207e40c65d0db5486bae12893fea0ee8",
+    "cpu_stacking_controls_v1/ce_newlex_mixset_predictions.jsonl": "4a44fa7b24fec86151455f0acbfbaa07ee71efdc00fa5d243b254be2cbbb3edb"
+  },
+  "checkpoint_sha256": "6797d46f3fb2f84734b0cf9e49d7d566eefc9f97ffa6d0db3219d8aa107098d1",
+  "script_sha256": "ef3ec85b91e3f7c5e03675d50be3317adcd5e0a9674cc6170d1580b1a1d1a471",
+  "limitations": [
+    "HART, HC3 and some MixSet results previously inspected; exploratory completion, not independent confirmation.",
+    "Stacking OOF threshold may not calibrate final all-development fitted model.",
+    "The base checkpoints used full development labels for checkpoint selection.",
+    "MixSet conservative mapped subset is not the original complete benchmark; source license unresolved.",
+    "Not a same-window structural ablation; no new neural training."
+  ]
+}

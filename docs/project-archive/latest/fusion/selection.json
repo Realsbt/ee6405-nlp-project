@@ -1,0 +1,23 @@
+{
+  "selected": "fusion_gated",
+  "baseline": "fusion_cls",
+  "rule": "Best validation Macro-F1 among fusion variants; ties: fewer trainable parameters, then name",
+  "validation_gap": 0.0072078437673429585,
+  "all_validation_macro_f1": {
+    "fusion_cls": 0.9064350151761276,
+    "fusion_mean": 0.9085006279978123,
+    "fusion_attention": 0.9089558048061225,
+    "fusion_gated": 0.9136428589434705
+  },
+  "seeds": [
+    3407,
+    42,
+    2026
+  ],
+  "epochs": 20,
+  "batch_size": 16,
+  "test_used_for_selection": false,
+  "frozen_at_utc": "2026-11-11T19:25:20.331888+00:00",
+  "code_archive_sha256": null,
+  "code_content_sha256": "21ae620364d77dd41c7583caf0c7acfae752a4c832618e84ded43ee100d5bc4f"
+}

@@ -1,0 +1,793 @@
+{
+  "development_oof": {
+    "ce_only": {
+      "macro_f1": 0.9101775851322342,
+      "class_recall": {
+        "human_written": 0.99,
+        "human_ai_polished": 0.9325,
+        "ai_generated": 0.9420289855072463,
+        "ai_humanized": 0.7272727272727273
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.936389153052613,
+        "essay": 0.8996992640990542,
+        "news": 0.8951827070630772,
+        "writing": 0.9031197781296056
+      },
+      "worst_domain_macro_f1": 0.8951827070630772
+    },
+    "ce_tfidf": {
+      "macro_f1": 0.9303144664835942,
+      "class_recall": {
+        "human_written": 0.9825,
+        "human_ai_polished": 0.9575,
+        "ai_generated": 0.9579710144927536,
+        "ai_humanized": 0.7727272727272727
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.9603140904240799,
+        "essay": 0.9339512952042509,
+        "news": 0.8959631812526984,
+        "writing": 0.9241830234828702
+      },
+      "worst_domain_macro_f1": 0.8959631812526984
+    },
+    "ce_newlex": {
+      "macro_f1": 0.9249607234784927,
+      "class_recall": {
+        "human_written": 0.9825,
+        "human_ai_polished": 0.95,
+        "ai_generated": 0.9579710144927536,
+        "ai_humanized": 0.7545454545454545
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.9484712665550694,
+        "essay": 0.9484367044544413,
+        "news": 0.8971382714209113,
+        "writing": 0.9038255033313619
+      },
+      "worst_domain_macro_f1": 0.8971382714209113
+    },
+    "ce_race": {
+      "macro_f1": 0.9268167562945958,
+      "class_recall": {
+        "human_written": 0.99,
+        "human_ai_polished": 0.94,
+        "ai_generated": 0.9579710144927536,
+        "ai_humanized": 0.7727272727272727
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.9586088089534235,
+        "essay": 0.9364569121153237,
+        "news": 0.9025430085381418,
+        "writing": 0.9053336848351854
+      },
+      "worst_domain_macro_f1": 0.9025430085381418
+    },
+    "all_original": {
+      "macro_f1": 0.9357766470805763,
+      "class_recall": {
+        "human_written": 0.99,
+        "human_ai_polished": 0.955,
+        "ai_generated": 0.9637681159420289,
+        "ai_humanized": 0.7909090909090909
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.9678241308768857,
+        "essay": 0.9587450558840148,
+        "news": 0.8976850334131887,
+        "writing": 0.9136613026463648
+      },
+      "worst_domain_macro_f1": 0.8976850334131887
+    }
+  },
+  "by_base_seed": {
+    "3407": {
+      "metrics": {
+        "ce": {
+          "macro_f1": 0.9074570309260068,
+          "class_recall": {
+            "human_written": 0.9736842105263158,
+            "human_ai_polished": 0.9348370927318296,
+            "ai_generated": 0.9394602479941648,
+            "ai_humanized": 0.7312775330396476
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9451211661927355,
+            "essay": 0.9300435140244356,
+            "news": 0.8786657719092226,
+            "writing": 0.8730133859119371
+          },
+          "worst_domain_macro_f1": 0.8730133859119371
+        },
+        "supcon": {
+          "macro_f1": 0.914284612811802,
+          "class_recall": {
+            "human_written": 0.9899749373433584,
+            "human_ai_polished": 0.9223057644110275,
+            "ai_generated": 0.9423778264040846,
+            "ai_humanized": 0.7665198237885462
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9303314006877463,
+            "essay": 0.932176422164255,
+            "news": 0.8999003847658797,
+            "writing": 0.8935257749912922
+          },
+          "worst_domain_macro_f1": 0.8935257749912922
+        },
+        "ce_only": {
+          "macro_f1": 0.906819444593128,
+          "class_recall": {
+            "human_written": 0.9849624060150376,
+            "human_ai_polished": 0.9160401002506265,
+            "ai_generated": 0.9423778264040846,
+            "ai_humanized": 0.73568281938326
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9440918724083747,
+            "essay": 0.9317996724484479,
+            "news": 0.880814096198729,
+            "writing": 0.8676167878430517
+          },
+          "worst_domain_macro_f1": 0.8676167878430517
+        },
+        "ce_tfidf": {
+          "macro_f1": 0.92909227343105,
+          "class_recall": {
+            "human_written": 0.9862155388471178,
+            "human_ai_polished": 0.9260651629072681,
+            "ai_generated": 0.9547775346462436,
+            "ai_humanized": 0.8237885462555066
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9625451216606598,
+            "essay": 0.9656760239569029,
+            "news": 0.8907815154731504,
+            "writing": 0.8925226789877885
+          },
+          "worst_domain_macro_f1": 0.8907815154731504
+        },
+        "ce_newlex": {
+          "macro_f1": 0.9264852703287549,
+          "class_recall": {
+            "human_written": 0.9837092731829574,
+            "human_ai_polished": 0.9285714285714286,
+            "ai_generated": 0.9569657184536834,
+            "ai_humanized": 0.8061674008810573
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9628323288834214,
+            "essay": 0.9641526398597875,
+            "news": 0.8850339453846388,
+            "writing": 0.8880795549793075
+          },
+          "worst_domain_macro_f1": 0.8850339453846388
+        },
+        "ce_race": {
+          "macro_f1": 0.9203602940071355,
+          "class_recall": {
+            "human_written": 0.9874686716791979,
+            "human_ai_polished": 0.9373433583959899,
+            "ai_generated": 0.9467541940189642,
+            "ai_humanized": 0.7797356828193832
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9530092780681876,
+            "essay": 0.9493760460491827,
+            "news": 0.8998766691679754,
+            "writing": 0.8759183311600786
+          },
+          "worst_domain_macro_f1": 0.8759183311600786
+        },
+        "all_original": {
+          "macro_f1": 0.9360969188130479,
+          "class_recall": {
+            "human_written": 0.9887218045112782,
+            "human_ai_polished": 0.9373433583959899,
+            "ai_generated": 0.9606126914660832,
+            "ai_humanized": 0.8325991189427313
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9705182250344448,
+            "essay": 0.9734536592975424,
+            "news": 0.9080479297956439,
+            "writing": 0.8870789235553576
+          },
+          "worst_domain_macro_f1": 0.8870789235553576
+        }
+      },
+      "paired_uncertainty": {
+        "ce_only": {
+          "ce": {
+            "delta": -0.0006375863328788034,
+            "paired_95_percentile": [
+              -0.004536337541409058,
+              0.00334821329807974
+            ]
+          },
+          "supcon": {
+            "delta": -0.007465168218673934,
+            "paired_95_percentile": [
+              -0.016560956974740464,
+              0.0008449598565124086
+            ]
+          }
+        },
+        "ce_tfidf": {
+          "ce": {
+            "delta": 0.02163524250504323,
+            "paired_95_percentile": [
+              0.01269670709567693,
+              0.030929089518047948
+            ]
+          },
+          "supcon": {
+            "delta": 0.014807660619248098,
+            "paired_95_percentile": [
+              0.0038138657835051575,
+              0.0252896195428019
+            ]
+          }
+        },
+        "ce_newlex": {
+          "ce": {
+            "delta": 0.019028239402748115,
+            "paired_95_percentile": [
+              0.01092750724801499,
+              0.02755091871954408
+            ]
+          },
+          "supcon": {
+            "delta": 0.012200657516952984,
+            "paired_95_percentile": [
+              0.0016074746731309431,
+              0.022137461011819067
+            ]
+          }
+        },
+        "ce_race": {
+          "ce": {
+            "delta": 0.012903263081128657,
+            "paired_95_percentile": [
+              0.004739035165813788,
+              0.02147900699427578
+            ]
+          },
+          "supcon": {
+            "delta": 0.006075681195333527,
+            "paired_95_percentile": [
+              -0.004092649484501634,
+              0.01595091002051647
+            ]
+          }
+        },
+        "all_original": {
+          "ce": {
+            "delta": 0.028639887887041082,
+            "paired_95_percentile": [
+              0.01951154974942156,
+              0.03823833998280777
+            ]
+          },
+          "supcon": {
+            "delta": 0.02181230600124595,
+            "paired_95_percentile": [
+              0.011504971145840712,
+              0.03160490598777839
+            ]
+          }
+        }
+      }
+    },
+    "42": {
+      "metrics": {
+        "ce": {
+          "macro_f1": 0.9095536592975625,
+          "class_recall": {
+            "human_written": 0.9824561403508771,
+            "human_ai_polished": 0.9160401002506265,
+            "ai_generated": 0.9620714806710431,
+            "ai_humanized": 0.7004405286343612
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9397961567814894,
+            "essay": 0.9194181595313123,
+            "news": 0.8891058595909342,
+            "writing": 0.8884824498144097
+          },
+          "worst_domain_macro_f1": 0.8884824498144097
+        },
+        "supcon": {
+          "macro_f1": 0.9106360473944255,
+          "class_recall": {
+            "human_written": 0.9887218045112782,
+            "human_ai_polished": 0.931077694235589,
+            "ai_generated": 0.9416484318016046,
+            "ai_humanized": 0.7224669603524229
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9352880016703083,
+            "essay": 0.9354518774410585,
+            "news": 0.8846403358918107,
+            "writing": 0.884716697256196
+          },
+          "worst_domain_macro_f1": 0.8846403358918107
+        },
+        "ce_only": {
+          "macro_f1": 0.9145217443594844,
+          "class_recall": {
+            "human_written": 0.9924812030075187,
+            "human_ai_polished": 0.9172932330827067,
+            "ai_generated": 0.9606126914660832,
+            "ai_humanized": 0.7180616740088106
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9398008945038279,
+            "essay": 0.9298737062243324,
+            "news": 0.8982844014880286,
+            "writing": 0.8885687200207909
+          },
+          "worst_domain_macro_f1": 0.8885687200207909
+        },
+        "ce_tfidf": {
+          "macro_f1": 0.9272393971563366,
+          "class_recall": {
+            "human_written": 0.9912280701754386,
+            "human_ai_polished": 0.9298245614035088,
+            "ai_generated": 0.9584245076586433,
+            "ai_humanized": 0.7797356828193832
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9494926937251478,
+            "essay": 0.95947997026994,
+            "news": 0.8986983829542117,
+            "writing": 0.8966954548526033
+          },
+          "worst_domain_macro_f1": 0.8966954548526033
+        },
+        "ce_newlex": {
+          "macro_f1": 0.9241827089652085,
+          "class_recall": {
+            "human_written": 0.9912280701754386,
+            "human_ai_polished": 0.924812030075188,
+            "ai_generated": 0.9606126914660832,
+            "ai_humanized": 0.762114537444934
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9397863096704708,
+            "essay": 0.9587591647235232,
+            "news": 0.8990012698874397,
+            "writing": 0.8949534829624632
+          },
+          "worst_domain_macro_f1": 0.8949534829624632
+        },
+        "ce_race": {
+          "macro_f1": 0.91625163688328,
+          "class_recall": {
+            "human_written": 0.9912280701754386,
+            "human_ai_polished": 0.9160401002506265,
+            "ai_generated": 0.9708242159008024,
+            "ai_humanized": 0.7092511013215859
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9389762128659433,
+            "essay": 0.9319390376072906,
+            "news": 0.8968422877739968,
+            "writing": 0.895532883032883
+          },
+          "worst_domain_macro_f1": 0.895532883032883
+        },
+        "all_original": {
+          "macro_f1": 0.9371208649479357,
+          "class_recall": {
+            "human_written": 0.9924812030075187,
+            "human_ai_polished": 0.9348370927318296,
+            "ai_generated": 0.9715536105032823,
+            "ai_humanized": 0.7973568281938326
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9574095961594665,
+            "essay": 0.9685433721782926,
+            "news": 0.9148447059623368,
+            "writing": 0.903108729067581
+          },
+          "worst_domain_macro_f1": 0.903108729067581
+        }
+      },
+      "paired_uncertainty": {
+        "ce_only": {
+          "ce": {
+            "delta": 0.004968085061921923,
+            "paired_95_percentile": [
+              0.0006208454578477379,
+              0.00930311946297879
+            ]
+          },
+          "supcon": {
+            "delta": 0.0038856969650589157,
+            "paired_95_percentile": [
+              -0.004440398444086715,
+              0.012088677443878825
+            ]
+          }
+        },
+        "ce_tfidf": {
+          "ce": {
+            "delta": 0.017685737858774142,
+            "paired_95_percentile": [
+              0.009237334117062698,
+              0.026440142752147476
+            ]
+          },
+          "supcon": {
+            "delta": 0.016603349761911135,
+            "paired_95_percentile": [
+              0.007905366079128931,
+              0.0259253716058317
+            ]
+          }
+        },
+        "ce_newlex": {
+          "ce": {
+            "delta": 0.014629049667645999,
+            "paired_95_percentile": [
+              0.006958277982121499,
+              0.022372554776357283
+            ]
+          },
+          "supcon": {
+            "delta": 0.013546661570782992,
+            "paired_95_percentile": [
+              0.005001576879070641,
+              0.022033278039464255
+            ]
+          }
+        },
+        "ce_race": {
+          "ce": {
+            "delta": 0.006697977585717552,
+            "paired_95_percentile": [
+              -0.00023288993232151162,
+              0.013383334229053731
+            ]
+          },
+          "supcon": {
+            "delta": 0.005615589488854544,
+            "paired_95_percentile": [
+              -0.003743982717883504,
+              0.014836384102143411
+            ]
+          }
+        },
+        "all_original": {
+          "ce": {
+            "delta": 0.027567205650373183,
+            "paired_95_percentile": [
+              0.018572585516087627,
+              0.03651625994465166
+            ]
+          },
+          "supcon": {
+            "delta": 0.026484817553510176,
+            "paired_95_percentile": [
+              0.017905884312211687,
+              0.035871546192477
+            ]
+          }
+        }
+      }
+    },
+    "2026": {
+      "metrics": {
+        "ce": {
+          "macro_f1": 0.9045403229772719,
+          "class_recall": {
+            "human_written": 0.9736842105263158,
+            "human_ai_polished": 0.918546365914787,
+            "ai_generated": 0.9649890590809628,
+            "ai_humanized": 0.6651982378854625
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9293948640184502,
+            "essay": 0.932272680646267,
+            "news": 0.8665811019262568,
+            "writing": 0.8848261929137611
+          },
+          "worst_domain_macro_f1": 0.8665811019262568
+        },
+        "supcon": {
+          "macro_f1": 0.909711485060017,
+          "class_recall": {
+            "human_written": 0.993734335839599,
+            "human_ai_polished": 0.9060150375939849,
+            "ai_generated": 0.9562363238512035,
+            "ai_humanized": 0.7092511013215859
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9332959587542347,
+            "essay": 0.9293823630415335,
+            "news": 0.8908637404281641,
+            "writing": 0.8825198246295262
+          },
+          "worst_domain_macro_f1": 0.8825198246295262
+        },
+        "ce_only": {
+          "macro_f1": 0.9087325813879381,
+          "class_recall": {
+            "human_written": 0.9887218045112782,
+            "human_ai_polished": 0.9260651629072681,
+            "ai_generated": 0.9591539022611233,
+            "ai_humanized": 0.6696035242290749
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9323363489261548,
+            "essay": 0.9355171852976255,
+            "news": 0.8757066938037087,
+            "writing": 0.886752680497433
+          },
+          "worst_domain_macro_f1": 0.8757066938037087
+        },
+        "ce_tfidf": {
+          "macro_f1": 0.9242686247851561,
+          "class_recall": {
+            "human_written": 0.9874686716791979,
+            "human_ai_polished": 0.9373433583959899,
+            "ai_generated": 0.9562363238512035,
+            "ai_humanized": 0.748898678414097
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.943586314332828,
+            "essay": 0.9623722426666845,
+            "news": 0.8861822617910451,
+            "writing": 0.8981455207028487
+          },
+          "worst_domain_macro_f1": 0.8861822617910451
+        },
+        "ce_newlex": {
+          "macro_f1": 0.9193809207593007,
+          "class_recall": {
+            "human_written": 0.9899749373433584,
+            "human_ai_polished": 0.931077694235589,
+            "ai_generated": 0.9635302698760029,
+            "ai_humanized": 0.7136563876651982
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9355858701540194,
+            "essay": 0.9626381580380345,
+            "news": 0.8742213916091867,
+            "writing": 0.8970256339215109
+          },
+          "worst_domain_macro_f1": 0.8742213916091867
+        },
+        "ce_race": {
+          "macro_f1": 0.9167519375687685,
+          "class_recall": {
+            "human_written": 0.9874686716791979,
+            "human_ai_polished": 0.9348370927318296,
+            "ai_generated": 0.9620714806710431,
+            "ai_humanized": 0.7048458149779736
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9380080099309965,
+            "essay": 0.9442832277054269,
+            "news": 0.8913241255819966,
+            "writing": 0.8886959595839116
+          },
+          "worst_domain_macro_f1": 0.8886959595839116
+        },
+        "all_original": {
+          "macro_f1": 0.9312039968540967,
+          "class_recall": {
+            "human_written": 0.9887218045112782,
+            "human_ai_polished": 0.9385964912280702,
+            "ai_generated": 0.9657184536834428,
+            "ai_humanized": 0.7709251101321586
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9502693935471582,
+            "essay": 0.9711992143534969,
+            "news": 0.8931793579693916,
+            "writing": 0.9032032401692951
+          },
+          "worst_domain_macro_f1": 0.8931793579693916
+        }
+      },
+      "paired_uncertainty": {
+        "ce_only": {
+          "ce": {
+            "delta": 0.004192258410666172,
+            "paired_95_percentile": [
+              0.0003748701288371126,
+              0.008128988575010827
+            ]
+          },
+          "supcon": {
+            "delta": -0.000978903672078868,
+            "paired_95_percentile": [
+              -0.010727250220080845,
+              0.008849899796436828
+            ]
+          }
+        },
+        "ce_tfidf": {
+          "ce": {
+            "delta": 0.019728301807884208,
+            "paired_95_percentile": [
+              0.011543631048536455,
+              0.02835413745319415
+            ]
+          },
+          "supcon": {
+            "delta": 0.014557139725139168,
+            "paired_95_percentile": [
+              0.003690914279292337,
+              0.02483090327435186
+            ]
+          }
+        },
+        "ce_newlex": {
+          "ce": {
+            "delta": 0.01484059778202873,
+            "paired_95_percentile": [
+              0.008326711023078354,
+              0.02196134652089978
+            ]
+          },
+          "supcon": {
+            "delta": 0.00966943569928369,
+            "paired_95_percentile": [
+              -0.000882926960008315,
+              0.019576153313724497
+            ]
+          }
+        },
+        "ce_race": {
+          "ce": {
+            "delta": 0.012211614591496556,
+            "paired_95_percentile": [
+              0.005740965561657018,
+              0.019126000427870344
+            ]
+          },
+          "supcon": {
+            "delta": 0.007040452508751516,
+            "paired_95_percentile": [
+              -0.0015444352508315383,
+              0.015308306144152083
+            ]
+          }
+        },
+        "all_original": {
+          "ce": {
+            "delta": 0.02666367387682478,
+            "paired_95_percentile": [
+              0.017653414073417383,
+              0.03615715662562547
+            ]
+          },
+          "supcon": {
+            "delta": 0.02149251179407974,
+            "paired_95_percentile": [
+              0.010865096709091363,
+              0.031644397348468196
+            ]
+          }
+        }
+      }
+    }
+  },
+  "reload_max_difference": {
+    "ce_only_s3407": 0.0,
+    "ce_tfidf_s3407": 0.0,
+    "ce_newlex_s3407": 0.0,
+    "ce_race_s3407": 0.0,
+    "all_original_s3407": 0.0,
+    "ce_only_s42": 0.0,
+    "ce_tfidf_s42": 0.0,
+    "ce_newlex_s42": 0.0,
+    "ce_race_s42": 0.0,
+    "all_original_s42": 0.0,
+    "ce_only_s2026": 0.0,
+    "ce_tfidf_s2026": 0.0,
+    "ce_newlex_s2026": 0.0,
+    "ce_race_s2026": 0.0,
+    "all_original_s2026": 0.0
+  },
+  "primary_controls_uncertainty": {
+    "ce_tfidf": {
+      "ce_only_meta": {
+        "delta": 0.022272828837922032,
+        "paired_95_percentile": [
+          0.013839109908513822,
+          0.031180955600358287
+        ]
+      }
+    },
+    "ce_newlex": {
+      "ce_only_meta": {
+        "delta": 0.01966582573562692,
+        "paired_95_percentile": [
+          0.012039254426206894,
+          0.027766136451556702
+        ]
+      }
+    },
+    "ce_race": {
+      "ce_only_meta": {
+        "delta": 0.013540849414007461,
+        "paired_95_percentile": [
+          0.005689689761234557,
+          0.02135817643393059
+        ]
+      }
+    },
+    "all_original": {
+      "ce_only_meta": {
+        "delta": 0.029277474219919886,
+        "paired_95_percentile": [
+          0.020284018233908,
+          0.03908418590024149
+        ]
+      }
+    }
+  },
+  "mixset": {
+    "ce": {
+      "macro_f1": 0.39013571178555245,
+      "class_recall": {
+        "human_written": 0.7,
+        "human_ai_polished": 0.69,
+        "ai_generated": 0.1951219512195122,
+        "ai_humanized": 0.014705882352941176
+      },
+      "domain_macro_f1": {
+        "TruthfulQA_LLMs": 0.07504298698108573,
+        "speech": 0.39771089861147496
+      },
+      "worst_domain_macro_f1": 0.07504298698108573
+    },
+    "ce_only": {
+      "macro_f1": 0.38086018600724486,
+      "class_recall": {
+        "human_written": 0.8,
+        "human_ai_polished": 0.655,
+        "ai_generated": 0.1951219512195122,
+        "ai_humanized": 0.014705882352941176
+      },
+      "domain_macro_f1": {
+        "TruthfulQA_LLMs": 0.07282014730339749,
+        "speech": 0.40137078927956726
+      },
+      "worst_domain_macro_f1": 0.07282014730339749
+    },
+    "ce_tfidf": {
+      "macro_f1": 0.3757856952142792,
+      "class_recall": {
+        "human_written": 0.84,
+        "human_ai_polished": 0.67,
+        "ai_generated": 0.14634146341463414,
+        "ai_humanized": 0.014705882352941176
+      },
+      "domain_macro_f1": {
+        "TruthfulQA_LLMs": 0.06081780538302277,
+        "speech": 0.4052871148459384
+      },
+      "worst_domain_macro_f1": 0.06081780538302277
+    },
+    "ce_newlex": {
+      "macro_f1": 0.37000264254268833,
+      "class_recall": {
+        "human_written": 0.78,
+        "human_ai_polished": 0.675,
+        "ai_generated": 0.14634146341463414,
+        "ai_humanized": 0.014705882352941176
+      },
+      "domain_macro_f1": {
+        "TruthfulQA_LLMs": 0.06179183135704874,
+        "speech": 0.4007350698468859
+      },
+      "worst_domain_macro_f1": 0.06179183135704874
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "status": "development_screen_only",
+  "C_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "fusion_alpha_grid": [
+    0.0,
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.5
+  ],
+  "fit_on": "train only",
+  "select_on": "development macro-F1; smaller C/alpha breaks ties",
+  "fusion": "(1-alpha)*RoBERTa_CE_s3407 + alpha*structural_LR",
+  "graph_scope": "published full-text RST; not same-window, not a causal structure ablation",
+  "test_evaluation": false,
+  "script_sha256": "49cf04d97ae137963c474c92a804e875c3eec824ac7afcec6130f8f7951d0c5a",
+  "input_sha256": {
+    "resources/experiments/hart_grouped_v1/train.jsonl": "3cd1539d26189ab1ca1c7e0efc5e34d92265f5d5a9c65783b85af28f41fa9c2b",
+    "resources/experiments/hart_grouped_v1/val.jsonl": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8"
+  },
+  "limitations": "Development also selected the neural checkpoint. Screening estimates are optimistic. Strongest archived configuration RoBERTa+SupCon is not available here as development predictions. Structure features include length proxies. Parsing cost is excluded from training timing."
+}

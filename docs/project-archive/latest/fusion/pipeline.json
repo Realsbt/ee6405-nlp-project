@@ -1,0 +1,9 @@
+{
+  "stage": "completed",
+  "time_utc": "2026-11-12T08:01:40.881909+00:00",
+  "source_kernel": "zhengyingqi/ee6405-text-edu-fusion-experiment-v1",
+  "code_content_sha256": "21ae620364d77dd41c7583caf0c7acfae752a4c832618e84ded43ee100d5bc4f",
+  "bootstrap_sha256": "9ca510dc1eea101d66214ef8dfa92395ccd9c6e5888ab4a3eb4a75b17e8247e6",
+  "gpu": "Tesla T4",
+  "cuda_device_count": 2
+}

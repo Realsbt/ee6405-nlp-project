@@ -1,0 +1,32 @@
+{
+  "source_kernel": "zhengyingqi/ee6405-text-edu-fusion-experiment-v1",
+  "prior_terminal_state": "cancel_acknowledged",
+  "prior_pipeline": {
+    "stage": "confirmation",
+    "time_utc": "2026-11-11T19:25:20.332345+00:00",
+    "code_archive_sha256": null,
+    "code_content_sha256": "21ae620364d77dd41c7583caf0c7acfae752a4c832618e84ded43ee100d5bc4f",
+    "bootstrap_sha256": "98f57c7469217049b56a437b4c5e3ef76e7143bccbae9c59d25369ba4c3ebe18",
+    "resource_dataset": "zhengyingqi/ee6405-same-window-gpu-v1",
+    "gpu": "Tesla T4",
+    "selected": "fusion_gated"
+  },
+  "selection_sha256": "dcfc425dba177ebbc7647194b9ef0332912bf29d3432191bf2b9e8840199a7a8",
+  "reused_complete_runs": [
+    "screen/fusion_cls_s3407",
+    "screen/fusion_mean_s3407",
+    "screen/fusion_attention_s3407",
+    "screen/fusion_gated_s3407",
+    "confirmation/fusion_cls_s42"
+  ],
+  "restarted_incomplete_runs": [
+    "confirmation/fusion_gated_s42"
+  ],
+  "new_runs": [
+    "confirmation/fusion_gated_s42",
+    "confirmation/fusion_cls_s2026",
+    "confirmation/fusion_gated_s2026"
+  ],
+  "test_accessed_before_continuation": false,
+  "policy": "Preserve completed runs; restart incomplete runs from base pretraining"
+}

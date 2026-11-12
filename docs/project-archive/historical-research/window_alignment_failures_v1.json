@@ -1,0 +1,201 @@
+{
+  "cache_protocol_sha256": "6cb50203f383a1cdcc02054f65f72baae4c5359a18de58c6242c85db66f79bec",
+  "diagnostics_only": true,
+  "trees_accepted": 0,
+  "records": [
+    {
+      "item_id": "arxiv-2002.00413v1_human_written",
+      "source_split": "train",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1252,
+      "parsed_characters": 1260,
+      "differences": [
+        {
+          "operation": "replace",
+          "original_span": [
+            266,
+            267
+          ],
+          "parsed_span": [
+            266,
+            271
+          ],
+          "original": "\u225c",
+          "parsed": "<unk>",
+          "original_codepoints": [
+            "U+225C"
+          ],
+          "parsed_codepoints": [
+            "U+003C",
+            "U+0075",
+            "U+006E",
+            "U+006B",
+            "U+003E"
+          ]
+        },
+        {
+          "operation": "replace",
+          "original_span": [
+            327,
+            328
+          ],
+          "parsed_span": [
+            331,
+            336
+          ],
+          "original": "\u225c",
+          "parsed": "<unk>",
+          "original_codepoints": [
+            "U+225C"
+          ],
+          "parsed_codepoints": [
+            "U+003C",
+            "U+0075",
+            "U+006E",
+            "U+006B",
+            "U+003E"
+          ]
+        }
+      ],
+      "raw_leaf_text_sha256": "5ea3b7fe50f25c1d597b1fcb152c67623900287060581751e68f1c4dfef154d7",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "arxiv-2003.00703v1_human_written",
+      "source_split": "train",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1971,
+      "parsed_characters": 1979,
+      "differences": [
+        {
+          "operation": "replace",
+          "original_span": [
+            337,
+            338
+          ],
+          "parsed_span": [
+            337,
+            342
+          ],
+          "original": "\u0202",
+          "parsed": "<unk>",
+          "original_codepoints": [
+            "U+0202"
+          ],
+          "parsed_codepoints": [
+            "U+003C",
+            "U+0075",
+            "U+006E",
+            "U+006B",
+            "U+003E"
+          ]
+        },
+        {
+          "operation": "replace",
+          "original_span": [
+            350,
+            351
+          ],
+          "parsed_span": [
+            354,
+            359
+          ],
+          "original": "\u0202",
+          "parsed": "<unk>",
+          "original_codepoints": [
+            "U+0202"
+          ],
+          "parsed_codepoints": [
+            "U+003C",
+            "U+0075",
+            "U+006E",
+            "U+006B",
+            "U+003E"
+          ]
+        }
+      ],
+      "raw_leaf_text_sha256": "d94203a7192d60292017270808e7c160c4cdc349fd5d449488a0aaf0ccd6c82c",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "arxiv-2004.11552v2_ai_generated_gemini-1.5-pro-002_THEN_gemini-1.5-pro-002",
+      "source_split": "train",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1720,
+      "parsed_characters": 1732,
+      "differences": [
+        {
+          "operation": "replace",
+          "original_span": [
+            761,
+            762
+          ],
+          "parsed_span": [
+            761,
+            766
+          ],
+          "original": "\u2291",
+          "parsed": "<unk>",
+          "original_codepoints": [
+            "U+2291"
+          ],
+          "parsed_codepoints": [
+            "U+003C",
+            "U+0075",
+            "U+006E",
+            "U+006B",
+            "U+003E"
+          ]
+        },
+        {
+          "operation": "replace",
+          "original_span": [
+            799,
+            800
+          ],
+          "parsed_span": [
+            803,
+            808
+          ],
+          "original": "\u2291",
+          "parsed": "<unk>",
+          "original_codepoints": [
+            "U+2291"
+          ],
+          "parsed_codepoints": [
+            "U+003C",
+            "U+0075",
+            "U+006E",
+            "U+006B",
+            "U+003E"
+          ]
+        },
+        {
+          "operation": "replace",
+          "original_span": [
+            1434,
+            1435
+          ],
+          "parsed_span": [
+            1442,
+            1447
+          ],
+          "original": "\u2291",
+          "parsed": "<unk>",
+          "original_codepoints": [
+            "U+2291"
+          ],
+          "parsed_codepoints": [
+            "U+003C",
+            "U+0075",
+            "U+006E",
+            "U+006B",
+            "U+003E"
+          ]
+        }
+      ],
+      "raw_leaf_text_sha256": "5a0af7113ab1cfbb0f7db4d75cbfc08fe65aa4869109a63e867c362c03e02f79",
+      "error": "RST output differs even after verified NFKC equivalence"
+    }
+  ]
+}

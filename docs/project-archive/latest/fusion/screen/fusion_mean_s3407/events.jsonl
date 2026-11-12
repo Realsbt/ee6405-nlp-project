@@ -1,0 +1,13 @@
+{"event": "epoch_complete", "epoch": 1, "mean_ce": 1.1742661684879419, "validation_macro_f1": 0.7631735284854174, "improved": true, "epoch_seconds": 523.8812928179996}
+{"event": "epoch_complete", "epoch": 2, "mean_ce": 0.4732968756270852, "validation_macro_f1": 0.8627503470068334, "improved": true, "epoch_seconds": 523.0848273969996}
+{"event": "epoch_complete", "epoch": 3, "mean_ce": 0.3294101636190612, "validation_macro_f1": 0.8743120010516017, "improved": true, "epoch_seconds": 523.5927425}
+{"event": "epoch_complete", "epoch": 4, "mean_ce": 0.26982588747060604, "validation_macro_f1": 0.8751979723434604, "improved": true, "epoch_seconds": 522.4314717540001}
+{"event": "epoch_complete", "epoch": 5, "mean_ce": 0.22415742913237074, "validation_macro_f1": 0.8924131584161197, "improved": true, "epoch_seconds": 522.6196836859999}
+{"event": "epoch_complete", "epoch": 6, "mean_ce": 0.19958992848687077, "validation_macro_f1": 0.8923450677333992, "improved": false, "epoch_seconds": 521.6712755389999}
+{"event": "epoch_complete", "epoch": 7, "mean_ce": 0.17219977656336707, "validation_macro_f1": 0.8959662624969709, "improved": true, "epoch_seconds": 523.1152669769999}
+{"event": "epoch_complete", "epoch": 8, "mean_ce": 0.16400121733278453, "validation_macro_f1": 0.9085006279978123, "improved": true, "epoch_seconds": 523.5120796909996}
+{"event": "epoch_complete", "epoch": 9, "mean_ce": 0.14261069018915043, "validation_macro_f1": 0.9014981211452646, "improved": false, "epoch_seconds": 522.2482841389992}
+{"event": "epoch_complete", "epoch": 10, "mean_ce": 0.13747475010366877, "validation_macro_f1": 0.9003681488956095, "improved": false, "epoch_seconds": 521.5794742329999}
+{"event": "epoch_complete", "epoch": 11, "mean_ce": 0.12159816082104813, "validation_macro_f1": 0.8928650556607399, "improved": false, "epoch_seconds": 521.0938513309993}
+{"event": "epoch_complete", "epoch": 12, "mean_ce": 0.1117922355272995, "validation_macro_f1": 0.8913627483121885, "improved": false, "epoch_seconds": 521.514793942999}
+{"event": "epoch_complete", "epoch": 13, "mean_ce": 0.10383405517506113, "validation_macro_f1": 0.8889689841886674, "improved": false, "epoch_seconds": 521.605402145}

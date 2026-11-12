@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "records": [
+    {
+      "item_id": "arxiv-2002.00413v1_human_written",
+      "same_tree_as_independent_repair": true,
+      "unknown_tokens": 2
+    },
+    {
+      "item_id": "arxiv-2003.00703v1_human_written",
+      "same_tree_as_independent_repair": true,
+      "unknown_tokens": 2
+    },
+    {
+      "item_id": "arxiv-2004.11552v2_ai_generated_gemini-1.5-pro-002_THEN_gemini-1.5-pro-002",
+      "same_tree_as_independent_repair": true,
+      "unknown_tokens": 3
+    }
+  ],
+  "cache_code_sha256": "e1320dec4f4e2300eeea05605bbfadeb19f0f999d3b848fc4c06a962d444811a",
+  "scope": "Actual integrated parser callback, no changes to cache"
+}

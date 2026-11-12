@@ -1,0 +1,24 @@
+{
+  "records": [
+    {
+      "item_id": "arxiv-2002.00413v1_human_written",
+      "status": "passed",
+      "unknown_tokens": 2
+    },
+    {
+      "item_id": "arxiv-2003.00703v1_human_written",
+      "status": "passed",
+      "unknown_tokens": 2
+    },
+    {
+      "item_id": "arxiv-2004.11552v2_ai_generated_gemini-1.5-pro-002_THEN_gemini-1.5-pro-002",
+      "status": "passed",
+      "unknown_tokens": 3
+    }
+  ],
+  "original_cache_unchanged": true,
+  "scope": "Separate train/dev repair verification, not integrated or complete full cache",
+  "cache_protocol_sha256": "6cb50203f383a1cdcc02054f65f72baae4c5359a18de58c6242c85db66f79bec",
+  "adapter_sha256": "8b2618ff8d025e0e200127f3f82f3d44f583b736bef655a1afa80fda58d3e2d8",
+  "parsed_sha256": "daf3355fae850db3d6f574ab232484c98d37eac868f9ebf97ec29cb3ddfd827a"
+}

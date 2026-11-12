@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "condition": "ext_edu_consistent",
+  "training_only_smoke": true,
+  "test_evaluated": false,
+  "finite_gradients": true,
+  "classifier_updated": true,
+  "last_encoder_updated": true,
+  "frozen_embeddings_unchanged": true,
+  "device": "cpu",
+  "parameters": {
+    "total": 125305092,
+    "trainable": 7747332
+  },
+  "elapsed_seconds": 9.979501374997199,
+  "peak_cuda_allocated_mib": null
+}

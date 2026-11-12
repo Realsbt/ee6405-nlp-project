@@ -1,0 +1,4 @@
+{"event": "epoch_complete", "condition": "deberta_full", "epoch": 1, "validation_macro_f1": 0.8581183312888674, "mean_ce": 0.6091168822613392, "epoch_seconds": 1061.240616109, "improved": true}
+{"event": "epoch_complete", "condition": "deberta_full", "epoch": 2, "validation_macro_f1": 0.8840327681506712, "mean_ce": 0.177013185476271, "epoch_seconds": 1063.129897451, "improved": true}
+{"event": "epoch_complete", "condition": "deberta_full", "epoch": 3, "validation_macro_f1": 0.897929757358379, "mean_ce": 0.08963326408240667, "epoch_seconds": 1061.8021079730006, "improved": true}
+{"event": "epoch_complete", "condition": "deberta_full", "epoch": 4, "validation_macro_f1": 0.8986699590756639, "mean_ce": 0.04989602444696725, "epoch_seconds": 1063.1880779679996, "improved": true}

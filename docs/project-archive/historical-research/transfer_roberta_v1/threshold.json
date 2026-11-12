@@ -1,0 +1,12 @@
+{
+  "threshold": 0.912526845932007,
+  "n_validation_negatives": 800,
+  "allowed_false_positives": 8,
+  "actual_false_positives": 8,
+  "target_empirical_validation_fpr": 0.01,
+  "scope": "Negative-only validation order statistic, ties excluded. Not a population FPR guarantee or a test-set ROC threshold.",
+  "run": "roberta_s3407",
+  "checkpoint_sha256": "d7eabbcd9a4a085dc23bd93d6d5ac27b73ac6dfe065745547554464397778f7f",
+  "validation_sha256": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8",
+  "script_sha256": "ef731d522c450417e585481c1d888c3115166924796d87b1fcfb1fa67b8f13d8"
+}

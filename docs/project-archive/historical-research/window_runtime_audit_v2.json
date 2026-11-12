@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "python": "3.12.14",
+  "packages": {
+    "torch": "2.7.0",
+    "transformers": "4.46.3",
+    "torch-geometric": "2.6.1",
+    "tokenizers": "0.20.3",
+    "isanlp-rst": "3.2.2",
+    "razdel": "0.5.0",
+    "numpy": "1.26.0"
+  },
+  "code_and_parser_asset_sha256": {
+    "same_window_cache.py": "e1320dec4f4e2300eeea05605bbfadeb19f0f999d3b848fc4c06a962d444811a",
+    "window_controls.py": "d9560e88fba8640af25c70ebe721ccc3462499b5fbc274e6f1fffdc756fe16f4",
+    "train_window_controls.py": "c90b3056c5d6fa30ee131a5cd2a46e9d37f45225ea0ed28dab96857eb1e772b3",
+    "repair_window_unknowns.py": "8b2618ff8d025e0e200127f3f82f3d44f583b736bef655a1afa80fda58d3e2d8",
+    "resources/assets/xlm-roberta-large-config/tokenizer_config.json": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+    "resources/assets/xlm-roberta-large-config/sentencepiece.bpe.model": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+    "resources/assets/xlm-roberta-large-config/config.json": "ec7c3a99c58a38ebb702a2297f1c4586944e841b5eb29d201ff87e0f9c9abe0e",
+    "resources/assets/xlm-roberta-large-config/tokenizer.json": "a898ea75433890f6610f4e470b8ebeb0c21dce5c8dd61f892eb09eb5919d2e2c",
+    ".venv-cpu/lib/python3.12/site-packages/isanlp_rst/base_predictor.py": "516cb049d8d030991b6ab740a11cc6cac3974447f63559cc014eddfe77fcc381",
+    ".venv-cpu/lib/python3.12/site-packages/isanlp_rst/dmrst_parser/predictor.py": "f3ca303f5902891ddacb725e756655926c777b061daa947b285868170b4c4ed5",
+    ".venv-cpu/lib/python3.12/site-packages/isanlp_rst/utils/du_converter.py": "fa73374c968a64dc25131ce6d1768e414d49fa0ae13c06ef83d8d8236f32b061"
+  },
+  "cache_protocol_sha256": "e287fcf3feb23ae33a6fa9f4fc6763690799d5bb01504b90855fba0773f04501",
+  "verified": 544,
+  "failed": 0,
+  "pending": 15440,
+  "resume_initialization_validated": true
+}

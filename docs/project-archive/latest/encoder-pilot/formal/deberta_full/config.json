@@ -1,0 +1,38 @@
+{
+  "condition": "deberta_full",
+  "seed": 3407,
+  "epochs": 4,
+  "model_source": "microsoft/deberta-v3-base",
+  "revision": "8ccc9b6f36199bec6961081d44eb72fb3f7353f3",
+  "recipe": "all_layers_cls_ce_v1",
+  "effective_batch": 16,
+  "micro_batch": 4,
+  "learning_rate": 2e-05,
+  "weight_decay": 0.01,
+  "warmup_fraction": 0.1,
+  "max_length": 512,
+  "all_encoder_layers_trainable": true,
+  "max_training_seconds": 14400,
+  "precision": "cuda_fp16",
+  "amp_initial_scale": 128.0,
+  "smoke_overflow_retry_limit": null,
+  "test_evaluated": false,
+  "smoke": false,
+  "data_protocol_sha256": "a9c9597e5febe44923ed20ef9ab3e72f55173b58f230b69806a02e5546922ee5",
+  "source_sha256": "044ff2dd16d327b828d6254bd65a7fdd315e0b4bea3d93bc5d91fa3fd879aeaf",
+  "source_cache_sha256": "73f85ea047fdce4736fc8d923b5474405b0e72f615f3a4cb14103f2e0aa2ee14",
+  "retokenization_truncated_records": {
+    "train": 61,
+    "val": 3
+  },
+  "tokenizer_class": "DebertaV2Tokenizer",
+  "source_weights_sha256": {
+    "hub_commit": "8ccc9b6f36199bec6961081d44eb72fb3f7353f3"
+  },
+  "packages": {
+    "torch": "2.14.1+cu130",
+    "transformers": "4.46.3"
+  },
+  "gpu": "Tesla T4",
+  "started_utc": "2026-11-12T06:55:07.848279+00:00"
+}

@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-09",
+  "fit": "none; reuse train-fitted models and earlier dev selection",
+  "selection": "No candidate selection in this evaluation; all three feature sets and frozen blends reported.",
+  "frozen_sha256": {
+    "structure_screen_v1/development_results.json": "2049a2340706e650b307ee3fbbbe53517365bf80301abeec8786b78e7d4a9204",
+    "structure_screen_v1/protocol.json": "bc321e0b869308b171409ff79c3fa47e61028a264472d33fdc9a671b21bb836b",
+    "structure_screen_v1/length.joblib": "a3fcf1442e380fa7f57720eda856d0cf3d15769fdd347d984782b427c40acb27",
+    "structure_screen_v1/length_development_predictions.jsonl": "88a840345a5868ec9a7aa2116710aea10951884c573d3e522b71e27f03603b41",
+    "structure_screen_v1/structure.joblib": "75b34ba08bd56196c8ebb5736af8a921e5c4e9ecaa6396d32185293739e475ba",
+    "structure_screen_v1/structure_development_predictions.jsonl": "86e17360d9ef790424c91b4b24318b3c24183ccfc1a4f6335c477c9dd95dda30",
+    "structure_screen_v1/combined.joblib": "0c0623d37fe45ae417d89eb4620641f933390967408e932f39f8ff4e925be90d",
+    "structure_screen_v1/combined_development_predictions.jsonl": "8681c9f71a457e7562b3734bd7492e94937fe0d62817958ddec9b4a19c538b77"
+  },
+  "script_sha256": "619c508f31d25adeac8fab0ced0b920d66d99258efcede67b43d359bca27422e",
+  "graph_scope": "Original released full-text HART trees; pinned parser full-text MixSet trees. Not same-window and not a controlled parser alignment comparison.",
+  "limitations": [
+    "HART and MixSet previously inspected: post-hoc evaluation.",
+    "Features include length proxies; structural statistics are not pure relation semantics.",
+    "No domain/label/ID is provided as a feature.",
+    "Dev checkpoint selection was not independent; fixed-model bootstrap excludes selection uncertainty.",
+    "All groups/results reported; no external fitting or threshold tuning."
+  ]
+}

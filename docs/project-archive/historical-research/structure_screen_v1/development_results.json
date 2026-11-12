@@ -1,0 +1,793 @@
+{
+  "baseline_roberta_ce_s3407": {
+    "macro_f1": 0.9106170564392321,
+    "class_recall": {
+      "human_written": 0.9825,
+      "human_ai_polished": 0.95,
+      "ai_generated": 0.936231884057971,
+      "ai_humanized": 0.7181818181818181
+    },
+    "domain_macro_f1": {
+      "arxiv": 0.9469061146967682,
+      "essay": 0.8916347543155125,
+      "news": 0.8925491499987229,
+      "writing": 0.903054937424232
+    },
+    "worst_domain_macro_f1": 0.8916347543155125
+  },
+  "models": {
+    "length": {
+      "selected_C": 1.0,
+      "candidates": [
+        {
+          "C": 0.01,
+          "development": {
+            "macro_f1": 0.40316465911320715,
+            "class_recall": {
+              "human_written": 0.6375,
+              "human_ai_polished": 0.2625,
+              "ai_generated": 0.5826086956521739,
+              "ai_humanized": 0.17272727272727273
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.3435653196169829,
+              "essay": 0.52423687390322,
+              "news": 0.4083807168099995,
+              "writing": 0.2798573015337088
+            },
+            "worst_domain_macro_f1": 0.2798573015337088
+          }
+        },
+        {
+          "C": 0.1,
+          "development": {
+            "macro_f1": 0.4173535475009241,
+            "class_recall": {
+              "human_written": 0.6425,
+              "human_ai_polished": 0.2975,
+              "ai_generated": 0.5797101449275363,
+              "ai_humanized": 0.19090909090909092
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.31893191522462394,
+              "essay": 0.54456862102948,
+              "news": 0.4332082697577676,
+              "writing": 0.29492827904266716
+            },
+            "worst_domain_macro_f1": 0.29492827904266716
+          }
+        },
+        {
+          "C": 1.0,
+          "development": {
+            "macro_f1": 0.42590118084172446,
+            "class_recall": {
+              "human_written": 0.64,
+              "human_ai_polished": 0.3175,
+              "ai_generated": 0.5666666666666667,
+              "ai_humanized": 0.22727272727272727
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.3352421387142268,
+              "essay": 0.5512113210389072,
+              "news": 0.4455695204536349,
+              "writing": 0.2919162685070952
+            },
+            "worst_domain_macro_f1": 0.2919162685070952
+          }
+        },
+        {
+          "C": 10.0,
+          "development": {
+            "macro_f1": 0.42580070800840325,
+            "class_recall": {
+              "human_written": 0.6375,
+              "human_ai_polished": 0.32,
+              "ai_generated": 0.5652173913043478,
+              "ai_humanized": 0.22727272727272727
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.3352421387142268,
+              "essay": 0.5528743834162554,
+              "news": 0.4417710730356444,
+              "writing": 0.2917456078487623
+            },
+            "worst_domain_macro_f1": 0.2917456078487623
+          }
+        }
+      ],
+      "development": {
+        "macro_f1": 0.42590118084172446,
+        "class_recall": {
+          "human_written": 0.64,
+          "human_ai_polished": 0.3175,
+          "ai_generated": 0.5666666666666667,
+          "ai_humanized": 0.22727272727272727
+        },
+        "domain_macro_f1": {
+          "arxiv": 0.3352421387142268,
+          "essay": 0.5512113210389072,
+          "news": 0.4455695204536349,
+          "writing": 0.2919162685070952
+        },
+        "worst_domain_macro_f1": 0.2919162685070952
+      },
+      "fusion_grid": [
+        {
+          "alpha": 0.0,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.05,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.1,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.2,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.3,
+          "development": {
+            "macro_f1": 0.9127740885232728,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.9405797101449276,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9488499874945181,
+              "essay": 0.8973739438435606,
+              "news": 0.8943865355790295,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8943865355790295
+          }
+        },
+        {
+          "alpha": 0.5,
+          "development": {
+            "macro_f1": 0.9118609695738331,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.9475,
+              "ai_generated": 0.9391304347826087,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9497365328575033,
+              "essay": 0.8947371857744402,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8925491499987229
+          }
+        }
+      ],
+      "selected_fusion": {
+        "alpha": 0.3,
+        "development": {
+          "macro_f1": 0.9127740885232728,
+          "class_recall": {
+            "human_written": 0.9825,
+            "human_ai_polished": 0.95,
+            "ai_generated": 0.9405797101449276,
+            "ai_humanized": 0.7181818181818181
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9488499874945181,
+            "essay": 0.8973739438435606,
+            "news": 0.8943865355790295,
+            "writing": 0.903054937424232
+          },
+          "worst_domain_macro_f1": 0.8943865355790295
+        }
+      },
+      "feature_names": [
+        "log_chars",
+        "log_sentences",
+        "log_words"
+      ]
+    },
+    "structure": {
+      "selected_C": 1.0,
+      "candidates": [
+        {
+          "C": 0.01,
+          "development": {
+            "macro_f1": 0.42402742044702013,
+            "class_recall": {
+              "human_written": 0.555,
+              "human_ai_polished": 0.36,
+              "ai_generated": 0.4666666666666667,
+              "ai_humanized": 0.4636363636363636
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.44917999078365545,
+              "essay": 0.3913448554172981,
+              "news": 0.4337774396865818,
+              "writing": 0.40267233330113655
+            },
+            "worst_domain_macro_f1": 0.3913448554172981
+          }
+        },
+        {
+          "C": 0.1,
+          "development": {
+            "macro_f1": 0.42513255104996817,
+            "class_recall": {
+              "human_written": 0.55,
+              "human_ai_polished": 0.3725,
+              "ai_generated": 0.46956521739130436,
+              "ai_humanized": 0.44545454545454544
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.4627565345322159,
+              "essay": 0.3899914866580734,
+              "news": 0.4304358897330428,
+              "writing": 0.39724022507866064
+            },
+            "worst_domain_macro_f1": 0.3899914866580734
+          }
+        },
+        {
+          "C": 1.0,
+          "development": {
+            "macro_f1": 0.42635775331825054,
+            "class_recall": {
+              "human_written": 0.555,
+              "human_ai_polished": 0.3725,
+              "ai_generated": 0.46956521739130436,
+              "ai_humanized": 0.44545454545454544
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.46862738421147365,
+              "essay": 0.3949563488651585,
+              "news": 0.42398785600945116,
+              "writing": 0.39754083293903625
+            },
+            "worst_domain_macro_f1": 0.3949563488651585
+          }
+        },
+        {
+          "C": 10.0,
+          "development": {
+            "macro_f1": 0.42629812090029245,
+            "class_recall": {
+              "human_written": 0.55,
+              "human_ai_polished": 0.375,
+              "ai_generated": 0.47101449275362317,
+              "ai_humanized": 0.44545454545454544
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.47145285009125054,
+              "essay": 0.3949563488651585,
+              "news": 0.4217291150107986,
+              "writing": 0.39724147774878016
+            },
+            "worst_domain_macro_f1": 0.3949563488651585
+          }
+        }
+      ],
+      "development": {
+        "macro_f1": 0.42635775331825054,
+        "class_recall": {
+          "human_written": 0.555,
+          "human_ai_polished": 0.3725,
+          "ai_generated": 0.46956521739130436,
+          "ai_humanized": 0.44545454545454544
+        },
+        "domain_macro_f1": {
+          "arxiv": 0.46862738421147365,
+          "essay": 0.3949563488651585,
+          "news": 0.42398785600945116,
+          "writing": 0.39754083293903625
+        },
+        "worst_domain_macro_f1": 0.3949563488651585
+      },
+      "fusion_grid": [
+        {
+          "alpha": 0.0,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.05,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.1,
+          "development": {
+            "macro_f1": 0.9089185632043135,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7090909090909091
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.8970511108192764
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.2,
+          "development": {
+            "macro_f1": 0.9084211558291861,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.9475,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7090909090909091
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8905702600466523,
+              "writing": 0.8970511108192764
+            },
+            "worst_domain_macro_f1": 0.8905702600466523
+          }
+        },
+        {
+          "alpha": 0.3,
+          "development": {
+            "macro_f1": 0.9084211558291861,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.9475,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7090909090909091
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8905702600466523,
+              "writing": 0.8970511108192764
+            },
+            "worst_domain_macro_f1": 0.8905702600466523
+          }
+        },
+        {
+          "alpha": 0.5,
+          "development": {
+            "macro_f1": 0.9074051083324739,
+            "class_recall": {
+              "human_written": 0.985,
+              "human_ai_polished": 0.94,
+              "ai_generated": 0.9333333333333333,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9449030461895929,
+              "essay": 0.8891031760407107,
+              "news": 0.8940711728939885,
+              "writing": 0.894672985473259
+            },
+            "worst_domain_macro_f1": 0.8891031760407107
+          }
+        }
+      ],
+      "selected_fusion": {
+        "alpha": 0.0,
+        "development": {
+          "macro_f1": 0.9106170564392321,
+          "class_recall": {
+            "human_written": 0.9825,
+            "human_ai_polished": 0.95,
+            "ai_generated": 0.936231884057971,
+            "ai_humanized": 0.7181818181818181
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9469061146967682,
+            "essay": 0.8916347543155125,
+            "news": 0.8925491499987229,
+            "writing": 0.903054937424232
+          },
+          "worst_domain_macro_f1": 0.8916347543155125
+        }
+      },
+      "feature_names": [
+        "edu_words_mean",
+        "edu_words_sd",
+        "leaf_depth_max",
+        "leaf_depth_mean",
+        "leaf_depth_sd",
+        "log_edu_count",
+        "nuclearity:NN",
+        "nuclearity:NS",
+        "nuclearity:SN",
+        "relation:Attribution",
+        "relation:Background",
+        "relation:Cause",
+        "relation:Comparison",
+        "relation:Condition",
+        "relation:Contrast",
+        "relation:Elaboration",
+        "relation:Enablement",
+        "relation:Evaluation",
+        "relation:Explanation",
+        "relation:Joint",
+        "relation:Manner-Means",
+        "relation:Summary",
+        "relation:Temporal",
+        "relation:Topic-Change",
+        "relation:Topic-Comment",
+        "relation:same-unit",
+        "relation:textual-organization",
+        "span_imbalance_mean"
+      ]
+    },
+    "combined": {
+      "selected_C": 1.0,
+      "candidates": [
+        {
+          "C": 0.01,
+          "development": {
+            "macro_f1": 0.4805678842524719,
+            "class_recall": {
+              "human_written": 0.6475,
+              "human_ai_polished": 0.4175,
+              "ai_generated": 0.5362318840579711,
+              "ai_humanized": 0.44545454545454544
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.5220620789105083,
+              "essay": 0.4829802588011014,
+              "news": 0.4658171894827326,
+              "writing": 0.43381196385137194
+            },
+            "worst_domain_macro_f1": 0.43381196385137194
+          }
+        },
+        {
+          "C": 0.1,
+          "development": {
+            "macro_f1": 0.5061412235385845,
+            "class_recall": {
+              "human_written": 0.7025,
+              "human_ai_polished": 0.4225,
+              "ai_generated": 0.553623188405797,
+              "ai_humanized": 0.5
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.5418628146047502,
+              "essay": 0.5293531075688944,
+              "news": 0.47965225563909775,
+              "writing": 0.44478764773056084
+            },
+            "worst_domain_macro_f1": 0.44478764773056084
+          }
+        },
+        {
+          "C": 1.0,
+          "development": {
+            "macro_f1": 0.5171002767194048,
+            "class_recall": {
+              "human_written": 0.72,
+              "human_ai_polished": 0.4425,
+              "ai_generated": 0.553623188405797,
+              "ai_humanized": 0.509090909090909
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.5547210727068282,
+              "essay": 0.543504224807181,
+              "news": 0.4937230689961536,
+              "writing": 0.44989939119154654
+            },
+            "worst_domain_macro_f1": 0.44989939119154654
+          }
+        },
+        {
+          "C": 10.0,
+          "development": {
+            "macro_f1": 0.5119116714999487,
+            "class_recall": {
+              "human_written": 0.7175,
+              "human_ai_polished": 0.4425,
+              "ai_generated": 0.5420289855072464,
+              "ai_humanized": 0.5
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.5471617824281005,
+              "essay": 0.5488163244905989,
+              "news": 0.48522068130920415,
+              "writing": 0.440190462028039
+            },
+            "worst_domain_macro_f1": 0.440190462028039
+          }
+        }
+      ],
+      "development": {
+        "macro_f1": 0.5171002767194048,
+        "class_recall": {
+          "human_written": 0.72,
+          "human_ai_polished": 0.4425,
+          "ai_generated": 0.553623188405797,
+          "ai_humanized": 0.509090909090909
+        },
+        "domain_macro_f1": {
+          "arxiv": 0.5547210727068282,
+          "essay": 0.543504224807181,
+          "news": 0.4937230689961536,
+          "writing": 0.44989939119154654
+        },
+        "worst_domain_macro_f1": 0.44989939119154654
+      },
+      "fusion_grid": [
+        {
+          "alpha": 0.0,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.05,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.1,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.2,
+          "development": {
+            "macro_f1": 0.9106170564392321,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.95,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9469061146967682,
+              "essay": 0.8916347543155125,
+              "news": 0.8925491499987229,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8916347543155125
+          }
+        },
+        {
+          "alpha": 0.3,
+          "development": {
+            "macro_f1": 0.9111710602106112,
+            "class_recall": {
+              "human_written": 0.9825,
+              "human_ai_polished": 0.9475,
+              "ai_generated": 0.9376811594202898,
+              "ai_humanized": 0.7181818181818181
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9488499874945181,
+              "essay": 0.8947371857744402,
+              "news": 0.8907177643784787,
+              "writing": 0.903054937424232
+            },
+            "worst_domain_macro_f1": 0.8907177643784787
+          }
+        },
+        {
+          "alpha": 0.5,
+          "development": {
+            "macro_f1": 0.9084156650600685,
+            "class_recall": {
+              "human_written": 0.98,
+              "human_ai_polished": 0.9375,
+              "ai_generated": 0.936231884057971,
+              "ai_humanized": 0.7272727272727273
+            },
+            "domain_macro_f1": {
+              "arxiv": 0.9472855524653464,
+              "essay": 0.8927549147766545,
+              "news": 0.8974850246652573,
+              "writing": 0.8912653642954557
+            },
+            "worst_domain_macro_f1": 0.8912653642954557
+          }
+        }
+      ],
+      "selected_fusion": {
+        "alpha": 0.3,
+        "development": {
+          "macro_f1": 0.9111710602106112,
+          "class_recall": {
+            "human_written": 0.9825,
+            "human_ai_polished": 0.9475,
+            "ai_generated": 0.9376811594202898,
+            "ai_humanized": 0.7181818181818181
+          },
+          "domain_macro_f1": {
+            "arxiv": 0.9488499874945181,
+            "essay": 0.8947371857744402,
+            "news": 0.8907177643784787,
+            "writing": 0.903054937424232
+          },
+          "worst_domain_macro_f1": 0.8907177643784787
+        }
+      },
+      "feature_names": [
+        "edu_words_mean",
+        "edu_words_sd",
+        "leaf_depth_max",
+        "leaf_depth_mean",
+        "leaf_depth_sd",
+        "log_chars",
+        "log_edu_count",
+        "log_sentences",
+        "log_words",
+        "nuclearity:NN",
+        "nuclearity:NS",
+        "nuclearity:SN",
+        "relation:Attribution",
+        "relation:Background",
+        "relation:Cause",
+        "relation:Comparison",
+        "relation:Condition",
+        "relation:Contrast",
+        "relation:Elaboration",
+        "relation:Enablement",
+        "relation:Evaluation",
+        "relation:Explanation",
+        "relation:Joint",
+        "relation:Manner-Means",
+        "relation:Summary",
+        "relation:Temporal",
+        "relation:Topic-Change",
+        "relation:Topic-Comment",
+        "relation:same-unit",
+        "relation:textual-organization",
+        "span_imbalance_mean"
+      ]
+    }
+  },
+  "input_sha256": {
+    "resources/experiments/hart_grouped_v1/train.jsonl": "3cd1539d26189ab1ca1c7e0efc5e34d92265f5d5a9c65783b85af28f41fa9c2b",
+    "resources/experiments/hart_grouped_v1/val.jsonl": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8",
+    "resources/assets/hart_official/test_graph.jsonl": "2acaf62ea42359266efd69e6c6023bcf5ec8c544991555bf1285638a560cc51c",
+    "resources/assets/hart_official/train_graph.jsonl": "ffedcc941c35c42a636d6e0ff3fe25b9971e2efd1ab88cb7998574d9eea7e9e6",
+    "resources/assets/hart_official/val_graph.jsonl": "791d635a7a472b9569ac5b9776076b428973eb4f05b1860f2bee1cb9adde9bad",
+    "transfer_roberta_v1/validation_predictions.jsonl": "9ea3bb575561c936f1f0a9847595734eeb42bd41cb50496e9f57288a5ead6e39"
+  },
+  "elapsed_seconds": 8.324546707997797
+}

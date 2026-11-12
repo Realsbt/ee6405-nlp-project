@@ -1,0 +1,1 @@
+{"event": "epoch_complete", "epoch": 1, "mean_ce": 1.3892743587493896, "validation_macro_f1": 0.1, "improved": true, "epoch_seconds": 1.3804373579999947}

@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "conditions": {
+    "ext_edu_ce2": {
+      "status": "passed",
+      "strict_reload": true,
+      "finite_forward": true,
+      "checkpoint_sha256": "77a4302a6fd304665afb091867f680e24e63f4b94471f3857e0f16d5cd72c30d",
+      "attention_normalized": true,
+      "weights_discarded": true,
+      "training_only_smoke": true,
+      "test_evaluated": false
+    },
+    "ext_chunks_ce2": {
+      "status": "passed",
+      "strict_reload": true,
+      "finite_forward": true,
+      "checkpoint_sha256": "9fddcc8f778e859697a88d4f2ffdfb5a6787dbd6ba4d34cdeb3731ee8a80a669",
+      "attention_normalized": true,
+      "weights_discarded": true,
+      "training_only_smoke": true,
+      "test_evaluated": false
+    },
+    "ext_edu_consistent": {
+      "status": "passed",
+      "strict_reload": true,
+      "finite_forward": true,
+      "checkpoint_sha256": "3443b7b7fb91b5d3b38e06d5ad17c16bb2f68a2a6e39290638d7b38bb41581af",
+      "attention_normalized": true,
+      "weights_discarded": true,
+      "training_only_smoke": true,
+      "test_evaluated": false
+    },
+    "ext_chunks_consistent": {
+      "status": "passed",
+      "strict_reload": true,
+      "finite_forward": true,
+      "checkpoint_sha256": "2cd03bb0fe211b393ed828c5f79f32c14d4ca18e7e2e18c3fb9fffc0de6cd77e",
+      "attention_normalized": true,
+      "weights_discarded": true,
+      "training_only_smoke": true,
+      "test_evaluated": false
+    }
+  },
+  "performance_claim": false
+}

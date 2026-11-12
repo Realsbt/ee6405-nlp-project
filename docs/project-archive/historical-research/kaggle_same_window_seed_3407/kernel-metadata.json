@@ -1,0 +1,15 @@
+{
+  "id": "zhengyingqi/ee6405-same-window-seed-3407",
+  "title": "EE6405 Same-Window Seed 3407",
+  "code_file": "run_same_window_seed.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": ["zhengyingqi/ee6405-same-window-gpu-v1"],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

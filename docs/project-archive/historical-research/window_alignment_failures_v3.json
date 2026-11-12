@@ -1,0 +1,429 @@
+{
+  "cache_protocol_sha256": "e287fcf3feb23ae33a6fa9f4fc6763690799d5bb01504b90855fba0773f04501",
+  "diagnostics_only": true,
+  "trees_accepted": 0,
+  "records": [
+    {
+      "item_id": "essay-AAAOPP13416000079378_human_ai_polished_gpt-4o-2024-11-20",
+      "source_split": "train",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1951,
+      "parsed_characters": 1946,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            1193,
+            1194
+          ],
+          "parsed_span": [
+            1193,
+            1193
+          ],
+          "original": "\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        },
+        {
+          "operation": "delete",
+          "original_span": [
+            1195,
+            1196
+          ],
+          "parsed_span": [
+            1194,
+            1194
+          ],
+          "original": "\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        },
+        {
+          "operation": "delete",
+          "original_span": [
+            1287,
+            1290
+          ],
+          "parsed_span": [
+            1285,
+            1285
+          ],
+          "original": "\u200b\u200b\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B",
+            "U+200B",
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "ba65e0e46268527492736744bfd23e6cf68470a9bc2f2935ce65e1f7c501c2f3",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "news-3b3f165e816bf855f6b17d5c3414a794_human_written",
+      "source_split": "train",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1431,
+      "parsed_characters": 1430,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            641,
+            642
+          ],
+          "parsed_span": [
+            641,
+            641
+          ],
+          "original": "\ufeff",
+          "parsed": "",
+          "original_codepoints": [
+            "U+FEFF"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "f52e797803ac6e7f11aecd8d89365f4a92eeb4ab090bac8276c90490bffdb42b",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "news-80a94f4504001bf13728861793e427c6_ai_generated_gpt-3.5-turbo_THEN_gpt-4o-2024-11-20",
+      "source_split": "train",
+      "nfkc_nonspace_equal": true,
+      "original_characters": 1675,
+      "parsed_characters": 1675,
+      "differences": [],
+      "raw_leaf_text_sha256": "3da43411d5989e18a338f011ebc98f4460353db243e951d2f88a2dbe7196c33b",
+      "error": "NFKC cross-character composition needs a different offset map"
+    },
+    {
+      "item_id": "news-9ff6ff0e0bf7bb5c8fab173ebd138ae1_ai_humanized_tool",
+      "source_split": "train",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1493,
+      "parsed_characters": 1492,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            430,
+            431
+          ],
+          "parsed_span": [
+            430,
+            430
+          ],
+          "original": "\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "0acac9dcc7d679cc0868d0050ba2b38f066407580e6ada5ae46c30122ef6c90f",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "news-be353fa215fdbf9aed72560272361f74_human_written",
+      "source_split": "train",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 991,
+      "parsed_characters": 990,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            190,
+            191
+          ],
+          "parsed_span": [
+            190,
+            190
+          ],
+          "original": "\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "f18cd3d6d9f0150481de041a63130656ff3a050f571dadcd313a27980d836d8f",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "news-f082e28bf1d70fa75341df0c859bd043_ai_generated_qwen2.5-72b-instruct_THEN_gpt-4o-2024-11-20",
+      "source_split": "train",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 2503,
+      "parsed_characters": 2502,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            2397,
+            2398
+          ],
+          "parsed_span": [
+            2397,
+            2397
+          ],
+          "original": "\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "c8c8c3bfd3854b85a3ca76ddfa92054002f7e138345850b47b97bf6dcdd0b906",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "writing-test8170_ai_generated_gpt-3.5-turbo",
+      "source_split": "train",
+      "nfkc_nonspace_equal": true,
+      "original_characters": 1138,
+      "parsed_characters": 1138,
+      "differences": [],
+      "raw_leaf_text_sha256": "235e40cac230f6f5c1d05ee08fd7c3011f3b8fbb88b3bf114c96d8e433d69f6d",
+      "error": "NFKC cross-character composition needs a different offset map"
+    },
+    {
+      "item_id": "arxiv-2401.12941v1_ai_generated_llama-3.3-70b-instruct_THEN_gpt-3.5-turbo",
+      "source_split": "test",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 2585,
+      "parsed_characters": 2584,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            2473,
+            2474
+          ],
+          "parsed_span": [
+            2473,
+            2473
+          ],
+          "original": "\u200d",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200D"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "59209a7e06109d94ecad92b7fe50512f626e3ff36cf0c33d2c3282fe383415bf",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "essay-AAAOPP13416000241748_ai_humanized_tool",
+      "source_split": "test",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1162,
+      "parsed_characters": 1161,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            527,
+            528
+          ],
+          "parsed_span": [
+            527,
+            527
+          ],
+          "original": "\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "61cf6cac0586d1863415ed39a44e73155c3c6fb407afa3b9c2ec24dd80ecede9",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "news-0e74ac07c832a35a88f0d4fd01436ba2_human_ai_polished_gpt-3.5-turbo",
+      "source_split": "test",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1469,
+      "parsed_characters": 1467,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            808,
+            810
+          ],
+          "parsed_span": [
+            808,
+            808
+          ],
+          "original": "\u200b\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B",
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "a4bdfece59aaaaad3809282bdc653ca220f465e5cd389db7d84485a61ce7c1ae",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "news-0e74ac07c832a35a88f0d4fd01436ba2_human_written",
+      "source_split": "test",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1494,
+      "parsed_characters": 1492,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            833,
+            835
+          ],
+          "parsed_span": [
+            833,
+            833
+          ],
+          "original": "\u200b\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B",
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "bb0de053b1b85130c9381468fce5da8020e65373ea13c6ce0a81b0a14bcd799b",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "news-574f3848cb95621cbccff786cf1a4e98_ai_generated_llama-3.3-70b-instruct_THEN_gpt-4o-2024-11-20",
+      "source_split": "test",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 2205,
+      "parsed_characters": 2204,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            2108,
+            2109
+          ],
+          "parsed_span": [
+            2108,
+            2108
+          ],
+          "original": "\u2581",
+          "parsed": "",
+          "original_codepoints": [
+            "U+2581"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "e9e33d47c63e9df2d7e69ba5e5578160fc581ffe447514664600f16888e5c628",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "news-5dcbdc42fee24ea8b5f5e61dfad85464_human_written",
+      "source_split": "test",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1847,
+      "parsed_characters": 1846,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            1179,
+            1180
+          ],
+          "parsed_span": [
+            1179,
+            1179
+          ],
+          "original": "\u200d",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200D"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "c12304b123348aae9697108548b0b2588d658e788d7ffc2f9f75e612f1b749d3",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "writing-valid9781_human_ai_polished_claude-3-5-sonnet-20241022",
+      "source_split": "test",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1608,
+      "parsed_characters": 1607,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            713,
+            714
+          ],
+          "parsed_span": [
+            713,
+            713
+          ],
+          "original": "\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "98c5f3ea200ba21ae4d43bc8a4bfd2c38ae5b30a708a40cc7575536027328cf6",
+      "error": "RST output differs even after verified NFKC equivalence"
+    },
+    {
+      "item_id": "writing-valid9781_human_written",
+      "source_split": "test",
+      "nfkc_nonspace_equal": false,
+      "original_characters": 1582,
+      "parsed_characters": 1581,
+      "differences": [
+        {
+          "operation": "delete",
+          "original_span": [
+            631,
+            632
+          ],
+          "parsed_span": [
+            631,
+            631
+          ],
+          "original": "\u200b",
+          "parsed": "",
+          "original_codepoints": [
+            "U+200B"
+          ],
+          "parsed_codepoints": []
+        }
+      ],
+      "raw_leaf_text_sha256": "9f947972e0eb141df6868aa781c8b8c3fb4a1c5e4804a01c43f22543bfc3e80a",
+      "error": "RST output differs even after verified NFKC equivalence"
+    }
+  ]
+}

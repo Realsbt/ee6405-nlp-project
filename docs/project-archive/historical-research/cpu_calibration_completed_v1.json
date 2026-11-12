@@ -1,0 +1,242 @@
+{
+  "execution_status": "completed",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "replay": {
+    "hart": {
+      "status": "passed",
+      "max_absolute_probability_difference": 2.4693859305535693e-05,
+      "changed_argmax": 0,
+      "tolerance": 0.0001
+    },
+    "hc3": {
+      "status": "passed",
+      "max_absolute_probability_difference": 6.230425913789084e-05,
+      "changed_argmax": 0,
+      "tolerance": 0.0001
+    }
+  },
+  "temperatures": {
+    "tfidf": 0.8409695409586664,
+    "roberta": 1.5879717523330115,
+    "race": 1.671814386634734
+  },
+  "metrics": [
+    {
+      "model": "tfidf",
+      "dataset": "hart",
+      "condition": "uncalibrated",
+      "brier": 0.043636230897861714,
+      "ece_10bins": 0.041270268950524706,
+      "auroc": 0.9840762732864704,
+      "locked_fpr": 0.011904761904761904,
+      "locked_tpr": 0.8773466833541927,
+      "macro_f1_4class": 0.7939849303252464
+    },
+    {
+      "model": "tfidf",
+      "dataset": "hart",
+      "condition": "temperature_scaled",
+      "brier": 0.041479267443987076,
+      "ece_10bins": 0.023416099790167733,
+      "auroc": 0.9841374399703888,
+      "locked_fpr": 0.011278195488721804,
+      "locked_tpr": 0.8748435544430538,
+      "macro_f1_4class": 0.7939849303252464
+    },
+    {
+      "model": "tfidf",
+      "dataset": "hc3",
+      "condition": "uncalibrated",
+      "brier": 0.3701646584025679,
+      "ece_10bins": 0.34581754662738173,
+      "auroc": 0.601108,
+      "locked_fpr": 0.006,
+      "locked_tpr": 0.01,
+      "macro_f1_4class": null
+    },
+    {
+      "model": "tfidf",
+      "dataset": "hc3",
+      "condition": "temperature_scaled",
+      "brier": 0.39073711314462434,
+      "ece_10bins": 0.3735776765222433,
+      "auroc": 0.598928,
+      "locked_fpr": 0.006,
+      "locked_tpr": 0.01,
+      "macro_f1_4class": null
+    },
+    {
+      "model": "tfidf",
+      "dataset": "mixset",
+      "condition": "uncalibrated",
+      "brier": 0.29382569388337376,
+      "ece_10bins": 0.24872963221173572,
+      "auroc": 0.3475596330275229,
+      "locked_fpr": 0.052,
+      "locked_tpr": 0.01834862385321101,
+      "macro_f1_4class": 0.316322272587637
+    },
+    {
+      "model": "tfidf",
+      "dataset": "mixset",
+      "condition": "temperature_scaled",
+      "brier": 0.3040475890097605,
+      "ece_10bins": 0.2616603263807267,
+      "auroc": 0.3517064220183487,
+      "locked_fpr": 0.052,
+      "locked_tpr": 0.01834862385321101,
+      "macro_f1_4class": 0.316322272587637
+    },
+    {
+      "model": "roberta",
+      "dataset": "hart",
+      "condition": "uncalibrated",
+      "brier": 0.03007004389772271,
+      "ece_10bins": 0.020548558748792047,
+      "auroc": 0.9931344318242414,
+      "locked_fpr": 0.015037593984962405,
+      "locked_tpr": 0.928035043804756,
+      "macro_f1_4class": 0.9074570309260068
+    },
+    {
+      "model": "roberta",
+      "dataset": "hart",
+      "condition": "temperature_scaled",
+      "brier": 0.028690919860031402,
+      "ece_10bins": 0.009251286436616352,
+      "auroc": 0.9931861882490959,
+      "locked_fpr": 0.015037593984962405,
+      "locked_tpr": 0.928035043804756,
+      "macro_f1_4class": 0.9074570309260068
+    },
+    {
+      "model": "roberta",
+      "dataset": "hc3",
+      "condition": "uncalibrated",
+      "brier": 0.4256993609539337,
+      "ece_10bins": 0.4099578391089936,
+      "auroc": 0.6108640000000001,
+      "locked_fpr": 0.006,
+      "locked_tpr": 0.058,
+      "macro_f1_4class": null
+    },
+    {
+      "model": "roberta",
+      "dataset": "hc3",
+      "condition": "temperature_scaled",
+      "brier": 0.3914523580336986,
+      "ece_10bins": 0.36825772053713707,
+      "auroc": 0.6080920000000001,
+      "locked_fpr": 0.006,
+      "locked_tpr": 0.056,
+      "macro_f1_4class": null
+    },
+    {
+      "model": "roberta",
+      "dataset": "mixset",
+      "condition": "uncalibrated",
+      "brier": 0.38524318551123804,
+      "ece_10bins": 0.37231140683031466,
+      "auroc": 0.41093577981651375,
+      "locked_fpr": 0.164,
+      "locked_tpr": 0.06422018348623854,
+      "macro_f1_4class": 0.39013571178555245
+    },
+    {
+      "model": "roberta",
+      "dataset": "mixset",
+      "condition": "temperature_scaled",
+      "brier": 0.35832132155723606,
+      "ece_10bins": 0.3362060242442194,
+      "auroc": 0.40664220183486244,
+      "locked_fpr": 0.164,
+      "locked_tpr": 0.06422018348623854,
+      "macro_f1_4class": 0.39013571178555245
+    },
+    {
+      "model": "race",
+      "dataset": "hart",
+      "condition": "uncalibrated",
+      "brier": 0.028619036804650565,
+      "ece_10bins": 0.018832844041081917,
+      "auroc": 0.9938323593715203,
+      "locked_fpr": 0.003132832080200501,
+      "locked_tpr": 0.851063829787234,
+      "macro_f1_4class": 0.9084148227104374
+    },
+    {
+      "model": "race",
+      "dataset": "hart",
+      "condition": "temperature_scaled",
+      "brier": 0.02725520831834919,
+      "ece_10bins": 0.00828874305939961,
+      "auroc": 0.9938370645010524,
+      "locked_fpr": 0.003132832080200501,
+      "locked_tpr": 0.8479349186483104,
+      "macro_f1_4class": 0.9084148227104374
+    },
+    {
+      "model": "race",
+      "dataset": "hc3",
+      "condition": "uncalibrated",
+      "brier": 0.48048282481963683,
+      "ece_10bins": 0.47773747034467556,
+      "auroc": 0.6843600000000001,
+      "locked_fpr": 0.03,
+      "locked_tpr": 0.012,
+      "macro_f1_4class": null
+    },
+    {
+      "model": "race",
+      "dataset": "hc3",
+      "condition": "temperature_scaled",
+      "brier": 0.43802160445065597,
+      "ece_10bins": 0.438316152047562,
+      "auroc": 0.685376,
+      "locked_fpr": 0.032,
+      "locked_tpr": 0.012,
+      "macro_f1_4class": null
+    }
+  ],
+  "hc3_parsing": {
+    "status": "passed",
+    "records": 1000,
+    "uncovered_nonwhitespace_ids": [],
+    "parsed_sha256": "69cd64433ad3df153d506bf98bce0bafa182cbd45275f0d8796166588189d691",
+    "script_sha256": "c818d90590e921c715bae53ed54f2c55a68cdf7ee9c9d809935a956d044da5d9",
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "peak_rss_mib_corrected": 2604.640625,
+    "rss_note": "Original worker assumes Linux KiB. macOS ru_maxrss is bytes; corrected here without modifying its archived audit.",
+    "parser_load_seconds": 26.839783834002446,
+    "parse_seconds": 1394.1000572007324
+  },
+  "evidence_sha256": {
+    "race_cpu_v1/hc3_report.json": "448c264bd7219c6f25d3620e75c91230b7f856d1bc78bcc2299d6e5afba590fa",
+    "race_cpu_v1/hc3_parse_coverage.json": "9537db6441139f2592c2e459c58b438f4603df3221d85fcf4b950d20359bbb04",
+    "race_cpu_v1/calibration.json": "e757f9451e40eaefb6d9c047090feb6f475fd1aba91b5f3d40c8b94629aed9ae",
+    "race_cpu_v1/hart_report.json": "f44f7c91fcae604ada3d434a9c7ce2e6e7d3200a2c5067983d8b5ba351d16f1e",
+    "race_cpu_v1/hart_test_predictions.jsonl": "f5f765b677f52a29204e835e6cf889baec7f53367fd5210c8563e1698ae0eb1f",
+    "race_cpu_v1/hc3_predictions.jsonl": "5e4e51a46de79db41080e4a10334336e025d989897691c857c6f61e9c57af9fb",
+    "race_cpu_v1/validation_predictions.jsonl": "9578eaa49ed330dae52a6f14207de8d9b8f4d0f4edb2f74725c8fbd5ca59cf4e",
+    "saved_temperature_v1/tfidf_report.json": "6d4dcfa6ecb5da41919ecc8040fade51693f092fd7776647e7508d1d063b1416",
+    "saved_temperature_v1/roberta_report.json": "5787dc07f57ec7b661977f7cff531c8a981676eac7520a6dff9e88420393118d",
+    "saved_temperature_v1/roberta_calibration.json": "13d9cf90e353ece8f1d45c5c80cb6463a2d613ff0a293eafd9bf4bd74c49a52a",
+    "saved_temperature_v1/tfidf_calibration.json": "84dcc955435504ad9525d6e4620540d088f8938d4ab4f893d3b4bacaa127efa1",
+    "race_cpu_replay.py": "cd299685ca7769837d39185bdb84c2ba79d64e475f3ce88632f18e820f6edb59",
+    "calibrate_saved_models.py": "03b6f69abb301c00feccedcf14a60c362fa765d96bb063f70b4a1ccc984130e4",
+    "audit_cpu_parses.py": "c818d90590e921c715bae53ed54f2c55a68cdf7ee9c9d809935a956d044da5d9",
+    "evaluation_metrics.py": "9085fc94a278808026cf1a114ef3aa1a37db40077d2e67962aaf1d0d78613a0a",
+    "fetch_cpu_assets.py": "d2e0b3815d8ed13ea3f2972b9c8f6b724962e49003f8dc90fcc45aa5f21ee334",
+    "test_race_cpu.py": "bd530d56be8a022d6a94134413b1ebb2fa619408e1c2fde918c8e18011358bf3",
+    "finalize_cpu_calibration.py": "e0cc1360223fac5e95394aaf4450be40d80d285ed788d8d6398a1630885c03f2"
+  },
+  "limitations": [
+    "RACE seed3407 CE+SupCon only; no new neural training.",
+    "HART val was also used for checkpoint selection; post-hoc calibration.",
+    "HC3 CPU reparsing does not establish tree identity with the old unavailable parse file.",
+    "Temperature fitting used four-class NLL, not external-test Brier.",
+    "No new confidence intervals or multiplicity-adjusted significance tests.",
+    "Original results and model code preserved."
+  ]
+}

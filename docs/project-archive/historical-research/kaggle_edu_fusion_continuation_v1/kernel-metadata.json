@@ -1,0 +1,17 @@
+{
+  "id": "zhengyingqi/ee6405-text-edu-fusion-continuation-v1",
+  "title": "EE6405 Text EDU Fusion Continuation v1",
+  "code_file": "resume_edu_fusion.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "zhengyingqi/ee6405-same-window-gpu-v1",
+    "zhengyingqi/ee6405-edu-fusion-code-v3",
+    "zhengyingqi/ee6405-fusion-stage1-v1"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

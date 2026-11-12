@@ -1,5 +1,7 @@
 # Yingqi contribution and execution snapshot
 
+**Later results (2026-11-13):** see the [full experiment ledger](project-archive/README.md). The Kaggle continuation and Colab pilot finished; the dated snapshot below preserves their earlier state.
+
 Snapshot: **2026-11-12 13:22 Singapore / 05:22 UTC**. This is a dated record,
 not a live training dashboard. Machine-readable API states and artifact hashes:
 [`status.json`](../experiments/reports/yingqi_snapshot/status.json) and

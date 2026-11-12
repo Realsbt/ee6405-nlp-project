@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-09",
+  "inputs_sha256": "73f85ea047fdce4736fc8d923b5474405b0e72f615f3a4cb14103f2e0aa2ee14",
+  "source_partition_sha256": {
+    "train": "3cd1539d26189ab1ca1c7e0efc5e34d92265f5d5a9c65783b85af28f41fa9c2b",
+    "val": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8",
+    "test": "1814009b21bad70fbbc83d4b5b952469f19fde009fe8d979ac9c0c71491f542a"
+  },
+  "code_sha256": {
+    "same_window_cache.py": "e1320dec4f4e2300eeea05605bbfadeb19f0f999d3b848fc4c06a962d444811a",
+    "parse_nfkc_cpu.py": "161c6cf2292f82c96c77ce3c14be8ed333abcf5bf1b935b5159e3702b869af19",
+    "prepare_same_window_cpu.py": "845de0eda103be231ff2d1dd0fb9cd2d3bcce993549367841ed1d97c59e04993",
+    "repair_window_unknowns.py": "8b2618ff8d025e0e200127f3f82f3d44f583b736bef655a1afa80fda58d3e2d8",
+    "repository/experiments/rst_worker.py": "a3b929b1e1ea13d418de50ebe289835a075c8f164d35ade485dad599c5cad887",
+    "repository/experiments/rst_alignment.py": "f5fb0a43842c119053b271ab03ceb4a0241188d18036320665b39f6cf56cf97e",
+    "resources/RACE/utils/flexible_dataset.py": "f6d183442b5ceb7c018f04993ae0be1db6aea9f511da1fa13e0893a2d9028738",
+    "resources/assets/roberta-base/tokenizer.json": "847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e",
+    "resources/assets/isanlp_rst_local/best_weights.pt": "c4008a42605d6fc2657be72ba1de50977b164f88bbc5f53b62a922f43fff3c32",
+    "resources/assets/isanlp_rst_local/config.json": "4a5f7fb460f7b201097700ee99c99a649efc49078dc1367ffa2c94cecce789ca"
+  },
+  "offset_alignment": "strict, verified NFKC, then replayed actual tokenizer offsets for unknowns; unchanged original text",
+  "text_budget": "512 tokens including specials; reparse the exact visible prefix",
+  "counts": {
+    "train": 11190,
+    "val": 1600,
+    "test": 3194
+  },
+  "failure_policy": "Record failures; no silent exclusion; full training blocked until all records verified.",
+  "test_scope": "Test input preprocessing only, no model fitting, evaluation or test-based selection.",
+  "cross_split_exact_visible_duplicates": 0
+}

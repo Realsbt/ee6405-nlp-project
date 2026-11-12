@@ -1,0 +1,58 @@
+{
+  "config": {
+    "protocol_id": "hart_grouped_v1",
+    "recipe_id": "edu_residual_fusion_v1",
+    "model_type": "roberta",
+    "seeds": [
+      3407,
+      42,
+      2026
+    ],
+    "seed": 3407,
+    "batch_size": 16,
+    "max_epochs": 20,
+    "learning_rate": 2.9e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "gradient_clip": 1.0,
+    "early_stopping_patience": 5,
+    "selection_metric": "validation_macro_f1",
+    "precision": "float32",
+    "balanced_batches": true,
+    "use_supcon": false,
+    "supcon_temperature": 0.07,
+    "supcon_weight": 1.0,
+    "architecture": {
+      "backbone_model_path": "/data/botao/ee6405-race-validation/assets/roberta-base",
+      "bert_dim": 768,
+      "max_seq_length": 512,
+      "unfreeze_bert_layers": 1,
+      "feature_dim": 128,
+      "gnn_hidden_dim": 512,
+      "num_gnn_layers": 2,
+      "gnn_layer_type": "RGCN",
+      "rgcn_num_bases": 10,
+      "gnn_dropout": 0.5,
+      "proj_dropout": 0.1,
+      "rst_use_nuclearity": false,
+      "use_distinct_reverse_edges": false,
+      "pooling_strategy": "root",
+      "classifier_type": "mlp",
+      "classifier_dropout": 0.1,
+      "debug_save_graph_path": "",
+      "debug_save_batch_indices": []
+    },
+    "condition": "fusion_mean",
+    "control_seed": 20261109,
+    "fusion": {
+      "attention_dim": 128,
+      "combination": "cls + gate * edu_context",
+      "gate_initial_bias": -2.0,
+      "head_width": 512
+    }
+  },
+  "cache": "/kaggle/input/datasets/zhengyingqi/ee6405-same-window-gpu-v1/resources/experiments/same_window_full_v3",
+  "cache_manifest_sha256": "9056a457000619ab4fc885a8e032e13ba0667efe64aa82d43deec61d3c8a1736",
+  "training_only_smoke": false,
+  "validation_only": true
+}

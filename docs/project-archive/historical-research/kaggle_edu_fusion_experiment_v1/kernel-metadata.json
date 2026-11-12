@@ -1,0 +1,18 @@
+{
+  "id": "zhengyingqi/ee6405-text-edu-fusion-experiment-v1",
+  "title": "EE6405 Text EDU Fusion Experiment v1",
+  "code_file": "run_edu_fusion.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "zhengyingqi/ee6405-same-window-gpu-v1",
+    "zhengyingqi/ee6405-edu-fusion-code-v3"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

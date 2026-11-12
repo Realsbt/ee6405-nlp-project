@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "test_partition_included": false,
+  "files": {
+    "frozen/encoder_pilot_code_v1.zip": "56e7af30660ff2e77ca7ad4db1a8f72dbd5f005b2cdc36b13368db9dc6ecaa5c",
+    "frozen/pilot_train.jsonl": "e9e387f3f07c4e4ad60a7f872f4801aa33c108b8731e5161ac684d2b0bf78e9a",
+    "frozen/pilot_val.jsonl": "c60b55e3d8165ba9fbd5272ad1f3ad8a597cde62904d01a2f77fa1ec8456cd8d",
+    "frozen/pilot_protocol.json": "a9c9597e5febe44923ed20ef9ab3e72f55173b58f230b69806a02e5546922ee5",
+    "frozen/encoder_pilot_manifest.json": "1079043497b63329dc9c371aa8b7e354e59cc5c07dd2e2d83f29c02f8e935711",
+    "code/experiments/common.py": "44330f81bdac1e9e49b9ee9a835112af4388fc88246fb7ee38343f4306a03844",
+    "code/experiments/paths.py": "6d2c45d79f30646970e09258e920b234b02c470269f8edc466ae791753c1df13",
+    "code/experiments/neural.py": "aae389ac20b0c121a07c8e4f03d5cee637388c94985120e29f21857519578c87",
+    "code/experiments/train_encoder_pilot.py": "044ff2dd16d327b828d6254bd65a7fdd315e0b4bea3d93bc5d91fa3fd879aeaf",
+    "code/cloud/kaggle/run_encoder_pilot.py": "a2199be01dcf21d9332997423361c03bfdca9c73b8be34cabeac1733a9664f0e",
+    "code/cloud/kaggle/run_same_window_smoke.py": "f73adfc267c0a261e6fb0ad33b83d4b10c070c6bb0333dbf329d5ef212abc18c",
+    "roberta_config/config.json": "ef0185e2aae6e06c5f105a285006952c340e20c7dbf43c86ec82601b13fc45e9",
+    "roberta_config/merges.txt": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+    "roberta_config/tokenizer.json": "847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e",
+    "roberta_config/tokenizer_config.json": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+    "roberta_config/vocab.json": "9e7f63c2d15d666b52e21d250d2e513b87c9b713cfa6987a82ed89e5e6e50655",
+    "run_encoder_pilot.py": "4d8415b61013054ed54e2221fd9f1dc396ce9d079a9f32405c00bf7a604de5a9"
+  },
+  "roberta_weights": {
+    "repo": "FacebookAI/roberta-base",
+    "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+    "sha256": "5bde1d28afb363d0103324efeb5afc8b2b397fe5e04beabb9b1ef355255ade81"
+  }
+}

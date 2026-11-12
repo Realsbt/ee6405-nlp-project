@@ -1,0 +1,46 @@
+{
+  "fixed_spec": {
+    "kind": "logistic",
+    "C": 1
+  },
+  "variants": {
+    "ce_only": [
+      "ce"
+    ],
+    "ce_tfidf": [
+      "ce",
+      "tfidf"
+    ],
+    "ce_newlex": [
+      "ce",
+      "newlex"
+    ],
+    "ce_race": [
+      "ce",
+      "race"
+    ],
+    "all_original": [
+      "ce",
+      "race",
+      "tfidf"
+    ]
+  },
+  "seeds": [
+    3407,
+    42,
+    2026
+  ],
+  "meta_fit": "seed3407 development only, same fixed C for every variant",
+  "other_seed_evaluation": "Apply UNCHANGED seed3407 meta-model to other seed base probabilities; not independently trained stacking replicates",
+  "purpose": "Post-hoc controls after first stacking result; compare extra development-label fitting and base-model complementarity",
+  "test_selection": false,
+  "original_selection_sha256": "e6d3b0c43f40fe3648d18b70182cb76eef6d0029f45f255fd64f89079df5087e",
+  "input_sha256": {
+    "resources/experiments/hart_grouped_v1/val.jsonl": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8",
+    "transfer_roberta_v1/validation_predictions.jsonl": "9ea3bb575561c936f1f0a9847595734eeb42bd41cb50496e9f57288a5ead6e39",
+    "race_cpu_v1/validation_predictions.jsonl": "9578eaa49ed330dae52a6f14207de8d9b8f4d0f4edb2f74725c8fbd5ca59cf4e",
+    "transfer_tfidf_v1/validation_predictions.jsonl": "e16a454acb5f3cd52ffc3bd2218f42205ab0f0cab4d800ef571c0627e8383d87",
+    "cpu_improvement_v1/lexical_only_development_predictions.jsonl": "8fa40dab9e2ea8ed613cf721cecd73bf59746b38b42a7e7203e48e683fe471e7"
+  },
+  "script_sha256": "69eb0a7da0079665e16d3c06cebd1036e717b26a916ed6036e70688324e53b40"
+}

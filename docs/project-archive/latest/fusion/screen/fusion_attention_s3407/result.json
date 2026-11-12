@@ -1,0 +1,129 @@
+{
+  "status": "validation_completed",
+  "condition": "fusion_attention",
+  "seed": 3407,
+  "best_epoch": 9,
+  "validation": {
+    "samples": 1600,
+    "accuracy": 0.940625,
+    "macro_f1": 0.9089558048061225,
+    "macro_precision": 0.9266737989579567,
+    "macro_recall": 0.8957065217391305,
+    "macro_auroc_ovr": 0.9840116875548279,
+    "macro_tpr_at_1pct_fpr_roc": 0.8005895915678525,
+    "per_class": {
+      "human_written": {
+        "support": 400,
+        "precision": 0.9732360097323601,
+        "recall": 1.0,
+        "f1": 0.9864364981504316,
+        "auroc_ovr": 0.9988854166666666,
+        "tpr_at_1pct_fpr_roc": 1.0
+      },
+      "human_ai_polished": {
+        "support": 400,
+        "precision": 0.9326683291770573,
+        "recall": 0.935,
+        "f1": 0.9338327091136079,
+        "auroc_ovr": 0.9885916666666668,
+        "tpr_at_1pct_fpr_roc": 0.91
+      },
+      "ai_generated": {
+        "support": 690,
+        "precision": 0.9356223175965666,
+        "recall": 0.9478260869565217,
+        "f1": 0.9416846652267818,
+        "auroc_ovr": 0.9839448956840261,
+        "tpr_at_1pct_fpr_roc": 0.6014492753623188
+      },
+      "ai_humanized": {
+        "support": 110,
+        "precision": 0.8651685393258427,
+        "recall": 0.7,
+        "f1": 0.7738693467336684,
+        "auroc_ovr": 0.9646247712019524,
+        "tpr_at_1pct_fpr_roc": 0.6909090909090909
+      }
+    },
+    "confusion_matrix": [
+      [
+        400,
+        0,
+        0,
+        0
+      ],
+      [
+        7,
+        374,
+        17,
+        2
+      ],
+      [
+        2,
+        24,
+        654,
+        10
+      ],
+      [
+        2,
+        3,
+        28,
+        77
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "test": null,
+  "test_evaluated": false,
+  "source_sha256": {
+    "common.py": "44330f81bdac1e9e49b9ee9a835112af4388fc88246fb7ee38343f4306a03844",
+    "edu_fusion.py": "a345c0247b8139fb86a2bd910d2b8964f27eaef9e9486aad5a0eff9c44d23a55",
+    "neural.py": "aae389ac20b0c121a07c8e4f03d5cee637388c94985120e29f21857519578c87",
+    "paths.py": "6d2c45d79f30646970e09258e920b234b02c470269f8edc466ae791753c1df13",
+    "train_edu_fusion.py": "a0223aaf13a6041991df105c7597ec4144fcca08ad6d7a26c1bc6958c23c4f1f",
+    "train_same_window.py": "165979c9a49bc317a8195ef7e81d02f6031f131b0fbc05a707ef04968611060d"
+  },
+  "parameters": {
+    "total": 125403652,
+    "trainable": 7845892,
+    "trainable_names": [
+      "bert_model.encoder.layer.11.attention.self.query.weight",
+      "bert_model.encoder.layer.11.attention.self.query.bias",
+      "bert_model.encoder.layer.11.attention.self.key.weight",
+      "bert_model.encoder.layer.11.attention.self.key.bias",
+      "bert_model.encoder.layer.11.attention.self.value.weight",
+      "bert_model.encoder.layer.11.attention.self.value.bias",
+      "bert_model.encoder.layer.11.attention.output.dense.weight",
+      "bert_model.encoder.layer.11.attention.output.dense.bias",
+      "bert_model.encoder.layer.11.attention.output.LayerNorm.weight",
+      "bert_model.encoder.layer.11.attention.output.LayerNorm.bias",
+      "bert_model.encoder.layer.11.intermediate.dense.weight",
+      "bert_model.encoder.layer.11.intermediate.dense.bias",
+      "bert_model.encoder.layer.11.output.dense.weight",
+      "bert_model.encoder.layer.11.output.dense.bias",
+      "bert_model.encoder.layer.11.output.LayerNorm.weight",
+      "bert_model.encoder.layer.11.output.LayerNorm.bias",
+      "projection.0.weight",
+      "projection.0.bias",
+      "projection.1.weight",
+      "projection.1.bias",
+      "classifier.dense.weight",
+      "classifier.dense.bias",
+      "classifier.out_proj.weight",
+      "classifier.out_proj.bias",
+      "fusion.attention.0.weight",
+      "fusion.attention.0.bias",
+      "fusion.attention.2.weight"
+    ]
+  },
+  "best_checkpoint_sha256": "3fea4df771c4dedeba5d483d0939e310e7b2e19baaf80d91852a9ddfda086587",
+  "elapsed_seconds": 7483.207419136001,
+  "gpu": "Tesla T4",
+  "peak_cuda_allocated_mib": 1339.15771484375,
+  "scope": "Same visible 512-token prefix, CE objective, base-pretrained initialization."
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yingqi · EE6405 实验延伸流程图</title>
+<style>
+:root{font:15px/1.55 "PingFang SC",system-ui,sans-serif;color:#1a3039;background:#f4f6f5}
+*{box-sizing:border-box}body{max-width:1100px;margin:auto;padding:clamp(18px,4vw,48px)}
+h1{font-size:clamp(25px,4vw,38px);line-height:1.2;margin:0 0 12px}
+h2{font-size:18px;margin:0 0 8px}p{margin:6px 0}
+header{margin-bottom:24px}.meta,footer{color:#49616a}
+.box{background:#fff;border:1px solid #b6c9cb;border-left:4px solid #307773;border-radius:8px;padding:14px 17px}
+.root{max-width:620px;margin:auto}.result{font-weight:600;color:#195654}
+.branches{display:grid;grid-template-columns:1fr 1fr;gap:24px;position:relative;padding-top:13px}
+.branches::before{content:"";position:absolute;top:12px;left:25%;right:25%;border-top:1px solid #829b9b}
+.branches::after{content:"";position:absolute;top:0;left:50%;height:13px;border-left:1px solid #829b9b}
+.edge{display:grid;justify-items:center;text-align:center;color:#365b61;font-size:13px;padding-bottom:5px}
+.edge::before,.edge::after{content:"";height:13px;border-left:1px solid #829b9b}
+.edge::after{height:11px;border:0;width:9px;background:#587d80;clip-path:polygon(44% 0,56% 0,56% 50%,100% 50%,50% 100%,0 50%,44% 50%)}
+.edge span{max-width:36ch;padding:3px 8px}
+footer{font-size:13px;margin-top:23px}a{color:#195654}
+@media(max-width:690px){.branches{grid-template-columns:1fr;gap:20px;padding-top:0}.branches::before,.branches::after{display:none}}
+@media print{body{padding:0;font-size:11px}h1{font-size:23px}h2{font-size:14px}.box{padding:7px 9px;break-inside:avoid}.edge{font-size:10px}.edge::before,.edge::after{height:7px}.branches{grid-template-columns:1fr 1fr}}
+</style>
+<header>
+<h1>Yingqi 的实验是怎么延伸开的</h1>
+<p class="meta">指标默认是 Macro-F1。HART 训练／验证／测试分别为 11,190／1,600／3,194 条。</p>
+</header>
+<main>
+<section class="box root">
+<h2>起点 · 小组 RoBERTa 与 RACE 对照</h2>
+<p>比较正文编码与篇章图模型，并控制 CE／SupCon 训练目标。</p>
+<p class="result">HART 测试三种子均值：CE 下 RoBERTa 90.72%，RACE 89.92%。</p>
+</section>
+<div class="branches">
+<section aria-label="结构与少数类路线">
+<div class="edge"><span>模型读到的文本范围不同，先固定可见窗口，检查篇章结构本身的作用</span></div>
+<article class="box">
+<h2>同窗口四条件消融</h2>
+<p>统一首 512 tokens 和 CE，比较 CLS、真实关系图、打乱关系图、EDU 池化。</p>
+<p class="result">HART 测试 · seed 3407：91.28%／89.69%／90.07%／90.89%。</p>
+</article>
+<div class="edge"><span>CLS 在这轮领先，于是保留全文表示，再试着加入局部 EDU 信息</span></div>
+<article class="box">
+<h2>Text–EDU 残差门控</h2>
+<p>CLS + 门控 × EDU 注意力。对照 CLS、均值、注意力和门控。</p>
+<p class="result">HART 验证 · seed 3407：门控 91.36%，CLS 90.64%。三种子测试均值：门控 90.72%，CLS 91.01%。</p>
+</article>
+<div class="edge"><span>门控仍漏掉 35/110 条改写类样本，试换编码器及增加微调深度</span></div>
+<article class="box">
+<h2>Colab 编码器试验</h2>
+<p>DeBERTa 与全层微调 RoBERTa，各训练 4 轮。</p>
+<p class="result">HART 验证：89.87%／91.48%，改写类命中 70／69 条，门控为 75 条。</p>
+</article>
+<div class="edge"><span>换模型没有改善召回，但门控与 DeBERTa 平均后整体得分上升，继续针对常见的 AI 生成→改写类混淆调权</span></div>
+<article class="box">
+<h2>概率融合 + 定向阈值</h2>
+<p>等权平均门控与 DeBERTa。原判为 AI 生成时提高改写类得分，按来源五折拟合并留出评估。</p>
+<p class="result">HART 验证：91.99% → 93.27%，改写类命中 74/110 → 85/110。单种子，尚无对应测试成绩。</p>
+</article>
+</section>
+<section aria-label="集成与外部评估路线">
+<div class="edge"><span>单模各有错判，检查同一文本上的预测能否互补</span></div>
+<article class="box">
+<h2>冻结模型概率融合</h2>
+<p>混合 RoBERTa CE 与 RACE SupCon 的预测，权重在 HART 验证集上选择。</p>
+<p class="result">HART 测试 · 底层 seed 3407：92.10%。</p>
+</article>
+<div class="edge"><span>固定权重已有收益，再加入词汇信号，让小模型学习怎样组合各分类器</span></div>
+<article class="box">
+<h2>三模型 Stacking</h2>
+<p>用 CE、RACE SupCon 和 TF-IDF 的冻结预测拟合逻辑回归。验证集按来源分四折。</p>
+<p class="result">HART 历史测试 · 底层 seed 3407：93.61% Macro-F1／95.27% Micro-F1。</p>
+</article>
+<div class="edge"><span>域内得分提高，接着查换数据后是否仍有收益，以及低误报阈值能否迁移</span></div>
+<article class="box">
+<h2>外部迁移与误报检查</h2>
+<p>使用 359 条 MixSet 映射子集，并复用 HART 验证集拟合的阈值。</p>
+<p class="result">MixSet：CE 39.01%，融合 36.86%，Stacking 36.22%。Stacking 名义 1% FPR 的阈值在该子集实际 FPR 为 18.80%。</p>
+</article>
+</section>
+</div>
+</main>
+<footer>连线表示实验动机。<a href="EE6405_实验与贡献总表.html">实验与贡献总表</a> · <a href="../EE6405_paper_research/repository/docs/ENCODER_PILOT.md">编码器与阈值记录</a></footer>
+</html>

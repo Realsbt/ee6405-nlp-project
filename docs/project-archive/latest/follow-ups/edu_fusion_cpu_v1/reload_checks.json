@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "scope": "Engineering smoke only, not performance evidence",
+  "conditions": [
+    {
+      "condition": "fusion_cls",
+      "strict_reload": true,
+      "finite_logits": true,
+      "weights_normalized": true,
+      "source_hashes_match": true,
+      "validation_items": 4,
+      "test_evaluated": false
+    },
+    {
+      "condition": "fusion_mean",
+      "strict_reload": true,
+      "finite_logits": true,
+      "weights_normalized": true,
+      "source_hashes_match": true,
+      "validation_items": 4,
+      "test_evaluated": false
+    },
+    {
+      "condition": "fusion_attention",
+      "strict_reload": true,
+      "finite_logits": true,
+      "weights_normalized": true,
+      "source_hashes_match": true,
+      "validation_items": 4,
+      "test_evaluated": false
+    },
+    {
+      "condition": "fusion_gated",
+      "strict_reload": true,
+      "finite_logits": true,
+      "weights_normalized": true,
+      "source_hashes_match": true,
+      "validation_items": 4,
+      "test_evaluated": false
+    }
+  ]
+}

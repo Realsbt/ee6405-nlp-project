@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "date": "2026-11-11",
+  "resolved_records": 15,
+  "source_splits": {
+    "train": 7,
+    "test": 8
+  },
+  "diagnostic_sha256": "89ca6795dad8fae429b14d95533ab442ceb892847ced354bac220009ded00de7",
+  "adapter_sha256": "46d63c91db89201713a80599f4f35fdfc33b1ceded970b1b79fa1150cc0914be",
+  "cache_protocol_sha256": "82112974df569083226aad59b31d25bd89c5e0afa1328c3f81c80431916705a9",
+  "cache_manifest_sha256": "9056a457000619ab4fc885a8e032e13ba0667efe64aa82d43deec61d3c8a1736",
+  "full_cache_ready": true,
+  "deleted_parser_characters": {
+    "U+200B": 15,
+    "U+FEFF": 1,
+    "U+200D": 2,
+    "U+2581": 1
+  },
+  "cross_character_nfkc_records": 2,
+  "policy": "Only audited U+200B/U+FEFF/U+200D/U+2581 projection or exact full NFKC equivalence; original model text unchanged.",
+  "item_ids": [
+    "essay-AAAOPP13416000079378_human_ai_polished_gpt-4o-2024-11-20",
+    "news-3b3f165e816bf855f6b17d5c3414a794_human_written",
+    "news-80a94f4504001bf13728861793e427c6_ai_generated_gpt-3.5-turbo_THEN_gpt-4o-2024-11-20",
+    "news-9ff6ff0e0bf7bb5c8fab173ebd138ae1_ai_humanized_tool",
+    "news-be353fa215fdbf9aed72560272361f74_human_written",
+    "news-f082e28bf1d70fa75341df0c859bd043_ai_generated_qwen2.5-72b-instruct_THEN_gpt-4o-2024-11-20",
+    "writing-test8170_ai_generated_gpt-3.5-turbo",
+    "arxiv-2401.12941v1_ai_generated_llama-3.3-70b-instruct_THEN_gpt-3.5-turbo",
+    "essay-AAAOPP13416000241748_ai_humanized_tool",
+    "news-0e74ac07c832a35a88f0d4fd01436ba2_human_ai_polished_gpt-3.5-turbo",
+    "news-0e74ac07c832a35a88f0d4fd01436ba2_human_written",
+    "news-574f3848cb95621cbccff786cf1a4e98_ai_generated_llama-3.3-70b-instruct_THEN_gpt-4o-2024-11-20",
+    "news-5dcbdc42fee24ea8b5f5e61dfad85464_human_written",
+    "writing-valid9781_human_ai_polished_claude-3-5-sonnet-20241022",
+    "writing-valid9781_human_written"
+  ]
+}

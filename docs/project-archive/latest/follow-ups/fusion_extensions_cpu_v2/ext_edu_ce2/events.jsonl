@@ -1,0 +1,1 @@
+{"epoch": 1, "mean_loss": 1.3747504949569702, "mean_ce": 1.3747504949569702, "mean_symmetric_kl": 0.00021933764219284058, "validation_macro_f1": 0.1, "improved": true, "epoch_seconds": 9.361445000016829}

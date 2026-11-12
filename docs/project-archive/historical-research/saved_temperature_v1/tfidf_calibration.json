@@ -1,0 +1,30 @@
+{
+  "temperature": 0.8409695409586664,
+  "validation_nll_before": 0.43766720024077743,
+  "validation_nll_after": 0.42989671254444617,
+  "bounds": [
+    0.05,
+    20
+  ],
+  "near_bound": false,
+  "uncalibrated_threshold": {
+    "threshold": 0.7132066678858923,
+    "n_validation_negatives": 800,
+    "allowed_false_positives": 8,
+    "actual_false_positives": 8,
+    "target_empirical_validation_fpr": 0.01,
+    "scope": "Negative-only validation order statistic, ties excluded. Not a population FPR guarantee or a test-set ROC threshold."
+  },
+  "temperature_scaled_threshold": {
+    "threshold": 0.7528252706829949,
+    "n_validation_negatives": 800,
+    "allowed_false_positives": 8,
+    "actual_false_positives": 8,
+    "target_empirical_validation_fpr": 0.01,
+    "scope": "Negative-only validation order statistic, ties excluded. Not a population FPR guarantee or a test-set ROC threshold."
+  },
+  "run": "tfidf_lr_v1",
+  "validation_predictions_sha256": "e16a454acb5f3cd52ffc3bd2218f42205ab0f0cab4d800ef571c0627e8383d87",
+  "scope": "HART val-only fit from log stored probabilities, not raw logits; no zero probabilities/clipping. Val also used for checkpoint selection.",
+  "script_sha256": "03b6f69abb301c00feccedcf14a60c362fa765d96bb063f70b4a1ccc984130e4"
+}

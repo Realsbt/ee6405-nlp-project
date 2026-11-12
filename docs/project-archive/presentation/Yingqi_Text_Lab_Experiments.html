@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text Lab · Yingqi’s experiments</title>
+<style>
+:root{--bg:#f3f3f2;--paper:#fff;--ink:#272c2a;--muted:#565f59;--line:#dce1dc;--accent:#245b47;--soft:#e9f2ea;--blue:#4e65a0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Instrument Sans",system-ui,sans-serif}
+header{background:var(--paper);border-bottom:1px solid var(--line)}
+header div,main{max-width:1240px;margin:auto;padding-inline:clamp(18px,5vw,64px)}
+header div{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:62px}
+.brand{font-weight:750;letter-spacing:-.025em;font-size:21px;color:var(--accent)}
+a{color:var(--accent);text-underline-offset:3px}
+main{padding-block:40px 52px}
+h1,h2,h3,p{margin:0}
+h1{font-size:clamp(32px,5vw,51px);line-height:1.12;letter-spacing:-.05em}
+.intro{color:var(--muted);margin:12px 0 24px}
+nav{display:flex;gap:22px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:20px}
+button,select{font:inherit;color:inherit}
+button{cursor:pointer}
+nav button{border:0;border-bottom:3px solid transparent;background:none;padding:12px 2px;font-weight:650;color:var(--muted)}
+nav button[aria-pressed=true]{color:var(--accent);border-bottom-color:var(--accent)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.workspace{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,1fr);background:var(--paper);border:1px solid var(--line);border-radius:14px}
+.plot,.detail{padding:clamp(20px,3vw,32px);min-width:0}
+.detail{border-left:1px solid var(--line);background:#fafbf9;border-radius:0 14px 14px 0}
+h2{font-size:23px;letter-spacing:-.025em}
+.context,.axis,.small{font-size:14px;color:var(--muted)}
+.context{margin:5px 0 18px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+label{font-size:13px;color:var(--muted);display:grid;gap:4px}
+select{padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:var(--paper)}
+.axis{display:flex;justify-content:space-between;margin:0 3px 5px}
+.row{width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:9px;padding:8px 10px;margin:2px 0}
+.row[aria-pressed=true]{background:var(--soft);border-color:#c5d9cc}
+.row:hover{border-color:#b4c9bd}
+.label{display:flex;justify-content:space-between;gap:12px;margin-bottom:6px;font-size:15px;font-weight:650}
+.value,.big,td{font-variant-numeric:tabular-nums}
+.track{height:10px;border-radius:3px;background:#edf0ed;overflow:hidden;display:block}
+.bar{height:100%;background:var(--blue);display:block}
+.row[aria-pressed=true] .bar{background:var(--accent)}
+.caption{margin-top:16px;color:var(--muted);font-size:14px}
+.big{font-size:44px;font-weight:720;letter-spacing:-.045em;color:var(--accent);line-height:1.2;margin:10px 0}
+.detail p+p{margin-top:8px}
+.detail h3{font-size:16px;margin:22px 0 6px}
+dl{display:grid;grid-template-columns:1fr auto;gap:7px 10px;margin:14px 0 0;font-size:14px}
+dt{color:var(--muted)}dd{margin:0;font-weight:650}
+table{width:100%;border-collapse:collapse;font-size:13px;text-align:right}
+th,td{padding:4px;text-align:center} th[scope=row]{text-align:left;white-space:nowrap}
+th small{display:block}
+footer{font-size:14px;color:var(--muted);margin-top:18px}
+@media(max-width:760px){.workspace{grid-template-columns:1fr}.detail{border-left:0;border-top:1px solid var(--line);border-radius:0 0 14px 14px}main{padding-top:28px}nav{gap:14px}}
+</style>
+</head>
+<body>
+<header><div><span class="brand">Text Lab / Experiments</span><a href="https://realsbt.github.io/ee6405-nlp-project/">Group Text Lab</a></div></header>
+<main>
+<h1>Yingqi’s experiment results</h1>
+<p class="intro">Explore saved scores and model details. This page uses recorded results.</p>
+<nav aria-label="Experiments">
+<button type="button" data-study="same" aria-pressed="true">Same-window controls</button>
+<button type="button" data-study="fusion" aria-pressed="false">Text-EDU fusion</button>
+<button type="button" data-study="transfer" aria-pressed="false">Stacking and transfer</button>
+</nav>
+<div class="workspace">
+<section class="plot" aria-labelledby="chart-title">
+<h2 id="chart-title"></h2><p class="context" id="context"></p>
+<div class="controls">
+<label>Split<select id="split"></select></label>
+<label>Metric<select id="metric"></select></label>
+</div>
+<div class="axis" id="axis" aria-hidden="true"></div>
+<div id="bars" role="group" aria-label="Select a model"></div>
+<p class="caption" id="caption"></p>
+</section>
+<aside class="detail" id="detail" aria-label="Selected model" aria-live="polite"></aside>
+</div>
+<footer id="sources"></footer>
+</main>
+<script type="application/json" id="evidence">{"same":[{"name":"CLS baseline","validation":{"samples":1600,"accuracy":0.93875,"macro_f1":0.9137793970340603,"macro_precision":0.9289843233796405,"macro_recall":0.9025238801054019,"macro_auroc_ovr":0.9853479028661495,"macro_tpr_at_1pct_fpr_roc":0.7984107378129118,"per_class":{"human_written":{"support":400,"precision":0.9801488833746899,"recall":0.9875,"f1":0.9838107098381071,"auroc_ovr":0.9991625,"tpr_at_1pct_fpr_roc":0.9975},"human_ai_polished":{"support":400,"precision":0.9026128266033254,"recall":0.95,"f1":0.925700365408039,"auroc_ovr":0.9904625,"tpr_at_1pct_fpr_roc":0.8275},"ai_generated":{"support":690,"precision":0.9430656934306569,"recall":0.936231884057971,"f1":0.9396363636363636,"auroc_ovr":0.9854761904761904,"tpr_at_1pct_fpr_roc":0.6231884057971014},"ai_humanized":{"support":110,"precision":0.8901098901098901,"recall":0.7363636363636363,"f1":0.8059701492537313,"auroc_ovr":0.9662904209884075,"tpr_at_1pct_fpr_roc":0.7454545454545455}},"confusion_matrix":[[395,5,0,0],[4,380,15,1],[2,33,646,9],[2,3,24,81]],"label_order":["human_written","human_ai_polished","ai_generated","ai_humanized"]},"test":{"samples":3194,"accuracy":0.9370695053224797,"macro_f1":0.9127984331857841,"macro_precision":0.9241913904241374,"macro_recall":0.9035056251759253,"macro_auroc_ovr":0.9893642959796607,"macro_tpr_at_1pct_fpr_roc":0.8342118303161098,"per_class":{"human_written":{"support":798,"precision":0.9788293897882939,"recall":0.9849624060150376,"f1":0.9818863210493441,"auroc_ovr":0.9987847854193078,"tpr_at_1pct_fpr_roc":0.993734335839599},"human_ai_polished":{"support":798,"precision":0.9130966952264382,"recall":0.9348370927318296,"f1":0.9238390092879257,"auroc_ovr":0.9886899008790757,"tpr_at_1pct_fpr_roc":0.8020050125313283},"ai_generated":{"support":1371,"precision":0.9368191721132898,"recall":0.9409190371991247,"f1":0.9388646288209607,"auroc_ovr":0.9862599341504314,"tpr_at_1pct_fpr_roc":0.7789934354485777},"ai_humanized":{"support":227,"precision":0.868020304568528,"recall":0.7533039647577092,"f1":0.8066037735849056,"auroc_ovr":0.9837225634698274,"tpr_at_1pct_fpr_roc":0.762114537444934}},"confusion_matrix":[[786,11,0,1],[13,746,37,2],[3,55,1290,23],[1,5,50,171]],"label_order":["human_written","human_ai_polished","ai_generated","ai_humanized"]}},{"name":"EDU mean","validation":{"samples":1600,"accuracy":0.935625,"macro_f1":0.9090893866072338,"macro_precision":0.9348001236226589,"macro_recall":0.8902527997364954,"macro_auroc_ovr":0.9788589783455104,"macro_tpr_at_1pct_fpr_roc":0.7587994071146246,"per_class":{"human_written":{"support":400,"precision":0.9799498746867168,"recall":0.9775,"f1":0.9787234042553191,"auroc_ovr":0.9993645833333332,"tpr_at_1pct_fpr_roc":0.9975},"human_ai_polished":{"support":400,"precision":0.9195979899497487,"recall":0.915,"f1":0.9172932330827067,"auroc_ovr":0.9842416666666667,"tpr_at_1pct_fpr_roc":0.7875},"ai_generated":{"support":690,"precision":0.9220055710306406,"recall":0.9594202898550724,"f1":0.9403409090909091,"auroc_ovr":0.9814269788182832,"tpr_at_1pct_fpr_roc":0.4956521739130435},"ai_humanized":{"support":110,"precision":0.9176470588235294,"recall":0.7090909090909091,"f1":0.8,"auroc_ovr":0.9504026845637584,"tpr_at_1pct_fpr_roc":0.7545454545454545}},"confusion_matrix":[[391,7,1,1],[5,366,29,0],[2,20,662,6],[1,5,26,78]],"label_order":["human_written","human_ai_polished","ai_generated","ai_humanized"]},"test":{"samples":3194,"accuracy":0.9329993738259236,"macro_f1":0.9089187489522184,"macro_precision":0.9269578769095684,"macro_recall":0.8944501371900142,"macro_auroc_ovr":0.9845717440218976,"macro_tpr_at_1pct_fpr_roc":0.8088574526765057,"per_class":{"human_written":{"support":798,"precision":0.9823008849557522,"recall":0.9736842105263158,"f1":0.9779735682819384,"auroc_ovr":0.9989900669871674,"tpr_at_1pct_fpr_roc":0.9924812030075187},"human_ai_polished":{"support":798,"precision":0.9154040404040404,"recall":0.9085213032581454,"f1":0.9119496855345912,"auroc_ovr":0.9882422040075146,"tpr_at_1pct_fpr_roc":0.7543859649122807},"ai_generated":{"support":1371,"precision":0.9212376933895922,"recall":0.9555069292487236,"f1":0.9380594343000358,"auroc_ovr":0.9837758714024901,"tpr_at_1pct_fpr_roc":0.7308533916849015},"ai_humanized":{"support":227,"precision":0.8888888888888888,"recall":0.7400881057268722,"f1":0.8076923076923077,"auroc_ovr":0.9672788336904184,"tpr_at_1pct_fpr_roc":0.7577092511013216}},"confusion_matrix":[[777,17,2,2],[12,725,55,6],[2,46,1310,13],[0,4,55,168]],"label_order":["human_written","human_ai_polished","ai_generated","ai_humanized"]}},{"name":"Shuffled graph","validation":{"samples":1600,"accuracy":0.926875,"macro_f1":0.8933236663120414,"macro_precision":0.9199006792490421,"macro_recall":0.8740522068511198,"macro_auroc_ovr":0.9740982434868592,"macro_tpr_at_1pct_fpr_roc":0.7356357048748353,"per_class":{"human_written":{"support":400,"precision":0.9824561403508771,"recall":0.98,"f1":0.981226533166458,"auroc_ovr":0.9992166666666668,"tpr_at_1pct_fpr_roc":0.995},"human_ai_polished":{"support":400,"precision":0.922879177377892,"recall":0.8975,"f1":0.9100126742712294,"auroc_ovr":0.98326875,"tpr_at_1pct_fpr_roc":0.815},"ai_generated":{"support":690,"precision":0.9052197802197802,"recall":0.9550724637681159,"f1":0.9294781382228491,"auroc_ovr":0.9797037744863832,"tpr_at_1pct_fpr_roc":0.45072463768115945},"ai_humanized":{"support":110,"precision":0.8690476190476191,"recall":0.6636363636363637,"f1":0.7525773195876289,"auroc_ovr":0.9342037827943868,"tpr_at_1pct_fpr_roc":0.6818181818181818}},"confusion_matrix":[[392,6,1,1],[4,359,36,1],[1,21,659,9],[2,3,32,73]],"label_order":["human_written","human_ai_polished","ai_generated","ai_humanized"]},"test":{"samples":3194,"accuracy":0.9267376330619912,"macro_f1":0.9006939731458012,"macro_precision":0.9246911120545195,"macro_recall":0.8830585770231496,"macro_auroc_ovr":0.981850361692137,"macro_tpr_at_1pct_fpr_roc":0.8051943382057647,"per_class":{"human_written":{"support":798,"precision":0.9821882951653944,"recall":0.9674185463659147,"f1":0.9747474747474747,"auroc_ovr":0.9986867209760629,"tpr_at_1pct_fpr_roc":0.9949874686716792},"human_ai_polished":{"support":798,"precision":0.8964241676942046,"recall":0.9110275689223057,"f1":0.9036668738346799,"auroc_ovr":0.9878520382759906,"tpr_at_1pct_fpr_roc":0.7832080200501254},"ai_generated":{"support":1371,"precision":0.9161971830985915,"recall":0.9489423778264041,"f1":0.932282336080258,"auroc_ovr":0.983127898523326,"tpr_at_1pct_fpr_roc":0.6892778993435449},"ai_humanized":{"support":227,"precision":0.903954802259887,"recall":0.7048458149779736,"f1":0.7920792079207921,"auroc_ovr":0.9577347889931687,"tpr_at_1pct_fpr_roc":0.7533039647577092}},"confusion_matrix":[[772,20,3,3],[12,727,56,3],[2,57,1301,11],[0,7,60,160]],"label_order":["human_written","human_ai_polished","ai_generated","ai_humanized"]}},{"name":"Original graph","validation":{"samples":1600,"accuracy":0.9275,"macro_f1":0.893163876496943,"macro_precision":0.9325665988019513,"macro_recall":0.8678952569169961,"macro_auroc_ovr":0.9734689436587753,"macro_tpr_at_1pct_fpr_roc":0.7518025362318841,"per_class":{"human_written":{"support":400,"precision":0.972972972972973,"recall":0.99,"f1":0.9814126394052045,"auroc_ovr":0.9986625,"tpr_at_1pct_fpr_roc":0.9975},"human_ai_polished":{"support":400,"precision":0.9386666666666666,"recall":0.88,"f1":0.9083870967741936,"auroc_ovr":0.9848666666666667,"tpr_at_1pct_fpr_roc":0.83},"ai_generated":{"support":690,"precision":0.8975741239892183,"recall":0.9652173913043478,"f1":0.9301675977653632,"auroc_ovr":0.9793948080904603,"tpr_at_1pct_fpr_roc":0.4797101449275362},"ai_humanized":{"support":110,"precision":0.9210526315789473,"recall":0.6363636363636364,"f1":0.7526881720430108,"auroc_ovr":0.9309517998779744,"tpr_at_1pct_fpr_roc":0.7}},"confusion_matrix":[[396,3,0,1],[7,352,40,1],[2,18,666,4],[2,2,36,70]],"label_order":["human_written","human_ai_polished","ai_generated","ai_humanized"]},"test":{"samples":3194,"accuracy":0.926111458985598,"macro_f1":0.8969321650253522,"macro_precision":0.9250886522662816,"macro_recall":0.8767896694714934,"macro_auroc_ovr":0.9812411440652242,"macro_tpr_at_1pct_fpr_roc":0.7845954788068118,"per_class":{"human_written":{"support":798,"precision":0.9728395061728395,"recall":0.9874686716791979,"f1":0.9800995024875622,"auroc_ovr":0.998369515190313,"tpr_at_1pct_fpr_roc":0.9899749373433584},"human_ai_polished":{"support":798,"precision":0.9297082228116711,"recall":0.8784461152882206,"f1":0.9033505154639175,"auroc_ovr":0.9875748427830845,"tpr_at_1pct_fpr_roc":0.7418546365914787},"ai_generated":{"support":1371,"precision":0.9018531228551819,"recall":0.9584245076586433,"f1":0.9292786421499293,"auroc_ovr":0.9822846735509035,"tpr_at_1pct_fpr_roc":0.6973012399708242},"ai_humanized":{"support":227,"precision":0.8959537572254336,"recall":0.6828193832599119,"f1":0.775,"auroc_ovr":0.956735544736596,"tpr_at_1pct_fpr_roc":0.7092511013215859}},"confusion_matrix":[[788,5,3,2],[19,701,73,5],[3,43,1314,11],[0,5,67,155]],"label_order":["human_written","human_ai_polished","ai_generated","ai_humanized"]}}],"fusion":[{"condition":"fusion_cls","seed":"3407","validation_macro_f1":"0.9064350151761276","best_epoch":"9","run_minutes":"110.3484343082","peak_cuda_allocated_mib":"1335.52783203125","trainable_parameters":"7747332"},{"condition":"fusion_mean","seed":"3407","validation_macro_f1":"0.9085006279978123","best_epoch":"8","run_minutes":"114.05177313803333","peak_cuda_allocated_mib":"1337.27783203125","trainable_parameters":"7747332"},{"condition":"fusion_attention","seed":"3407","validation_macro_f1":"0.9089558048061225","best_epoch":"9","run_minutes":"124.72012365226668","peak_cuda_allocated_mib":"1339.15771484375","trainable_parameters":"7845892"},{"condition":"fusion_gated","seed":"3407","validation_macro_f1":"0.9136428589434705","best_epoch":"10","run_minutes":"132.71052350606666","peak_cuda_allocated_mib":"1339.189453125","trainable_parameters":"7847429"}]}</script>
+<script>
+const evidence=JSON.parse(document.getElementById('evidence').textContent);
+const root='https://github.com/Realsbt/ee6405-nlp-project/blob/86e8ac866e8cfbfe55c4640c45d349873b61d193/';
+const sameDescriptions=[
+  'CLS summary over the shared visible prefix.',
+  'Equal-weight averaging of elementary discourse units (EDUs).',
+  'Graph with fixed topology and permuted relation labels.',
+  'Graph with the original discourse relation labels.'
+];
+const fusionNames=['CLS only','CLS + EDU mean','CLS + attention','CLS + gated attention'];
+const fusionDescriptions=[
+  'Global CLS summary with a shared projection and classifier.',
+  'Adds the equally weighted EDU context to CLS.',
+  'Adds an attention-weighted EDU context to CLS.',
+  'Uses a learned scalar gate to control the attention-weighted context added to CLS.'
+];
+const transfer=[
+  {name:'RoBERTa CE',hart:90.75,mix:39.01,description:'Single neural component, seed 3407.'},
+  {name:'RACE + SupCon',hart:90.84,mix:33.38,description:'Single graph model, seed 3407.'},
+  {name:'Probability blend',hart:92.10,mix:36.86,description:'Blends probabilities from frozen RoBERTa and RACE.'},
+  {name:'Stacking',hart:93.61,mix:36.22,description:'Logistic regression over predictions from frozen RoBERTa, RACE and TF-IDF.'}
+];
+const studies={
+  same:{title:'Same-window controls',splits:{test:'HART test',validation:'HART validation'},metrics:{macro_f1:'Macro-F1',accuracy:'Accuracy',minority:'AI-humanized recall'},source:'experiments/reports/same_window/seed_3407',caption:'All four conditions see the same RoBERTa-visible prefix, up to 512 tokens. Seed 3407.'},
+  fusion:{title:'Text-EDU validation screening',splits:{validation:'HART validation'},metrics:{f1:'Macro-F1',runtime:'Training run time'},source:'experiments/reports/yingqi_snapshot/fusion/validation_screen.csv',caption:'Four variants from the seed-3407 screening set. Validation scores were used to select the candidate.'},
+  transfer:{title:'Frozen-model stacking and transfer',splits:{hart:'HART test',mix:'MixSet subset'},metrics:{f1:'Macro-F1'},source:'docs/YINGQI_STATUS.md',caption:'The MixSet evaluation uses a fixed 359-text subset. The neural components use one underlying seed.'}
+};
+const $=id=>document.getElementById(id);
+const tabs=[...document.querySelectorAll('nav button')];
+let study='same', selected=0;
+const pct=value=>value.toFixed(2)+'%';
+function options(select,entries){
+  select.replaceChildren(...Object.entries(entries).map(([value,label])=>new Option(label,value)));
+}
+function switchStudy(key){
+  study=key;
+  selected=key==='same'?0:3;
+  tabs.forEach(tab=>tab.setAttribute('aria-pressed',tab.dataset.study===key));
+  options($('split'),studies[key].splits);
+  options($('metric'),studies[key].metrics);
+  $('split').disabled=$('split').options.length===1;
+  $('metric').disabled=$('metric').options.length===1;
+  render();
+}
+function render(){
+  const split=$('split').value, metric=$('metric').value, info=studies[study];
+  const rows=study==='same'?evidence.same:study==='fusion'?evidence.fusion:transfer;
+  const runtime=metric==='runtime';
+  const max=runtime?160:100;
+  const format=runtime?value=>value.toFixed(1)+' min':pct;
+  const names=study==='fusion'?fusionNames:rows.map(row=>row.name);
+  const values=rows.map(row=>{
+    if(study==='same'){
+      const score=row[split];
+      return 100*(metric==='minority'?score.per_class.ai_humanized.recall:score[metric]);
+    }
+    if(study==='fusion')return runtime?Number(row.run_minutes):100*Number(row.validation_macro_f1);
+    return row[split];
+  });
+  $('chart-title').textContent=info.title;
+  $('context').textContent=info.splits[split]+' / '+info.metrics[metric];
+  $('axis').innerHTML=runtime?'<span>0</span><span>80</span><span>160 min</span>':'<span>0%</span><span>50%</span><span>100%</span>';
+  $('caption').textContent=info.caption;
+  $('bars').innerHTML=values.map((value,i)=>'<button class="row" type="button" data-model="'+i+'" aria-pressed="'+(selected===i)+'"><span class="label"><span>'+names[i]+'</span><span class="value">'+format(value)+'</span></span><span class="track" aria-hidden="true"><span class="bar" style="width:'+value/max*100+'%"></span></span></button>').join('');
+  const row=rows[selected];
+  let details;
+  if(study==='same'){
+    const result=row[split];
+    const labels=['Human','AI-pol.','AI-gen.','AI-hum.'];
+    details='<p>'+sameDescriptions[selected]+'</p><dl><dt>Samples</dt><dd>'+result.samples.toLocaleString('en-US')+'</dd><dt>AI-humanized recall</dt><dd>'+pct(100*result.per_class.ai_humanized.recall)+'</dd></dl><h3>Confusion matrix</h3><p class="small">Rows are actual labels. Columns are predictions.</p><table aria-label="Confusion matrix"><thead><tr><th scope="col">Actual</th>'+labels.map(label=>'<th scope="col">'+label+'</th>').join('')+'</tr></thead><tbody>'+result.confusion_matrix.map((counts,i)=>{
+      const maxCount=Math.max(...counts);
+      return '<tr><th scope="row">'+labels[i]+'</th>'+counts.map(count=>'<td style="background:rgba(36,91,71,'+(.03+.22*count/maxCount)+')">'+count+'</td>').join('')+'</tr>';
+    }).join('')+'</tbody></table>';
+  }else if(study==='fusion'){
+    const gap=(100*(Number(row.validation_macro_f1)-Number(rows[0].validation_macro_f1))).toFixed(2);
+    details='<p>'+fusionDescriptions[selected]+'</p><dl><dt>Validation gain vs CLS</dt><dd>+'+gap+' pp</dd><dt>Best epoch</dt><dd>'+row.best_epoch+'</dd><dt>Run time</dt><dd>'+Number(row.run_minutes).toFixed(1)+' min</dd><dt>Trainable parameters</dt><dd>'+Number(row.trainable_parameters).toLocaleString('en-US')+'</dd></dl>';
+  }else{
+    details='<p>'+row.description+'</p><dl><dt>HART test Macro-F1</dt><dd>'+pct(row.hart)+'</dd><dt>MixSet subset Macro-F1</dt><dd>'+pct(row.mix)+'</dd></dl>';
+  }
+  $('detail').innerHTML='<h2>'+names[selected]+'</h2><p class="big">'+format(values[selected])+'</p>'+details;
+  $('sources').innerHTML='Data source <a href="'+root+info.source+'">Yingqi branch, saved experiment evidence</a>';
+}
+tabs.forEach(tab=>tab.addEventListener('click',()=>switchStudy(tab.dataset.study)));
+$('split').addEventListener('change',render);
+$('metric').addEventListener('change',render);
+$('bars').addEventListener('click',event=>{
+  const button=event.target.closest('[data-model]');
+  if(!button)return;
+  selected=Number(button.dataset.model);
+  render();
+  $('bars').querySelector('[data-model="'+selected+'"]').focus();
+});
+switchStudy('same');
+</script>
+</body>
+</html>

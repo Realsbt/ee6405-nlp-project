@@ -1,0 +1,1 @@
+{"event": "epoch_complete", "condition": "deberta_full", "epoch": 1, "validation_macro_f1": 0.1, "mean_ce": 1.6414309740066528, "epoch_seconds": 12.612145534999854, "improved": true}

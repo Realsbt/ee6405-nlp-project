@@ -1,0 +1,46 @@
+{
+  "cache": "/Users/miracle/Desktop/26S1/EE6405_paper_research/resources/experiments/same_window_full_v3",
+  "scope": "currently compiled records",
+  "splits": {
+    "train": {
+      "graphs": 11190,
+      "relation_nodes": 447236,
+      "changed_relation_nodes": 327656,
+      "unchanged_graphs": 29,
+      "single_or_zero_relation_graphs": 16,
+      "directed_edges": 1788944,
+      "changed_edge_types": 1310624
+    },
+    "val": {
+      "graphs": 1600,
+      "relation_nodes": 63830,
+      "changed_relation_nodes": 46770,
+      "unchanged_graphs": 2,
+      "single_or_zero_relation_graphs": 0,
+      "directed_edges": 255320,
+      "changed_edge_types": 187080
+    },
+    "test": {
+      "graphs": 3194,
+      "relation_nodes": 126972,
+      "changed_relation_nodes": 92943,
+      "unchanged_graphs": 5,
+      "single_or_zero_relation_graphs": 1,
+      "directed_edges": 507888,
+      "changed_edge_types": 371772
+    }
+  },
+  "totals": {
+    "graphs": 15984,
+    "relation_nodes": 638038,
+    "changed_relation_nodes": 467369,
+    "unchanged_graphs": 36,
+    "single_or_zero_relation_graphs": 17,
+    "directed_edges": 2552152,
+    "changed_edge_types": 1869476
+  },
+  "changed_relation_node_fraction": 0.7325096624338989,
+  "changed_edge_type_fraction": 0.7325096624338989,
+  "unchanged_graph_fraction": 0.0022522522522522522,
+  "full_cache_ready": true
+}

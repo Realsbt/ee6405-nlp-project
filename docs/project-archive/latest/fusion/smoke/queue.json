@@ -1,0 +1,35 @@
+{
+  "status": "completed",
+  "finished": [
+    {
+      "condition": "fusion_cls",
+      "seed": 3407,
+      "output": "/kaggle/working/edu_fusion_experiment_v1/smoke/fusion_cls_s3407",
+      "status": "passed",
+      "validation_macro_f1": null
+    },
+    {
+      "condition": "fusion_mean",
+      "seed": 3407,
+      "output": "/kaggle/working/edu_fusion_experiment_v1/smoke/fusion_mean_s3407",
+      "status": "passed",
+      "validation_macro_f1": null
+    },
+    {
+      "condition": "fusion_attention",
+      "seed": 3407,
+      "output": "/kaggle/working/edu_fusion_experiment_v1/smoke/fusion_attention_s3407",
+      "status": "passed",
+      "validation_macro_f1": null
+    },
+    {
+      "condition": "fusion_gated",
+      "seed": 3407,
+      "output": "/kaggle/working/edu_fusion_experiment_v1/smoke/fusion_gated_s3407",
+      "status": "passed",
+      "validation_macro_f1": null
+    }
+  ],
+  "test_evaluated": false,
+  "scope": "Engineering smoke only"
+}

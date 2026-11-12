@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-09",
+  "device": "CPU",
+  "train_count": 11190,
+  "development_count": 1600,
+  "candidate_families": [
+    "race_blend",
+    "old_tfidf_blend",
+    "lexical_only",
+    "lexical_blend",
+    "specialist",
+    "class_bias"
+  ],
+  "C_grid": [
+    0.1,
+    1.0,
+    10.0
+  ],
+  "class_weight_grid": [
+    null,
+    "balanced"
+  ],
+  "blend_grid": [
+    0.0,
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "humanized_factor_grid": [
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    2.0
+  ],
+  "text_budget": "Existing model_text: first 512 RoBERTa tokens",
+  "vectorizer": "word(1,2), max50k + char_wb(3,5), max80k; min_df3; sublinear TF; train-only fit; row L2 normalize",
+  "selection": "Development Macro-F1 only; simpler/first candidate wins ties; freeze before test evaluation",
+  "specialist": "Train only on ai_generated/ai_humanized; preserve creator mass at inference",
+  "neural_base": "Frozen RoBERTa CE seed3407; RACE SupCon seed3407 optional second inference",
+  "known_limitations": [
+    "Development already used for original checkpoint selection and previous research.",
+    "HART test and external datasets have been inspected in previous work; evaluation is post-hoc.",
+    "No new independent test set or training seed replication.",
+    "RACE branch uses original full-text graph; not equal information budget.",
+    "Strong SupCon baseline lacks local weights/dev probabilities; use archived test only as reference."
+  ],
+  "input_sha256": {
+    "resources/experiments/hart_grouped_v1/train.jsonl": "3cd1539d26189ab1ca1c7e0efc5e34d92265f5d5a9c65783b85af28f41fa9c2b",
+    "resources/experiments/hart_grouped_v1/val.jsonl": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8"
+  },
+  "script_sha256": "f3b1828ae0b3dee9fd1664023decb56dca561088ca46beb46ebcf4f8d7ea240a"
+}

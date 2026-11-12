@@ -1,0 +1,12 @@
+{
+  "threshold": 0.7132066678858923,
+  "n_validation_negatives": 800,
+  "allowed_false_positives": 8,
+  "actual_false_positives": 8,
+  "target_empirical_validation_fpr": 0.01,
+  "scope": "Negative-only validation order statistic, ties excluded. Not a population FPR guarantee or a test-set ROC threshold.",
+  "run": "tfidf_lr_v1",
+  "checkpoint_sha256": "7f9886dc472f58ff65cebf1496f849a6a7704e0c704dd112dc2fd2529a5bb2f8",
+  "validation_sha256": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8",
+  "script_sha256": "ef731d522c450417e585481c1d888c3115166924796d87b1fcfb1fa67b8f13d8"
+}

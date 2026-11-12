@@ -1,0 +1,26 @@
+{
+  "status": "partial",
+  "verified": 544,
+  "failed": 0,
+  "pending": 15440,
+  "counts": {
+    "train": 528,
+    "val": 16
+  },
+  "expected_counts": {
+    "train": 11190,
+    "val": 1600,
+    "test": 3194
+  },
+  "graph_stats": {
+    "single_or_zero_relation_graphs": 0
+  },
+  "source_blocks_disjoint": true,
+  "invisible_edu_nodes": 0,
+  "protocol_sha256": "e287fcf3feb23ae33a6fa9f4fc6763690799d5bb01504b90855fba0773f04501",
+  "parsed_sha256": "785a67f3ab22691d18bbee1d03e9bb2849b5e7006750aa14207c5131088008d5",
+  "graphs_sha256": "68b665cdc670dbbf2ff32def3313d29b1bbf639f2a6a68eb41e820576ad7fbc3",
+  "index_sha256": "e79ad764d9fa79fe14cd8fd6f26ee06614ae3452fd7084d74b96ff6552bbe613",
+  "invocation_seconds": 1.3099435829999493,
+  "full_cache_ready": false
+}

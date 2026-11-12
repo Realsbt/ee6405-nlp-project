@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "conditions": {
+    "scale_fixed": {
+      "status": "passed",
+      "strict_reload": true,
+      "finite_forward": true,
+      "checkpoint_sha256": "20006e9fee3a996957073b48da5ded0940b6dfa006d3769f5e17da338533f95e",
+      "attention_normalized": true,
+      "weights_discarded": true,
+      "training_only_smoke": true,
+      "test_evaluated": false
+    },
+    "scale_global": {
+      "status": "passed",
+      "strict_reload": true,
+      "finite_forward": true,
+      "checkpoint_sha256": "9c6500738830f007aa235eaebe07c3a2154dd526792c664b6bb13d5c90d88a65",
+      "attention_normalized": true,
+      "weights_discarded": true,
+      "training_only_smoke": true,
+      "test_evaluated": false
+    },
+    "scale_adaptive": {
+      "status": "passed",
+      "strict_reload": true,
+      "finite_forward": true,
+      "checkpoint_sha256": "a4d9b62f23c08cbde01847b6c7b6fb1a714051d643262c6f6deb31a9d9244380",
+      "attention_normalized": true,
+      "weights_discarded": true,
+      "training_only_smoke": true,
+      "test_evaluated": false
+    }
+  },
+  "performance_claim": false
+}

@@ -1,0 +1,1 @@
+{"event": "epoch_complete", "condition": "roberta_full", "epoch": 1, "validation_macro_f1": 0.1, "mean_ce": 1.4770758152008057, "epoch_seconds": 3.150323773000082, "improved": true}

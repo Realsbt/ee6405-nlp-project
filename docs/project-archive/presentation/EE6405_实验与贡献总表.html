@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EE6405 实验与贡献总表</title>
+<style>
+:root { color-scheme: light; font: 15px/1.55 "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; color: #172d34; background: #f5f7f6; }
+* { box-sizing: border-box; }
+body { max-width: 1560px; margin: auto; padding: clamp(18px, 4vw, 52px); }
+h1 { font-size: clamp(26px, 4vw, 38px); line-height: 1.2; margin: 0 0 18px; }
+p { max-width: 90ch; color: #435b62; margin: 8px 0; }
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin: 24px 0 12px; }
+select { font: inherit; border: 1px solid #9db2ad; border-radius: 5px; background: white; color: inherit; padding: 5px; }
+output { color: #435b62; }
+.scroll { overflow: auto; max-height: 70vh; border: 1px solid #c6d3d0; border-radius: 8px; background: white; }
+table { border-collapse: separate; border-spacing: 0; min-width: 780px; width: 100%; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 11px 12px; border-bottom: 1px solid #dce5e3; }
+thead th { position: sticky; top: 0; background: #e0ebe7; }
+tbody th { min-width: 160px; font-weight: 650; }
+td:nth-child(2) { min-width: 115px; }
+td:nth-child(3) { min-width: 220px; }
+td:nth-child(4) { min-width: 240px; color: #435b62; font-size: 13px; }
+tbody tr:nth-child(even) { background: #f5f8f7; }
+footer { margin-top: 14px; color: #435b62; font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+<h1>EE6405 实验与贡献总表</h1>
+<p>HART 训练／验证／测试为 11,190／1,600／3,194 条，按来源及重复关联分组隔离。HC3 为 1,000 条二分类样本。MixSet 为 91 个来源组的 359 条映射子集。</p>
+<p>结果默认是 Macro-F1。± 为跨种子样本标准差，单位为百分点。归属依据分支报告、提交及本地实验记录。共享成果的个人分工待组内确认。</p>
+</header>
+<main>
+<div class="filters">
+<label>归属 <select id="owner"><option value="">全部归属</option><option>小组共享 · Botao / Realsbt 主线提交</option><option>Yuzhe · yuzhe 分支</option><option>foatium · Git 提交</option><option>Yingqi</option></select></label>
+<label>阶段 <select id="stage"><option value="">全部阶段</option><option>实现／核验</option><option>有测试结果</option><option>仅验证</option></select></label>
+<output id="count" aria-live="polite">27 / 27 项</output>
+</div>
+<div class="scroll" tabindex="0" role="region" aria-label="实验记录表，可横向滚动">
+<table aria-label="EE6405 实验与贡献">
+<thead><tr><th scope="col">实验／工作</th><th scope="col">归属</th><th scope="col">数据／结果</th><th scope="col">说明与来源</th></tr></thead>
+<tbody><tr data-owner="小组共享 · Botao / Realsbt 主线提交" data-stage="实现／核验"><th scope="row">HART 分组、RACE 复现与共同评估协议</th><td>小组共享 · Botao / Realsbt 主线提交</td><td>15,984 条，四分类</td><td>阶段：实现／核验<br>训练／拟合：固定 HART 划分<br>验证／选型：同源及关联重复文本按组隔离<br>测试／外部：同一固定测试划分<br>来源：data/README.md；主线提交 f1a56eb、7eb3319</td></tr>
+<tr data-owner="小组共享 · Botao / Realsbt 主线提交" data-stage="有测试结果"><th scope="row">TF-IDF + 逻辑回归</th><td>小组共享 · Botao / Realsbt 主线提交</td><td>79.40%，确定性基线</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194<br>来源：主线 comparison / REPORT.md</td></tr>
+<tr data-owner="小组共享 · Botao / Realsbt 主线提交" data-stage="有测试结果"><th scope="row">RoBERTa · CE</th><td>小组共享 · Botao / Realsbt 主线提交</td><td>90.72% ± 0.25 pp，3 种子</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194<br>来源：主线 comparison / REPORT.md</td></tr>
+<tr data-owner="小组共享 · Botao / Realsbt 主线提交" data-stage="有测试结果"><th scope="row">RoBERTa · CE + SupCon</th><td>小组共享 · Botao / Realsbt 主线提交</td><td>91.15% ± 0.24 pp，3 种子；三种子平均 Micro-F1 93.58%</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194<br>来源：主线 comparison / REPORT.md；项目演示 v5 第 9 页（Micro-F1）</td></tr>
+<tr data-owner="小组共享 · Botao / Realsbt 主线提交" data-stage="有测试结果"><th scope="row">RACE · CE</th><td>小组共享 · Botao / Realsbt 主线提交</td><td>89.92% ± 0.90 pp，3 种子</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194<br>来源：主线 comparison / REPORT.md</td></tr>
+<tr data-owner="小组共享 · Botao / Realsbt 主线提交" data-stage="有测试结果"><th scope="row">RACE · CE + SupCon</th><td>小组共享 · Botao / Realsbt 主线提交</td><td>90.37% ± 0.60 pp，3 种子</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194<br>来源：主线 comparison / REPORT.md</td></tr>
+<tr data-owner="小组共享 · Botao / Realsbt 主线提交" data-stage="有测试结果"><th scope="row">HC3 辅助迁移</th><td>小组共享 · Botao / Realsbt 主线提交</td><td>HC3 二分类 Macro-F1：TF-IDF 38.59%、RoBERTa 43.37%、RACE 38.69%、RACE（CE）44.52%；RACE AI 召回 8.40%</td><td>阶段：有测试结果<br>训练／拟合：复用 HART 权重<br>验证／选型：沿用既定二分类规则<br>测试／外部：HC3 1,000<br>来源：主线 auxiliary / REPORT.md</td></tr>
+<tr data-owner="Yuzhe · yuzhe 分支" data-stage="有测试结果"><th scope="row">六层解冻 + 层间学习率衰减 + SupCon</th><td>Yuzhe · yuzhe 分支</td><td>三种子平均 Macro-F1 91.1558%，原参照 91.1544%；三种子模型等权集成 Macro-F1 91.6999%、Micro-F1 94.36%（同一 HART 测试集）</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194<br>来源：yuzhe · confirmed_anchor / REPORT.md；项目演示 v5 第 9 页（Micro-F1）</td></tr>
+<tr data-owner="Yuzhe · yuzhe 分支" data-stage="仅验证"><th scope="row">投影头／弱 SupCon／辅助目标等训练筛选</th><td>Yuzhe · yuzhe 分支</td><td>验证集筛选后回退六层参照；最终均值变化 0.0000 pp</td><td>阶段：仅验证<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：最终沿用六层方案<br>来源：yuzhe · confirmed_anchor / JOINT_REPORT.zh-CN.md</td></tr>
+<tr data-owner="foatium · Git 提交" data-stage="实现／核验"><th scope="row">Text Lab、解释工作台与 Windows 运行支持</th><td>foatium · Git 提交</td><td>Text Lab、文档图、交互式编辑</td><td>阶段：实现／核验<br>训练／拟合：复用主线模型<br>验证／选型：功能检查<br>测试／外部：功能演示<br>来源：main：8e66642、03bf373、e3b2d6c；zsp：6986879</td></tr>
+<tr data-owner="foatium · Git 提交" data-stage="实现／核验"><th scope="row">长文多窗口推理</th><td>foatium · Git 提交</td><td>首／中／尾概率平均；长文最多三次前向</td><td>阶段：实现／核验<br>训练／拟合：复用主线模型<br>验证／选型：同 checkpoint 比较首段与首／中／尾<br>测试／外部：未核实正式多窗口分数<br>来源：method/multiview-inference；docs/MULTIVIEW.md</td></tr>
+<tr data-owner="Yingqi" data-stage="实现／核验"><th scope="row">标签溯源、预测复核、RACE 重放</th><td>Yingqi</td><td>复核原 13 组 HART 和 4 组 HC3 结果；重放 RACE 测试 argmax 一致</td><td>阶段：实现／核验<br>训练／拟合：复用共享模型及预测<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194；HC3 1,000<br>来源：03_CPU执行结果.md；08_RACE重放与验证集校准.md</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">温度缩放、低误报与编辑敏感性</th><td>Yingqi</td><td>例：RoBERTa 的 HC3 二分类 Brier 0.42570 → 0.39145；外部误报仍偏高</td><td>阶段：有测试结果<br>训练／拟合：HART 验证 1,600 拟合温度／阈值<br>验证／选型：同一 HART 验证集<br>测试／外部：HART 3,194；HC3 1,000；MixSet 子集 359<br>来源：08_RACE重放与验证集校准.md；12_CPU续跑结果与下一步.md</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">CPU 词汇模型、少数类专家与类别偏置</th><td>Yingqi</td><td>词汇单模 83.05%，与 CE 融合 91.96%；专家 90.84%，类别偏置 91.01%（HART）</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190 拟合词汇模型；部分变体复用旧概率<br>验证／选型：HART 1,600 调参<br>测试／外部：HART 3,194；MixSet 子集 359<br>来源：cpu_improvement_v1 / REPORT.md</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">长度／篇章结构轻量模型</th><td>Yingqi</td><td>HART 42.41／44.27／52.67%；MixSet 35.06／23.95／29.16%（长度／结构／合用）</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194；MixSet 子集 359<br>来源：12_CPU续跑结果与下一步.md</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">RoBERTa CE + RACE SupCon 概率融合</th><td>Yingqi</td><td>HART 92.10%；MixSet 36.86%，底层种子 3407</td><td>阶段：有测试结果<br>训练／拟合：复用已有预测<br>验证／选型：HART 1,600 选融合系数<br>测试／外部：HART 3,194；MixSet 子集 359<br>来源：docs/YINGQI_STATUS.md</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">CE + RACE + TF-IDF Stacking</th><td>Yingqi</td><td>HART 93.61% Macro / 95.27% Micro；MixSet 36.22% Macro；底层种子 3407</td><td>阶段：有测试结果<br>训练／拟合：底层复用；元模型拟合 HART 验证预测 1,600<br>验证／选型：同 1,600 条按来源 4 折；OOF 93.58%<br>测试／外部：HART 3,194；MixSet 子集 359<br>来源：docs/YINGQI_STATUS.md</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">Stacking 同标签预算与跨底层种子对照</th><td>Yingqi</td><td>三模型固定元模型换底层预测 93.61／93.71／93.12%；CE + TF-IDF 92.91／92.72／92.43%</td><td>阶段：有测试结果<br>训练／拟合：同 1,600 条开发预测拟合固定元模型<br>验证／选型：同来源 4 折<br>测试／外部：HART 3,194；MixSet 子集 359（部分变体）<br>来源：cpu_stacking_controls_v1 / REPORT.md</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">同窗口四条件消融</th><td>Yingqi</td><td>正文 91.28%、篇章图 89.69%、打乱关系 90.07%、EDU 池化 90.89%；种子 3407</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194<br>来源：docs/YINGQI_STATUS.md</td></tr>
+<tr data-owner="Yingqi" data-stage="仅验证"><th scope="row">Text–EDU 融合四条件筛选</th><td>Yingqi</td><td>CLS 90.64%、均值 90.85%、注意力 90.90%、门控 91.36%；种子 3407</td><td>阶段：仅验证<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：均值／注意力未做正式测试<br>来源：docs/YINGQI_STATUS.md</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">匹配 CLS 与门控融合三种子测试</th><td>Yingqi</td><td>CLS 均值 91.01%，门控 90.72%；按 3407／42／2026，CLS 90.41／90.98／91.64%，门控 90.96／90.41／90.79%</td><td>阶段：有测试结果<br>训练／拟合：HART 11,190<br>验证／选型：HART 1,600<br>测试／外部：HART 3,194<br>来源：本地 Kaggle continuation / evaluation</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">门控预测加入／替换 Stacking 组件</th><td>Yingqi</td><td>开发选出三种子平均门控替换 RACE；测试 93.17%，原 Stacking 93.61%</td><td>阶段：有测试结果<br>训练／拟合：在 HART 验证预测上拟合元模型<br>验证／选型：HART 1,600，4 折<br>测试／外部：HART 3,194<br>来源：.ee6405-slides-build/gated_stacking.json</td></tr>
+<tr data-owner="Yingqi" data-stage="实现／核验"><th scope="row">固定／自适应门控、切分一致性、校准与 DFS</th><td>Yingqi</td><td>有代码及运行入口</td><td>阶段：实现／核验<br>训练／拟合：实现及 CPU 检查<br>验证／选型：正式增益待验证<br>测试／外部：未评估<br>来源：docs/FUSION_SUPERVISION.zh-CN.md</td></tr>
+<tr data-owner="Yingqi" data-stage="仅验证"><th scope="row">Colab 编码器试验</th><td>Yingqi</td><td>DeBERTa 89.87%，全层 RoBERTa 91.48%；改写类命中 70／69，原门控 75（共 110 条）</td><td>阶段：仅验证<br>训练／拟合：HART 11,190，T4 各 4 轮<br>验证／选型：HART 1,600<br>测试／外部：未评估<br>来源：docs/ENCODER_PILOT.md</td></tr>
+<tr data-owner="Yingqi" data-stage="仅验证"><th scope="row">门控 + Colab 模型等权融合</th><td>Yingqi</td><td>加 DeBERTa 91.99%，加全层 RoBERTa 91.58%；改写类命中 74／69（共 110 条）</td><td>阶段：仅验证<br>训练／拟合：复用已有预测<br>验证／选型：HART 1,600<br>测试／外部：未评估<br>来源：docs/ENCODER_PILOT.md</td></tr>
+<tr data-owner="Yingqi" data-stage="仅验证"><th scope="row">门控 + DeBERTa + AI 生成类定向阈值</th><td>Yingqi</td><td>93.27%；改写类 85/110，精确率 90.43%；单种子；两次复跑一致</td><td>阶段：仅验证<br>训练／拟合：仅拟合分数权重，每轮使用另四折<br>验证／选型：HART 1,600，5 折分组留出<br>测试／外部：缺 DeBERTa 测试预测及权重<br>来源：docs/ENCODER_PILOT.md</td></tr>
+<tr data-owner="Yingqi" data-stage="有测试结果"><th scope="row">定向阈值应用到既有 Stacking</th><td>Yingqi</td><td>历史测试 93.61% → 93.54%；改写类多命中 7 条、多误报 9 条</td><td>阶段：有测试结果<br>训练／拟合：复用预测；用开发集拟合权重<br>验证／选型：HART 1,600，5 折分组留出<br>测试／外部：HART 3,194<br>来源：docs/ENCODER_PILOT.md</td></tr>
+</tbody>
+</table>
+</div>
+</main>
+<footer>记录截至 2026-11-13（新加坡时间）</footer>
+<script>
+const owner = document.getElementById("owner");
+const stage = document.getElementById("stage");
+const count = document.getElementById("count");
+const rows = [...document.querySelectorAll("tbody tr")];
+function update() {
+  let visible = 0;
+  for (const row of rows) {
+    row.hidden = (owner.value && row.dataset.owner !== owner.value)
+      || (stage.value && row.dataset.stage !== stage.value);
+    if (!row.hidden) visible++;
+  }
+  count.textContent = visible + " / " + rows.length + " 项";
+}
+owner.addEventListener("change", update);
+stage.addEventListener("change", update);
+update();
+</script>
+</body>
+</html>

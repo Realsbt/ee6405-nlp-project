@@ -1,0 +1,29 @@
+{
+  "cache": "/Users/miracle/Desktop/26S1/EE6405_paper_research/resources/experiments/same_window_smoke_nfkc_v2",
+  "scope": "smoke",
+  "splits": {
+    "train": {
+      "graphs": 16,
+      "relation_nodes": 591,
+      "changed_relation_nodes": 453,
+      "unchanged_graphs": 0,
+      "single_or_zero_relation_graphs": 0
+    },
+    "val": {
+      "graphs": 16,
+      "relation_nodes": 613,
+      "changed_relation_nodes": 481,
+      "unchanged_graphs": 0,
+      "single_or_zero_relation_graphs": 0
+    }
+  },
+  "totals": {
+    "graphs": 32,
+    "relation_nodes": 1204,
+    "changed_relation_nodes": 934,
+    "unchanged_graphs": 0,
+    "single_or_zero_relation_graphs": 0
+  },
+  "changed_relation_node_fraction": 0.7757475083056479,
+  "unchanged_graph_fraction": 0.0
+}

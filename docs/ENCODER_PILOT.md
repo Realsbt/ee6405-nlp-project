@@ -4,7 +4,65 @@ Date: 2026-11-12. Goal: investigate a stronger candidate, not promise 97%
 Macro-F1. The historical stacking result remains 93.61% test Macro-F1; this
 experiment does not relabel it as a new single-model score.
 
-## Execution status
+## Colab v3 结项（2026-11-12）
+
+两组在 Colab T4 上各完成 4 轮训练。本轮结束。两组均未达到替换现有门控融合模型的要求。门控融合会根据文本调整篇章特征在分类中的作用。Macro-F1 是四个类别 F1 的等权平均。
+
+- DeBERTa-v3-base 验证 Macro-F1 为 **89.87%**。`ai_humanized`（经人工或工具改写的 AI 文本）召回率为 **63.64%（70/110）**。
+- 全层微调 RoBERTa 验证 Macro-F1 为 **91.48%**，比门控融合高 **0.11 个百分点**。`ai_humanized` 召回率为 **62.73%（69/110）**，比门控融合低 **5.45 个百分点**。
+- 现有门控融合的验证 Macro-F1 为 **91.36%**，`ai_humanized` 召回率为 **68.18%（75/110）**。三组结果均使用同一批 1,600 条验证样本和种子 3407。两组 Colab 模型均未评估测试集。
+
+完整性校验通过的结果包保存在本地
+`outputs/colab_pilot_monitor_v3/pilot_evidence.zip`，含逐条验证预测、指标和训练日志。
+包内没有模型权重。浏览器等待下载事件曾超时，随后在本地下载目录找到了结果包。Colab 重连时提示无法连接 reCAPTCHA，权重未取回。
+
+### 无需训练的概率融合对照
+
+将门控融合分别与两组 Colab 模型按 1:1 平均四类预测概率，取概率最高的类别。用 `item_id` 对齐全部 1,600 条验证预测，并逐条核对真实标签、组 ID 和类别集合。门控融合的原始预测来自 [已保存的验证文件](../experiments/reports/yingqi_snapshot/fusion/screen/fusion_gated_s3407/validation_predictions.jsonl)。
+
+- 门控融合 + DeBERTa 的验证 Macro-F1 为 **91.99%**，比门控融合高 **0.62 个百分点**。`ai_humanized` 召回率为 **67.27%（74/110）**。
+- 门控融合 + 全层 RoBERTa 的验证 Macro-F1 为 **91.58%**，比门控融合高 **0.22 个百分点**。`ai_humanized` 召回率为 **62.73%（69/110）**。
+
+两组等权概率融合都少识别了部分 `ai_humanized` 样本。
+
+### 对 AI 生成与改写文本单独调整判定（2026-11-13）
+
+冻结门控融合与 DeBERTa 的预测并等权平均。仅当原预测为
+`ai_generated` 时，将 `ai_humanized` 的分数乘以权重，再重新选取得分最高的类别。
+以 HART 的 `split_block_id` 做五折分组，同一来源及其关联重复文本留在同一折。
+每折在另外四折从 1、1.25、1.5、2、3、4 中选权重，优先最大化目标类 F1，
+并约束拟合折的 Macro-F1 至少持平、目标类精确率最多下降 5 个百分点。
+表中的分数合并各折留出预测后计算。
+
+| 判定方式 | Macro-F1 | 改写类 F1 | 改写类精确率 | 改写类召回率 |
+|---|---:|---:|---:|---:|
+| 门控融合原预测 | 91.36% | 78.12% | 91.46% | 68.18%（75/110） |
+| 门控融合与 DeBERTa 等权平均 | 91.99% | 78.72% | 94.87% | 67.27%（74/110） |
+| 等权平均，所有竞争类别均可触发调整 | 92.77% | 81.59% | 90.11% | 74.55%（82/110） |
+| 等权平均，仅在原预测为 AI 生成时调整 | 93.27% | 83.33% | 90.43% | 77.27%（85/110） |
+
+最后一组在五折均增加目标类命中数，分别增加 1、2、3、3、2 条，五折的
+Macro-F1 也都上升。相比未调阈值的同一融合，目标类多命中 11 条，同时增加
+5 个误报，Macro-F1 上升 1.28 个百分点。用完整验证集拟合时选得权重 1.5。
+
+同样的流程用在三组单门控模型及现有 stacking 上，分组验证均未同时提高
+Macro-F1 和改写类 F1。将完整验证集拟合的权重应用到项目历史测试集时，
+只针对 AI 生成的判定规则使门控模型三个种子的 Macro-F1 分别变化
++0.27、0.00、+0.57 个百分点。现有 stacking 由 93.61% 降到 93.54%，
+多命中 7 条改写文本，同时多出 9 个误报。
+
+交叉验证仅隔离本轮权重拟合。基础模型曾用这批验证数据选择检查点，
+当前融合及规则也在这批数据上探索。DeBERTa 的结果包仅提供验证预测，
+尚无测试预测或模型权重，因此 93.27% 目前只有单种子的验证集证据。
+
+从仓库根目录运行下列命令（需 NumPy、scikit-learn 和 joblib），使用[公开归档的预测和分组元数据](project-archive/latest/)复现，无需原文或权重。
+结果写入 `outputs/minority_threshold_replay/`，包含分折指标和混淆矩阵。
+
+```bash
+python -m experiments.replay_minority_threshold
+```
+
+## Launch history
 
 On 2026-11-12, the private Kaggle dataset upload succeeded, but the kernel push
 was rejected with `Maximum weekly GPU quota of 30.00 hours reached`.
@@ -21,9 +79,8 @@ Colab allocated a Tesla T4 (15,360 MiB), verified with its preinstalled
 `nvidia-smi` at 06:33:40 UTC. The user then approved private train/validation
 upload, dependency installation and model execution. Both CUDA checks passed
 with one verified update and zero AMP skips each; DeBERTa formal validation
-training launched at **06:54:15 UTC / 14:54:15 Singapore**. RoBERTa is queued
-serially. **No completed formal score exists yet.** Smoke metrics on four
-examples are engineering checks, not model-performance evidence.
+training launched at **06:54:15 UTC / 14:54:15 Singapore**, followed by RoBERTa.
+Both completed. The scores above use the full validation partition.
 
 Colab v1 failed on TensorFlow/protobuf imports; v2 detected a skipped AMP
 update and stopped. V3 disables unused TensorFlow/Flax imports and records an

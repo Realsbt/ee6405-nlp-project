@@ -1,0 +1,30 @@
+{
+  "temperature": 1.671814386634734,
+  "validation_nll_before": 0.24777922641897787,
+  "validation_nll_after": 0.20268998921904802,
+  "bounds": [
+    0.05,
+    20
+  ],
+  "near_bound": false,
+  "uncalibrated_threshold": {
+    "threshold": 0.990419464450979,
+    "n_validation_negatives": 800,
+    "allowed_false_positives": 8,
+    "actual_false_positives": 8,
+    "target_empirical_validation_fpr": 0.01,
+    "scope": "Negative-only validation order statistic, ties excluded. Not a population FPR guarantee or a test-set ROC threshold."
+  },
+  "temperature_scaled_threshold": {
+    "threshold": 0.9435602143615226,
+    "n_validation_negatives": 800,
+    "allowed_false_positives": 8,
+    "actual_false_positives": 8,
+    "target_empirical_validation_fpr": 0.01,
+    "scope": "Negative-only validation order statistic, ties excluded. Not a population FPR guarantee or a test-set ROC threshold."
+  },
+  "validation_sha256": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8",
+  "validation_predictions_sha256": "9578eaa49ed330dae52a6f14207de8d9b8f4d0f4edb2f74725c8fbd5ca59cf4e",
+  "checkpoint_sha256": "6797d46f3fb2f84734b0cf9e49d7d566eefc9f97ffa6d0db3219d8aa107098d1",
+  "fit_on": "HART validation only"
+}

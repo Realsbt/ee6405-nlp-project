@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "records": 359,
+  "uncovered_nonspace_characters": 0,
+  "edu_count_min": 8,
+  "edu_count_max": 28,
+  "parsed_sha256": "879fe716b5d87e396edf930dff059b5a1bb8d77388965b4b4e0d3a3069f094a7",
+  "parse_seconds": 155.16433300400013,
+  "parser_revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a",
+  "parser_load_seconds": 20.715007582999988,
+  "peak_rss_mib_corrected": 4536.09375
+}

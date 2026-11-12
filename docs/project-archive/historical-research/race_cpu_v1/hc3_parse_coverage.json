@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "records": 1000,
+  "uncovered_nonwhitespace_ids": [],
+  "parsed_sha256": "69cd64433ad3df153d506bf98bce0bafa182cbd45275f0d8796166588189d691",
+  "script_sha256": "c818d90590e921c715bae53ed54f2c55a68cdf7ee9c9d809935a956d044da5d9",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "peak_rss_mib_corrected": 2604.640625,
+  "rss_note": "Original worker assumes Linux KiB. macOS ru_maxrss is bytes; corrected here without modifying its archived audit.",
+  "parser_load_seconds": 26.839783834002446,
+  "parse_seconds": 1394.1000572007324
+}

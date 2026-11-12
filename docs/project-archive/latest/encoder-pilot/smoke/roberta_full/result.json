@@ -1,0 +1,93 @@
+{
+  "status": "smoke_completed",
+  "condition": "roberta_full",
+  "seed": 3407,
+  "validation": {
+    "samples": 4,
+    "accuracy": 0.25,
+    "macro_f1": 0.1,
+    "macro_precision": 0.0625,
+    "macro_recall": 0.25,
+    "macro_auroc_ovr": 0.75,
+    "macro_tpr_at_1pct_fpr_roc": 0.25,
+    "per_class": {
+      "human_written": {
+        "support": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "auroc_ovr": 0.6666666666666667,
+        "tpr_at_1pct_fpr_roc": 0.0
+      },
+      "human_ai_polished": {
+        "support": 1,
+        "precision": 0.25,
+        "recall": 1.0,
+        "f1": 0.4,
+        "auroc_ovr": 0.6666666666666667,
+        "tpr_at_1pct_fpr_roc": 0.0
+      },
+      "ai_generated": {
+        "support": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "auroc_ovr": 0.6666666666666667,
+        "tpr_at_1pct_fpr_roc": 0.0
+      },
+      "ai_humanized": {
+        "support": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "auroc_ovr": 1.0,
+        "tpr_at_1pct_fpr_roc": 1.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "test": null,
+  "test_evaluated": false,
+  "best_epoch": 1,
+  "completed_epochs": 1,
+  "elapsed_seconds": 3.5704138630001125,
+  "optimizer_updates": 1,
+  "classifier_update_verified": true,
+  "amp_skipped_updates": 0,
+  "parameters": 124648708,
+  "trainable_parameters": 124648708,
+  "peak_cuda_allocated_mib": 2426.435546875,
+  "best_checkpoint_sha256": "110374fcfe4f8251f5241f95f0e894f61327859ed95b2728813269a64aa54891",
+  "config_sha256": "cb83b32d1c023464fed9f0f42dd8382ecd7bb4494451823a48a9e4917483b379"
+}

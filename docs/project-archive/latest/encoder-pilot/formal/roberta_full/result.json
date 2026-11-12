@@ -1,0 +1,93 @@
+{
+  "status": "validation_completed",
+  "condition": "roberta_full",
+  "seed": 3407,
+  "validation": {
+    "samples": 1600,
+    "accuracy": 0.949375,
+    "macro_f1": 0.9147508245162113,
+    "macro_precision": 0.965201593618693,
+    "macro_recall": 0.8860210803689065,
+    "macro_auroc_ovr": 0.971613821588619,
+    "macro_tpr_at_1pct_fpr_roc": 0.734155138339921,
+    "per_class": {
+      "human_written": {
+        "support": 400,
+        "precision": 0.9925187032418953,
+        "recall": 0.995,
+        "f1": 0.9937578027465668,
+        "auroc_ovr": 0.9998229166666667,
+        "tpr_at_1pct_fpr_roc": 1.0
+      },
+      "human_ai_polished": {
+        "support": 400,
+        "precision": 0.945,
+        "recall": 0.945,
+        "f1": 0.945,
+        "auroc_ovr": 0.9912364583333334,
+        "tpr_at_1pct_fpr_roc": 0.905
+      },
+      "ai_generated": {
+        "support": 690,
+        "precision": 0.9232876712328767,
+        "recall": 0.9768115942028985,
+        "f1": 0.9492957746478873,
+        "auroc_ovr": 0.97955088389871,
+        "tpr_at_1pct_fpr_roc": 0.30434782608695654
+      },
+      "ai_humanized": {
+        "support": 110,
+        "precision": 1.0,
+        "recall": 0.6272727272727273,
+        "f1": 0.770949720670391,
+        "auroc_ovr": 0.9158450274557658,
+        "tpr_at_1pct_fpr_roc": 0.7272727272727273
+      }
+    },
+    "confusion_matrix": [
+      [
+        398,
+        1,
+        1,
+        0
+      ],
+      [
+        3,
+        378,
+        19,
+        0
+      ],
+      [
+        0,
+        16,
+        674,
+        0
+      ],
+      [
+        0,
+        5,
+        36,
+        69
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "test": null,
+  "test_evaluated": false,
+  "best_epoch": 4,
+  "completed_epochs": 4,
+  "elapsed_seconds": 1679.1241856140005,
+  "optimizer_updates": 2796,
+  "classifier_update_verified": true,
+  "amp_skipped_updates": 0,
+  "parameters": 124648708,
+  "trainable_parameters": 124648708,
+  "peak_cuda_allocated_mib": 2431.310546875,
+  "best_checkpoint_sha256": "4f59591ef0644c7ded81aaa5ad06362948b7fdf6f194165a4794fb0aa172b4b7",
+  "config_sha256": "3dd8bfaa01dc1656335e14b9c982c5944711f528c3654928050bc64b21b60872"
+}

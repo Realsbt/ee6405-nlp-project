@@ -1,0 +1,93 @@
+{
+  "status": "smoke_completed",
+  "condition": "deberta_full",
+  "seed": 3407,
+  "validation": {
+    "samples": 4,
+    "accuracy": 0.25,
+    "macro_f1": 0.1,
+    "macro_precision": 0.0625,
+    "macro_recall": 0.25,
+    "macro_auroc_ovr": 0.4166666666666667,
+    "macro_tpr_at_1pct_fpr_roc": 0.0,
+    "per_class": {
+      "human_written": {
+        "support": 1,
+        "precision": 0.25,
+        "recall": 1.0,
+        "f1": 0.4,
+        "auroc_ovr": 0.0,
+        "tpr_at_1pct_fpr_roc": 0.0
+      },
+      "human_ai_polished": {
+        "support": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "auroc_ovr": 0.33333333333333337,
+        "tpr_at_1pct_fpr_roc": 0.0
+      },
+      "ai_generated": {
+        "support": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "auroc_ovr": 0.6666666666666667,
+        "tpr_at_1pct_fpr_roc": 0.0
+      },
+      "ai_humanized": {
+        "support": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "auroc_ovr": 0.6666666666666667,
+        "tpr_at_1pct_fpr_roc": 0.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "test": null,
+  "test_evaluated": false,
+  "best_epoch": 1,
+  "completed_epochs": 1,
+  "elapsed_seconds": 13.309205991999988,
+  "optimizer_updates": 1,
+  "classifier_update_verified": true,
+  "amp_skipped_updates": 0,
+  "parameters": 183834628,
+  "trainable_parameters": 183834628,
+  "peak_cuda_allocated_mib": 3557.48779296875,
+  "best_checkpoint_sha256": "26c9604d7d75b2ace96764dce90a57ca980bc240e71f6a29bebe3a3e16af64cf",
+  "config_sha256": "f0d511d261f40dadf1f859d74655a597f1bf5d78bcbf07c0760783208dcd8b54"
+}

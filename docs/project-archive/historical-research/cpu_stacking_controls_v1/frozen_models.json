@@ -1,0 +1,96 @@
+{
+  "development_oof": {
+    "ce_only": {
+      "macro_f1": 0.9101775851322342,
+      "class_recall": {
+        "human_written": 0.99,
+        "human_ai_polished": 0.9325,
+        "ai_generated": 0.9420289855072463,
+        "ai_humanized": 0.7272727272727273
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.936389153052613,
+        "essay": 0.8996992640990542,
+        "news": 0.8951827070630772,
+        "writing": 0.9031197781296056
+      },
+      "worst_domain_macro_f1": 0.8951827070630772
+    },
+    "ce_tfidf": {
+      "macro_f1": 0.9303144664835942,
+      "class_recall": {
+        "human_written": 0.9825,
+        "human_ai_polished": 0.9575,
+        "ai_generated": 0.9579710144927536,
+        "ai_humanized": 0.7727272727272727
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.9603140904240799,
+        "essay": 0.9339512952042509,
+        "news": 0.8959631812526984,
+        "writing": 0.9241830234828702
+      },
+      "worst_domain_macro_f1": 0.8959631812526984
+    },
+    "ce_newlex": {
+      "macro_f1": 0.9249607234784927,
+      "class_recall": {
+        "human_written": 0.9825,
+        "human_ai_polished": 0.95,
+        "ai_generated": 0.9579710144927536,
+        "ai_humanized": 0.7545454545454545
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.9484712665550694,
+        "essay": 0.9484367044544413,
+        "news": 0.8971382714209113,
+        "writing": 0.9038255033313619
+      },
+      "worst_domain_macro_f1": 0.8971382714209113
+    },
+    "ce_race": {
+      "macro_f1": 0.9268167562945958,
+      "class_recall": {
+        "human_written": 0.99,
+        "human_ai_polished": 0.94,
+        "ai_generated": 0.9579710144927536,
+        "ai_humanized": 0.7727272727272727
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.9586088089534235,
+        "essay": 0.9364569121153237,
+        "news": 0.9025430085381418,
+        "writing": 0.9053336848351854
+      },
+      "worst_domain_macro_f1": 0.9025430085381418
+    },
+    "all_original": {
+      "macro_f1": 0.9357766470805763,
+      "class_recall": {
+        "human_written": 0.99,
+        "human_ai_polished": 0.955,
+        "ai_generated": 0.9637681159420289,
+        "ai_humanized": 0.7909090909090909
+      },
+      "domain_macro_f1": {
+        "arxiv": 0.9678241308768857,
+        "essay": 0.9587450558840148,
+        "news": 0.8976850334131887,
+        "writing": 0.9136613026463648
+      },
+      "worst_domain_macro_f1": 0.8976850334131887
+    }
+  },
+  "fixed_spec": {
+    "kind": "logistic",
+    "C": 1
+  },
+  "model_sha256": {
+    "all_original.joblib": "aed36b2fb07b1084d9957677004e8fbfe0c1f14d534c2febb575ff5dab079145",
+    "ce_race.joblib": "972343f78a384bea61f32cc3cbe9581724f33efacfebb07670d631fde8a80daf",
+    "ce_tfidf.joblib": "7516c0e65d1f03807ebbffc73e1d26d342322d0b66ec60d9ad656bc73ad7314d",
+    "ce_only.joblib": "8703dd3271669890313290845df95ded7ef03762f8991fcaf00e8e74899fe720",
+    "ce_newlex.joblib": "83bc44eebb608425dc8a78edff31cd87207f6a859fae0a690023a63bfa5030b0"
+  },
+  "test_used_for_selection": false
+}

@@ -1,0 +1,72 @@
+{
+  "scope": "Post-hoc descriptive HC3 Brier comparisons. Frozen single-seed models, question-pair bootstrap within each source, 5000 draws, seed 20261106. Intervals omit retraining and unseen-source uncertainty; no multiplicity correction.",
+  "n_questions": 500,
+  "n_answers": 1000,
+  "source_question_counts": {
+    "finance": 100,
+    "medicine": 100,
+    "open_qa": 100,
+    "reddit_eli5": 100,
+    "wiki_csai": 100
+  },
+  "input_sha256": {
+    "race_no_supcon_s3407": "c324cb41b71315280ce57a350facc036bcc8eb79162401ffc82fb68dacc0b8b4",
+    "race_s3407": "2fa35bde50e2ba70f980ccaae4bed74da72664c6c7b1147bcb86f55c5e446c05",
+    "roberta_s3407": "24da89dab36ec80710a6e584cf5187423e23ca53d096f641d4f32e5454bfebdf",
+    "tfidf_lr_v1": "59dcbd92ae143606889776f5fc58b025f1506f27fc35a6492b06ef4d586001fe"
+  },
+  "script_sha256": "34e3d2c9eb5bef04f49289a9b397ffd0ebae77afe01b64905184aafd7be14933",
+  "vs_roberta_ce": {
+    "race_no_supcon_s3407": {
+      "mean_brier_difference": -0.005423957803241741,
+      "percentile_95_interval": [
+        -0.018151021288718563,
+        0.0073059760844334
+      ]
+    },
+    "race_s3407": {
+      "mean_brier_difference": 0.05478344105835448,
+      "percentile_95_interval": [
+        0.0403723003378557,
+        0.06989198367803923
+      ]
+    },
+    "tfidf_lr_v1": {
+      "mean_brier_difference": -0.055534702551365785,
+      "percentile_95_interval": [
+        -0.06882707335069727,
+        -0.042193599007631775
+      ]
+    }
+  },
+  "vs_constant_half": {
+    "race_no_supcon_s3407": {
+      "mean_brier_difference": 0.17027540315069195,
+      "percentile_95_interval": [
+        0.15458862887322214,
+        0.18566496481247308
+      ]
+    },
+    "race_s3407": {
+      "mean_brier_difference": 0.23048280201228818,
+      "percentile_95_interval": [
+        0.21490626907894908,
+        0.24672718800983362
+      ]
+    },
+    "roberta_s3407": {
+      "mean_brier_difference": 0.1756993609539337,
+      "percentile_95_interval": [
+        0.16202916204241496,
+        0.188860706284389
+      ]
+    },
+    "tfidf_lr_v1": {
+      "mean_brier_difference": 0.1201646584025679,
+      "percentile_95_interval": [
+        0.11076398868060117,
+        0.12931837247571892
+      ]
+    }
+  }
+}

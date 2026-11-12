@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "date": "2026-11-11",
+  "python": "3.12.14",
+  "cuda_available": false,
+  "packages": {
+    "torch": "2.7.0",
+    "transformers": "4.46.3",
+    "torch-geometric": "2.6.1",
+    "tokenizers": "0.20.3",
+    "isanlp-rst": "3.2.2",
+    "razdel": "0.5.0",
+    "numpy": "1.26.0"
+  },
+  "protocol_sha256": "82112974df569083226aad59b31d25bd89c5e0afa1328c3f81c80431916705a9",
+  "manifest_sha256": "9056a457000619ab4fc885a8e032e13ba0667efe64aa82d43deec61d3c8a1736",
+  "parsed_sha256": "de984ff7f663054367fd7b75484c533ca54df65836de032f9d11c6dadc265406",
+  "graphs_sha256": "6f21f059a0074722266c64c8d6930bd77118ecbd28ad360442ccd74de799bd86",
+  "index_sha256": "1dee265017f5c67dbe190fcfc9e9735de493c1f663b070c4d1516bc0c688d5b2",
+  "counts": {
+    "train": 11190,
+    "val": 1600,
+    "test": 3194
+  },
+  "full_cache_ready": true,
+  "source_sha256": {
+    "same_window_cache.py": "3cc9ec5cb755515920ced4571b96f9d757c927f4970bc633bc432981ed039819",
+    "parse_nfkc_cpu.py": "46d63c91db89201713a80599f4f35fdfc33b1ceded970b1b79fa1150cc0914be",
+    "window_controls.py": "d9560e88fba8640af25c70ebe721ccc3462499b5fbc274e6f1fffdc756fe16f4",
+    "train_window_controls.py": "c90b3056c5d6fa30ee131a5cd2a46e9d37f45225ea0ed28dab96857eb1e772b3"
+  }
+}

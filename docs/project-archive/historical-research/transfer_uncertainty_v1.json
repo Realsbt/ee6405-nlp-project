@@ -1,0 +1,74 @@
+{
+  "retained_hart_provenance": {
+    "train": {
+      "matched_label": 11190
+    },
+    "val": {
+      "matched_label": 1600
+    },
+    "test": {
+      "matched_label": 3194
+    }
+  },
+  "mixset_groups": 91,
+  "replicates": 2000,
+  "seed": 20261106,
+  "intervals": {
+    "tfidf": {
+      "macro_f1": {
+        "percentile_95": [
+          0.2733806526277753,
+          0.3628958892352069
+        ],
+        "valid_replicates": 2000
+      },
+      "fpr": {
+        "percentile_95": [
+          0.019226190476190477,
+          0.09492873651771949
+        ],
+        "valid_replicates": 2000
+      },
+      "tpr": {
+        "percentile_95": [
+          0.0,
+          0.0655827778778598
+        ],
+        "valid_replicates": 2000
+      }
+    },
+    "roberta": {
+      "macro_f1": {
+        "percentile_95": [
+          0.34503849678122134,
+          0.4362683900872772
+        ],
+        "valid_replicates": 2000
+      },
+      "fpr": {
+        "percentile_95": [
+          0.10543722943722944,
+          0.22801428571428564
+        ],
+        "valid_replicates": 2000
+      },
+      "tpr": {
+        "percentile_95": [
+          0.009345794392523364,
+          0.13861386138613863
+        ],
+        "valid_replicates": 2000
+      }
+    }
+  },
+  "paired_roberta_minus_tfidf_macro_f1_95": [
+    0.030734419934249597,
+    0.11484738077130066
+  ],
+  "scope": "Post-hoc paired source-group percentile bootstrap, fixed checkpoints and thresholds. Not seed, calibration-selection or population uncertainty; not corrected for multiple comparisons. Labels fixed to four classes.",
+  "input_sha256": {
+    "transfer_tfidf_v1/mixset_predictions.jsonl": "d40e4089886d3ac108cf2796ff9d3540b5f5eb84c7bf6652d7871aaf30db52ab",
+    "transfer_roberta_v1/mixset_predictions.jsonl": "91125b51d2c2d7458053852329413acd14ab634b7b73ecb7817979165005e924"
+  },
+  "script_sha256": "735094af9af923837ca4ab272259a42077f5125df625c7ad4c040beccc24eeb8"
+}

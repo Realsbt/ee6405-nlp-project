@@ -1,0 +1,184 @@
+{
+  "selected": {
+    "kind": "logistic",
+    "C": 1
+  },
+  "candidates": [
+    {
+      "spec": {
+        "kind": "logistic",
+        "C": 0.01
+      },
+      "oof_development": {
+        "macro_f1": 0.9330929276902352,
+        "class_recall": {
+          "human_written": 0.99,
+          "human_ai_polished": 0.96,
+          "ai_generated": 0.9652173913043478,
+          "ai_humanized": 0.7454545454545455
+        },
+        "domain_macro_f1": {
+          "arxiv": 0.9718988421955057,
+          "essay": 0.9408531570571147,
+          "news": 0.9016013461765053,
+          "writing": 0.9105184280015732
+        },
+        "worst_domain_macro_f1": 0.9016013461765053
+      }
+    },
+    {
+      "spec": {
+        "kind": "logistic",
+        "C": 0.1
+      },
+      "oof_development": {
+        "macro_f1": 0.9333264547248137,
+        "class_recall": {
+          "human_written": 0.99,
+          "human_ai_polished": 0.9625,
+          "ai_generated": 0.9637681159420289,
+          "ai_humanized": 0.7636363636363637
+        },
+        "domain_macro_f1": {
+          "arxiv": 0.9723416044489137,
+          "essay": 0.9402916758119433,
+          "news": 0.8964891790978748,
+          "writing": 0.9141245532312643
+        },
+        "worst_domain_macro_f1": 0.8964891790978748
+      }
+    },
+    {
+      "spec": {
+        "kind": "logistic",
+        "C": 1
+      },
+      "oof_development": {
+        "macro_f1": 0.9357766470805763,
+        "class_recall": {
+          "human_written": 0.99,
+          "human_ai_polished": 0.955,
+          "ai_generated": 0.9637681159420289,
+          "ai_humanized": 0.7909090909090909
+        },
+        "domain_macro_f1": {
+          "arxiv": 0.9678241308768857,
+          "essay": 0.9587450558840148,
+          "news": 0.8976850334131887,
+          "writing": 0.9136613026463648
+        },
+        "worst_domain_macro_f1": 0.8976850334131887
+      }
+    },
+    {
+      "spec": {
+        "kind": "logistic",
+        "C": 10
+      },
+      "oof_development": {
+        "macro_f1": 0.9346510490958667,
+        "class_recall": {
+          "human_written": 0.9925,
+          "human_ai_polished": 0.9525,
+          "ai_generated": 0.9652173913043478,
+          "ai_humanized": 0.7818181818181819
+        },
+        "domain_macro_f1": {
+          "arxiv": 0.9653418426910888,
+          "essay": 0.9543019551365978,
+          "news": 0.9015407893077796,
+          "writing": 0.9135511156529048
+        },
+        "worst_domain_macro_f1": 0.9015407893077796
+      }
+    },
+    {
+      "spec": {
+        "kind": "histogram",
+        "max_leaf_nodes": 3,
+        "l2_regularization": 10.0
+      },
+      "oof_development": {
+        "macro_f1": 0.935041869524232,
+        "class_recall": {
+          "human_written": 0.99,
+          "human_ai_polished": 0.9525,
+          "ai_generated": 0.9652173913043478,
+          "ai_humanized": 0.7818181818181819
+        },
+        "domain_macro_f1": {
+          "arxiv": 0.969889180571239,
+          "essay": 0.9573600143327683,
+          "news": 0.9148099190782117,
+          "writing": 0.8966126447157672
+        },
+        "worst_domain_macro_f1": 0.8966126447157672
+      }
+    },
+    {
+      "spec": {
+        "kind": "histogram",
+        "max_leaf_nodes": 7,
+        "l2_regularization": 10.0
+      },
+      "oof_development": {
+        "macro_f1": 0.9313489221597082,
+        "class_recall": {
+          "human_written": 0.99,
+          "human_ai_polished": 0.9525,
+          "ai_generated": 0.9637681159420289,
+          "ai_humanized": 0.7636363636363637
+        },
+        "domain_macro_f1": {
+          "arxiv": 0.9590861784262905,
+          "essay": 0.9553969177086362,
+          "news": 0.9097599690282617,
+          "writing": 0.9013588321600002
+        },
+        "worst_domain_macro_f1": 0.9013588321600002
+      }
+    }
+  ],
+  "baseline_development": {
+    "macro_f1": 0.9106170564392321,
+    "class_recall": {
+      "human_written": 0.9825,
+      "human_ai_polished": 0.95,
+      "ai_generated": 0.936231884057971,
+      "ai_humanized": 0.7181818181818181
+    },
+    "domain_macro_f1": {
+      "arxiv": 0.9469061146967682,
+      "essay": 0.8916347543155125,
+      "news": 0.8925491499987229,
+      "writing": 0.903054937424232
+    },
+    "worst_domain_macro_f1": 0.8916347543155125
+  },
+  "selected_oof_development": {
+    "macro_f1": 0.9357766470805763,
+    "class_recall": {
+      "human_written": 0.99,
+      "human_ai_polished": 0.955,
+      "ai_generated": 0.9637681159420289,
+      "ai_humanized": 0.7909090909090909
+    },
+    "domain_macro_f1": {
+      "arxiv": 0.9678241308768857,
+      "essay": 0.9587450558840148,
+      "news": 0.8976850334131887,
+      "writing": 0.9136613026463648
+    },
+    "worst_domain_macro_f1": 0.8976850334131887
+  },
+  "threshold": {
+    "threshold": 0.7426616657429362,
+    "n_validation_negatives": 800,
+    "allowed_false_positives": 8,
+    "actual_false_positives": 8,
+    "target_empirical_validation_fpr": 0.01,
+    "scope": "Negative-only validation order statistic, ties excluded. Not a population FPR guarantee or a test-set ROC threshold."
+  },
+  "test_used_for_selection": false,
+  "model_sha256": "aed36b2fb07b1084d9957677004e8fbfe0c1f14d534c2febb575ff5dab079145"
+}

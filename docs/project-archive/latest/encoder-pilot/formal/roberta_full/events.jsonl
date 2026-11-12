@@ -1,0 +1,4 @@
+{"event": "epoch_complete", "condition": "roberta_full", "epoch": 1, "validation_macro_f1": 0.8943318132783444, "mean_ce": 0.5597765402844574, "epoch_seconds": 419.79516342900024, "improved": true}
+{"event": "epoch_complete", "condition": "roberta_full", "epoch": 2, "validation_macro_f1": 0.8876575120176605, "mean_ce": 0.16442311480305255, "epoch_seconds": 410.0971617289997, "improved": false}
+{"event": "epoch_complete", "condition": "roberta_full", "epoch": 3, "validation_macro_f1": 0.9133116530848936, "mean_ce": 0.07729422899794271, "epoch_seconds": 418.6559349380004, "improved": true}
+{"event": "epoch_complete", "condition": "roberta_full", "epoch": 4, "validation_macro_f1": 0.9147508245162113, "mean_ce": 0.03164755413848061, "epoch_seconds": 419.786900778, "improved": true}

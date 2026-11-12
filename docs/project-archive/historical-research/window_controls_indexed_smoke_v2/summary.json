@@ -1,0 +1,102 @@
+{
+  "text": {
+    "status": "passed",
+    "condition": "text",
+    "training_only_smoke": true,
+    "test_evaluated": false,
+    "finite_gradients": true,
+    "classifier_updated": true,
+    "last_encoder_updated": true,
+    "frozen_embeddings_unchanged": true,
+    "parameters": {
+      "total": 125239300,
+      "trainable": 7681540
+    },
+    "initial_classifier_sha256": "8c65fd52de2343539bda90996721bbfec845639c91f8b87dc61626408757aef7",
+    "initial_model_sha256": "44c641afa68a43013e0c81d7cd215479d8ca25bf96b628e28ef3aba865d8ebaa",
+    "batch_token_sha256": [
+      "ace960367b8a2f4f72d59d712084361c976010d87941f73f70f0a35199648030"
+    ],
+    "elapsed_seconds": 2.86334799999986,
+    "packages": {
+      "torch": "2.7.0",
+      "transformers": "4.46.3",
+      "torch-geometric": "2.6.1"
+    }
+  },
+  "graph": {
+    "status": "passed",
+    "condition": "graph",
+    "training_only_smoke": true,
+    "test_evaluated": false,
+    "finite_gradients": true,
+    "classifier_updated": true,
+    "last_encoder_updated": true,
+    "frozen_embeddings_unchanged": true,
+    "parameters": {
+      "total": 128617148,
+      "trainable": 11059388
+    },
+    "initial_classifier_sha256": "ab4755b152350fd00ba1741fc1e06ead71193ad34cd3ae0d13c24806f65cd84b",
+    "initial_model_sha256": "bee3e1b85e01a4aa7ba5116b4d543eccd0948133defabc7ab2668b0daff61f81",
+    "batch_token_sha256": [
+      "ace960367b8a2f4f72d59d712084361c976010d87941f73f70f0a35199648030"
+    ],
+    "elapsed_seconds": 3.723271875000137,
+    "packages": {
+      "torch": "2.7.0",
+      "transformers": "4.46.3",
+      "torch-geometric": "2.6.1"
+    }
+  },
+  "shuffled": {
+    "status": "passed",
+    "condition": "shuffled",
+    "training_only_smoke": true,
+    "test_evaluated": false,
+    "finite_gradients": true,
+    "classifier_updated": true,
+    "last_encoder_updated": true,
+    "frozen_embeddings_unchanged": true,
+    "parameters": {
+      "total": 128617148,
+      "trainable": 11059388
+    },
+    "initial_classifier_sha256": "ab4755b152350fd00ba1741fc1e06ead71193ad34cd3ae0d13c24806f65cd84b",
+    "initial_model_sha256": "bee3e1b85e01a4aa7ba5116b4d543eccd0948133defabc7ab2668b0daff61f81",
+    "batch_token_sha256": [
+      "ace960367b8a2f4f72d59d712084361c976010d87941f73f70f0a35199648030"
+    ],
+    "elapsed_seconds": 3.7043393750000178,
+    "packages": {
+      "torch": "2.7.0",
+      "transformers": "4.46.3",
+      "torch-geometric": "2.6.1"
+    }
+  },
+  "edu": {
+    "status": "passed",
+    "condition": "edu",
+    "training_only_smoke": true,
+    "test_evaluated": false,
+    "finite_gradients": true,
+    "classifier_updated": true,
+    "last_encoder_updated": true,
+    "frozen_embeddings_unchanged": true,
+    "parameters": {
+      "total": 125305092,
+      "trainable": 7747332
+    },
+    "initial_classifier_sha256": "33b2f2f76c47a5e651b1ea7fa4ad3cd4773345f383fc5cd3f936be9ed979d601",
+    "initial_model_sha256": "eb795301997ceaf9942f91f908972388a1912c8d3df573ad642c278c30bf64f8",
+    "batch_token_sha256": [
+      "ace960367b8a2f4f72d59d712084361c976010d87941f73f70f0a35199648030"
+    ],
+    "elapsed_seconds": 2.8976121670002613,
+    "packages": {
+      "torch": "2.7.0",
+      "transformers": "4.46.3",
+      "torch-geometric": "2.6.1"
+    }
+  }
+}
