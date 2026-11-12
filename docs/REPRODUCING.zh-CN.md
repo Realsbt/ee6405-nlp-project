@@ -1,6 +1,6 @@
 # Linux / Windows WSL2 复现指南
 
-[English](REPRODUCING.md) | **简体中文** | [项目概况](../README.zh-CN.md)
+[English](REPRODUCING.md) | **简体中文** | [项目概况](../README.md#简体中文)
 
 组员不需要复制原机器的 `/data/botao/ee6405-race-validation`。这个约 17 GB 的目录保存数据、权重、环境、缓存和训练记录，并不是第二个代码项目。Git 保存代码与结果证据；模型单独放在私有仓库的 [resources-v1 Release](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/resources-v1)，其他资源从固定版本的原始来源获取。
 
