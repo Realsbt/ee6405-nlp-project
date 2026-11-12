@@ -25,9 +25,10 @@ from torch.utils.data import DataLoader
 from transformers import get_linear_schedule_with_warmup
 
 from experiments.common import DATA_ROOT, DOMAINS, LABELS, classification_metrics, file_hash, write_json, write_jsonl
+from experiments.ablation import condition_name, resolve_config
 from experiments.neural import (BACKBONE, PROJECT_ROOT, RUN_ROOT, BalancedBatchSampler, TextDataset,
                                 balanced_smoke_records, build_model, collate_batch, import_upstream,
-                                load_records, resolve_use_supcon, tokenizer_local)
+                                load_records, tokenizer_local)
 
 
 STOP_REQUESTED = False
@@ -75,26 +76,24 @@ def main():
     global RUN_OUTPUT
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=Path("experiments/configs/neural_v1.json"))
-    parser.add_argument("--model-type", choices=["roberta", "race", "race_no_supcon"], default="roberta")
-    supcon = parser.add_mutually_exclusive_group()
-    supcon.add_argument("--use-supcon", dest="use_supcon", action="store_true",
-                        help="Enable supervised contrastive loss for any model architecture")
-    supcon.add_argument("--no-supcon", dest="use_supcon", action="store_false",
-                        help="Disable supervised contrastive loss for any model architecture")
-    parser.set_defaults(use_supcon=None)
-    parser.add_argument("--seed", type=int, default=3407)
+    parser.add_argument("--model-type", choices=["roberta", "race", "race_no_supcon"],
+                        help="Architecture override; loss is independently read from JSON or --[no-]supcon")
+    parser.add_argument("--supcon", action=argparse.BooleanOptionalAction, default=None,
+                        help="Override use_supcon independently of the architecture")
+    parser.add_argument("--seed", type=int, help="Override the JSON training seed")
     parser.add_argument("--run-name", type=run_name,
                         help="Alternative output name; existing runs are preserved; smoke runs add a smoke_ prefix")
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
-    config = json.loads(args.config.read_text())
-    config["architecture"]["backbone_model_path"] = str(BACKBONE)
-    config.update(model_type=args.model_type, seed=args.seed,
-                  use_supcon=resolve_use_supcon(args.model_type, config.get("use_supcon", False), args.use_supcon))
+    try:
+        config = resolve_config(json.loads(args.config.read_text()), args.model_type, args.seed, args.supcon)
+    except ValueError as error:
+        parser.error(str(error))
+    seed = config["seed"]
     if args.smoke:
         config.update(max_epochs=1, early_stopping_patience=1)
-    run_id = ("smoke_" if args.smoke else "") + (args.run_name or f"{args.model_type}_s{args.seed}")
+    run_id = ("smoke_" if args.smoke else "") + (args.run_name or f"{condition_name(config)}_s{seed}")
     output = RUN_ROOT / run_id
     report_dir = PROJECT_ROOT / "experiments/reports" / run_id
     if not args.resume and (output.exists() or report_dir.exists()):
@@ -115,8 +114,9 @@ def main():
         else:
             raise RuntimeError(f"Recorded process {prior['pid']} is still alive; inspect it before resuming")
     RUN_OUTPUT = output
-    source_files = [Path(__file__), PROJECT_ROOT / "experiments/neural.py", PROJECT_ROOT / "experiments/common.py"]
-    if args.model_type != "roberta":
+    source_files = [Path(__file__), PROJECT_ROOT / "experiments/neural.py", PROJECT_ROOT / "experiments/common.py",
+                    PROJECT_ROOT / "experiments/ablation.py", PROJECT_ROOT / "experiments/paths.py"]
+    if config["model_type"] != "roberta":
         source_files.append(PROJECT_ROOT / "experiments/graph_data.py")
     source_hashes = {}
     for path in source_files:
@@ -131,10 +131,10 @@ def main():
             shutil.copy2(path, destination)
     assert torch.cuda.is_available() and torch.cuda.is_bf16_supported()
     torch.set_num_threads(4)
-    random.seed(args.seed)
-    np.random.seed(args.seed)
-    torch.manual_seed(args.seed)
-    torch.cuda.manual_seed_all(args.seed)
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
     signal.signal(signal.SIGTERM, stop_handler)
     signal.signal(signal.SIGINT, stop_handler)
     status = {"status": "running", "run_id": run_id, "pid": os.getpid(), "started_utc": datetime.datetime.now(datetime.timezone.utc).isoformat()}
@@ -152,13 +152,13 @@ def main():
         train_records = balanced_smoke_records(train_records, 8)
         val_records = balanced_smoke_records(val_records, 2)
     metadata = None
-    if args.model_type == "roberta":
+    if config["model_type"] == "roberta":
         train_data, val_data = TextDataset(train_records, tokenizer), TextDataset(val_records, tokenizer)
     else:
         from experiments.graph_data import GraphDataset
         train_data, val_data = GraphDataset("train", train_records), GraphDataset("val", val_records)
         metadata = train_data.metadata
-    sampler = BalancedBatchSampler(train_data.labels, config["batch_size"], args.seed)
+    sampler = BalancedBatchSampler(train_data.labels, config["batch_size"], seed)
     loader = DataLoader(train_data, batch_sampler=sampler, collate_fn=collate_batch, num_workers=0)
     model = build_model(config, metadata).cuda()
     trainable = [(name, parameter) for name, parameter in model.named_parameters() if parameter.requires_grad]
@@ -196,7 +196,7 @@ def main():
         model.train()
         sampler.epoch = epoch
         epoch_started = time.perf_counter()
-        running_loss = 0.0
+        running_loss = running_ce = running_supcon = 0.0
         for step, batch in enumerate(loader):
             optimizer.zero_grad(set_to_none=True)
             with torch.autocast("cuda", dtype=torch.bfloat16):
@@ -204,8 +204,10 @@ def main():
                 labels = batch["labels"].cuda()
                 loss_ce = F.cross_entropy(prediction["logits"].float(), labels)
                 loss = loss_ce
+                loss_supcon = loss_ce.new_zeros(())
                 if config["use_supcon"]:
-                    loss = loss + config["supcon_weight"] * criterion_supcon(F.normalize(prediction["features"].float(), dim=1), labels)
+                    loss_supcon = criterion_supcon(F.normalize(prediction["features"].float(), dim=1), labels)
+                    loss = loss + config["supcon_weight"] * loss_supcon
             if not torch.isfinite(loss):
                 raise FloatingPointError("Non-finite training loss")
             loss.backward()
@@ -218,9 +220,12 @@ def main():
             scheduler.step()
             global_step += 1
             running_loss += float(loss.detach())
+            running_ce += float(loss_ce.detach())
+            running_supcon += float(loss_supcon.detach())
             if step % 50 == 0 or step == len(loader) - 1:
                 event("train_step", epoch=epoch + 1, batch=step + 1, batches=len(loader), global_step=global_step,
-                      loss=float(loss.detach()), gradient_norm=float(gradient_norm), learning_rate=scheduler.get_last_lr()[0])
+                      loss=float(loss.detach()), loss_ce=float(loss_ce.detach()), loss_supcon=float(loss_supcon.detach()),
+                      gradient_norm=float(gradient_norm), learning_rate=scheduler.get_last_lr()[0])
             if STOP_REQUESTED:
                 status.update(status="interrupted", last_completed_epoch=epoch, resume_checkpoint=str(output / "last.pt") if (output / "last.pt").exists() else None)
                 write_json(output / "status.json", status)
@@ -242,6 +247,7 @@ def main():
                          "python_rng": random.getstate(), "numpy_rng": np.random.get_state(), "torch_rng": torch.get_rng_state(),
                          "cuda_rng": torch.cuda.get_rng_state_all()})
         event("epoch_complete", epoch=epoch + 1, mean_train_loss=running_loss / len(loader),
+              mean_train_ce=running_ce / len(loader), mean_train_supcon=running_supcon / len(loader),
               fit_seconds=fit_seconds, validation_seconds=eval_seconds, validation=metrics,
               improved=improved, best_epoch=best_epoch, stale_epochs=stale)
         status.update(last_completed_epoch=epoch + 1, best_epoch=best_epoch, best_validation_macro_f1=best_score)
@@ -255,7 +261,8 @@ def main():
         smoke = {"status": "passed", "run_id": run_id, "training_only_smoke": True,
                  "test_partition_loaded": False, "finite_gradients": True, "frozen_layer_unchanged": True,
                  "classifier_updated": True, "peak_cuda_allocated_mib": torch.cuda.max_memory_allocated() / 1024**2,
-                 "validation": metrics, "config": config}
+                 "validation": metrics, "config": config,
+                 "mean_train_ce": running_ce / len(loader), "mean_train_supcon": running_supcon / len(loader)}
         write_json(output / "smoke.json", smoke)
         write_json(report_dir / "smoke.json", smoke)
         status.update(status="smoke_passed")
@@ -270,7 +277,7 @@ def main():
     best = torch.load(output / "best.pt", map_location="cpu", weights_only=True)
     model.load_state_dict(best["model_state_dict"], strict=True)
     test_records = load_records("test")
-    if args.model_type == "roberta":
+    if config["model_type"] == "roberta":
         test_data = TextDataset(test_records, tokenizer)
     else:
         from experiments.graph_data import GraphDataset

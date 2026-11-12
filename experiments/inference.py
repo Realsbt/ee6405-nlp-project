@@ -4,7 +4,9 @@ import atexit
 import json
 import os
 from pathlib import Path
-import select
+
+from experiments.paths import STORAGE, BACKBONE, UPSTREAM, resolve_recorded_path, parser_python
+import queue
 import subprocess
 import threading
 import time
@@ -18,7 +20,6 @@ from experiments.neural import PROJECT_ROOT, TextDataset, build_model, collate_b
 from experiments.raw_graph import RawGraphDataset
 
 
-STORAGE = DATA_ROOT.parent.parent
 RUN_NAMES = {"tfidf": "tfidf_lr_v1", "roberta": "roberta_s3407", "race": "race_s3407",
              "race_no_supcon": "race_no_supcon_s3407"}
 DISPLAY = {"tfidf": "TF-IDF + Logistic Regression", "roberta": "RoBERTa", "race": "RACE",
@@ -36,6 +37,8 @@ class DetectorService:
         self.models = {}
         self.tokenizer = tokenizer_local()
         self.parser = None
+        self.parser_queue = None
+        self.parser_reader = None
         self.lock = threading.Lock()
         self.runtime = STORAGE / "experiments/demo_runtime"
         self.runtime.mkdir(parents=True, exist_ok=True)
@@ -46,10 +49,22 @@ class DetectorService:
         for name, run in RUN_NAMES.items():
             report = PROJECT_ROOT / "experiments/reports" / run
             ready = (report / "result.json").exists() and (report / "verification.json").exists()
+            reason = "Training or verification pending"
             if ready:
-                ready = json.loads((report / "result.json").read_text())["status"] == "completed"
+                result = json.loads((report / "result.json").read_text())
+                ready = result["status"] == "completed"
                 ready = ready and json.loads((report / "verification.json").read_text())["status"] == "passed"
+                if ready:
+                    required = [resolve_recorded_path(result.get("checkpoint_path", result.get("model_path")))]
+                    if name != "tfidf":
+                        required += [BACKBONE / "model.safetensors", UPSTREAM / "models/flexible_model.py"]
+                    if name.startswith("race"):
+                        required += [STORAGE / "assets/isanlp_rst_local/best_weights.pt",
+                                     STORAGE / "assets/isanlp_rst_local/config.json"]
+                    ready = all(path.is_file() for path in required)
+                    reason = "Model resources not installed" if not ready else ""
             output.append({"id": name, "name": DISPLAY[name], "available": ready,
+                           "availability_reason": reason,
                            "requires_rst": name.startswith("race"), "run_id": run})
         return {"models": output, "device": self.device, "max_characters": 12000,
                 "labels": LABELS, "parser_loaded": self.parser is not None and self.parser.poll() is None}
@@ -58,26 +73,29 @@ class DetectorService:
         if name in self.models:
             return self.models[name], 0.0
         if not any(row["id"] == name and row["available"] for row in self.registry()["models"]):
-            raise ValueError("This model has not completed training and reload verification")
+            raise ValueError("Model unavailable: install its resources and check the verification record")
         started = time.perf_counter()
         run = RUN_NAMES[name]
         report = PROJECT_ROOT / "experiments/reports" / run
         result = json.loads((report / "result.json").read_text())
         if name == "tfidf":
             assert file_hash(result["model_path"]) == result["model_sha256"]
-            model = joblib.load(result["model_path"])
+            model = joblib.load(resolve_recorded_path(result["model_path"]))
         else:
             assert file_hash(result["checkpoint_path"]) == result["checkpoint_sha256"]
-            saved = torch.load(result["checkpoint_path"], map_location="cpu", weights_only=True)
+            saved = torch.load(resolve_recorded_path(result["checkpoint_path"]), map_location="cpu", weights_only=True)
             model = build_model(result["config"], saved.get("metadata")).to(self.device).eval()
             model.load_state_dict(saved["model_state_dict"], strict=True)
         self.models[name] = model
         return model, time.perf_counter() - started
 
     def _parser_message(self, timeout):
-        if self.parser is None or not select.select([self.parser.stdout], [], [], timeout)[0]:
+        if self.parser is None or self.parser_queue is None:
+            raise RuntimeError("RST parser is not running")
+        try:
+            line = self.parser_queue.get(timeout=timeout)
+        except queue.Empty:
             raise TimeoutError("RST parser response timed out; inspect the local parser log")
-        line = self.parser.stdout.readline()
         if not line:
             raise RuntimeError("RST parser stopped; inspect the local parser log")
         message = json.loads(line)
@@ -92,10 +110,20 @@ class DetectorService:
             environment = {**os.environ, "HF_HOME": str(STORAGE / "cache/huggingface"),
                            "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1", "TOKENIZERS_PARALLELISM": "false",
                            "PYTHONDONTWRITEBYTECODE": "1", "OMP_NUM_THREADS": "2", "OPENBLAS_NUM_THREADS": "2"}
-            self.parser = subprocess.Popen([str(STORAGE / ".venv-rst/bin/python"), "-u", "-m", "experiments.rst_service"],
+            self.parser = subprocess.Popen([parser_python(), "-u", "-m", "experiments.rst_service"],
                                            cwd=PROJECT_ROOT, env=environment, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                           stderr=log, text=True, bufsize=1)
+                                           stderr=log, text=True, encoding="utf-8", bufsize=1)
             log.close()
+            self.parser_queue = queue.Queue()
+            parser_queue = self.parser_queue
+            def read_parser_output():
+                try:
+                    for line in self.parser.stdout:
+                        parser_queue.put(line)
+                finally:
+                    parser_queue.put(None)
+            self.parser_reader = threading.Thread(target=read_parser_output, daemon=True)
+            self.parser_reader.start()
             try:
                 startup = self._parser_message(180)
                 assert startup["status"] == "ready"
@@ -113,7 +141,7 @@ class DetectorService:
 
     def predict(self, text, name):
         if not isinstance(text, str) or not text.strip() or len(text) > 12000:
-            raise ValueError("请输入非空英文文本，最多 12000 个字符。")
+            raise ValueError("Enter non-empty English text, up to 12,000 characters.")
         if name not in RUN_NAMES:
             raise ValueError("Unknown model")
         with self.lock:
@@ -123,6 +151,9 @@ class DetectorService:
             end = max((end for start, end in encoded["offset_mapping"] if end > start), default=0)
             if end == 0:
                 raise ValueError("The input has no usable text tokens")
+            # TF-IDF has no position embeddings, so the 512-token window is a
+            # transformer limit that does not apply to it. It reads the whole text.
+            lexical_end = len(text) if name == "tfidf" else end
             record = {"item_id": "interactive", "article": text, "label_id": -1}
             parsed, startup = None, None
             if name.startswith("race"):
@@ -135,7 +166,7 @@ class DetectorService:
                 torch.cuda.synchronize()
             forward_started = time.perf_counter()
             if name == "tfidf":
-                scores = model.predict_proba([text[:end]])[0]
+                scores = model.predict_proba([text[:lexical_end]])[0]
             else:
                 with torch.inference_mode():
                     logits = model(collate_batch([dataset[0]]))["logits"].float()
@@ -148,7 +179,8 @@ class DetectorService:
             result = {"model": name, "run_id": RUN_NAMES[name], "prediction": LABELS[int(np.argmax(scores))],
                       "scores": dict(zip(LABELS, map(float, scores))), "ai_creator_score": float(scores[2] + scores[3]),
                       "input": {"characters": len(text), "lexical_tokens_with_specials": len(encoded["input_ids"]),
-                                "lexical_covered_characters": end, "lexical_truncated": end < len(text.rstrip()),
+                                "lexical_covered_characters": lexical_end, "lexical_truncated": lexical_end < len(text.rstrip()),
+                                "lexical_window": "full_text" if name == "tfidf" else "512_tokens",
                                 "rst_scope": "full document" if parsed else None, "edu_count": parsed["edus"] if parsed else None},
                       "timing": {"end_to_end_seconds": total_seconds, "detector_model_load_seconds": loading_seconds,
                                  "detector_forward_seconds": forward_seconds,
@@ -169,3 +201,5 @@ class DetectorService:
                 self.parser.kill()
                 self.parser.wait()
         self.parser = None
+        self.parser_queue = None
+        self.parser_reader = None

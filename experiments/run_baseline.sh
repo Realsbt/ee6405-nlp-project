@@ -11,11 +11,12 @@ export OPENBLAS_NUM_THREADS=4
 export OMP_NUM_THREADS=4
 export MKL_NUM_THREADS=4
 export PYTHONDONTWRITEBYTECODE=1
-BASELINE_PYTHON=/data/botao/ee6405-race-validation/.venv/bin/python
+source experiments/runtime_env.sh
+BASELINE_PYTHON="$EE6405_PYTHON"
 BASELINE_OUTPUT="experiments/reports/$BASELINE_ID"
 if [[ ! -f "$BASELINE_OUTPUT/result.json" ]]; then
     "$BASELINE_PYTHON" -u -m experiments.train_tfidf \
         --output "$BASELINE_OUTPUT" \
-        --model "/data/botao/ee6405-race-validation/experiments/models/$BASELINE_ID.joblib"
+        --model "$EE6405_STORAGE/experiments/models/$BASELINE_ID.joblib"
 fi
 "$BASELINE_PYTHON" -m experiments.verify_tfidf --output "$BASELINE_OUTPUT"

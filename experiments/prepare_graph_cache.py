@@ -4,11 +4,14 @@ The source RST trees cover the complete article, while lexical token features us
 the first 512 tokens. That information difference is retained and reported.
 """
 
+import argparse
 from collections import Counter
 import json
 from pathlib import Path
 
-from experiments.common import ASSETS_ROOT, DATA_ROOT, LABELS, file_hash, write_json
+from experiments.paths import BACKBONE, resolve_recorded_path
+
+from experiments.common import DATA_ROOT, LABELS, file_hash, write_json
 from experiments.neural import PROJECT_ROOT, UPSTREAM, import_upstream, load_records, tokenizer_local
 
 
@@ -16,6 +19,10 @@ CACHE_ROOT = DATA_ROOT / "graph_cache_v1"
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--report', type=Path, default=PROJECT_ROOT / 'experiments/reports/graph_cache_v1.json',
+                        help='Use a resource-directory path to preserve archived repository evidence')
+    args = parser.parse_args()
     import_upstream()
     from utils.flexible_dataset import FlexibleGraphDataset
     if CACHE_ROOT.exists():
@@ -26,7 +33,7 @@ def main():
     expected = {row["item_id"]: (split, row) for split, rows in records.items() for row in rows}
     assert len(expected) == sum(map(len, records.values()))
     processor = object.__new__(FlexibleGraphDataset)
-    processor.config = {"backbone_model_path": str(ASSETS_ROOT / "roberta-base"), "max_seq_length": 512}
+    processor.config = {"backbone_model_path": str(BACKBONE), "max_seq_length": 512}
     processor.tokenizer = tokenizer_local()
     handles = {split: (temporary / f"{split}.jsonl").open("wb") for split in records}
     indices = {split: {} for split in records}
@@ -37,7 +44,7 @@ def main():
         processed = 0
         for source in source_files:
             assert file_hash(source["path"]) == source["sha256"]
-            with Path(source["path"]).open() as stream:
+            with resolve_recorded_path(source["path"]).open() as stream:
                 for line in stream:
                     raw = json.loads(line)
                     match = expected.get(raw["item_id"])
@@ -91,14 +98,15 @@ def main():
         "status": "completed", "data_protocol_sha256": file_hash(DATA_ROOT / "protocol.json"),
         "counts": {split: dict(values) for split, values in counts.items()},
         "relation_counts": dict(relation_counts), "relation_types": len(names), "edge_types": len(edge_types),
-        "source_code_sha256": {str(path.relative_to(PROJECT_ROOT)): file_hash(path) for path in
+        "source_code_sha256": {(str(path.relative_to(PROJECT_ROOT)) if path.is_relative_to(PROJECT_ROOT)
+                                else 'upstream/RACE/' + str(path.relative_to(UPSTREAM))): file_hash(path) for path in
                                (Path(__file__), UPSTREAM / "utils/flexible_dataset.py")},
         "cache_file_sha256": {split: file_hash(temporary / f"{split}.jsonl") for split in records},
         "information_boundary": "Original full-article RST and first-512-token lexical features. Hidden EDUs remain as structure; compare untruncated subsets before attributing gains purely to graph modeling.",
     }
     write_json(temporary / "manifest.json", report)
     temporary.rename(CACHE_ROOT)
-    write_json(PROJECT_ROOT / "experiments/reports/graph_cache_v1.json", report)
+    write_json(args.report, report)
     print(json.dumps({"status": report["status"], "counts": report["counts"]}, indent=2), flush=True)
 
 

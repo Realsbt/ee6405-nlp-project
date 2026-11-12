@@ -3,6 +3,8 @@
 import argparse
 import json
 from pathlib import Path
+
+from experiments.paths import resolve_recorded_path
 import time
 
 import joblib
@@ -44,7 +46,7 @@ def main():
     started = time.perf_counter()
     if args.run.startswith("tfidf"):
         assert file_hash(trained["model_path"]) == trained["model_sha256"]
-        model = joblib.load(trained["model_path"])
+        model = joblib.load(resolve_recorded_path(trained["model_path"]))
         with threadpool_limits(limits=4):
             probabilities = model.predict_proba([r["model_text"] for r in records])
         detector_hash = trained["model_sha256"]
@@ -55,7 +57,7 @@ def main():
         assert (report_dir / "verification.json").exists(), "Reload verification must pass before auxiliary evaluation"
         torch.set_num_threads(4)
         assert file_hash(trained["checkpoint_path"]) == trained["checkpoint_sha256"]
-        checkpoint = torch.load(trained["checkpoint_path"], map_location="cpu", weights_only=True)
+        checkpoint = torch.load(resolve_recorded_path(trained["checkpoint_path"]), map_location="cpu", weights_only=True)
         data_started = time.perf_counter()
         if trained["config"]["model_type"] == "roberta":
             dataset = TextDataset(records, tokenizer_local())

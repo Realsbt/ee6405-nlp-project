@@ -10,6 +10,8 @@ from collections import Counter, defaultdict
 from itertools import combinations
 import json
 from pathlib import Path
+
+from experiments.paths import ASSETS, BACKBONE
 import re
 import unicodedata
 import hashlib
@@ -18,7 +20,7 @@ import numpy as np
 from sklearn.model_selection import StratifiedGroupKFold
 from transformers import AutoTokenizer
 
-from experiments.common import ASSETS_ROOT, DATA_ROOT, DOMAINS, LABELS, file_hash, write_json, write_jsonl
+from experiments.common import DATA_ROOT, DOMAINS, LABELS, file_hash, write_json, write_jsonl
 
 
 def text_hash(text):
@@ -134,7 +136,7 @@ def describe(rows):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, default=ASSETS_ROOT / "hart_official")
+    parser.add_argument("--source", type=Path, default=ASSETS / "hart_official")
     parser.add_argument("--output", type=Path, default=DATA_ROOT)
     parser.add_argument("--report", type=Path, default=Path("experiments/reports/data_v1.json"))
     args = parser.parse_args()
@@ -147,7 +149,7 @@ def main():
     original = {split: [r for r in raw if r["original_split"] == split] for split in ("train", "val", "test")}
     retained, exclusions = clean_and_group(raw)
     partitions = make_partitions(retained)
-    tokenizer_path = ASSETS_ROOT / "roberta-base"
+    tokenizer_path = BACKBONE
     tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path), local_files_only=True)
     for rows in partitions.values():
         for start in range(0, len(rows), 128):

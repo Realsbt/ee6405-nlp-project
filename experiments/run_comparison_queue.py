@@ -20,9 +20,10 @@ try:
 except ImportError:
     fcntl = None
 
+from experiments.paths import STORAGE
+
 
 ROOT = Path(__file__).resolve().parents[1]
-STORAGE = Path(os.environ.get("EE6405_STORAGE", ROOT))
 RUNS = STORAGE / "experiments/neural_runs"
 REPORTS = ROOT / "experiments/reports"
 QUEUE = STORAGE / "experiments/comparison_queue_v1"

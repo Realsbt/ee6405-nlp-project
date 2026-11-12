@@ -1,0 +1,143 @@
+{
+  "status": "passed_with_scope_limits",
+  "validated_utc": "2026-11-06T08:45:02.545258+00:00",
+  "scope": "Original eight-run resource bundle: Linux CPU installation and resource relocation.",
+  "environment": {
+    "platform": "Linux x86_64",
+    "python": "3.11.15",
+    "packages": {
+      "torch": "2.7.0+cpu",
+      "torch-geometric": "2.6.1",
+      "transformers": "4.46.3",
+      "scikit-learn": "1.6.1",
+      "isanlp-rst": "3.2.2"
+    },
+    "isolated_venv": true,
+    "inherits_system_site_packages": false,
+    "separate_code_checkout": true,
+    "separate_resource_directory": true,
+    "existing_python_3_11_interpreter_used": true,
+    "fresh_operating_system": false
+  },
+  "manifest_sha256": "f176dd4dcd34e6c4ea78950d15d5577c3d5601deb1650c560e16652aa8fb6209",
+  "checks": {
+    "all_manifest_files": {
+      "count": 26,
+      "size_and_sha256_checked": true,
+      "source": "Verified local copies; no model/data symlinks to the original store."
+    },
+    "frozen_partition_sha256": {
+      "hart_train": "3cd1539d26189ab1ca1c7e0efc5e34d92265f5d5a9c65783b85af28f41fa9c2b",
+      "hart_val": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8",
+      "hart_test": "1814009b21bad70fbbc83d4b5b952469f19fde009fe8d979ac9c0c71491f542a",
+      "hc3_test": "d7a046f3391353a68b0aa7c85d5aff402182ac01d976876708e00569c42820bb"
+    },
+    "hc3_protocol_hash_matches_archived_evaluation": true,
+    "rebuilt_graph_cache_hashes_match_archived": {
+      "train": "8038e725f170dd8df14419c8323b1ab6e01f148703e819cc3fcbe098f08fb0fe",
+      "val": "dba9258febb11dc4d626a2a01768c2560e3c894cc2c93044d9bec28e637c6757",
+      "test": "fa199487dcbf9c2886064b79092bce7c9a7d72e61b93472a5beb044ff35f888a"
+    },
+    "graph_forward_equivalence": {
+      "status": "passed",
+      "samples": 4,
+      "split": "train only",
+      "cached_fields_equal_official_processing": true,
+      "four_class_output_shape": [
+        4,
+        4
+      ],
+      "max_abs_logit_difference": 0.0,
+      "weights": "base pretrained RoBERTa plus randomly initialized RACE layers; no author fine-tuned checkpoint",
+      "device": "cpu",
+      "training_performed": false
+    },
+    "tfidf_complete_test_replay": {
+      "status": "passed",
+      "retained_records": 15984,
+      "cross_split_id_group_normalized_text_and_block_overlap": 0,
+      "reloaded_model_prediction_count": 3194,
+      "max_probability_difference": 0.0,
+      "metrics_match_saved_results": true,
+      "feature_count": 50000,
+      "input_field": "model_text only; IDs, labels, domain and model_name excluded from features"
+    },
+    "cpu_models": {
+      "tfidf": {
+        "status": "passed",
+        "prediction": "human_ai_polished",
+        "probability_sum": 1.0,
+        "rst_edus": null
+      },
+      "roberta": {
+        "status": "passed",
+        "prediction": "ai_humanized",
+        "probability_sum": 0.9999999966239557,
+        "rst_edus": null
+      },
+      "race": {
+        "status": "passed",
+        "prediction": "ai_humanized",
+        "probability_sum": 0.9999999739229679,
+        "rst_edus": 6
+      },
+      "race_no_supcon": {
+        "status": "passed",
+        "prediction": "ai_humanized",
+        "probability_sum": 1.000000058207661,
+        "rst_edus": 6
+      }
+    },
+    "http_demo": {
+      "status": "passed",
+      "models_available": 4,
+      "html_language": "en",
+      "actual_race_request": true,
+      "rst_edus": 2,
+      "device": "cpu"
+    },
+    "existing_unit_tests": {
+      "passed": 9,
+      "modules": [
+        "experiments.test_protocol",
+        "experiments.test_neural_data",
+        "experiments.test_rst_alignment"
+      ]
+    },
+    "saved_prediction_check": {
+      "status": "passed",
+      "hart_runs": 8,
+      "hc3_runs": 4
+    },
+    "online_download_spot_checks": [
+      {
+        "source": "Hugging Face",
+        "file": "assets/roberta-base/config.json",
+        "sha256_matches": true
+      },
+      {
+        "source": "Google Drive",
+        "file": "assets/hart_official/val_graph.jsonl",
+        "sha256_matches": true
+      },
+      {
+        "source": "private GitHub Release",
+        "file": "experiments/models/tfidf_lr_v1.joblib",
+        "sha256_matches": true
+      }
+    ],
+    "uploaded_release_assets": {
+      "tag": "resources-v1",
+      "count": 8,
+      "github_asset_digests_and_sizes_match_manifest": true
+    }
+  },
+  "not_validated": [
+    "Actual WSL2 execution",
+    "Fresh CUDA environment installation",
+    "New complete neural training campaign",
+    "Full neural held-out replay in this fresh CPU environment",
+    "Redownload of every large external resource",
+    "Original-host historical event/source-snapshot gate from this compact release"
+  ]
+}

@@ -2,16 +2,6 @@
   "status": "passed",
   "checks": {
     "tfidf_lr_v1": "completed and reload-verified; frozen protocol and current checkpoint hash match",
-    "race_no_supcon_s3407_recipe_and_selection": {
-      "initialization": "same base pretrained weights",
-      "recipe": "exact fixed comparison configuration",
-      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
-      "completed_epochs": 13,
-      "selected_epoch": 8,
-      "source_snapshot_hashes_match": true,
-      "full_test_reload_samples": 3194
-    },
-    "race_no_supcon_s3407": "completed and reload-verified; frozen protocol and current checkpoint hash match",
     "roberta_s3407_recipe_and_selection": {
       "initialization": "same base pretrained weights",
       "recipe": "exact fixed comparison configuration",
@@ -42,6 +32,66 @@
       "full_test_reload_samples": 3194
     },
     "roberta_s2026": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "roberta_supcon_s3407_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 14,
+      "selected_epoch": 9,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "roberta_supcon_s3407": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "roberta_supcon_s42_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 13,
+      "selected_epoch": 8,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "roberta_supcon_s42": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "roberta_supcon_s2026_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 15,
+      "selected_epoch": 10,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "roberta_supcon_s2026": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "race_no_supcon_s3407_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 13,
+      "selected_epoch": 8,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "race_no_supcon_s3407": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "race_no_supcon_s42_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 18,
+      "selected_epoch": 13,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "race_no_supcon_s42": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "race_no_supcon_s2026_recipe_and_selection": {
+      "initialization": "same base pretrained weights",
+      "recipe": "exact fixed comparison configuration",
+      "selection": "maximum recorded validation Macro-F1; held-out test not a selection input",
+      "completed_epochs": 11,
+      "selected_epoch": 6,
+      "source_snapshot_hashes_match": true,
+      "full_test_reload_samples": 3194
+    },
+    "race_no_supcon_s2026": "completed and reload-verified; frozen protocol and current checkpoint hash match",
     "race_s3407_recipe_and_selection": {
       "initialization": "same base pretrained weights",
       "recipe": "exact fixed comparison configuration",
@@ -72,6 +122,23 @@
       "full_test_reload_samples": 3194
     },
     "race_s2026": "completed and reload-verified; frozen protocol and current checkpoint hash match",
+    "roberta_s3407_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "roberta_s42_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "roberta_s2026_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "roberta_supcon_s3407_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "roberta_supcon_s42_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "roberta_supcon_s2026_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "race_no_supcon_s3407_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "race_no_supcon_s42_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "race_no_supcon_s2026_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "race_s3407_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "race_s42_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "race_s2026_architecture_parameters": "same parameter counts and trainable layers within architecture",
+    "roberta_supcon_s3407_shared_training_source": "same shared training implementation across the added runs",
+    "roberta_supcon_s42_shared_training_source": "same shared training implementation across the added runs",
+    "roberta_supcon_s2026_shared_training_source": "same shared training implementation across the added runs",
+    "race_no_supcon_s42_shared_training_source": "same shared training implementation across the added runs",
+    "race_no_supcon_s2026_shared_training_source": "same shared training implementation across the added runs",
     "tfidf_lr_v1_hc3": "frozen binary auxiliary evaluation completed",
     "roberta_s3407_hc3": "frozen binary auxiliary evaluation completed",
     "race_s3407_hc3": "frozen binary auxiliary evaluation completed",
@@ -83,6 +150,7 @@
     "released_rst_span_audit.json": "audited_without_data_changes",
     "parser_assets.json": "passed",
     "retraining_entrypoint.json": "passed",
+    "ablation_entrypoint.json": "passed",
     "auxiliary/summary.json": "completed",
     "comparison/case_studies.json": "completed",
     "hc3_rst_aligned_span_audit.json": "passed",
@@ -90,5 +158,5 @@
   },
   "missing_or_invalid": [],
   "scope": "Local implementation/evaluation/Demo/documentation gate. Human narration, signatures and course submission remain user tasks.",
-  "verification_script_sha256": "388b8e415e33907ff688eb8166e70b7e40e07f813d54734966570496bf3c8ed8"
+  "verification_script_sha256": "ca9ecc728d9cb0a1e2707c512ecd55058f06924b5bdc3da9b3655d07a04ffdbb"
 }

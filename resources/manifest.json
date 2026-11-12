@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "upstream": {
+    "repository": "https://github.com/ICTMCG/RACE.git",
+    "commit": "61ce528430a8bb84fd1bfb3285ee34827182ef59"
+  },
+  "files": [
+    {
+      "path": "assets/roberta-base/config.json",
+      "group": "backbone",
+      "bytes": 481,
+      "sha256": "ef0185e2aae6e06c5f105a285006952c340e20c7dbf43c86ec82601b13fc45e9",
+      "source": "huggingface",
+      "repo": "FacebookAI/roberta-base",
+      "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+      "repo_type": "model",
+      "filename": "config.json"
+    },
+    {
+      "path": "assets/roberta-base/tokenizer_config.json",
+      "group": "backbone",
+      "bytes": 25,
+      "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+      "source": "huggingface",
+      "repo": "FacebookAI/roberta-base",
+      "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+      "repo_type": "model",
+      "filename": "tokenizer_config.json"
+    },
+    {
+      "path": "assets/roberta-base/tokenizer.json",
+      "group": "backbone",
+      "bytes": 1355863,
+      "sha256": "847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e",
+      "source": "huggingface",
+      "repo": "FacebookAI/roberta-base",
+      "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+      "repo_type": "model",
+      "filename": "tokenizer.json"
+    },
+    {
+      "path": "assets/roberta-base/vocab.json",
+      "group": "backbone",
+      "bytes": 898823,
+      "sha256": "9e7f63c2d15d666b52e21d250d2e513b87c9b713cfa6987a82ed89e5e6e50655",
+      "source": "huggingface",
+      "repo": "FacebookAI/roberta-base",
+      "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+      "repo_type": "model",
+      "filename": "vocab.json"
+    },
+    {
+      "path": "assets/roberta-base/merges.txt",
+      "group": "backbone",
+      "bytes": 456318,
+      "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+      "source": "huggingface",
+      "repo": "FacebookAI/roberta-base",
+      "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+      "repo_type": "model",
+      "filename": "merges.txt"
+    },
+    {
+      "path": "assets/roberta-base/model.safetensors",
+      "group": "backbone",
+      "bytes": 498818054,
+      "sha256": "5bde1d28afb363d0103324efeb5afc8b2b397fe5e04beabb9b1ef355255ade81",
+      "source": "huggingface",
+      "repo": "FacebookAI/roberta-base",
+      "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+      "repo_type": "model",
+      "filename": "model.safetensors"
+    },
+    {
+      "path": "assets/isanlp_rst_rstdt/config.json",
+      "group": "parser",
+      "bytes": 1088,
+      "sha256": "b1f844b6b39f08023bfbde97c7a3075404c360c2014c5f283b47e8f9db4bea74",
+      "source": "huggingface",
+      "repo": "tchewik/isanlp_rst_v3",
+      "revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a",
+      "repo_type": "model",
+      "filename": "config.json"
+    },
+    {
+      "path": "assets/isanlp_rst_rstdt/relation_table.txt",
+      "group": "parser",
+      "bytes": 576,
+      "sha256": "850c1978c57ef3c59f45ad8a120f635b20953d4fac1f98acaba858a0f61d402c",
+      "source": "huggingface",
+      "repo": "tchewik/isanlp_rst_v3",
+      "revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a",
+      "repo_type": "model",
+      "filename": "relation_table.txt"
+    },
+    {
+      "path": "assets/isanlp_rst_rstdt/best_weights.pt",
+      "group": "parser",
+      "bytes": 2545320602,
+      "sha256": "c4008a42605d6fc2657be72ba1de50977b164f88bbc5f53b62a922f43fff3c32",
+      "source": "huggingface",
+      "repo": "tchewik/isanlp_rst_v3",
+      "revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a",
+      "repo_type": "model",
+      "filename": "best_weights.pt"
+    },
+    {
+      "path": "assets/xlm-roberta-large-config/config.json",
+      "group": "parser",
+      "bytes": 616,
+      "sha256": "ec7c3a99c58a38ebb702a2297f1c4586944e841b5eb29d201ff87e0f9c9abe0e",
+      "source": "huggingface",
+      "repo": "FacebookAI/xlm-roberta-large",
+      "revision": "c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "repo_type": "model",
+      "filename": "config.json"
+    },
+    {
+      "path": "assets/xlm-roberta-large-config/tokenizer_config.json",
+      "group": "parser",
+      "bytes": 25,
+      "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+      "source": "huggingface",
+      "repo": "FacebookAI/xlm-roberta-large",
+      "revision": "c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "repo_type": "model",
+      "filename": "tokenizer_config.json"
+    },
+    {
+      "path": "assets/xlm-roberta-large-config/tokenizer.json",
+      "group": "parser",
+      "bytes": 9096718,
+      "sha256": "a898ea75433890f6610f4e470b8ebeb0c21dce5c8dd61f892eb09eb5919d2e2c",
+      "source": "huggingface",
+      "repo": "FacebookAI/xlm-roberta-large",
+      "revision": "c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "repo_type": "model",
+      "filename": "tokenizer.json"
+    },
+    {
+      "path": "assets/xlm-roberta-large-config/sentencepiece.bpe.model",
+      "group": "parser",
+      "bytes": 5069051,
+      "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+      "source": "huggingface",
+      "repo": "FacebookAI/xlm-roberta-large",
+      "revision": "c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "repo_type": "model",
+      "filename": "sentencepiece.bpe.model"
+    },
+    {
+      "path": "assets/hc3/all.jsonl",
+      "group": "datasets",
+      "bytes": 73722850,
+      "sha256": "ee231f82283d754050a4dc58ecf9331afaf5daea7283c6da0b096ed0fb2774cf",
+      "source": "huggingface",
+      "repo": "Hello-SimpleAI/HC3",
+      "revision": "4d0ff18143b5a7e1b1e79beb540c04549d1e59d3",
+      "repo_type": "dataset",
+      "filename": "all.jsonl"
+    },
+    {
+      "path": "assets/hc3/README.md",
+      "group": "datasets",
+      "bytes": 1487,
+      "sha256": "ce119f7fcd4511acb1d2ac37ddb082238b9a93b2f638c57f8d2c44f381248691",
+      "source": "huggingface",
+      "repo": "Hello-SimpleAI/HC3",
+      "revision": "4d0ff18143b5a7e1b1e79beb540c04549d1e59d3",
+      "repo_type": "dataset",
+      "filename": "README.md"
+    },
+    {
+      "path": "assets/hart_official/train_graph.jsonl",
+      "group": "datasets",
+      "bytes": 463781847,
+      "sha256": "ffedcc941c35c42a636d6e0ff3fe25b9971e2efd1ab88cb7998574d9eea7e9e6",
+      "source": "google-drive",
+      "file_id": "1bKPdOdhW97l2_9H46DwICRKZelg0Y8dW",
+      "url": "https://drive.google.com/file/d/1bKPdOdhW97l2_9H46DwICRKZelg0Y8dW/view"
+    },
+    {
+      "path": "assets/hart_official/val_graph.jsonl",
+      "group": "datasets",
+      "bytes": 66869993,
+      "sha256": "791d635a7a472b9569ac5b9776076b428973eb4f05b1860f2bee1cb9adde9bad",
+      "source": "google-drive",
+      "file_id": "1MBOQYSJy21ny2SA1GR_Yb58MM4nVw_Vn",
+      "url": "https://drive.google.com/file/d/1MBOQYSJy21ny2SA1GR_Yb58MM4nVw_Vn/view"
+    },
+    {
+      "path": "assets/hart_official/test_graph.jsonl",
+      "group": "datasets",
+      "bytes": 130891961,
+      "sha256": "2acaf62ea42359266efd69e6c6023bcf5ec8c544991555bf1285638a560cc51c",
+      "source": "google-drive",
+      "file_id": "1GEpgjVzW8yZZUeEPv9xsBdOjP2KBkON8",
+      "url": "https://drive.google.com/file/d/1GEpgjVzW8yZZUeEPv9xsBdOjP2KBkON8/view"
+    },
+    {
+      "path": "experiments/models/tfidf_lr_v1.joblib",
+      "group": "checkpoint-demo",
+      "bytes": 3613292,
+      "sha256": "7f9886dc472f58ff65cebf1496f849a6a7704e0c704dd112dc2fd2529a5bb2f8",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "tfidf_lr_v1.joblib",
+      "run": "tfidf_lr_v1"
+    },
+    {
+      "path": "experiments/neural_runs/roberta_s3407/best.pt",
+      "group": "checkpoint-demo",
+      "bytes": 501031286,
+      "sha256": "d7eabbcd9a4a085dc23bd93d6d5ac27b73ac6dfe065745547554464397778f7f",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "roberta_s3407-best.pt",
+      "run": "roberta_s3407"
+    },
+    {
+      "path": "experiments/neural_runs/race_s3407/best.pt",
+      "group": "checkpoint-demo",
+      "bytes": 514550389,
+      "sha256": "6797d46f3fb2f84734b0cf9e49d7d566eefc9f97ffa6d0db3219d8aa107098d1",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "race_s3407-best.pt",
+      "run": "race_s3407"
+    },
+    {
+      "path": "experiments/neural_runs/race_no_supcon_s3407/best.pt",
+      "group": "checkpoint-demo",
+      "bytes": 514550389,
+      "sha256": "06d0e7bd2a5ffa19fa49b959498560eafa147e270b361061f069b38809265b27",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "race_no_supcon_s3407-best.pt",
+      "run": "race_no_supcon_s3407"
+    },
+    {
+      "path": "experiments/neural_runs/roberta_s42/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 501031286,
+      "sha256": "bfca16904f499e1f25461cc9c74e41fc80bd851daaf304bb6de9d5644c927371",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "roberta_s42-best.pt",
+      "run": "roberta_s42"
+    },
+    {
+      "path": "experiments/neural_runs/race_s42/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 514550389,
+      "sha256": "6a53f05a849c6ab4fcf4898f2bbf47b4c26d20c75e5b8e63655bc2f3e9cf9bb0",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "race_s42-best.pt",
+      "run": "race_s42"
+    },
+    {
+      "path": "experiments/neural_runs/roberta_s2026/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 501031286,
+      "sha256": "8bd8fcb87f9a18f354eaede827250f1d31b3786ffdba6a1b8373e253c0418766",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "roberta_s2026-best.pt",
+      "run": "roberta_s2026"
+    },
+    {
+      "path": "experiments/neural_runs/race_s2026/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 514550389,
+      "sha256": "304528018c63590034f86d7c1b703accf009636fd8c200afccb81295e9dbcc10",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "race_s2026-best.pt",
+      "run": "race_s2026"
+    },
+    {
+      "path": "experiments/neural_runs/race_no_supcon_s42/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 514550389,
+      "sha256": "d0473c708f0ba21e28661b9e2c47665c2bf7fb06fa8c53707536b56ba1ed7eb9",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "race_no_supcon_s42-best.pt",
+      "run": "race_no_supcon_s42"
+    },
+    {
+      "path": "experiments/neural_runs/race_no_supcon_s2026/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 514550389,
+      "sha256": "a66dd2bd0b7ec7435f2623be39cb8a15c57286e6d6d9ba62d7191165a6c1ff85",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "race_no_supcon_s2026-best.pt",
+      "run": "race_no_supcon_s2026"
+    },
+    {
+      "path": "experiments/neural_runs/roberta_supcon_s3407/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 501031286,
+      "sha256": "30e50814f2e5b9e8271a054a1b3aef724264105b2a17e8a01267b8ae80a8d0c2",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "roberta_supcon_s3407-best.pt",
+      "run": "roberta_supcon_s3407"
+    },
+    {
+      "path": "experiments/neural_runs/roberta_supcon_s42/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 501031286,
+      "sha256": "a06f08fe0977718fa4050e91737472235c161ac1dbb81875635ade24724a52f1",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "roberta_supcon_s42-best.pt",
+      "run": "roberta_supcon_s42"
+    },
+    {
+      "path": "experiments/neural_runs/roberta_supcon_s2026/best.pt",
+      "group": "checkpoint-extra",
+      "bytes": 501031286,
+      "sha256": "c845ae945621044bb8ebbb5e0967605a5b09a91e17d69f763a6e70bdcdc04338",
+      "source": "github-release",
+      "repository": "Realsbt/ee6405-nlp-project",
+      "tag": "resources-v1",
+      "asset": "roberta_supcon_s2026-best.pt",
+      "run": "roberta_supcon_s2026"
+    }
+  ]
+}

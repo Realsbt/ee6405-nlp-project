@@ -10,15 +10,27 @@ import hashlib
 import importlib.metadata
 import json
 from pathlib import Path
-import resource
+
+from experiments.paths import ASSETS, PROJECT_ROOT, UPSTREAM
 import time
 
 from experiments.rst_alignment import exact_tree_alignment
-from experiments.common import ASSETS_ROOT
 
 
-ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ASSETS_ROOT
+ROOT = PROJECT_ROOT
+
+
+def peak_process_rss_mib():
+    """Peak resident set size in MiB, or None where the platform cannot report it.
+
+    The ``resource`` module is POSIX-only (absent on Windows); this worker also
+    runs inside a dedicated parser environment that may be Linux or Windows.
+    """
+    try:
+        import resource
+    except ImportError:
+        return None
+    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
 
 
 def tree_dict(node, text, relation_names):
@@ -90,7 +102,7 @@ def main():
         torch.load = original_load
         PreTrainedModel.resize_token_embeddings = original_resize
     load_seconds = time.perf_counter() - load_started
-    names = {line.split("_")[0] for line in (ROOT / "local_validation/upstream/RACE/utils/relation_table.txt").read_text().splitlines() if line.strip()}
+    names = {line.split("_")[0] for line in (UPSTREAM / "utils/relation_table.txt").read_text().splitlines() if line.strip()}
     relation_names = {name.casefold(): name for name in names}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     timings, edu_counts = [], []
@@ -116,7 +128,7 @@ def main():
     report = {"status": "passed", "records": len(records), "cuda_device": args.cuda_device,
               "model_load_seconds": load_seconds, "parse_seconds": timings, "edu_counts": edu_counts,
               "character_spans_valid_and_ordered": True, "canonical_relation_inventory": sorted(names),
-              "peak_process_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024,
+              "peak_process_rss_mib": peak_process_rss_mib(),
               "output_sha256": hashlib.sha256(args.output.read_bytes()).hexdigest(),
               "parser_revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a",
               "isanlp_git_commit": "2a102e59f9718acc7fe259dd8d83c66d5da39794",

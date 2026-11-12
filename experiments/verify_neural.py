@@ -4,6 +4,8 @@ import argparse
 import json
 from pathlib import Path
 
+from experiments.paths import resolve_recorded_path
+
 import numpy as np
 import torch
 
@@ -15,6 +17,7 @@ from experiments.train_neural import evaluate
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", required=True)
+    parser.add_argument("--report", type=Path, help="Write the new verification separately from archived evidence")
     args = parser.parse_args()
     torch.set_num_threads(4)
     output = RUN_ROOT / args.run
@@ -32,7 +35,7 @@ def main():
         data = GraphDataset("test", records)
         metadata = data.metadata
     model = build_model(result["config"], metadata).cuda().eval()
-    checkpoint = torch.load(result["checkpoint_path"], map_location="cpu", weights_only=True)
+    checkpoint = torch.load(resolve_recorded_path(result["checkpoint_path"]), map_location="cpu", weights_only=True)
     model.load_state_dict(checkpoint["model_state_dict"], strict=True)
     metrics, probabilities, ids, seconds = evaluate(model, data, result["config"]["batch_size"])
     stored = read_jsonl(report_dir / "test_predictions.jsonl")
@@ -47,7 +50,7 @@ def main():
               "same_ids_and_order": True, "predictions_identical": True,
               "max_probability_difference": max_difference, "metrics_match_saved_result": True,
               "evaluation_seconds": seconds, "checkpoint_sha256": result["checkpoint_sha256"]}
-    write_json(report_dir / "verification.json", report)
+    write_json(args.report or report_dir / "verification.json", report)
     print(json.dumps(report, indent=2))
 
 

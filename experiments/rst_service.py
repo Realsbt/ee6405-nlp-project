@@ -2,11 +2,13 @@
 
 from contextlib import redirect_stdout
 import json
-import resource
+import queue
+import threading
 import sys
 import time
 
-from experiments.rst_worker import ASSETS, ROOT, leaves, tree_dict
+from experiments.rst_worker import ASSETS, ROOT, leaves, peak_process_rss_mib, tree_dict
+from experiments.paths import UPSTREAM
 from experiments.rst_alignment import exact_tree_alignment
 
 
@@ -31,7 +33,7 @@ def main():
             parser = Parser(model_dir=str(ASSETS / "isanlp_rst_local"), hf_model_version="rstdt", cuda_device=-1)
         finally:
             torch.load, PreTrainedModel.resize_token_embeddings = load, resize
-    names = {line.split("_")[0] for line in (ROOT / "local_validation/upstream/RACE/utils/relation_table.txt").read_text().splitlines() if line.strip()}
+    names = {line.split("_")[0] for line in (UPSTREAM / "utils/relation_table.txt").read_text().splitlines() if line.strip()}
     names = {name.casefold(): name for name in names}
     print(json.dumps({"status": "ready", "model_load_seconds": time.perf_counter() - started,
                       "device": "cpu", "parser_revision": "5141450ac3eb7decad0b8735fdbf5ec6928ec97a"}), flush=True)
@@ -52,7 +54,7 @@ def main():
             assert all(a["end"] <= b["start"] for a, b in zip(units, units[1:]))
             response = {"status": "ok", "rst_structure": tree, "edus": len(units),
                         "parse_seconds": time.perf_counter() - started,
-                        "peak_process_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024}
+                        "peak_process_rss_mib": peak_process_rss_mib()}
         except Exception as error:
             response = {"status": "error", "error": str(error), "error_type": type(error).__name__}
         print(json.dumps(response, ensure_ascii=False), flush=True)

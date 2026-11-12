@@ -4,10 +4,12 @@ import hashlib
 import json
 from pathlib import Path
 
-from experiments.common import ASSETS_ROOT, file_hash, write_json
+from experiments.paths import ASSETS
+
+from experiments.common import file_hash, write_json
 
 
-ASSETS = ASSETS_ROOT
+
 
 
 def verify_download(root, filename, revision):

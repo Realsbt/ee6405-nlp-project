@@ -4,6 +4,8 @@ from collections import Counter, defaultdict
 import json
 from pathlib import Path
 
+from experiments.paths import resolve_recorded_path
+
 from experiments.common import DATA_ROOT, file_hash, write_json, write_jsonl
 from experiments.neural import PROJECT_ROOT, load_records
 from experiments.rst_worker import leaves
@@ -16,7 +18,7 @@ def main():
     examples, quality = [], []
     for source in protocol["source_files"]:
         assert file_hash(source["path"]) == source["sha256"]
-        for line in Path(source["path"]).open():
+        for line in resolve_recorded_path(source["path"]).open():
             raw = json.loads(line)
             if raw["item_id"] not in records:
                 continue
