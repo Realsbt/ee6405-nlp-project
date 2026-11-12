@@ -48,7 +48,8 @@ Text Lab 是在本机运行的英文 Demo。粘贴英文文本后，选择 TF-ID
 ```mermaid
 flowchart TB
     T["英文正文"] --> V["首 512 tokens 对应文本"]
-    V --> F["TF-IDF＋逻辑回归"]
+    T --> W["全文"]
+    W --> F["TF-IDF＋逻辑回归"]
     V --> B["RoBERTa 编码"]
     B --> C["CLS＋MLP"]
     T --> G["全文 RST／EDU 关系图"]

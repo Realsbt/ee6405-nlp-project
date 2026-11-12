@@ -48,7 +48,8 @@ An independent auxiliary evaluation uses 1,000 human / ChatGPT answers from **HC
 ```mermaid
 flowchart TB
     T["English text"] --> V["Text covered by the first 512 tokens"]
-    V --> F["TF-IDF + logistic regression"]
+    T --> W["Full text"]
+    W --> F["TF-IDF + logistic regression"]
     V --> B["RoBERTa encoder"]
     B --> C["CLS + MLP"]
     T --> G["Full-text RST / EDU relation graph"]
