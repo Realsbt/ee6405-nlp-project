@@ -54,15 +54,19 @@ flowchart TB
     W --> F["TF-IDF＋逻辑回归"]
     V --> B["RoBERTa 编码"]
     B --> C["CLS＋MLP"]
-    T --> G["全文 RST／EDU 关系图"]
+    T --> G["全文 RST 解析"]
+    V --> E["词汇窗口内的 EDU"]
+    G --> E
     B --> R["EDU 池化＋RGCN<br/>Root＋MLP"]
-    G --> R
+    E --> R
     F --> Y["四类分数"]
     C --> Y
     R --> Y
 ```
 
 各模型独立训练；RoBERTa 与 RACE 使用相同基础初始化。HART 使用作者发布的 RST 树，Demo／HC3 使用本机解析器。两种神经架构分别启用或关闭 SupCon；损失开关不改变各自推理结构。
+
+RST 解析覆盖全文，但图中只保留落在 512 token 词汇窗口内的 EDU，因为 EDU 特征来自编码器。一篇 9,000 字符的文档解析出 179 个 EDU，图中保留编码器能看到的 57 个；其余标记为词汇窗口外，而不是静默丢弃。
 
 ## 实验结果
 

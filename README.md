@@ -54,15 +54,19 @@ flowchart TB
     W --> F["TF-IDF + logistic regression"]
     V --> B["RoBERTa encoder"]
     B --> C["CLS + MLP"]
-    T --> G["Full-text RST / EDU relation graph"]
+    T --> G["Full-text RST parse"]
+    V --> E["EDUs inside the token window"]
+    G --> E
     B --> R["EDU pooling + RGCN<br/>Root + MLP"]
-    G --> R
+    E --> R
     F --> Y["Four-class scores"]
     C --> Y
     R --> Y
 ```
 
 Models are trained independently. RoBERTa and RACE use the same base-pretrained initialization. HART uses the released RST trees; the demo and HC3 use the local parser. Each neural architecture is trained both with and without SupCon; changing the objective leaves its inference architecture intact.
+
+The RST parse covers the whole document, but the graph only contains EDUs that fall inside the 512-token lexical window, because EDU features come from the encoder. On a 9,000-character document the parser returns 179 EDUs and the graph keeps the 57 that the encoder can see; the rest are reported as outside the lexical window rather than silently dropped.
 
 ## Results
 
