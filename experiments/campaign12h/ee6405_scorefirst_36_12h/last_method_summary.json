@@ -1,0 +1,22 @@
+{
+  "task_id": "E16_final_deberta_v3_base_s3407",
+  "method": "DeBERTa-v3-base full-encoder four-class CE",
+  "status": "RESOURCE_BLOCKED",
+  "formal_training_started": false,
+  "optimizer_updates": 0,
+  "actual_epochs": 0,
+  "stopped_reason": "model_not_available_locally",
+  "error": "We couldn't connect to 'https://huggingface.co' to load this file, couldn't find it in the cached files and it looks like microsoft/deberta-v3-base is not the path to a directory containing a file named config.json.\nCheckout your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.",
+  "test_partition_loaded": false,
+  "hc3_loaded": false,
+  "new_method_added_to_ranking": false,
+  "config": {
+    "seed": 3407,
+    "max_length": 512,
+    "encoder_lr": 1e-05,
+    "head_lr": 5e-05,
+    "effective_batch": 16,
+    "max_epochs": 4
+  },
+  "record_sha256": "805a8de27e7fcae44766d0ebcdcd1e447df0b49a3f9ded3e29d3287cf0212fb1"
+}

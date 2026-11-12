@@ -1,0 +1,37 @@
+﻿[
+    {
+        "Algorithm":  "SHA256",
+        "Hash":  "47A0253085CF835D3EBCFE8814B2DEFD33057BE64001A2B15029513A494C2814",
+        "Path":  "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\stage_A_20261107_0355\\campaign_state.json"
+    },
+    {
+        "Algorithm":  "SHA256",
+        "Hash":  "084941B795CF3609281BBF3E6F0702693144286EA9C268865FF1D13A0A709953",
+        "Path":  "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\stage_A_20261107_0355\\candidate_lock.json"
+    },
+    {
+        "Algorithm":  "SHA256",
+        "Hash":  "965ABFE952DDB6C31CE6928C0EEB221FDE00FA0338B57B6A6B4B5BAED30366F8",
+        "Path":  "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\stage_A_20261107_0355\\comparison.md"
+    },
+    {
+        "Algorithm":  "SHA256",
+        "Hash":  "34A2FDBC1B6E1E8B297AE088E8515B49BDCA23F4C22430F71BD12C610F22C28E",
+        "Path":  "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\stage_A_20261107_0355\\evidence_no_text.zip"
+    },
+    {
+        "Algorithm":  "SHA256",
+        "Hash":  "347012FCEEEBC172744D0C64E7DD41A2F0163415E94FBBB8FFC7716B9F4BF80A",
+        "Path":  "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\stage_A_20261107_0355\\leaderboard_confirm.json"
+    },
+    {
+        "Algorithm":  "SHA256",
+        "Hash":  "1D52C5F43F65F9A747CD287B1B79E34DD363286A1BB552EFEAD750579D5B11A4",
+        "Path":  "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\stage_A_20261107_0355\\leaderboard_selection.json"
+    },
+    {
+        "Algorithm":  "SHA256",
+        "Hash":  "0E38EB4B4270DADECBE1E27E0F19F1ECFC1CFC6E8F85B2A5B1B6E09BFAE0F2BE",
+        "Path":  "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\stage_A_20261107_0355\\sources_lock.json"
+    }
+]

@@ -1,0 +1,2376 @@
+{
+  "all": {
+    "wrong_to_right": 3,
+    "right_to_wrong": 2,
+    "net_correct": 1,
+    "changed_wrong_to_wrong": 1,
+    "disagreements": 6,
+    "both_wrong": 51,
+    "both_correct": 904,
+    "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.946875
+  },
+  "slices": [
+    {
+      "slice": "ALL",
+      "n": 960,
+      "groups": 240,
+      "baseline": {
+        "n": 960,
+        "correct": 906,
+        "accuracy": 0.94375,
+        "macro_f1": 0.9256410942828763,
+        "J": 0.9346955471414382,
+        "nll": 0.16193354968981197,
+        "confusion_matrix": [
+          [
+            239,
+            1,
+            0,
+            0
+          ],
+          [
+            3,
+            223,
+            14,
+            0
+          ],
+          [
+            1,
+            18,
+            397,
+            5
+          ],
+          [
+            0,
+            0,
+            12,
+            47
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 240,
+            "predicted": 243,
+            "precision": 0.9835390946502057,
+            "recall": 0.9958333333333333,
+            "f1": 0.989648033126294
+          },
+          "human_ai_polished": {
+            "support": 240,
+            "predicted": 242,
+            "precision": 0.9214876033057852,
+            "recall": 0.9291666666666667,
+            "f1": 0.9253112033195021
+          },
+          "ai_generated": {
+            "support": 421,
+            "predicted": 423,
+            "precision": 0.9385342789598109,
+            "recall": 0.9429928741092637,
+            "f1": 0.9407582938388626
+          },
+          "ai_humanized": {
+            "support": 59,
+            "predicted": 52,
+            "precision": 0.9038461538461539,
+            "recall": 0.7966101694915254,
+            "f1": 0.8468468468468469
+          }
+        }
+      },
+      "E26": {
+        "n": 960,
+        "correct": 907,
+        "accuracy": 0.9447916666666667,
+        "macro_f1": 0.927020764032624,
+        "J": 0.9359062153496454,
+        "nll": 0.16322766023439575,
+        "confusion_matrix": [
+          [
+            239,
+            1,
+            0,
+            0
+          ],
+          [
+            3,
+            224,
+            13,
+            0
+          ],
+          [
+            2,
+            18,
+            398,
+            3
+          ],
+          [
+            1,
+            0,
+            12,
+            46
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 240,
+            "predicted": 245,
+            "precision": 0.9755102040816327,
+            "recall": 0.9958333333333333,
+            "f1": 0.9855670103092784
+          },
+          "human_ai_polished": {
+            "support": 240,
+            "predicted": 243,
+            "precision": 0.9218106995884774,
+            "recall": 0.9333333333333333,
+            "f1": 0.927536231884058
+          },
+          "ai_generated": {
+            "support": 421,
+            "predicted": 423,
+            "precision": 0.9408983451536643,
+            "recall": 0.9453681710213777,
+            "f1": 0.943127962085308
+          },
+          "ai_humanized": {
+            "support": 59,
+            "predicted": 49,
+            "precision": 0.9387755102040817,
+            "recall": 0.7796610169491526,
+            "f1": 0.8518518518518519
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 3,
+        "right_to_wrong": 2,
+        "net_correct": 1,
+        "changed_wrong_to_wrong": 1,
+        "disagreements": 6,
+        "both_wrong": 51,
+        "both_correct": 904,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.946875
+      }
+    },
+    {
+      "slice": "GATE",
+      "n": 0
+    },
+    {
+      "slice": "OUTSIDE_GATE",
+      "n": 960,
+      "groups": 240,
+      "baseline": {
+        "n": 960,
+        "correct": 906,
+        "accuracy": 0.94375,
+        "macro_f1": 0.9256410942828763,
+        "J": 0.9346955471414382,
+        "nll": 0.16193354968981197,
+        "confusion_matrix": [
+          [
+            239,
+            1,
+            0,
+            0
+          ],
+          [
+            3,
+            223,
+            14,
+            0
+          ],
+          [
+            1,
+            18,
+            397,
+            5
+          ],
+          [
+            0,
+            0,
+            12,
+            47
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 240,
+            "predicted": 243,
+            "precision": 0.9835390946502057,
+            "recall": 0.9958333333333333,
+            "f1": 0.989648033126294
+          },
+          "human_ai_polished": {
+            "support": 240,
+            "predicted": 242,
+            "precision": 0.9214876033057852,
+            "recall": 0.9291666666666667,
+            "f1": 0.9253112033195021
+          },
+          "ai_generated": {
+            "support": 421,
+            "predicted": 423,
+            "precision": 0.9385342789598109,
+            "recall": 0.9429928741092637,
+            "f1": 0.9407582938388626
+          },
+          "ai_humanized": {
+            "support": 59,
+            "predicted": 52,
+            "precision": 0.9038461538461539,
+            "recall": 0.7966101694915254,
+            "f1": 0.8468468468468469
+          }
+        }
+      },
+      "E26": {
+        "n": 960,
+        "correct": 907,
+        "accuracy": 0.9447916666666667,
+        "macro_f1": 0.927020764032624,
+        "J": 0.9359062153496454,
+        "nll": 0.16322766023439575,
+        "confusion_matrix": [
+          [
+            239,
+            1,
+            0,
+            0
+          ],
+          [
+            3,
+            224,
+            13,
+            0
+          ],
+          [
+            2,
+            18,
+            398,
+            3
+          ],
+          [
+            1,
+            0,
+            12,
+            46
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 240,
+            "predicted": 245,
+            "precision": 0.9755102040816327,
+            "recall": 0.9958333333333333,
+            "f1": 0.9855670103092784
+          },
+          "human_ai_polished": {
+            "support": 240,
+            "predicted": 243,
+            "precision": 0.9218106995884774,
+            "recall": 0.9333333333333333,
+            "f1": 0.927536231884058
+          },
+          "ai_generated": {
+            "support": 421,
+            "predicted": 423,
+            "precision": 0.9408983451536643,
+            "recall": 0.9453681710213777,
+            "f1": 0.943127962085308
+          },
+          "ai_humanized": {
+            "support": 59,
+            "predicted": 49,
+            "precision": 0.9387755102040817,
+            "recall": 0.7796610169491526,
+            "f1": 0.8518518518518519
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 3,
+        "right_to_wrong": 2,
+        "net_correct": 1,
+        "changed_wrong_to_wrong": 1,
+        "disagreements": 6,
+        "both_wrong": 51,
+        "both_correct": 904,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.946875
+      }
+    },
+    {
+      "slice": "margin_[0,0.02)",
+      "n": 1,
+      "groups": 1,
+      "baseline": {
+        "n": 1,
+        "correct": 1,
+        "accuracy": 1.0,
+        "macro_f1": 0.25,
+        "J": 0.625,
+        "nll": 0.739819398303318,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 1,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "E26": {
+        "n": 1,
+        "correct": 1,
+        "accuracy": 1.0,
+        "macro_f1": 0.25,
+        "J": 0.625,
+        "nll": 0.7398169626601153,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 1,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 0,
+        "right_to_wrong": 0,
+        "net_correct": 0,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 0,
+        "both_wrong": 0,
+        "both_correct": 1,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 1.0
+      }
+    },
+    {
+      "slice": "margin_[0.02,0.05)",
+      "n": 1,
+      "groups": 1,
+      "baseline": {
+        "n": 1,
+        "correct": 1,
+        "accuracy": 1.0,
+        "macro_f1": 0.25,
+        "J": 0.625,
+        "nll": 0.6559536251893407,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 1,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "E26": {
+        "n": 1,
+        "correct": 1,
+        "accuracy": 1.0,
+        "macro_f1": 0.25,
+        "J": 0.625,
+        "nll": 0.6559541994740763,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 1,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 0,
+        "right_to_wrong": 0,
+        "net_correct": 0,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 0,
+        "both_wrong": 0,
+        "both_correct": 1,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 1.0
+      }
+    },
+    {
+      "slice": "margin_[0.05,0.1)",
+      "n": 7,
+      "groups": 7,
+      "baseline": {
+        "n": 7,
+        "correct": 3,
+        "accuracy": 0.42857142857142855,
+        "macro_f1": 0.2833333333333333,
+        "J": 0.3559523809523809,
+        "nll": 0.7582355415512446,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            2
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 1,
+            "predicted": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 4,
+            "predicted": 2,
+            "precision": 0.5,
+            "recall": 0.25,
+            "f1": 0.3333333333333333
+          },
+          "ai_humanized": {
+            "support": 2,
+            "predicted": 3,
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8
+          }
+        }
+      },
+      "E26": {
+        "n": 7,
+        "correct": 3,
+        "accuracy": 0.42857142857142855,
+        "macro_f1": 0.2833333333333333,
+        "J": 0.3559523809523809,
+        "nll": 0.7126857714083202,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            2
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 1,
+            "predicted": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 4,
+            "predicted": 2,
+            "precision": 0.5,
+            "recall": 0.25,
+            "f1": 0.3333333333333333
+          },
+          "ai_humanized": {
+            "support": 2,
+            "predicted": 3,
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 0,
+        "right_to_wrong": 0,
+        "net_correct": 0,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 0,
+        "both_wrong": 4,
+        "both_correct": 3,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.42857142857142855
+      }
+    },
+    {
+      "slice": "margin_[0.1,0.2)",
+      "n": 3,
+      "groups": 3,
+      "baseline": {
+        "n": 3,
+        "correct": 2,
+        "accuracy": 0.6666666666666666,
+        "macro_f1": 0.2,
+        "J": 0.43333333333333335,
+        "nll": 0.7095659923078464,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            2,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 3,
+            "predicted": 2,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "E26": {
+        "n": 3,
+        "correct": 3,
+        "accuracy": 1.0,
+        "macro_f1": 0.25,
+        "J": 0.625,
+        "nll": 0.6078961717849675,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            3,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 3,
+            "predicted": 3,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 1,
+        "right_to_wrong": 0,
+        "net_correct": 1,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 1,
+        "both_wrong": 0,
+        "both_correct": 2,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 1.0
+      }
+    },
+    {
+      "slice": "margin_[0.2,1.00000000001)",
+      "n": 948,
+      "groups": 240,
+      "baseline": {
+        "n": 948,
+        "correct": 899,
+        "accuracy": 0.9483122362869199,
+        "macro_f1": 0.9308642189458269,
+        "J": 0.9395882276163734,
+        "nll": 0.15466675939973057,
+        "confusion_matrix": [
+          [
+            239,
+            1,
+            0,
+            0
+          ],
+          [
+            3,
+            222,
+            13,
+            0
+          ],
+          [
+            1,
+            16,
+            393,
+            3
+          ],
+          [
+            0,
+            0,
+            12,
+            45
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 240,
+            "predicted": 243,
+            "precision": 0.9835390946502057,
+            "recall": 0.9958333333333333,
+            "f1": 0.989648033126294
+          },
+          "human_ai_polished": {
+            "support": 238,
+            "predicted": 239,
+            "precision": 0.9288702928870293,
+            "recall": 0.9327731092436975,
+            "f1": 0.9308176100628931
+          },
+          "ai_generated": {
+            "support": 413,
+            "predicted": 418,
+            "precision": 0.9401913875598086,
+            "recall": 0.9515738498789347,
+            "f1": 0.9458483754512635
+          },
+          "ai_humanized": {
+            "support": 57,
+            "predicted": 48,
+            "precision": 0.9375,
+            "recall": 0.7894736842105263,
+            "f1": 0.8571428571428571
+          }
+        }
+      },
+      "E26": {
+        "n": 948,
+        "correct": 899,
+        "accuracy": 0.9483122362869199,
+        "macro_f1": 0.9299945718651954,
+        "J": 0.9391534040760576,
+        "nll": 0.15663533095746052,
+        "confusion_matrix": [
+          [
+            239,
+            1,
+            0,
+            0
+          ],
+          [
+            3,
+            223,
+            12,
+            0
+          ],
+          [
+            2,
+            16,
+            393,
+            2
+          ],
+          [
+            1,
+            0,
+            12,
+            44
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 240,
+            "predicted": 245,
+            "precision": 0.9755102040816327,
+            "recall": 0.9958333333333333,
+            "f1": 0.9855670103092784
+          },
+          "human_ai_polished": {
+            "support": 238,
+            "predicted": 240,
+            "precision": 0.9291666666666667,
+            "recall": 0.9369747899159664,
+            "f1": 0.9330543933054394
+          },
+          "ai_generated": {
+            "support": 413,
+            "predicted": 417,
+            "precision": 0.9424460431654677,
+            "recall": 0.9515738498789347,
+            "f1": 0.946987951807229
+          },
+          "ai_humanized": {
+            "support": 57,
+            "predicted": 46,
+            "precision": 0.9565217391304348,
+            "recall": 0.7719298245614035,
+            "f1": 0.8543689320388349
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 2,
+        "right_to_wrong": 2,
+        "net_correct": 0,
+        "changed_wrong_to_wrong": 1,
+        "disagreements": 5,
+        "both_wrong": 47,
+        "both_correct": 897,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.95042194092827
+      }
+    },
+    {
+      "slice": "human_written_to_human_ai_polished",
+      "n": 0
+    },
+    {
+      "slice": "human_written_to_ai_generated",
+      "n": 0
+    },
+    {
+      "slice": "human_written_to_ai_humanized",
+      "n": 0
+    },
+    {
+      "slice": "human_ai_polished_to_human_written",
+      "n": 0
+    },
+    {
+      "slice": "human_ai_polished_to_ai_generated",
+      "n": 1,
+      "groups": 1,
+      "baseline": {
+        "n": 1,
+        "correct": 1,
+        "accuracy": 1.0,
+        "macro_f1": 0.25,
+        "J": 0.625,
+        "nll": 0.13240628138868746,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 1,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "E26": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "macro_f1": 0.0,
+        "J": 0.0,
+        "nll": 0.8392263278287443,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 0,
+        "right_to_wrong": 1,
+        "net_correct": -1,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 1,
+        "both_wrong": 0,
+        "both_correct": 0,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 1.0
+      }
+    },
+    {
+      "slice": "human_ai_polished_to_ai_humanized",
+      "n": 0
+    },
+    {
+      "slice": "ai_generated_to_human_written",
+      "n": 0
+    },
+    {
+      "slice": "ai_generated_to_human_ai_polished",
+      "n": 2,
+      "groups": 2,
+      "baseline": {
+        "n": 2,
+        "correct": 0,
+        "accuracy": 0.0,
+        "macro_f1": 0.0,
+        "J": 0.0,
+        "nll": 3.7173248757252484,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "E26": {
+        "n": 2,
+        "correct": 2,
+        "accuracy": 1.0,
+        "macro_f1": 0.25,
+        "J": 0.625,
+        "nll": 0.47556452225374723,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 2,
+            "predicted": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 2,
+        "right_to_wrong": 0,
+        "net_correct": 2,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 2,
+        "both_wrong": 0,
+        "both_correct": 0,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 1.0
+      }
+    },
+    {
+      "slice": "ai_generated_to_ai_humanized",
+      "n": 0
+    },
+    {
+      "slice": "ai_humanized_to_human_written",
+      "n": 2,
+      "groups": 2,
+      "baseline": {
+        "n": 2,
+        "correct": 1,
+        "accuracy": 0.5,
+        "macro_f1": 0.16666666666666666,
+        "J": 0.3333333333333333,
+        "nll": 0.8826391388121914,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 1,
+            "predicted": 2,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        }
+      },
+      "E26": {
+        "n": 2,
+        "correct": 0,
+        "accuracy": 0.0,
+        "macro_f1": 0.0,
+        "J": 0.0,
+        "nll": 1.459140598438545,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 0,
+        "right_to_wrong": 1,
+        "net_correct": -1,
+        "changed_wrong_to_wrong": 1,
+        "disagreements": 2,
+        "both_wrong": 1,
+        "both_correct": 0,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.5
+      }
+    },
+    {
+      "slice": "ai_humanized_to_human_ai_polished",
+      "n": 0
+    },
+    {
+      "slice": "ai_humanized_to_ai_generated",
+      "n": 1,
+      "groups": 1,
+      "baseline": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "macro_f1": 0.0,
+        "J": 0.0,
+        "nll": 0.8552628152054275,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "E26": {
+        "n": 1,
+        "correct": 1,
+        "accuracy": 1.0,
+        "macro_f1": 0.25,
+        "J": 0.625,
+        "nll": 0.5502541323516486,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 1,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 1,
+        "right_to_wrong": 0,
+        "net_correct": 1,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 1,
+        "both_wrong": 0,
+        "both_correct": 0,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 1.0
+      }
+    },
+    {
+      "slice": "truth_human_written",
+      "n": 240,
+      "groups": 240,
+      "baseline": {
+        "n": 240,
+        "correct": 239,
+        "accuracy": 0.9958333333333333,
+        "macro_f1": 0.24947807933194155,
+        "J": 0.6226557063326374,
+        "nll": 0.010171682950349424,
+        "confusion_matrix": [
+          [
+            239,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 240,
+            "predicted": 239,
+            "precision": 1.0,
+            "recall": 0.9958333333333333,
+            "f1": 0.9979123173277662
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "E26": {
+        "n": 240,
+        "correct": 239,
+        "accuracy": 0.9958333333333333,
+        "macro_f1": 0.24947807933194155,
+        "J": 0.6226557063326374,
+        "nll": 0.012647103336281041,
+        "confusion_matrix": [
+          [
+            239,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 240,
+            "predicted": 239,
+            "precision": 1.0,
+            "recall": 0.9958333333333333,
+            "f1": 0.9979123173277662
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 0,
+        "right_to_wrong": 0,
+        "net_correct": 0,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 0,
+        "both_wrong": 1,
+        "both_correct": 239,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.9958333333333333
+      }
+    },
+    {
+      "slice": "truth_human_ai_polished",
+      "n": 240,
+      "groups": 240,
+      "baseline": {
+        "n": 240,
+        "correct": 223,
+        "accuracy": 0.9291666666666667,
+        "macro_f1": 0.2408207343412527,
+        "J": 0.5849937005039597,
+        "nll": 0.23362386667470744,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            223,
+            14,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 240,
+            "predicted": 223,
+            "precision": 1.0,
+            "recall": 0.9291666666666667,
+            "f1": 0.9632829373650108
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 14,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "E26": {
+        "n": 240,
+        "correct": 224,
+        "accuracy": 0.9333333333333333,
+        "macro_f1": 0.2413793103448276,
+        "J": 0.5873563218390805,
+        "nll": 0.20875592467267204,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            224,
+            13,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 240,
+            "predicted": 224,
+            "precision": 1.0,
+            "recall": 0.9333333333333333,
+            "f1": 0.9655172413793104
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 13,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 2,
+        "right_to_wrong": 1,
+        "net_correct": 1,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 3,
+        "both_wrong": 15,
+        "both_correct": 222,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.9375
+      }
+    },
+    {
+      "slice": "truth_ai_generated",
+      "n": 421,
+      "groups": 240,
+      "baseline": {
+        "n": 421,
+        "correct": 397,
+        "accuracy": 0.9429928741092637,
+        "macro_f1": 0.24266503667481662,
+        "J": 0.5928289553920402,
+        "nll": 0.13866976035571033,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            18,
+            397,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 18,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 421,
+            "predicted": 397,
+            "precision": 1.0,
+            "recall": 0.9429928741092637,
+            "f1": 0.9706601466992665
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 5,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "E26": {
+        "n": 421,
+        "correct": 398,
+        "accuracy": 0.9453681710213777,
+        "macro_f1": 0.24297924297924298,
+        "J": 0.5941737070003104,
+        "nll": 0.15038900753275133,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            18,
+            398,
+            3
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 18,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 421,
+            "predicted": 398,
+            "precision": 1.0,
+            "recall": 0.9453681710213777,
+            "f1": 0.9719169719169719
+          },
+          "ai_humanized": {
+            "support": 0,
+            "predicted": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 1,
+        "right_to_wrong": 0,
+        "net_correct": 1,
+        "changed_wrong_to_wrong": 1,
+        "disagreements": 2,
+        "both_wrong": 23,
+        "both_correct": 397,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.9453681710213777
+      }
+    },
+    {
+      "slice": "truth_ai_humanized",
+      "n": 59,
+      "groups": 59,
+      "baseline": {
+        "n": 59,
+        "correct": 47,
+        "accuracy": 0.7966101694915254,
+        "macro_f1": 0.22169811320754718,
+        "J": 0.5091541413495363,
+        "nll": 0.6536492658042677,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            12,
+            47
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 12,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 59,
+            "predicted": 47,
+            "precision": 1.0,
+            "recall": 0.7966101694915254,
+            "f1": 0.8867924528301887
+          }
+        }
+      },
+      "E26": {
+        "n": 59,
+        "correct": 46,
+        "accuracy": 0.7796610169491526,
+        "macro_f1": 0.21904761904761905,
+        "J": 0.4993543179983858,
+        "nll": 0.6821704225692015,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            12,
+            46
+          ]
+        ],
+        "label_order": [
+          "human_written",
+          "human_ai_polished",
+          "ai_generated",
+          "ai_humanized"
+        ],
+        "per_class": {
+          "human_written": {
+            "support": 0,
+            "predicted": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "human_ai_polished": {
+            "support": 0,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_generated": {
+            "support": 0,
+            "predicted": 12,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ai_humanized": {
+            "support": 59,
+            "predicted": 46,
+            "precision": 1.0,
+            "recall": 0.7796610169491526,
+            "f1": 0.8761904761904762
+          }
+        }
+      },
+      "changes": {
+        "wrong_to_right": 0,
+        "right_to_wrong": 1,
+        "net_correct": -1,
+        "changed_wrong_to_wrong": 0,
+        "disagreements": 1,
+        "both_wrong": 12,
+        "both_correct": 46,
+        "oracle_either_correct_accuracy_DIAGNOSTIC_ONLY": 0.7966101694915254
+      }
+    }
+  ],
+  "diagnostic_only_thresholds_not_search_space": true
+}

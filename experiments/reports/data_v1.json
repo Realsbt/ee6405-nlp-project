@@ -167,7 +167,7 @@
       "split_blocks": 2800,
       "truncated_at_512_tokens": 3166,
       "fraction": 0.700075075075075,
-      "sha256": "3cd1539d26189ab1ca1c7e0efc5e34d92265f5d5a9c65783b85af28f41fa9c2b"
+      "sha256": "387e5e624cbf42c49b5be52a057370b83143c970e7c7ec7bee37b80feaa12fa3"
     },
     "val": {
       "records": 1600,
@@ -213,7 +213,7 @@
       "split_blocks": 400,
       "truncated_at_512_tokens": 418,
       "fraction": 0.1001001001001001,
-      "sha256": "b4b94e6665102794020d85130cd7876f7add7dd9b82fa51ca4b2f520e14e99f8"
+      "sha256": "7196ac51d9c040485258ddd2a9586354b7ad46bab7ab35fc3513b215629c0db9"
     },
     "test": {
       "records": 3194,
@@ -259,7 +259,7 @@
       "split_blocks": 799,
       "truncated_at_512_tokens": 897,
       "fraction": 0.19982482482482483,
-      "sha256": "1814009b21bad70fbbc83d4b5b952469f19fde009fe8d979ac9c0c71491f542a"
+      "sha256": "c3044b998cbd40a759846727528f1b75cf370583eae33cac4a52a050ccf1a1df"
     }
   },
   "new_partition_overlap": {
@@ -282,7 +282,7 @@
     {
       "name": "train_graph.jsonl",
       "file_id": "1bKPdOdhW97l2_9H46DwICRKZelg0Y8dW",
-      "path": "/data/botao/ee6405-race-validation/assets/hart_official/train_graph.jsonl",
+      "path": "D:\\6405_prj\\ee6405-nlp-project\\assets\\hart_official\\train_graph.jsonl",
       "size_bytes": 463781847,
       "sha256": "ffedcc941c35c42a636d6e0ff3fe25b9971e2efd1ab88cb7998574d9eea7e9e6",
       "source_url": "https://drive.google.com/file/d/1bKPdOdhW97l2_9H46DwICRKZelg0Y8dW/view"
@@ -290,7 +290,7 @@
     {
       "name": "val_graph.jsonl",
       "file_id": "1MBOQYSJy21ny2SA1GR_Yb58MM4nVw_Vn",
-      "path": "/data/botao/ee6405-race-validation/assets/hart_official/val_graph.jsonl",
+      "path": "D:\\6405_prj\\ee6405-nlp-project\\assets\\hart_official\\val_graph.jsonl",
       "size_bytes": 66869993,
       "sha256": "791d635a7a472b9569ac5b9776076b428973eb4f05b1860f2bee1cb9adde9bad",
       "source_url": "https://drive.google.com/file/d/1MBOQYSJy21ny2SA1GR_Yb58MM4nVw_Vn/view"
@@ -298,14 +298,14 @@
     {
       "name": "test_graph.jsonl",
       "file_id": "1GEpgjVzW8yZZUeEPv9xsBdOjP2KBkON8",
-      "path": "/data/botao/ee6405-race-validation/assets/hart_official/test_graph.jsonl",
+      "path": "D:\\6405_prj\\ee6405-nlp-project\\assets\\hart_official\\test_graph.jsonl",
       "size_bytes": 130891961,
       "sha256": "2acaf62ea42359266efd69e6c6023bcf5ec8c544991555bf1285638a560cc51c",
       "source_url": "https://drive.google.com/file/d/1GEpgjVzW8yZZUeEPv9xsBdOjP2KBkON8/view"
     }
   ],
-  "prepare_script_sha256": "c7cc093682ee48eebfbbef14b006eda61a17a711c1103a0a092aa19ae57af5e5",
-  "data_root": "/data/botao/ee6405-race-validation/experiments/hart_grouped_v1",
+  "prepare_script_sha256": "a02af1867241b0daffad818344da81d5689863f805d0ae59988a13ed55406ac4",
+  "data_root": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\hart_grouped_v1",
   "checkpoint_boundary": "Author fine-tuned checkpoint is for smoke checks only; it may have seen the new test groups and must not be used for an independent evaluation on this split.",
   "remaining_limitations": [
     "Only one benchmark with four domains",

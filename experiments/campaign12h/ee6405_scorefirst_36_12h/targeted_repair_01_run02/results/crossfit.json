@@ -1,0 +1,77 @@
+{
+  "status": "CV_BLOCKED_KEEP_B0",
+  "deploy_lambda": 0.0,
+  "reason": "Cross-fitted selection requires audited groups for both models.",
+  "crossfit_executed": false,
+  "score_kind": "NO_OOF_BASELINE_FALLBACK",
+  "baseline": {
+    "n": 960,
+    "correct": 906,
+    "accuracy": 0.94375,
+    "macro_f1": 0.9256410942828763,
+    "J": 0.9346955471414382,
+    "nll": 0.16193354968981197,
+    "confusion_matrix": [
+      [
+        239,
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        223,
+        14,
+        0
+      ],
+      [
+        1,
+        18,
+        397,
+        5
+      ],
+      [
+        0,
+        0,
+        12,
+        47
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ],
+    "per_class": {
+      "human_written": {
+        "support": 240,
+        "predicted": 243,
+        "precision": 0.9835390946502057,
+        "recall": 0.9958333333333333,
+        "f1": 0.989648033126294
+      },
+      "human_ai_polished": {
+        "support": 240,
+        "predicted": 242,
+        "precision": 0.9214876033057852,
+        "recall": 0.9291666666666667,
+        "f1": 0.9253112033195021
+      },
+      "ai_generated": {
+        "support": 421,
+        "predicted": 423,
+        "precision": 0.9385342789598109,
+        "recall": 0.9429928741092637,
+        "f1": 0.9407582938388626
+      },
+      "ai_humanized": {
+        "support": 59,
+        "predicted": 52,
+        "precision": 0.9038461538461539,
+        "recall": 0.7966101694915254,
+        "f1": 0.8468468468468469
+      }
+    }
+  }
+}

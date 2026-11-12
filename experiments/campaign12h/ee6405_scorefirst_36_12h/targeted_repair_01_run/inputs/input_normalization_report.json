@@ -1,0 +1,22 @@
+{
+  "metadata_file": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\protocol\\split_manifest.json",
+  "metadata_sha256": "bfec5cb577560e3845c6697bd979979f9612b0e8e64246bf5f06bbf4ac607f13",
+  "S_count": 960,
+  "normalization_only_not_new_generation_proof": true,
+  "models": {
+    "B0": {
+      "status": "INPUT_BLOCKED",
+      "error": "KeyError: 'label_ids'"
+    },
+    "E26": {
+      "status": "INPUT_BLOCKED",
+      "error": "KeyError: 'label_ids'"
+    },
+    "E16": {
+      "status": "NORMALIZED_VALID",
+      "path": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\targeted_repair_01_run\\inputs\\E16_S.json",
+      "sha256": "54c143e18e0391d4fff11a9c93db391e716da3b49a73885f0beaaebff6ca9709"
+    }
+  },
+  "bindings_sha256": "7fda11dcbdfb287fe451a050b9173716c701313055983dc60b063902ff5a2712"
+}

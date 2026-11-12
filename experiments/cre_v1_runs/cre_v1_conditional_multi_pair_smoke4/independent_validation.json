@@ -1,0 +1,110 @@
+{
+  "run_id": "cre_v1_conditional_multi_pair_smoke4",
+  "checkpoint_epoch": 0,
+  "metrics": {
+    "samples": 1600,
+    "accuracy": 0.943125,
+    "macro_f1": 0.9200786397289521,
+    "macro_precision": 0.9410716564304654,
+    "macro_recall": 0.904272068511199,
+    "macro_auroc_ovr": 0.9877186979328667,
+    "macro_tpr_at_1pct_fpr_roc": 0.813717885375494,
+    "per_class": {
+      "human_written": {
+        "support": 400,
+        "precision": 0.9875930521091811,
+        "recall": 0.995,
+        "f1": 0.9912826899128269,
+        "auroc_ovr": 0.9997125,
+        "tpr_at_1pct_fpr_roc": 1.0
+      },
+      "human_ai_polished": {
+        "support": 400,
+        "precision": 0.9257425742574258,
+        "recall": 0.935,
+        "f1": 0.9303482587064676,
+        "auroc_ovr": 0.9891458333333333,
+        "tpr_at_1pct_fpr_roc": 0.8525
+      },
+      "ai_generated": {
+        "support": 690,
+        "precision": 0.9304964539007092,
+        "recall": 0.9507246376811594,
+        "f1": 0.9405017921146953,
+        "auroc_ovr": 0.9867144449753146,
+        "tpr_at_1pct_fpr_roc": 0.6478260869565218
+      },
+      "ai_humanized": {
+        "support": 110,
+        "precision": 0.9204545454545454,
+        "recall": 0.7363636363636363,
+        "f1": 0.8181818181818182,
+        "auroc_ovr": 0.9753020134228187,
+        "tpr_at_1pct_fpr_roc": 0.7545454545454545
+      }
+    },
+    "confusion_matrix": [
+      [
+        398,
+        2,
+        0,
+        0
+      ],
+      [
+        4,
+        374,
+        21,
+        1
+      ],
+      [
+        1,
+        27,
+        656,
+        6
+      ],
+      [
+        0,
+        1,
+        28,
+        81
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "diagnostics": {
+    "delta_mean": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "delta_std": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "delta_abs_quantiles": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "condition_score_mean": [
+      0.1491864025592804,
+      1.6254266500473022,
+      -4.783544540405273
+    ],
+    "seconds": 22.283637100001215
+  },
+  "sample_ids_sha256": "289a82ead34d8239d787b9f44fa7bff3dc1a0b5b6e71c493ee5f71e6f5dbb872",
+  "prediction_counts": {
+    "human_written": 403,
+    "human_ai_polished": 404,
+    "ai_generated": 705,
+    "ai_humanized": 88
+  },
+  "test_partition_loaded": false
+}

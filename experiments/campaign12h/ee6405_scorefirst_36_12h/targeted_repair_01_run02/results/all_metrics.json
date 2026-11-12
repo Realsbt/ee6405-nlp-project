@@ -1,0 +1,212 @@
+{
+  "B0": {
+    "n": 960,
+    "correct": 906,
+    "accuracy": 0.94375,
+    "macro_f1": 0.9256410942828763,
+    "J": 0.9346955471414382,
+    "nll": 0.16193354968981197,
+    "confusion_matrix": [
+      [
+        239,
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        223,
+        14,
+        0
+      ],
+      [
+        1,
+        18,
+        397,
+        5
+      ],
+      [
+        0,
+        0,
+        12,
+        47
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ],
+    "per_class": {
+      "human_written": {
+        "support": 240,
+        "predicted": 243,
+        "precision": 0.9835390946502057,
+        "recall": 0.9958333333333333,
+        "f1": 0.989648033126294
+      },
+      "human_ai_polished": {
+        "support": 240,
+        "predicted": 242,
+        "precision": 0.9214876033057852,
+        "recall": 0.9291666666666667,
+        "f1": 0.9253112033195021
+      },
+      "ai_generated": {
+        "support": 421,
+        "predicted": 423,
+        "precision": 0.9385342789598109,
+        "recall": 0.9429928741092637,
+        "f1": 0.9407582938388626
+      },
+      "ai_humanized": {
+        "support": 59,
+        "predicted": 52,
+        "precision": 0.9038461538461539,
+        "recall": 0.7966101694915254,
+        "f1": 0.8468468468468469
+      }
+    }
+  },
+  "E26": {
+    "n": 960,
+    "correct": 907,
+    "accuracy": 0.9447916666666667,
+    "macro_f1": 0.927020764032624,
+    "J": 0.9359062153496454,
+    "nll": 0.16322766023439575,
+    "confusion_matrix": [
+      [
+        239,
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        224,
+        13,
+        0
+      ],
+      [
+        2,
+        18,
+        398,
+        3
+      ],
+      [
+        1,
+        0,
+        12,
+        46
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ],
+    "per_class": {
+      "human_written": {
+        "support": 240,
+        "predicted": 245,
+        "precision": 0.9755102040816327,
+        "recall": 0.9958333333333333,
+        "f1": 0.9855670103092784
+      },
+      "human_ai_polished": {
+        "support": 240,
+        "predicted": 243,
+        "precision": 0.9218106995884774,
+        "recall": 0.9333333333333333,
+        "f1": 0.927536231884058
+      },
+      "ai_generated": {
+        "support": 421,
+        "predicted": 423,
+        "precision": 0.9408983451536643,
+        "recall": 0.9453681710213777,
+        "f1": 0.943127962085308
+      },
+      "ai_humanized": {
+        "support": 59,
+        "predicted": 49,
+        "precision": 0.9387755102040817,
+        "recall": 0.7796610169491526,
+        "f1": 0.8518518518518519
+      }
+    }
+  },
+  "E16": {
+    "n": 960,
+    "correct": 794,
+    "accuracy": 0.8270833333333333,
+    "macro_f1": 0.6977198154481906,
+    "J": 0.762401574390762,
+    "nll": 0.47426370166494297,
+    "confusion_matrix": [
+      [
+        207,
+        31,
+        2,
+        0
+      ],
+      [
+        8,
+        186,
+        46,
+        0
+      ],
+      [
+        9,
+        19,
+        392,
+        1
+      ],
+      [
+        1,
+        5,
+        44,
+        9
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ],
+    "per_class": {
+      "human_written": {
+        "support": 240,
+        "predicted": 225,
+        "precision": 0.92,
+        "recall": 0.8625,
+        "f1": 0.8903225806451613
+      },
+      "human_ai_polished": {
+        "support": 240,
+        "predicted": 241,
+        "precision": 0.7717842323651453,
+        "recall": 0.775,
+        "f1": 0.7733887733887734
+      },
+      "ai_generated": {
+        "support": 421,
+        "predicted": 484,
+        "precision": 0.8099173553719008,
+        "recall": 0.9311163895486936,
+        "f1": 0.8662983425414365
+      },
+      "ai_humanized": {
+        "support": 59,
+        "predicted": 10,
+        "precision": 0.9,
+        "recall": 0.15254237288135594,
+        "f1": 0.2608695652173913
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4080 Laptop GPU",
+  "vram_bytes": 12878086144,
+  "cuda": "12.8",
+  "bf16": true,
+  "test_partition_loaded": false,
+  "hc3_loaded": false
+}

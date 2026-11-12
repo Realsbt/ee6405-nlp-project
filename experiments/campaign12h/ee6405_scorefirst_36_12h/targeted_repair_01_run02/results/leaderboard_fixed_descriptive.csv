@@ -1,0 +1,4 @@
+﻿method,accuracy,macro_f1,J,n,original_score_kind,ranking_scope,same_probabilities_on_S_as,binding_verified,wrong_to_right,right_to_wrong,net_correct,changed_wrong_to_wrong,disagreements,both_wrong,both_correct,oracle_either_correct_accuracy_DIAGNOSTIC_ONLY
+E26,0.9447916666666667,0.927020764032624,0.9359062153496454,960,S_historical_dev_selected,S_historical_descriptive_not_blind,,True,3,2,1,1,6,51,904,0.946875
+B0,0.94375,0.9256410942828763,0.9346955471414382,960,S_historical_dev_selected,S_historical_descriptive_not_blind,,True,0,0,0,0,0,54,906,0.94375
+E16,0.8270833333333333,0.6977198154481906,0.762401574390762,960,S_historical_dev_selected,S_historical_descriptive_not_blind,,True,19,131,-112,6,156,35,775,0.9635416666666666

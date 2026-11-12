@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "run_id": "cre_v1_conditional_multi_s3407",
+  "mode": "conditional_multi",
+  "seed": 3407,
+  "epochs_completed": 7,
+  "best_overall": {
+    "epoch": 0,
+    "macro_f1": 0.9200786397289521,
+    "status": "ZERO_CORRECTION_SELECTED"
+  },
+  "best_trained": {
+    "epoch": 2,
+    "macro_f1": 0.9169789219426824,
+    "status": "TRAINED_CORRECTION_SELECTED"
+  },
+  "selection_status": "ZERO_CORRECTION_SELECTED",
+  "test_partition_loaded": false,
+  "training_seconds": 2080.8705913999875,
+  "peak_memory_bytes": 818850304,
+  "new_trainable_parameters": 362755
+}

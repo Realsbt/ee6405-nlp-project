@@ -1,0 +1,26 @@
+{
+  "status": "COMPLETED",
+  "started_epoch": 1794043540.9920764,
+  "pid": 88040,
+  "source_hashes": {
+    "execute_bundle.py": "fc76607a7bc3ef004a8e02c4611b9e71683fd130c827b6d4580ef8c240b49380",
+    "optimizer_recipe.py": "3a7d3f03b39767ec3a713c4bae3744d01e3989bfa972e77fb09090985083c48e",
+    "prepare_inputs.py": "99281049f5762e0e5be89817e3255fe38b4dd03aa777a474f090068ffa9e0249",
+    "repair_core.py": "74e1afdab8cec016c54f7e8e1b4ac74ffa6cc46553c0fac24c4f806184c06869",
+    "run_targeted_repair.py": "5e05c2d1c50311de120a22021bf44b0cdb166540cd9f97d5f38bc45e166a083b",
+    "start_budget.py": "dcec0d827c1c3cedf34d79be70030863dc5b5cadc628c89813c6c9d26a36b85e",
+    "test_reference.py": "7312e360c2221d349b41e271e463214c839288b593b9afd0776bdb611587eefb"
+  },
+  "config_sha256": "fec29916c6ac884fff59bd07d7a89663b0af030c3e6a156bcad0b7396ff2e186",
+  "python": "3.11.11 | packaged by Anaconda, Inc. | (main, Dec 11 2024, 16:34:19) [MSC v.1929 64 bit (AMD64)]",
+  "numpy": "2.4.6",
+  "sklearn": "1.6.1",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "training": false,
+  "downloads": false,
+  "H_test_HC3_access": false,
+  "routing_status": "INSUFFICIENT_GATE_SUPPORT",
+  "errors": [],
+  "ended_epoch": 1794043541.05258,
+  "wall_seconds": 0.062000000005355105
+}

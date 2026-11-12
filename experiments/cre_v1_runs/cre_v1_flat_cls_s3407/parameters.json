@@ -1,0 +1,10 @@
+{
+  "total_model_parameters": 125601841,
+  "new_trainable_parameters": 362541,
+  "trainable_names": [
+    "flat.input.weight",
+    "flat.input.bias",
+    "flat.output.weight",
+    "flat.output.bias"
+  ]
+}

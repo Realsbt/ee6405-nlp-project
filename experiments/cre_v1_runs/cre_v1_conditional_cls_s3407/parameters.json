@@ -1,0 +1,22 @@
+{
+  "total_model_parameters": 125602021,
+  "new_trainable_parameters": 362721,
+  "trainable_names": [
+    "shared_projection.0.weight",
+    "shared_projection.0.bias",
+    "shared_projection.1.weight",
+    "shared_projection.1.bias",
+    "experts.0.input.weight",
+    "experts.0.input.bias",
+    "experts.0.output.weight",
+    "experts.0.output.bias",
+    "experts.1.input.weight",
+    "experts.1.input.bias",
+    "experts.1.output.weight",
+    "experts.1.output.bias",
+    "experts.2.input.weight",
+    "experts.2.input.bias",
+    "experts.2.output.weight",
+    "experts.2.output.bias"
+  ]
+}

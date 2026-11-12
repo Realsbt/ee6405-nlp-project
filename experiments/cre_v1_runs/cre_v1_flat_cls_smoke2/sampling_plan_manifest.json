@@ -1,0 +1,10 @@
+{
+  "version": "shared_group_pair_balanced_v1",
+  "seed": 3407,
+  "batch_size": 16,
+  "samples_per_class": 4,
+  "batches": 0,
+  "draws_per_epoch": [],
+  "batch_plan_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "batches_plan": []
+}

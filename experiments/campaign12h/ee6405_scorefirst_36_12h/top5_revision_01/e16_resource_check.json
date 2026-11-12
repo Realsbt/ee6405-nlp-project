@@ -1,0 +1,24 @@
+{
+  "task_id": "E16_final_deberta_v3_base_s3407",
+  "attempt_kind": "official_resource_check",
+  "model_id": "microsoft/deberta-v3-base",
+  "revision": "main",
+  "started_utc": "2026-11-07T06:09:37.235412+00:00",
+  "environment_before": {
+    "HF_HUB_OFFLINE": null,
+    "TRANSFORMERS_OFFLINE": null
+  },
+  "environment_for_attempt": {
+    "HF_HUB_OFFLINE": null,
+    "TRANSFORMERS_OFFLINE": null
+  },
+  "formal_training_started": false,
+  "test_partition_loaded": false,
+  "hc3_loaded": false,
+  "status": "RESOURCE_AVAILABLE",
+  "config_model_type": "deberta-v2",
+  "hidden_size": 768,
+  "tokenizer_class": "DebertaV2TokenizerFast",
+  "finished_utc": "2026-11-07T06:09:41.173885+00:00",
+  "wall_seconds": 3.9384734630584717
+}

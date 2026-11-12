@@ -1,0 +1,5 @@
+{
+  "records": [],
+  "seed": 3407,
+  "method": "StratifiedGroupKFold(3)"
+}

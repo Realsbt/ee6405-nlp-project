@@ -1,0 +1,14 @@
+{
+  "task_id": "E10",
+  "status": "RESOURCE_BLOCKED",
+  "attempted_utc": "2026-11-06T20:09:48.957813+00:00",
+  "peft_installed": false,
+  "cuda": true,
+  "bf16": true,
+  "fallback_attempted": true,
+  "reason": "PEFT absent. A project-local Linear-LoRA compatibility smoke passed, but no budgeted E10 screen trainer was added or run; no main-environment change.",
+  "test_partition_loaded": false,
+  "hc3_loaded": false,
+  "fallback_status": "SMOKE_PASS",
+  "matched_query_value_modules": 24
+}

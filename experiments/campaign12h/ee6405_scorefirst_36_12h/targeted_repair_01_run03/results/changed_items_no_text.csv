@@ -1,0 +1,7 @@
+﻿item_id,evaluation_group_id,true_label,B0_prediction,E26_prediction,B0_margin,gate,B0_correct,E26_correct
+news-4848cf49d6079f6e28a5b2bf2216912c_human_ai_polished_gpt-4o-2024-11-20,news-4848cf49d6079f6e28a5b2bf2216912c,human_ai_polished,ai_generated,human_ai_polished,0.9853329975157976,False,False,True
+news-663f6b91ce38c76b096b58ed39da2bb1_human_ai_polished_gpt-4o-2024-11-20,news-663f6b91ce38c76b096b58ed39da2bb1,human_ai_polished,ai_generated,human_ai_polished,0.8091115280985832,False,False,True
+news-a1f11a0b0bfc73ca513a575c44306afd_ai_generated_qwen2.5-72b-instruct,news-a1f11a0b0bfc73ca513a575c44306afd,ai_generated,ai_humanized,ai_generated,0.1488087773323059,False,False,True
+writing-test13279_human_ai_polished_claude-3-5-sonnet-20241022,writing-test13279,human_ai_polished,human_ai_polished,ai_generated,0.7523429021239281,False,True,False
+writing-valid3998_ai_generated_gpt-4o-2024-11-20,writing-valid3998,ai_generated,ai_humanized,human_written,0.4709390103816986,False,False,False
+writing-valid466_ai_humanized_tool,writing-valid466,ai_humanized,ai_humanized,human_written,0.4942711889743805,False,True,False

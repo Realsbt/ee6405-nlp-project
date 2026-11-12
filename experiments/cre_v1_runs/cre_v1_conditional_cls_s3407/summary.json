@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "run_id": "cre_v1_conditional_cls_s3407",
+  "mode": "conditional_cls",
+  "seed": 3407,
+  "epochs_completed": 15,
+  "best_overall": {
+    "epoch": 0,
+    "macro_f1": 0.9200786397289521,
+    "status": "ZERO_CORRECTION_SELECTED"
+  },
+  "best_trained": {
+    "epoch": 10,
+    "macro_f1": 0.9136146276720728,
+    "status": "TRAINED_CORRECTION_SELECTED"
+  },
+  "selection_status": "ZERO_CORRECTION_SELECTED",
+  "test_partition_loaded": false,
+  "training_seconds": 682.2978593000007,
+  "peak_memory_bytes": 818858496,
+  "new_trainable_parameters": 362721
+}

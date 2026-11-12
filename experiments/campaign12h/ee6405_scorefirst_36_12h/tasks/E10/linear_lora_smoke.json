@@ -1,0 +1,10 @@
+{
+  "status": "SMOKE_PASS",
+  "matched_query_value_modules": 24,
+  "b0_sha256": "cb61944bc1229b13e826911db27e98e0ea0e06d576c9ded65ba165c5f0df8b8c",
+  "adapter_b_zero_initialized": true,
+  "adapter_gradient_nonzero": true,
+  "adapter_parameters_changed": true,
+  "test_partition_loaded": false,
+  "hc3_loaded": false
+}

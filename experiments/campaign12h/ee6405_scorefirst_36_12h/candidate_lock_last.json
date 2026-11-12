@@ -1,0 +1,14 @@
+{
+  "stage": "last",
+  "selection_split": "S",
+  "ranking_source": "top5_recomputed.json",
+  "candidate_lock_sha256": "084941b795cf3609281bbf3e6f0702693144286ea9c268865ff1d13a0a709953",
+  "new_method": {
+    "task_id": "E16_final_deberta_v3_base_s3407",
+    "status": "RESOURCE_BLOCKED",
+    "included": false
+  },
+  "locked_utc": "2026-11-07T05:56:31.848593+00:00",
+  "test_partition_loaded": false,
+  "hc3_loaded": false
+}
