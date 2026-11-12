@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-12",
+  "status": "not_started",
+  "conditions": ["deberta_full", "roberta_full"],
+  "seed": 3407,
+  "gpu_training_started": false,
+  "test_evaluated": false,
+  "new_performance_result": null,
+  "kaggle": {
+    "private_dataset": "zhengyingqi/ee6405-encoder-pilot-v1",
+    "dataset_upload": "ready",
+    "kernel": "zhengyingqi/ee6405-paired-encoder-pilot-v1",
+    "submission": "rejected",
+    "error": "Maximum weekly GPU quota of 30.00 hours reached",
+    "cli_exit_code": 0,
+    "uploaded_source_version": "v1",
+    "latest_local_package": "outputs/paired_encoder_pilot_package_v2"
+  },
+  "colab": {
+    "hardware_verified": "Tesla T4",
+    "memory_mib": 15360,
+    "checked_at_utc": "2026-11-12T06:33:40Z",
+    "training_data_uploaded": false,
+    "training_dependencies_installed": false,
+    "next_step": "User confirmation before private train/validation upload and software installation/execution"
+  },
+  "existing_fusion_job": "Not cancelled or modified",
+  "scope": "Validation-only encoder pilot; no 97% result claimed"
+}

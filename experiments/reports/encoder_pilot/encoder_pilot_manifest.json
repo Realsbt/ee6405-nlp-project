@@ -1,0 +1,13 @@
+{
+  "code_files": {
+    "experiments/common.py": "44330f81bdac1e9e49b9ee9a835112af4388fc88246fb7ee38343f4306a03844",
+    "experiments/paths.py": "6d2c45d79f30646970e09258e920b234b02c470269f8edc466ae791753c1df13",
+    "experiments/neural.py": "aae389ac20b0c121a07c8e4f03d5cee637388c94985120e29f21857519578c87",
+    "experiments/train_encoder_pilot.py": "741852625dda3426df657e7919a0cf41a66d19a28bc2330996acd7b3c92ea02e",
+    "cloud/kaggle/run_encoder_pilot.py": "a2199be01dcf21d9332997423361c03bfdca9c73b8be34cabeac1733a9664f0e",
+    "cloud/kaggle/run_same_window_smoke.py": "f73adfc267c0a261e6fb0ad33b83d4b10c070c6bb0333dbf329d5ef212abc18c"
+  },
+  "protocol_sha256": "86d951a197fcbff541bd71c0832e227b06beda3216e9c7243e9a22065192e77f",
+  "private_data": true,
+  "contains_test_partition": false
+}

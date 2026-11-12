@@ -44,6 +44,12 @@ Entry points: [fusion design and commands](docs/EDU_FUSION.md),
 [saved snapshot evidence](experiments/reports/yingqi_snapshot/).
 Model weights, private source texts and credentials are not uploaded.
 
+**Later follow-up, 2026-11-12:** a bounded, validation-only paired
+DeBERTa-v3-base / all-layer RoBERTa pilot is implemented with CPU checks.
+Kaggle rejected its launch because the weekly GPU quota was exhausted:
+**not started, no new score, no 97% claim**. This is separate from the fusion
+continuation above. See the [pilot protocol and diagnostics](docs/ENCODER_PILOT.md).
+
 ```bash
 python3 scripts/check_yingqi_results.py
 ```

@@ -1,0 +1,31 @@
+{
+  "recipe": "all_layers_cls_ce_v1",
+  "seed": 3407,
+  "epochs": 4,
+  "conditions": [
+    "deberta_full",
+    "roberta_full"
+  ],
+  "effective_batch": 16,
+  "micro_batch": 4,
+  "max_seconds_per_arm": 14400,
+  "learning_rate": 2e-05,
+  "test_evaluated": false,
+  "selection": "Validation Macro-F1 only; retain all pilot results; no automatic final test",
+  "expansion": "No extra seeds, models, learning-rate sweep or paid compute automatically",
+  "input_note": "Same audited visible character prefix; each tokenizer capped at 512 tokens",
+  "historical_comparison_note": "All-layer training differs from earlier one-layer fusion",
+  "deberta_revision": "8ccc9b6f36199bec6961081d44eb72fb3f7353f3",
+  "source_inputs_sha256": "73f85ea047fdce4736fc8d923b5474405b0e72f615f3a4cb14103f2e0aa2ee14",
+  "partitions": {
+    "train": {
+      "sha256": "e9e387f3f07c4e4ad60a7f872f4801aa33c108b8731e5161ac684d2b0bf78e9a",
+      "count": 11190
+    },
+    "val": {
+      "sha256": "c60b55e3d8165ba9fbd5272ad1f3ad8a597cde62904d01a2f77fa1ec8456cd8d",
+      "count": 1600
+    }
+  },
+  "packaged_at_utc": "2026-11-12T06:33:27.521486+00:00"
+}

@@ -77,6 +77,7 @@ models/
 !/experiments/reports/runtime_training.json
 !/experiments/reports/same_window/
 !/experiments/reports/yingqi_snapshot/
+!/experiments/reports/encoder_pilot/
 
 # Raw-text excerpts and superseded auxiliary IDs can be regenerated locally.
 /experiments/reports/comparison/error_cases.jsonl
