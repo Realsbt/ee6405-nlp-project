@@ -1,6 +1,7 @@
 """Local inference for the course Demo, using only verified project checkpoints."""
 
 import atexit
+import copy
 import json
 import os
 from pathlib import Path
@@ -16,14 +17,17 @@ import numpy as np
 import torch
 
 from experiments.common import DATA_ROOT, LABELS, file_hash
+from experiments.glpc_data import GLPCDataset, collate_glpc
+from experiments.glpc_model import GLPCModel
 from experiments.neural import PROJECT_ROOT, TextDataset, build_model, collate_batch, tokenizer_local
 from experiments.raw_graph import RawGraphDataset
 
 
 RUN_NAMES = {"tfidf": "tfidf_lr_v1", "roberta": "roberta_s3407", "race": "race_s3407",
-             "race_no_supcon": "race_no_supcon_s3407"}
+             "race_no_supcon": "race_no_supcon_s3407", "glpc_b0": "glpc_b0_s3407"}
 DISPLAY = {"tfidf": "TF-IDF + Logistic Regression", "roberta": "RoBERTa", "race": "RACE",
-           "race_no_supcon": "RACE · no contrastive loss"}
+           "race_no_supcon": "RACE · no contrastive loss",
+           "glpc_b0": "RoBERTa + GLPC B0 (local checkpoint)"}
 
 
 class DetectorService:
@@ -45,22 +49,31 @@ class DetectorService:
     def registry(self):
         output = []
         for name, run in RUN_NAMES.items():
-            report = PROJECT_ROOT / "experiments/reports" / run
-            ready = (report / "result.json").exists() and (report / "verification.json").exists()
-            reason = "Training or verification pending"
-            if ready:
-                result = json.loads((report / "result.json").read_text())
-                ready = result["status"] == "completed"
-                ready = ready and json.loads((report / "verification.json").read_text())["status"] == "passed"
+            if name == "glpc_b0":
+                run_dir = PROJECT_ROOT / "experiments/glpc_runs" / run
+                config_path = run_dir / "config.json"
+                checkpoint_path = run_dir / "best.pt"
+                required = [config_path, checkpoint_path, BACKBONE / "model.safetensors",
+                            UPSTREAM / "models/flexible_model.py"]
+                ready = all(path.is_file() for path in required)
+                reason = "Model resources not installed" if not ready else ""
+            else:
+                report = PROJECT_ROOT / "experiments/reports" / run
+                ready = (report / "result.json").exists() and (report / "verification.json").exists()
+                reason = "Training or verification pending"
                 if ready:
-                    required = [resolve_recorded_path(result.get("checkpoint_path", result.get("model_path")))]
-                    if name != "tfidf":
-                        required += [BACKBONE / "model.safetensors", UPSTREAM / "models/flexible_model.py"]
-                    if name.startswith("race"):
-                        required += [STORAGE / "assets/isanlp_rst_local/best_weights.pt",
-                                     STORAGE / "assets/isanlp_rst_local/config.json"]
-                    ready = all(path.is_file() for path in required)
-                    reason = "Model resources not installed" if not ready else ""
+                    result = json.loads((report / "result.json").read_text())
+                    ready = result["status"] == "completed"
+                    ready = ready and json.loads((report / "verification.json").read_text())["status"] == "passed"
+                    if ready:
+                        required = [resolve_recorded_path(result.get("checkpoint_path", result.get("model_path")))]
+                        if name != "tfidf":
+                            required += [BACKBONE / "model.safetensors", UPSTREAM / "models/flexible_model.py"]
+                        if name.startswith("race"):
+                            required += [STORAGE / "assets/isanlp_rst_local/best_weights.pt",
+                                         STORAGE / "assets/isanlp_rst_local/config.json"]
+                        ready = all(path.is_file() for path in required)
+                        reason = "Model resources not installed" if not ready else ""
             output.append({"id": name, "name": DISPLAY[name], "available": ready,
                            "availability_reason": reason,
                            "requires_rst": name.startswith("race"), "run_id": run})
@@ -74,6 +87,16 @@ class DetectorService:
             raise ValueError("Model unavailable: install its resources and check the verification record")
         started = time.perf_counter()
         run = RUN_NAMES[name]
+        if name == "glpc_b0":
+            run_dir = PROJECT_ROOT / "experiments/glpc_runs" / run
+            config = json.loads((run_dir / "config.json").read_text(encoding="utf-8"))
+            config = copy.deepcopy(config)
+            config["architecture"]["backbone_model_path"] = str(BACKBONE)
+            saved = torch.load(run_dir / "best.pt", map_location="cpu", weights_only=True)
+            model = GLPCModel(config, config["mode"]).to(self.device).eval()
+            model.load_state_dict(saved["model_state_dict"], strict=True)
+            self.models[name] = model
+            return model, time.perf_counter() - started
         report = PROJECT_ROOT / "experiments/reports" / run
         result = json.loads((report / "result.json").read_text())
         if name == "tfidf":
@@ -144,6 +167,8 @@ class DetectorService:
                 dataset = RawGraphDataset([record], self.tokenizer)
             elif name == "roberta":
                 dataset = TextDataset([record], self.tokenizer)
+            elif name == "glpc_b0":
+                dataset = GLPCDataset([record], self.tokenizer)
             if self.device == "cuda" and name != "tfidf":
                 torch.cuda.synchronize()
             forward_started = time.perf_counter()
@@ -151,7 +176,9 @@ class DetectorService:
                 scores = model.predict_proba([text[:end]])[0]
             else:
                 with torch.inference_mode():
-                    logits = model(collate_batch([dataset[0]]))["logits"].float()
+                    batch = collate_glpc([dataset[0]]) if name == "glpc_b0" else collate_batch([dataset[0]])
+                    logits = model({key: value.to(self.device) if torch.is_tensor(value) else value
+                                    for key, value in batch.items()})["logits"].float()
                     scores = logits.softmax(-1)[0].cpu().numpy()
                 if self.device == "cuda":
                     torch.cuda.synchronize()

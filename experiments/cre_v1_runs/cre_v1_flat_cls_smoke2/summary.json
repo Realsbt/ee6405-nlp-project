@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "run_id": "cre_v1_flat_cls_smoke2",
+  "mode": "flat_cls",
+  "seed": 3407,
+  "epochs_completed": 1,
+  "best_overall": {
+    "epoch": 0,
+    "macro_f1": 0.9200786397289521,
+    "status": "ZERO_CORRECTION_SELECTED"
+  },
+  "best_trained": {
+    "epoch": 1,
+    "macro_f1": 0.9200786397289521,
+    "status": "TRAINED_CORRECTION_SELECTED"
+  },
+  "selection_status": "ZERO_CORRECTION_SELECTED",
+  "test_partition_loaded": false,
+  "training_seconds": 12.121592099996633,
+  "peak_memory_bytes": 806622720,
+  "new_trainable_parameters": 362541
+}

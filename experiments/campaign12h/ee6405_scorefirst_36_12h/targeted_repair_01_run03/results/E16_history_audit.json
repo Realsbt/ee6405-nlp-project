@@ -1,0 +1,25 @@
+{
+  "task": "R09",
+  "status": "NOT_VERIFIED",
+  "historical_training_runs_this_round": 0,
+  "known_from_existing_selection": {
+    "formal_training": true,
+    "actual_epochs": 4,
+    "optimizer_updates": 2800,
+    "best_epoch": 3,
+    "encoder_lr_recorded": 0.00001,
+    "head_lr_recorded": 0.00005,
+    "weight_decay_recorded": 0.01,
+    "gradient_checkpointing": true
+  },
+  "not_recoverable_from_history": [
+    "optimizer parameter names and counts per group",
+    "duplicate or omitted parameter audit",
+    "final scheduler class and parameters",
+    "actual learning-rate sequence and 10 percent warmup execution",
+    "training-time source snapshot or hash",
+    "per-epoch training loss and complete optimizer-state history"
+  ],
+  "current_source_not_substituted_for_history": true,
+  "schedule_reference": "schedule_reference_NOT_HISTORY.json"
+}

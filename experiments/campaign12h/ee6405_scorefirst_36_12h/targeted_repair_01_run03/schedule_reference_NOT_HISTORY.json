@@ -1,0 +1,56 @@
+{
+  "kind": "REFERENCE_ONLY_NOT_HISTORICAL_EVIDENCE",
+  "training_authorized": false,
+  "train_records_assumed": 11190,
+  "microbatch": 2,
+  "gradient_accumulation": 8,
+  "updates_per_epoch": 700,
+  "total_updates": 2800,
+  "warmup_updates": 280,
+  "schedule_state_index_not_completed_training_count": true,
+  "sample_points": [
+    {
+      "scheduler_index": 0,
+      "factor": 0.0,
+      "encoder_lr": 0.0,
+      "head_lr": 0.0
+    },
+    {
+      "scheduler_index": 1,
+      "factor": 0.0035714285714285713,
+      "encoder_lr": 3.571428571428572e-08,
+      "head_lr": 1.7857142857142858e-07
+    },
+    {
+      "scheduler_index": 140,
+      "factor": 0.5,
+      "encoder_lr": 5e-06,
+      "head_lr": 2.5e-05
+    },
+    {
+      "scheduler_index": 280,
+      "factor": 1.0,
+      "encoder_lr": 1e-05,
+      "head_lr": 5e-05
+    },
+    {
+      "scheduler_index": 1400,
+      "factor": 0.5555555555555556,
+      "encoder_lr": 5.555555555555557e-06,
+      "head_lr": 2.777777777777778e-05
+    },
+    {
+      "scheduler_index": 2799,
+      "factor": 0.0003968253968253968,
+      "encoder_lr": 3.968253968253969e-09,
+      "head_lr": 1.9841269841269843e-08
+    },
+    {
+      "scheduler_index": 2800,
+      "factor": 0.0,
+      "encoder_lr": 0.0,
+      "head_lr": 0.0
+    }
+  ],
+  "note": "Optimizer update uses the current lr; call scheduler.step AFTER optimizer.step. Scale an incomplete accumulation window by its actual example count, not always by 8."
+}

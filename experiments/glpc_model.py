@@ -56,11 +56,13 @@ class GLPCModel(nn.Module):
             dropout_prob=architecture.get("classifier_dropout", 0.1),
         )
 
-    def forward(self, batch):
-        outputs = self.bert_model(
-            input_ids=batch["input_ids"],
-            attention_mask=batch["attention_mask"],
-        )
+    def forward(self, batch, inputs_embeds=None):
+        encoder_inputs = {"attention_mask": batch["attention_mask"]}
+        if inputs_embeds is None:
+            encoder_inputs["input_ids"] = batch["input_ids"]
+        else:
+            encoder_inputs["inputs_embeds"] = inputs_embeds
+        outputs = self.bert_model(**encoder_inputs)
         hidden = outputs.last_hidden_state
         cls = hidden[:, 0]
         logits = self.classifier(cls)

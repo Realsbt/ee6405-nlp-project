@@ -1,0 +1,41 @@
+{
+  "status": "FAILED",
+  "deadline_epoch": 1794046147.6849716,
+  "steps": [
+    {
+      "step": "tests",
+      "pid": 23636,
+      "command": [
+        "C:\\Users\\danie\\anaconda3\\envs\\pt311\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_reference"
+      ],
+      "started_epoch": 1794043477.71268,
+      "returncode": 0,
+      "status": "PASS",
+      "wall_seconds": 4.528514385223389
+    },
+    {
+      "step": "prepare",
+      "pid": 97924,
+      "command": [
+        "C:\\Users\\danie\\anaconda3\\envs\\pt311\\python.exe",
+        "-B",
+        "D:\\6405_prj\\gpt\\EE6405_targeted_repair_v1\\prepare_inputs.py",
+        "--bindings",
+        "D:\\6405_prj\\gpt\\EE6405_targeted_repair_v1\\bindings.json",
+        "--out",
+        "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\targeted_repair_01_run\\inputs"
+      ],
+      "started_epoch": 1794043482.2421966,
+      "returncode": 1,
+      "status": "FAILED",
+      "wall_seconds": 0.9924571514129639
+    }
+  ],
+  "finished_epoch": 1794043483.2356598,
+  "remaining_seconds": 2664.449311733246
+}

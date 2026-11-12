@@ -1,0 +1,20 @@
+{
+  "schema": "ee6405.gated_view_policy.v1",
+  "margin": 0.1,
+  "lambda": 0.0,
+  "gate": "B0_margin < 0.10 AND argmax(B0) != argmax(E26)",
+  "formula": "p=(1-lambda)*p_B0+lambda*p_E26 inside gate; otherwise p=p_B0",
+  "decision_tie_rule": "smallest index in the fixed label_order",
+  "label_order": [
+    "human_written",
+    "human_ai_polished",
+    "ai_generated",
+    "ai_humanized"
+  ],
+  "status": "CV_BLOCKED_KEEP_B0",
+  "auto_deploy": false,
+  "checkpoint_changes": false,
+  "expected_B0_input_sha": "a39019a2a11c0d77ee390d970b4cfdb91c506c4303dcc4d5f5a22bbf5a82f1a7",
+  "expected_E26_input_sha": "7d4514b7485483d550e6b5399260294dd6a7d2b64998053bb2391a55eafc1aca",
+  "limitation": "Full S refit after cross-fit screen; no independent H/test validation in this task."
+}

@@ -1,0 +1,14 @@
+{
+  "task_id": "E10",
+  "status": "RESOURCE_BLOCKED",
+  "metrics": null,
+  "base_metrics": null,
+  "S_accuracy": null,
+  "S_macro_f1": null,
+  "H_accuracy": null,
+  "H_macro_f1": null,
+  "optimizer_updates": 0,
+  "stopped_reason": "peft_not_installed_and_main_environment_reinstall_prohibited",
+  "test_partition_loaded": false,
+  "hc3_loaded": false
+}

@@ -1,0 +1,26 @@
+{
+  "plan_id": "ee6405_targeted_repair_v1",
+  "status": "COMPLETED_WITH_FIXED_RULE_BLOCKED",
+  "training_started": false,
+  "downloads_started": false,
+  "H_test_HC3_access": false,
+  "decision": "NO_ROBUST_GAIN_KEEP_B0",
+  "gate_count": 0,
+  "crossfit_status": "INSUFFICIENT_GATE_SUPPORT",
+  "e30_status": "NO_HISTORICAL_RECIPE_NOT_REFIT",
+  "tasks": {
+    "R00": "PASS",
+    "R01": "PASS",
+    "R02": "PASS",
+    "R03": "PASS",
+    "R04": "PASS",
+    "R05": "PASS",
+    "R06": "BLOCKED",
+    "R07": "PASS",
+    "R08": "PASS",
+    "R09": "NOT_VERIFIED",
+    "R10": "PASS",
+    "R11": "PASS",
+    "R12": "PASS"
+  }
+}

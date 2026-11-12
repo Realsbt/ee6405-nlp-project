@@ -1,0 +1,37 @@
+﻿task_id,family,method,status,S_accuracy,S_macro_f1,H_accuracy,H_macro_f1,stopped_reason
+E01,基准,B0锁定基线与预测缓存,COMPLETE,0.94375,0.9256410942828763,0.9421875,0.9133390717705058,completed
+E02,低成本决策,有界类别偏置／先验修正,COMPLETE,0.9447916666666667,0.9243075158770301,0.9359375,0.8953150731063348,completed
+E03,低成本决策,正则化向量校准,COMPLETE,0.94375,0.9256410942828763,0.9421875,0.9133390717705058,completed
+E04,低成本决策,低margin Top-2有条件反转,COMPLETE,0.94375,0.9256410942828763,0.9421875,0.9133390717705058,completed
+E05,稀疏互补,字符＋词组稀疏线性模型及融合,COMPLETE,0.8739583333333333,0.7839943736507317,0.86875,0.7411605082644728,completed
+E06,稀疏互补,NB log-count ratio线性专家,COMPLETE,0.23125,0.16328199582116604,0.2484375,0.16875474503972135,completed
+E07,稀疏互补,轻量风格统计复核器,COMPLETE,0.6635416666666667,0.49582430340557276,0.628125,0.4640816827263069,completed
+E08,编码器适配,B0末四层继续微调,UNDERTRAINED,0.94375,0.9256410942828763,,,screen_update_budget_160_not_converged
+E09,编码器适配,B0全编码器低学习率微调,UNDERTRAINED,0.94375,0.9256410942828763,,,screen_update_budget_160_not_converged
+E10,编码器适配,B0内部LoRA适配,RESOURCE_BLOCKED,,,,,peft_not_installed_and_main_environment_reinstall_prohibited
+E11,优化稳健化,B0末四层R-Drop,PLANNED,,,,,Not started before campaign execution segment ended
+E12,优化稳健化,B0连续嵌入对抗微调,PLANNED,,,,,Not started before campaign execution segment ended
+E13,优化稳健化,B0难例Focal微调,PLANNED,,,,,Not started before campaign execution segment ended
+E14,新底座,通用RoBERTa全量CE,PLANNED,,,,,Not started before campaign execution segment ended
+E15,新底座,DeBERTa-v3-small全量CE,PLANNED,,,,,Not started before campaign execution segment ended
+E16,新底座,DeBERTa-v3-base全量CE,PLANNED,,,,,Not started before campaign execution segment ended
+E17,新底座,DeBERTa-v3-base LoRA,PLANNED,,,,,Not started before campaign execution segment ended
+E18,新底座,ModernBERT长窗口候选,PLANNED,,,,,Not started before campaign execution segment ended
+E19,可训练结构,DeBERTa类别自适应层读取,PLANNED,,,,,Not started before campaign execution segment ended
+E20,可训练结构,共享编码器首尾双窗口,PLANNED,,,,,Not started before campaign execution segment ended
+E21,可训练结构,三窗口MIL注意力分类,PLANNED,,,,,Not started before campaign execution segment ended
+E22,句向量与检索,SetFit-style句向量分类,PLANNED,,,,,Not started before campaign execution segment ended
+E23,句向量与检索,训练库kNN概率融合,PLANNED,,,,,Not started before campaign execution segment ended
+E24,表示预适配,train-only任务自适应预训练,PLANNED,,,,,Not started before campaign execution segment ended
+E25,二次测量,MC-Dropout五次复核,COMPLETE,0.9302083333333333,0.9024668409858301,0.921875,0.8889849046436923,completed
+E26,二次测量,原文三视角推理平均,COMPLETE,0.9447916666666667,0.927020764032624,0.9390625,0.9081158484217453,completed
+E27,二次测量,轻扰动响应复核器,PLANNED,,,,,Not started before campaign execution segment ended
+E28,二次测量,双向受控改写响应,PLANNED,,,,,Not started before campaign execution segment ended
+E29,二次测量,低概率token统计补充,PLANNED,,,,,Not started before campaign execution segment ended
+E30,结果集成,异构概率平均集成,COMPLETE,0.9458333333333333,0.926428275044231,0.94375,0.9146258740892047,completed
+E31,结果集成,非负权重概率融合,COMPLETE,0.94375,0.9234308199968038,0.9375,0.9068113733176936,completed
+E32,结果集成,正则化logit stacking,PLANNED,,,,,Not started before campaign execution segment ended
+E33,结果集成,低margin双模型收益路由,PLANNED,,,,,Not started before campaign execution segment ended
+E34,权重与随机性集成,单轨迹权重平均候选,PLANNED,,,,,Not started before campaign execution segment ended
+E35,权重与随机性集成,兼容模型greedy soup,PLANNED,,,,,Not started before campaign execution segment ended
+E36,权重与随机性集成,第二训练随机流的概率集成,PLANNED,,,,,Not started before campaign execution segment ended

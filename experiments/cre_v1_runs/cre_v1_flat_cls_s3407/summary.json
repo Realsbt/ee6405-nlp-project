@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "run_id": "cre_v1_flat_cls_s3407",
+  "mode": "flat_cls",
+  "seed": 3407,
+  "epochs_completed": 6,
+  "best_overall": {
+    "epoch": 0,
+    "macro_f1": 0.9200786397289521,
+    "status": "ZERO_CORRECTION_SELECTED"
+  },
+  "best_trained": {
+    "epoch": 1,
+    "macro_f1": 0.9133263234512187,
+    "status": "TRAINED_CORRECTION_SELECTED"
+  },
+  "selection_status": "ZERO_CORRECTION_SELECTED",
+  "test_partition_loaded": false,
+  "training_seconds": 266.37142880000465,
+  "peak_memory_bytes": 821468672,
+  "new_trainable_parameters": 362541
+}

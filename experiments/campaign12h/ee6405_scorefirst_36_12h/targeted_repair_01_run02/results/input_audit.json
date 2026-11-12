@@ -1,0 +1,40 @@
+{
+  "B0_sha256": "a39019a2a11c0d77ee390d970b4cfdb91c506c4303dcc4d5f5a22bbf5a82f1a7",
+  "E26_sha256": "7d4514b7485483d550e6b5399260294dd6a7d2b64998053bb2391a55eafc1aca",
+  "ids_sha256": "427339ebbab33fab8e8757d80c6ec33fbd8e9c5ab9fc1b7f11ce829294ed2439",
+  "n": 960,
+  "label_order": [
+    "human_written",
+    "human_ai_polished",
+    "ai_generated",
+    "ai_humanized"
+  ],
+  "group_count": 240,
+  "groups_verified": false,
+  "provenance_B0": {
+    "source_prediction_file": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\top5_revision_01\\E01_prediction_with_ids.json",
+    "source_prediction_sha256": "d4073285cae5539de65b41c93c9ded1ee834b18fed0d5d0054f6ed9c8ddf61f1",
+    "binding_status": "REINFERRED_IDS_BOUND",
+    "binding_evidence": "top5_revision_01/E01_prediction_with_ids.json records ordered_item_ids, label_ids, probabilities, label_order, data hashes, and the locked B0 checkpoint hash.",
+    "label_order_evidence": "Prediction was independently re-inferred from the locked B0 checkpoint with explicit label_order and item_id binding.",
+    "group_evidence": "split_manifest.json provides the original group_id and fold assignments; no separate connected-component audit was found, so groups_verified remains false.",
+    "metadata_sha256": "bfec5cb577560e3845c6697bd979979f9612b0e8e64246bf5f06bbf4ac607f13",
+    "checkpoint_sha256": "cb61944bc1229b13e826911db27e98e0ea0e06d576c9ded65ba165c5f0df8b8c",
+    "source_configuration_file": null,
+    "source_scope": "historically reused S",
+    "historical_fit_scope": "B0 locked checkpoint; S validation reuse"
+  },
+  "provenance_E26": {
+    "source_prediction_file": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\top5_revision_01\\E26_prediction_with_ids.json",
+    "source_prediction_sha256": "883d1c5480b133d6e3c2fc49bf2e18b419599d073d4041793355091226d45573",
+    "binding_status": "REINFERRED_IDS_BOUND",
+    "binding_evidence": "top5_revision_01/E26_prediction_with_ids.json records ordered_item_ids, label_ids, probabilities, label_order, data hashes, and the locked B0 checkpoint hash.",
+    "label_order_evidence": "E26 bound prediction file carries the same explicit four-class label order.",
+    "group_evidence": "split_manifest.json provides the original group_id and fold assignments; no separate connected-component audit was found, so groups_verified remains false.",
+    "metadata_sha256": "bfec5cb577560e3845c6697bd979979f9612b0e8e64246bf5f06bbf4ac607f13",
+    "checkpoint_sha256": "cb61944bc1229b13e826911db27e98e0ea0e06d576c9ded65ba165c5f0df8b8c",
+    "source_configuration_file": null,
+    "source_scope": "historically reused S",
+    "historical_fit_scope": "fixed B0 with historical multi-window E26 recipe; S validation reuse"
+  }
+}

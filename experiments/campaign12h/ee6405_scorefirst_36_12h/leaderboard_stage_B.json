@@ -1,0 +1,362 @@
+[
+  {
+    "task_id": "E01",
+    "family": "基准",
+    "method": "B0锁定基线与预测缓存",
+    "status": "COMPLETE",
+    "S_accuracy": 0.94375,
+    "S_macro_f1": 0.9256410942828763,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E02",
+    "family": "低成本决策",
+    "method": "有界类别偏置／先验修正",
+    "status": "COMPLETE",
+    "S_accuracy": 0.9447916666666667,
+    "S_macro_f1": 0.9243075158770301,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E03",
+    "family": "低成本决策",
+    "method": "正则化向量校准",
+    "status": "COMPLETE",
+    "S_accuracy": 0.94375,
+    "S_macro_f1": 0.9256410942828763,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E04",
+    "family": "低成本决策",
+    "method": "低margin Top-2有条件反转",
+    "status": "COMPLETE",
+    "S_accuracy": 0.94375,
+    "S_macro_f1": 0.9256410942828763,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E05",
+    "family": "稀疏互补",
+    "method": "字符＋词组稀疏线性模型及融合",
+    "status": "COMPLETE",
+    "S_accuracy": 0.8739583333333333,
+    "S_macro_f1": 0.7839943736507317,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E06",
+    "family": "稀疏互补",
+    "method": "NB log-count ratio线性专家",
+    "status": "COMPLETE",
+    "S_accuracy": 0.23125,
+    "S_macro_f1": 0.16328199582116604,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E07",
+    "family": "稀疏互补",
+    "method": "轻量风格统计复核器",
+    "status": "COMPLETE",
+    "S_accuracy": 0.6635416666666667,
+    "S_macro_f1": 0.49582430340557276,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E08",
+    "family": "编码器适配",
+    "method": "B0末四层继续微调",
+    "status": "UNDERTRAINED",
+    "S_accuracy": 0.94375,
+    "S_macro_f1": 0.9256410942828763,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E09",
+    "family": "编码器适配",
+    "method": "B0全编码器低学习率微调",
+    "status": "UNDERTRAINED",
+    "S_accuracy": 0.94375,
+    "S_macro_f1": 0.9256410942828763,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E10",
+    "family": "编码器适配",
+    "method": "B0内部LoRA适配",
+    "status": "IMPLEMENTATION_BLOCKED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E11",
+    "family": "优化稳健化",
+    "method": "B0末四层R-Drop",
+    "status": "UNDERTRAINED",
+    "S_accuracy": 0.94375,
+    "S_macro_f1": 0.9256410942828763,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E12",
+    "family": "优化稳健化",
+    "method": "B0连续嵌入对抗微调",
+    "status": "UNDERTRAINED",
+    "S_accuracy": 0.94375,
+    "S_macro_f1": 0.9256410942828763,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E13",
+    "family": "优化稳健化",
+    "method": "B0难例Focal微调",
+    "status": "UNDERTRAINED",
+    "S_accuracy": 0.94375,
+    "S_macro_f1": 0.9256410942828763,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E14",
+    "family": "新底座",
+    "method": "通用RoBERTa全量CE",
+    "status": "UNDERTRAINED",
+    "S_accuracy": 0.925,
+    "S_macro_f1": 0.8822005718230297,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E15",
+    "family": "新底座",
+    "method": "DeBERTa-v3-small全量CE",
+    "status": "RESOURCE_BLOCKED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E16",
+    "family": "新底座",
+    "method": "DeBERTa-v3-base全量CE",
+    "status": "RESOURCE_BLOCKED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E17",
+    "family": "新底座",
+    "method": "DeBERTa-v3-base LoRA",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E18",
+    "family": "新底座",
+    "method": "ModernBERT长窗口候选",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E19",
+    "family": "可训练结构",
+    "method": "DeBERTa类别自适应层读取",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E20",
+    "family": "可训练结构",
+    "method": "共享编码器首尾双窗口",
+    "status": "COMPLETE",
+    "S_accuracy": 0.940625,
+    "S_macro_f1": 0.9173712382197154,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E21",
+    "family": "可训练结构",
+    "method": "三窗口MIL注意力分类",
+    "status": "COMPLETE",
+    "S_accuracy": 0.9416666666666667,
+    "S_macro_f1": 0.9203112793232214,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E22",
+    "family": "句向量与检索",
+    "method": "SetFit-style句向量分类",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E23",
+    "family": "句向量与检索",
+    "method": "训练库kNN概率融合",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E24",
+    "family": "表示预适配",
+    "method": "train-only任务自适应预训练",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E25",
+    "family": "二次测量",
+    "method": "MC-Dropout五次复核",
+    "status": "COMPLETE",
+    "S_accuracy": 0.9302083333333333,
+    "S_macro_f1": 0.9024668409858301,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E26",
+    "family": "二次测量",
+    "method": "原文三视角推理平均",
+    "status": "COMPLETE",
+    "S_accuracy": 0.9447916666666667,
+    "S_macro_f1": 0.927020764032624,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E27",
+    "family": "二次测量",
+    "method": "轻扰动响应复核器",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E28",
+    "family": "二次测量",
+    "method": "双向受控改写响应",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E29",
+    "family": "二次测量",
+    "method": "低概率token统计补充",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E30",
+    "family": "结果集成",
+    "method": "异构概率平均集成",
+    "status": "COMPLETE",
+    "S_accuracy": 0.9458333333333333,
+    "S_macro_f1": 0.926428275044231,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E31",
+    "family": "结果集成",
+    "method": "非负权重概率融合",
+    "status": "COMPLETE",
+    "S_accuracy": 0.94375,
+    "S_macro_f1": 0.9234308199968038,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E32",
+    "family": "结果集成",
+    "method": "正则化logit stacking",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E33",
+    "family": "结果集成",
+    "method": "低margin双模型收益路由",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E34",
+    "family": "权重与随机性集成",
+    "method": "单轨迹权重平均候选",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E35",
+    "family": "权重与随机性集成",
+    "method": "兼容模型greedy soup",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  },
+  {
+    "task_id": "E36",
+    "family": "权重与随机性集成",
+    "method": "第二训练随机流的概率集成",
+    "status": "PLANNED",
+    "S_accuracy": null,
+    "S_macro_f1": null,
+    "H_accuracy": null,
+    "H_macro_f1": null
+  }
+]

@@ -1,0 +1,73 @@
+{
+  "status": "COMPLETED_CORE_ANALYSIS",
+  "deadline_epoch": 1794046147.6849716,
+  "steps": [
+    {
+      "step": "tests",
+      "pid": 107428,
+      "command": [
+        "C:\\Users\\danie\\anaconda3\\envs\\pt311\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_reference"
+      ],
+      "started_epoch": 1794043504.4657867,
+      "returncode": 0,
+      "status": "PASS",
+      "wall_seconds": 4.455428600311279
+    },
+    {
+      "step": "prepare",
+      "pid": 44276,
+      "command": [
+        "C:\\Users\\danie\\anaconda3\\envs\\pt311\\python.exe",
+        "-B",
+        "D:\\6405_prj\\gpt\\EE6405_targeted_repair_v1\\prepare_inputs.py",
+        "--bindings",
+        "D:\\6405_prj\\gpt\\EE6405_targeted_repair_v1\\bindings.json",
+        "--out",
+        "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\targeted_repair_01_run02\\inputs"
+      ],
+      "started_epoch": 1794043508.9222164,
+      "returncode": 0,
+      "status": "PASS",
+      "wall_seconds": 1.0913310050964355
+    },
+    {
+      "step": "analysis",
+      "pid": 101592,
+      "command": [
+        "C:\\Users\\danie\\anaconda3\\envs\\pt311\\python.exe",
+        "-B",
+        "D:\\6405_prj\\gpt\\EE6405_targeted_repair_v1\\run_targeted_repair.py",
+        "--inputs",
+        "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\targeted_repair_01_run02\\inputs",
+        "--out",
+        "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\targeted_repair_01_run02\\results"
+      ],
+      "started_epoch": 1794043510.014541,
+      "returncode": 0,
+      "status": "PASS",
+      "wall_seconds": 1.0468058586120605
+    },
+    {
+      "step": "schedule_reference",
+      "pid": 111196,
+      "command": [
+        "C:\\Users\\danie\\anaconda3\\envs\\pt311\\python.exe",
+        "-B",
+        "D:\\6405_prj\\gpt\\EE6405_targeted_repair_v1\\optimizer_recipe.py",
+        "--out",
+        "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\targeted_repair_01_run02\\schedule_reference_NOT_HISTORY.json"
+      ],
+      "started_epoch": 1794043511.062346,
+      "returncode": 0,
+      "status": "PASS",
+      "wall_seconds": 0.9703762531280518
+    }
+  ],
+  "finished_epoch": 1794043512.0437236,
+  "remaining_seconds": 2635.641247987747
+}

@@ -1,0 +1,29 @@
+{
+  "total_model_parameters": 125602055,
+  "new_trainable_parameters": 362755,
+  "trainable_names": [
+    "token_queries",
+    "sentence_queries",
+    "shared_projection.0.weight",
+    "shared_projection.0.bias",
+    "shared_projection.1.weight",
+    "shared_projection.1.bias",
+    "sentence_projection.weight",
+    "sentence_projection.bias",
+    "sentence_norm.weight",
+    "sentence_norm.bias",
+    "position.weight",
+    "expert_layers.0.input.weight",
+    "expert_layers.0.input.bias",
+    "expert_layers.0.output.weight",
+    "expert_layers.0.output.bias",
+    "expert_layers.1.input.weight",
+    "expert_layers.1.input.bias",
+    "expert_layers.1.output.weight",
+    "expert_layers.1.output.bias",
+    "expert_layers.2.input.weight",
+    "expert_layers.2.input.bias",
+    "expert_layers.2.output.weight",
+    "expert_layers.2.output.bias"
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "task_id": "E06",
+  "status": "COMPLETE",
+  "metrics": {
+    "samples": 960,
+    "accuracy": 0.23125,
+    "macro_f1": 0.16328199582116604,
+    "macro_precision": 0.24192360885556569,
+    "macro_recall": 0.2169797663620382,
+    "macro_auroc_ovr": 0.4650767146086667,
+    "macro_tpr_at_1pct_fpr_roc": 0.00899777903028839,
+    "per_class": {
+      "human_written": {
+        "support": 240,
+        "precision": 0.15135135135135136,
+        "recall": 0.11666666666666667,
+        "f1": 0.13176470588235295,
+        "auroc_ovr": 0.3952777777777778,
+        "tpr_at_1pct_fpr_roc": 0.008333333333333333
+      },
+      "human_ai_polished": {
+        "support": 240,
+        "precision": 0.23583460949464014,
+        "recall": 0.6416666666666667,
+        "f1": 0.3449048152295633,
+        "auroc_ovr": 0.48005787037037034,
+        "tpr_at_1pct_fpr_roc": 0.008333333333333333
+      },
+      "ai_generated": {
+        "support": 421,
+        "precision": 0.3305084745762712,
+        "recall": 0.09263657957244656,
+        "f1": 0.14471243042671614,
+        "auroc_ovr": 0.46276424627289914,
+        "tpr_at_1pct_fpr_roc": 0.0023752969121140144
+      },
+      "ai_humanized": {
+        "support": 59,
+        "precision": 0.25,
+        "recall": 0.01694915254237288,
+        "f1": 0.031746031746031744,
+        "auroc_ovr": 0.5222069640136195,
+        "tpr_at_1pct_fpr_roc": 0.01694915254237288
+      }
+    },
+    "confusion_matrix": [
+      [
+        28,
+        170,
+        41,
+        1
+      ],
+      [
+        54,
+        154,
+        32,
+        0
+      ],
+      [
+        96,
+        284,
+        39,
+        2
+      ],
+      [
+        7,
+        45,
+        6,
+        1
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "base_metrics": {
+    "samples": 960,
+    "accuracy": 0.94375,
+    "macro_f1": 0.9256410942828763,
+    "macro_precision": 0.9368517826904889,
+    "macro_recall": 0.9161507609001973,
+    "macro_auroc_ovr": 0.9923915767600681,
+    "macro_tpr_at_1pct_fpr_roc": 0.8386371146852396,
+    "per_class": {
+      "human_written": {
+        "support": 240,
+        "precision": 0.9835390946502057,
+        "recall": 0.9958333333333333,
+        "f1": 0.989648033126294,
+        "auroc_ovr": 0.9996643518518519,
+        "tpr_at_1pct_fpr_roc": 1.0
+      },
+      "human_ai_polished": {
+        "support": 240,
+        "precision": 0.9214876033057852,
+        "recall": 0.9291666666666667,
+        "f1": 0.9253112033195021,
+        "auroc_ovr": 0.9921006944444445,
+        "tpr_at_1pct_fpr_roc": 0.8708333333333333
+      },
+      "ai_generated": {
+        "support": 421,
+        "precision": 0.9385342789598109,
+        "recall": 0.9429928741092637,
+        "f1": 0.9407582938388626,
+        "auroc_ovr": 0.9894455730899572,
+        "tpr_at_1pct_fpr_roc": 0.6532066508313539
+      },
+      "ai_humanized": {
+        "support": 59,
+        "precision": 0.9038461538461539,
+        "recall": 0.7966101694915254,
+        "f1": 0.8468468468468469,
+        "auroc_ovr": 0.988355687654019,
+        "tpr_at_1pct_fpr_roc": 0.8305084745762712
+      }
+    },
+    "confusion_matrix": [
+      [
+        239,
+        1,
+        0,
+        0
+      ],
+      [
+        3,
+        223,
+        14,
+        0
+      ],
+      [
+        1,
+        18,
+        397,
+        5
+      ],
+      [
+        0,
+        0,
+        12,
+        47
+      ]
+    ],
+    "label_order": [
+      "human_written",
+      "human_ai_polished",
+      "ai_generated",
+      "ai_humanized"
+    ]
+  },
+  "delta_accuracy_pp": -71.24999999999999,
+  "delta_macro_f1_pp": -76.23590984617104,
+  "J": 0.19726599791058302,
+  "wrong_to_right": 14,
+  "right_to_wrong": 698,
+  "changed_wrong_to_wrong": 23,
+  "stopped_reason": "completed",
+  "config": {
+    "kind": "nb_svm"
+  },
+  "wall_seconds": 0.018331050872802734,
+  "test_partition_loaded": false,
+  "hc3_loaded": false
+}

@@ -1,0 +1,24 @@
+{
+  "metadata_file": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\protocol\\split_manifest.json",
+  "metadata_sha256": "bfec5cb577560e3845c6697bd979979f9612b0e8e64246bf5f06bbf4ac607f13",
+  "S_count": 960,
+  "normalization_only_not_new_generation_proof": true,
+  "models": {
+    "B0": {
+      "status": "NORMALIZED_VALID",
+      "path": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\targeted_repair_01_run02\\inputs\\B0_S.json",
+      "sha256": "a39019a2a11c0d77ee390d970b4cfdb91c506c4303dcc4d5f5a22bbf5a82f1a7"
+    },
+    "E26": {
+      "status": "NORMALIZED_VALID",
+      "path": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\targeted_repair_01_run02\\inputs\\E26_S.json",
+      "sha256": "7d4514b7485483d550e6b5399260294dd6a7d2b64998053bb2391a55eafc1aca"
+    },
+    "E16": {
+      "status": "NORMALIZED_VALID",
+      "path": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\campaign12h\\ee6405_scorefirst_36_12h\\targeted_repair_01_run02\\inputs\\E16_S.json",
+      "sha256": "54c143e18e0391d4fff11a9c93db391e716da3b49a73885f0beaaebff6ca9709"
+    }
+  },
+  "bindings_sha256": "7964406f59402fa4a9e49b3e8e8318b1c8217855b1c3b917de95ac3592a0cab2"
+}

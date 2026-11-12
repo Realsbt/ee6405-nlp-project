@@ -1,0 +1,47 @@
+{
+  "branch_status": "## zsp-glpc-v1-cre\n M experiments/reports/data_v1.json\n M experiments/reports/graph_cache_v1.json\n?? docs/GLPC_V1_CRE.md\n?? experiments/configs/cre_v1.json\n?? experiments/cre_data.py\n?? experiments/cre_losses.py\n?? experiments/cre_model.py\n?? experiments/cre_sampling.py\n?? experiments/cre_v1_runs/\n?? experiments/evaluate_cre.py\n?? experiments/test_cre.py\n?? experiments/train_cre.py\n?? experiments/verify_cre.py\n?? scripts/audit_cre_workspace.py\n?? scripts/export_cre_evidence.py\n",
+  "train_samples": 11190,
+  "validation_samples": 1600,
+  "train_pair_inventory": {
+    "pairs": 6269,
+    "groups_by_type": {
+      "G-U": 678,
+      "H-P": 2795,
+      "P-G": 2796
+    },
+    "items_by_type": {
+      "G-U": 1356,
+      "H-P": 5590,
+      "P-G": 5592
+    },
+    "pair_types": [
+      "G-U",
+      "H-P",
+      "P-G"
+    ],
+    "relation_limit": "Same group is treated as same-source cross-label evidence, not a verified edit lineage."
+  },
+  "validation_pair_inventory": {
+    "pairs": 910,
+    "groups_by_type": {
+      "G-U": 110,
+      "H-P": 400,
+      "P-G": 400
+    },
+    "items_by_type": {
+      "G-U": 220,
+      "H-P": 800,
+      "P-G": 800
+    },
+    "pair_types": [
+      "G-U",
+      "H-P",
+      "P-G"
+    ],
+    "relation_limit": "Same group is treated as same-source cross-label evidence, not a verified edit lineage."
+  },
+  "test_partition_loaded": false,
+  "hc3_loaded": false,
+  "historical_equivalence": "unverified",
+  "data_root": "D:\\6405_prj\\ee6405-nlp-project\\experiments\\hart_grouped_v1"
+}
