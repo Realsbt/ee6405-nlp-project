@@ -9,9 +9,8 @@ experiment does not relabel it as a new single-model score.
 On 2026-11-12, the private Kaggle dataset upload succeeded, but the kernel push
 was rejected with `Maximum weekly GPU quota of 30.00 hours reached`.
 The CLI exited with code zero despite that error, so its exit code is not proof
-of a successful submission. **No new encoder GPU smoke or formal training has
-started, and no pilot performance result exists.** Existing fusion training was
-not cancelled or modified.
+of a successful submission. No encoder GPU training started on Kaggle.
+Existing fusion training was not cancelled or modified.
 
 The original local `paired_encoder_pilot_package_v1` is preserved. A subsequent
 bootstrap fix supports nested, auto-unpacked Kaggle code archives; the updated
@@ -19,9 +18,20 @@ sources are frozen separately in `paired_encoder_pilot_package_v2`. The uploaded
 private dataset still contains v1 and must be explicitly versioned before a
 future submission uses v2. Do not repeatedly resubmit while quota is exhausted.
 Colab allocated a Tesla T4 (15,360 MiB), verified with its preinstalled
-`nvidia-smi` at 06:33:40 UTC. No private inputs were uploaded and no training
-dependencies were installed there. Upload and software execution await user
-confirmation. A connected runtime is not a training result.
+`nvidia-smi` at 06:33:40 UTC. The user then approved private train/validation
+upload, dependency installation and model execution. Both CUDA checks passed
+with one verified update and zero AMP skips each; DeBERTa formal validation
+training launched at **06:54:15 UTC / 14:54:15 Singapore**. RoBERTa is queued
+serially. **No completed formal score exists yet.** Smoke metrics on four
+examples are engineering checks, not model-performance evidence.
+
+Colab v1 failed on TensorFlow/protobuf imports; v2 detected a skipped AMP
+update and stopped. V3 disables unused TensorFlow/Flax imports and records an
+initial AMP scale of 128 for both arms. All failed directories are preserved.
+The v3 frozen sources/protocol are under
+`experiments/reports/encoder_pilot/colab_v3/`; the old root-level manifest and
+protocol still document the earlier Kaggle v2 package. Reproduction, archive
+hashes and temporary-storage limitations are in `cloud/colab/README.md`.
 
 ## Why this experiment
 
@@ -60,11 +70,14 @@ encoder provide better representations before porting the project's EDU module.
 | Budget | At most 4 epochs per arm; validation patience 2 |
 | Optimization | AdamW, LR 2e-5, weight decay 0.01, linear decay, warmup 10%, clip 1 |
 | Sampling | Existing balanced sampler, effective batch 16; microbatch 4, accumulation 4 |
-| Memory | Gradient checkpointing; FP16 on CUDA |
+| Memory | Gradient checkpointing; FP16 on CUDA, AMP initial loss scale 128 |
 | Hard limit | 14,400 training seconds per arm; hitting it is labeled incomplete |
 | Selection | Validation Macro-F1; preserve both results; no automatic test evaluation |
 
-At most eight **formal** epochs total, plus two one-batch CUDA smokes.
+At most eight **formal** epochs total, plus two one-update CUDA smokes.
+Each smoke retries the same batch at most 12 times if AMP skips an overflowing
+gradient, and stops after its first successful update. No successful update
+means failure, not a passing smoke. Formal runs report overflow skips separately.
 The training timer includes validation/checkpoint work after model loading, but
 not dependency installation, downloads or initial tokenization. Total job time
 can therefore exceed eight hours if both arms hit the training cap.

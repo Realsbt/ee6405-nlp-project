@@ -149,7 +149,7 @@ def train(args):
         optimizer, int(.1 * epochs * len(sampler)), epochs * len(sampler),
     )
     amp = device.type == "cuda"
-    scaler = torch.amp.GradScaler("cuda", enabled=amp)
+    scaler = torch.amp.GradScaler("cuda", enabled=amp, init_scale=128.0)
     args.output.mkdir(parents=True)
     config = {
         "condition": args.condition, "seed": args.seed, "epochs": epochs,
@@ -159,6 +159,8 @@ def train(args):
         "max_length": 512, "all_encoder_layers_trainable": True,
         "max_training_seconds": args.max_seconds,
         "precision": "cuda_fp16" if amp else "cpu_fp32",
+        "amp_initial_scale": 128.0 if amp else None,
+        "smoke_overflow_retry_limit": 12 if args.smoke else None,
         "test_evaluated": False, "smoke": args.smoke,
         "data_protocol_sha256": file_hash(args.data_root / "protocol.json"),
         "source_sha256": file_hash(__file__),
@@ -180,6 +182,7 @@ def train(args):
     best_score, best_epoch, stale, completed_epochs = -1.0, 0, 0, 0
     budget_stopped = False
     updates = 0
+    skipped_updates = 0
     if amp:
         torch.cuda.reset_peak_memory_stats()
     for epoch in range(epochs):
@@ -187,7 +190,9 @@ def train(args):
         sampler.epoch = epoch
         epoch_started = time.perf_counter()
         losses = []
-        for step, indices in enumerate(sampler, 1):
+        # A smoke must perform one real update, not pass after an AMP skip.
+        batches = [next(iter(sampler))] * 12 if args.smoke else sampler
+        for step, indices in enumerate(batches, 1):
             if time.perf_counter() - started > args.max_seconds:
                 budget_stopped = True
                 break
@@ -209,6 +214,11 @@ def train(args):
                 optimizer.zero_grad(set_to_none=True)
                 if not amp:
                     raise ValueError("Non-finite gradients")
+                skipped_updates += 1
+                print(json.dumps({
+                    "event": "amp_overflow_skip", "condition": args.condition,
+                    "epoch": epoch + 1, "batch": step, "loss_scale": scaler.get_scale(),
+                }), flush=True)
                 scaler.update()
                 continue
             scaler.step(optimizer)
@@ -223,6 +233,10 @@ def train(args):
                     "mean_ce": float(np.mean(losses)),
                     "epoch_elapsed_seconds": time.perf_counter() - epoch_started,
                 }), flush=True)
+            if args.smoke:
+                break
+        if args.smoke and updates == 0:
+            raise RuntimeError("Smoke exhausted overflow retries without a real update")
         if budget_stopped:
             break
         metrics, _, _ = evaluate(model, datasets["val"], collator, device, micro_batch, amp)
@@ -273,6 +287,7 @@ def train(args):
         "test": None, "test_evaluated": False, "best_epoch": best_epoch,
         "completed_epochs": completed_epochs, "elapsed_seconds": time.perf_counter() - started,
         "optimizer_updates": updates, "classifier_update_verified": True,
+        "amp_skipped_updates": skipped_updates,
         "parameters": sum(p.numel() for p in model.parameters()),
         "trainable_parameters": sum(p.numel() for p in model.parameters() if p.requires_grad),
         "peak_cuda_allocated_mib": torch.cuda.max_memory_allocated() / 2**20 if amp else None,

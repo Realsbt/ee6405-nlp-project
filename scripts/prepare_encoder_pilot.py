@@ -60,6 +60,7 @@ def prepare(output, cache):
         "conditions": ["deberta_full", "roberta_full"],
         "effective_batch": 16, "micro_batch": 4, "max_seconds_per_arm": 14400,
         "learning_rate": 2e-5, "test_evaluated": False,
+        "amp_initial_scale": 128.0, "smoke_max_overflow_attempts": 12,
         "selection": "Validation Macro-F1 only; retain all pilot results; no automatic final test",
         "expansion": "No extra seeds, models, learning-rate sweep or paid compute automatically",
         "input_note": "Same audited visible character prefix; each tokenizer capped at 512 tokens",

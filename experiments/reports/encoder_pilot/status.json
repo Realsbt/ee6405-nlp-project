@@ -1,9 +1,9 @@
 {
   "date": "2026-11-12",
-  "status": "not_started",
+  "status": "colab_validation_pilot_launched",
   "conditions": ["deberta_full", "roberta_full"],
   "seed": 3407,
-  "gpu_training_started": false,
+  "gpu_training_started": true,
   "test_evaluated": false,
   "new_performance_result": null,
   "kaggle": {
@@ -14,15 +14,34 @@
     "error": "Maximum weekly GPU quota of 30.00 hours reached",
     "cli_exit_code": 0,
     "uploaded_source_version": "v1",
-    "latest_local_package": "outputs/paired_encoder_pilot_package_v2"
+    "latest_local_package": "outputs/paired_encoder_pilot_package_v3"
   },
   "colab": {
     "hardware_verified": "Tesla T4",
     "memory_mib": 15360,
     "checked_at_utc": "2026-11-12T06:33:40Z",
-    "training_data_uploaded": false,
-    "training_dependencies_installed": false,
-    "next_step": "User confirmation before private train/validation upload and software installation/execution"
+    "user_approval_received": true,
+    "training_data_uploaded": true,
+    "training_dependencies_installed": true,
+    "private_test_partition_uploaded": false,
+    "active_condition": "deberta_full",
+    "queued_condition": "roberta_full",
+    "formal_launched_at_utc": "2026-11-12T06:54:15.600336+00:00",
+    "both_cuda_smokes_passed": true,
+    "smoke_optimizer_updates_each": 1,
+    "smoke_amp_skips_each": 0,
+    "smoke_peak_cuda_allocated_mib": {
+      "deberta_full": 3557.48779296875,
+      "roberta_full": 2426.435546875
+    },
+    "formal_first_update_verified": true,
+    "colab_package_sha256": "e16c7b592a0b01d43b0d41cb11ff9d6022cd248f3213655e8e85bedd94f02ff7",
+    "results_root": "/content/ee6405_encoder_pilot_v3/results",
+    "runtime_storage": "Temporary; not persisted to Drive",
+    "previous_attempts": [
+      {"version": "v1", "formal_started": false, "error": "TensorFlow/protobuf import conflict"},
+      {"version": "v2", "formal_started": false, "error": "AMP skipped first smoke update"}
+    ]
   },
   "existing_fusion_job": "Not cancelled or modified",
   "scope": "Validation-only encoder pilot; no 97% result claimed"

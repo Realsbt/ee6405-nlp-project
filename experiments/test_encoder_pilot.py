@@ -108,6 +108,8 @@ class EncoderPilotTests(unittest.TestCase):
             self.assertEqual(result["status"], "smoke_completed")
             self.assertFalse(result["test_evaluated"])
             self.assertEqual(result["validation"]["samples"], 4)
+            self.assertEqual(result["optimizer_updates"], 1)
+            self.assertEqual(result["amp_skipped_updates"], 0)
             self.assertTrue((args.output / "best.pt").exists())
 
 
