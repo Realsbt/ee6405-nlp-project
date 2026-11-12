@@ -128,16 +128,6 @@ The demo profile downloads about **4.28 GiB** of resources plus its Python envir
 
 Follow the **[Linux / WSL2 reproduction guide](docs/REPRODUCING.md)** for prerequisites, full-data restoration, hardware requirements and GPU training. The original `/data/botao/ee6405-race-validation/` directory remains a local resource store; teammates choose their own `EE6405_STORAGE`. Historical result paths are resolved at read time without changing their provenance.
 
-### Host the demo on a small VPS
-
-The full demo needs torch and a 500 MB transformer per model, which does not fit in 1 GiB of RAM. The TF-IDF model does: about **130 MiB resident** and **~1 ms** per prediction. `experiments/tfidf_server.py` serves that model alone and reports the others as unavailable, so the page disables them instead of failing.
-
-```bash
-sudo bash scripts/deploy_tfidf_vps.sh
-```
-
-The script installs packages, creates a service user, clones the repository, builds a virtual environment with only `joblib`, `numpy` and `scikit-learn`, downloads the hash-verified model, and installs a hardened systemd unit. No domain name is needed — a bare IP works. See **[deploying on a VPS](docs/DEPLOY_VPS.md)** for firewall rules, updates, and adding TLS later.
-
 ## Repository contents
 
 ```text
