@@ -1,0 +1,19 @@
+{
+  "schema": "ee6405-group-conformal/v1",
+  "alpha": 0.1,
+  "threshold": 0.9473087936639786,
+  "quantile_rank": 360,
+  "calibration_groups": 399,
+  "calibration_rows": 1594,
+  "labels": [
+    "human_written",
+    "human_ai_polished",
+    "ai_generated",
+    "ai_humanized"
+  ],
+  "score": "group_max_one_minus_true_probability",
+  "model_run": "race_s3407",
+  "source_prediction_sha256": "466df1bd7efa2e136e0e2d679d6f7dbdd83c15c9b762ef1cc7b217c6db06be45",
+  "retrospective": true,
+  "split_seed": "6405-conformal-v1"
+}
