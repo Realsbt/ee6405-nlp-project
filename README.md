@@ -2,11 +2,15 @@
 
 [English](#english) · [简体中文](#简体中文)
 
-**[视频和讲稿 · Video and script](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/untagged-cc115752d2bea3b46070)**
+**[V2 视频、英文口播稿和组员分段包 · V2 recording materials](https://github.com/Realsbt/ee6405-nlp-project/releases/tag/untagged-cc115752d2bea3b46070)**
 
-登录具有仓库写权限的 GitHub 账号，在 Release 草稿的 **Assets** 下载 9 分 20 秒无声视频与完整讲稿。
+请用具有仓库写权限的 GitHub 账号登录，在 Release 草稿的 **Assets** 下载 V2：
 
-Download the 9:20 silent video and the full script under **Assets** in the draft release. Sign in with an account that has repository write access.
+Sign in with a GitHub account that has repository write access and download these V2 files under **Assets** in the draft release.
+
+- `EE6405_V2_EN_silent.mp4` — 8 分 14 秒无声视频 / 8:14 silent video
+- `VIDEO_SCRIPT_V2.md` — 英文口播稿，附中文画面提示和时间码 / English narration with Chinese visual cues and timecodes
+- `EE6405_V2_team_clips.zip` — 7 个组员录音片段及对应讲稿 / Seven recording clips with individual scripts
 
 ## English
 
